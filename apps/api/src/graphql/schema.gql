@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum EGender {
+  female
+  male
+  unspecified
+}
+
+type ImageInput {
+  public_id: String!
+  url: String!
+}
+
+type Info {
+  bio: String
+  birthday: DateTime!
+  gender: EGender
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  login(loginInput: LoginInput!): User!
+}
+
+type Query {
+  logout: String!
+  whoAmI: User!
+}
+
+type User {
+  coverPicture: ImageInput
+  email: String!
+  firstName: String
+  info: Info
+  isOwnProfile: Boolean
+  lastName: String
+  password: String!
+  phone: String
+  profilePicture: ImageInput
+  username: String!
+}
