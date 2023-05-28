@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@social-zone/common": ["libs/common/src/index.ts"],
-      "~frontend": ["libs/frontend/src/index.ts"],
-      "@social-zone/types": ["libs/types/src/index.ts"]
+      "@social-zone/types": ["libs/types/src/index.ts"],
+      "@social-zone/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
