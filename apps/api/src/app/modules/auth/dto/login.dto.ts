@@ -11,12 +11,9 @@ export class LoginInput extends PickType(
 ) {}
 
 
-// @ObjectType()
-// export class LoginResponse {
-//   @Field()
-//   message: string;
-
-//   @Field()
-//   user: UserWithoutPassword;
-// }
+@ObjectType()
+export class LoginResponse {
+  @Field()
+  message: string;
+}
 

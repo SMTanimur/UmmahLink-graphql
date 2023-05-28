@@ -4,13 +4,12 @@ import { AuthService } from './auth.service';
 
 import { Auth } from './entities/auth.entity';
 
-import { UseGuards } from '@nestjs/common';
+import { Req, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local.guard';
-import { SessionAuthGuard } from './guards/session.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { Logout } from './guards/logout.guard';
 import { CurrentUser } from '@social-zone/common';
-import {  LoginInput } from './dto/login.dto';
+import {  LoginInput, LoginResponse } from './dto/login.dto';
 import { User, UserDocument } from '../users/entities/user.entity';
 
 
@@ -21,22 +20,19 @@ export class AuthResolver {
     private readonly usersService: UsersService
   ) {}
 
-  @Mutation(() => User)
-  @UseGuards(LocalAuthGuard, SessionAuthGuard)
+  @Mutation(() => LoginResponse)
+  @UseGuards(LocalAuthGuard)
   async login(
-    @CurrentUser() user:UserDocument ,
     @Args('loginInput') _loginInput: LoginInput
   ) {
-
-
     // console.log({ user });
-    return { message: 'Login Success', user:user.toJSON()  };
+    return { message: 'Login Success' };
   }
 
   @Query(() => User)
   @UseGuards(AuthenticatedGuard)
-  whoAmI(@CurrentUser() user:UserDocument) {
-    return user;
+  Me(@Req() req: any) {
+    return this.usersService.findUserById(req.user._id)
   }
 
   @UseGuards(Logout)

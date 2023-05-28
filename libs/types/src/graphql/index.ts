@@ -36,14 +36,18 @@ export interface Info {
     gender?: Nullable<EGender>;
 }
 
+export interface LoginResponse {
+    message: string;
+}
+
 export interface IMutation {
     createUser(input: CreateUserInput): User | Promise<User>;
-    login(loginInput: LoginInput): User | Promise<User>;
+    login(loginInput: LoginInput): LoginResponse | Promise<LoginResponse>;
 }
 
 export interface IQuery {
+    Me(): User | Promise<User>;
     logout(): string | Promise<string>;
-    whoAmI(): User | Promise<User>;
 }
 
 export interface User {

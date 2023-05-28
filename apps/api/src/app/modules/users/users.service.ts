@@ -7,6 +7,7 @@ import { CreateUserInput } from './dto/input/create-user-input';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { createHash } from '../../utils/hash';
 
 @Injectable()
 export class UsersService {
@@ -21,6 +22,7 @@ export class UsersService {
       if(user){
       return new ConflictException('User already exists')
       }
+      createUser.password = await createHash(createUser.password)
       return await this.userModel.create(createUser);
 
     } catch (error) {
