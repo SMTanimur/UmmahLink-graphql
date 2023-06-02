@@ -106,4 +106,3 @@ export const Icon404 = () => {
     </svg>
   );
 };
-

@@ -4,10 +4,8 @@ import type { Metadata } from 'next';
 
 import '../styles/global.css';
 
-import {  defaultMetadata } from '@social-zone/ui';
-import { ModalProvider } from '../context/modal/modal.context';
-import Navbar from '../modules/common/NavBar';
-import ManagedModal from '../context/modal/managed-modal';
+import {  defaultMetadata } from '~ui';
+
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -21,11 +19,9 @@ export default function RootLayout({
       <body
       suppressHydrationWarning={true} 
       >
-        <ModalProvider>
-        <Navbar/>
+        
         {children}
-        <ManagedModal />
-        </ModalProvider>
+     
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 
-import { Icon404 } from "@social-zone/ui";
 import Head from "next/head";
 import Link from "next/link";
+import { Icon404 } from "~ui";
 
 
 
