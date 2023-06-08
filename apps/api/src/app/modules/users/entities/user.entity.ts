@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import { AbstractDocument, ImageInput } from '@social-zone/common';
+import {  ImageInput } from '@social-zone/common';
 import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt'
-import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { IsEmail,IsNotEmpty,IsString,IsNumber ,IsOptional,ValidateNested,IsBoolean,Min} from 'class-validator';
+import { Field, InputType, ObjectType, OmitType, registerEnumType } from '@nestjs/graphql';
+import { IsEmail,IsNotEmpty,IsString,IsOptional,ValidateNested,IsBoolean,Min} from 'class-validator';
 
 
 
@@ -123,3 +123,5 @@ UserSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, user.password);
 };
 
+@ObjectType()
+export class UserWithoutPassword extends OmitType(User, ['password']) {}

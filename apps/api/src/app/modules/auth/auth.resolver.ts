@@ -1,16 +1,17 @@
 import { UsersService } from './../users/users.service';
-import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 
 import { Auth } from './entities/auth.entity';
 
-import { Req, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { Logout } from './guards/logout.guard';
 import { CurrentUser } from '@social-zone/common';
 import {  LoginInput, LoginResponse } from './dto/login.dto';
-import { User, UserDocument } from '../users/entities/user.entity';
+import {  UserWithoutPassword } from '../users/entities/user.entity';
+import { SessionAuthGuard } from './guards/session.guard';
 
 
 @Resolver(() => Auth)
@@ -21,18 +22,19 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard, SessionAuthGuard)
   async login(
+    @CurrentUser() user: UserWithoutPassword,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Args('loginInput') _loginInput: LoginInput
   ) {
-    // console.log({ user });
-    return { message: 'Login Success' };
+    return { message: `Welcome back! ${user.username}` };
   }
 
-  @Query(() => User)
+  @Query(() => UserWithoutPassword)
   @UseGuards(AuthenticatedGuard)
-  Me(@Req() req: any) {
-    return this.usersService.findUserById(req.user._id)
+  whoAmI(@CurrentUser() user: UserWithoutPassword) {
+    return user;
   }
 
   @UseGuards(Logout)
@@ -41,5 +43,4 @@ export class AuthResolver {
     return 'Logout Success';
   }
 
-  
 }

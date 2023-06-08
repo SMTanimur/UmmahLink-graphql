@@ -14,10 +14,19 @@ import { join } from 'path';
     AuthModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      autoSchemaFile:true,
-
-      definitions: {
-        path: join(process.cwd(), 'libs/types/src/graphql/index.ts'),
+      autoSchemaFile:join(process.cwd(), 'apps/api/src/schema.gql'),
+      // process.env.NODE_ENV === 'development'
+      // ? join(process.cwd(), 'apps/api/src/schema.gql')
+      // : true,
+      debug: process.env.NODE_ENV !== 'production',
+      playground: {
+        settings: {
+          'request.credentials': 'include',
+        },
+      },
+      cors: {
+        credentials: true,
+        origin: true,
       },
       sortSchema: true,
     }),
