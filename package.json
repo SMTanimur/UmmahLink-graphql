@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test"
+    "dev": "nx run-many --target=serve --projects=web,api --parallel",
+    "gen:graphql-client": "graphql-codegen --watch"
   },
   "private": true,
   "dependencies": {
