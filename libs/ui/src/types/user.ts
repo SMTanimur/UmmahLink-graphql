@@ -1,9 +1,8 @@
-export interface IUser {
-  id: string;
-  username: string;
-  fullname: string;
+export interface ICurrentUser {
+  _id: string;
   email: string;
-  profilePicture?: string | Record<string, any>;
-  isEmailValidated: boolean;
-  [prop: string]: any;
+  fullName: string;
+  username:string
+  avatar: string;
+  roles: string[];
 }
