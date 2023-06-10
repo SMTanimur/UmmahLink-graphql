@@ -1,7 +1,7 @@
 'use client';
-import { Modal } from '../app/components/ui/modal';
+
 import type { FC } from 'react';
-import { useGlobalModalStateStore } from '~ui';
+import { Modal, useGlobalModalStateStore } from '~ui';
 import LoginView from '../app/global/login-form';
 
 const GlobalModals: FC = () => {

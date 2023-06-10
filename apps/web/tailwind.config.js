@@ -12,7 +12,7 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
     'libs/frontend/src/**/!(*.stories|*.spec).{ts,tsx,html}',
   ],
-  
+
   theme: {
     extend: {
       screens: {
@@ -29,9 +29,9 @@ module.exports = {
         '10px': '0.625rem',
       },
       colors: {
-        "seafoam" : "#C9EEBE",
-        "champange" : "#F7EDE3",
-        brand: colors.emerald,
+        seafoam: '#C9EEBE',
+        champange: '#F7EDE3',
+        brand: colors.indigo,
         social: {
           facebook: '#3b5998',
           'facebook-hover': '#35508a',

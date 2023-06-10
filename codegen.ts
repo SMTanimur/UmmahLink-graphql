@@ -11,8 +11,9 @@ const config: CodegenConfig = {
       ],
       config: {
         fetcher: {
-          endpoint: 'http://localhost:8080/graphql',
+          func: '../configs#fetcher',
           fetchParams: {
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -27,6 +28,9 @@ const config: CodegenConfig = {
         exposeQueryKeys: true, // We use it as the key for the react query without having to manually give a string.
         exposeMutationKeys: true, // We use it as the key for the react query without having to manually give a string.
         exposeFetcher: true, // exposes a fetch to use for SSR,
+      },
+      hooks: {
+        afterOneFileWrite: ['prettier --write'],
       },
     },
   },

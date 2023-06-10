@@ -1,7 +1,6 @@
 
 import type { FC } from 'react';
-import {   useGlobalModalStateStore} from '~ui';
-import { Button } from '../ui/button';
+import {   Button, useGlobalModalStateStore} from '~ui';
 
 
 

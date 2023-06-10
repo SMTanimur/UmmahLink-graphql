@@ -81,7 +81,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           </span>
           <span
             tabIndex={-1}
-            className={cn({ 'order-last pr-3': iconRight }, iconStyles)}
+            className={cn({ 'order-last pr-3 ': iconRight }, iconStyles)}
           >
             {iconRight}
           </span>

@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const metaData:Metadata={
-  title:'Home'
-}
+
 const HomePage = () => {
   return (
      <>
