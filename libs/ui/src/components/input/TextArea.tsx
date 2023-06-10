@@ -1,3 +1,5 @@
+"use client"
+
 import type { ComponentProps } from 'react';
 import { forwardRef, useId } from 'react';
 import { FieldError } from '../form/Form';

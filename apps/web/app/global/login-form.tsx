@@ -89,12 +89,12 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
         {...form.register('email')}
       />
 
-      <PasswordInput
+      {/* <PasswordInput
         label="Password"
         type="password"
         placeholder="Password"
         {...form.register('password')}
-      />
+      /> */}
 
       <Button
         className="ml-auto"

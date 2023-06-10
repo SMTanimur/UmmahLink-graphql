@@ -68,7 +68,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
 
             <span
               tabIndex={-1}
-              className={cn('order-last pr-3', iconStyles)}
+              className={cn('order-last pr-3 ', iconStyles)}
               onClick={() => setShow((prev) => !prev)}
             >
               {show ? (

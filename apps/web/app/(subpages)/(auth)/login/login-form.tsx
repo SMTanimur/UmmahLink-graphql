@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import Link from 'next/link';
 import { FC } from 'react';
 import { object, string } from 'zod';
-import { Button, Form, Input, PasswordInput, useZodForm } from '~ui';
+import { Button, Card, Form, Input, PasswordInput, useZodForm } from '~ui';
 
 
 const newUserSchema = object({
@@ -40,6 +41,7 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
   // };
 
   return (
+    <div>
     <Form
       form={form}
       className="space-y-8"
@@ -104,9 +106,23 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
         //   loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
         // }
       >
-        <span>Sign up</span>
+        <span>Login</span>
       </Button>
     </Form>
+    <div>
+				<Card rounded="lg" className="mt-4">
+					<Card.Body>
+						<span className="mr-1">Don’t have an account yet ?</span>
+						<Link
+							className="font-medium text-brand-600 hover:text-brand-400"
+							href="signup"
+						>
+							Join UmmahLink™
+						</Link>
+					</Card.Body>
+				</Card>
+			</div>
+    </div>
   );
 };
 

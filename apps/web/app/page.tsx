@@ -7,13 +7,15 @@ const HomePage = () => {
      <>
      <div>
         <h1>Home Page</h1>
-        <Link href='/login'>
+        {/* <Link href='/login'>
           login
-        </Link>
+        </Link> */}
      </div>
      </>
   )
 };
 
 export default HomePage;
-
+export const metadata: Metadata = {
+  title: 'Home'
+}
