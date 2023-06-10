@@ -14,71 +14,87 @@ module.exports = {
   ],
   
   theme: {
-    screens: {
-      mobile: '420px',
-      tablet: '640px',
-      laptop: '1024px',
-      desktop: '1280px',
-    },
-    fontFamily: {
-      sans: ['SF Pro Display', 'sans-serif'],
-    },
     extend: {
-      fontSize: {
-        '1xs': '11px',
-      },
-      colors: {
-        'indigo-900': '#363452',
-        'indigo-950': '#2D2B44',
-        'indigo-1000': '#222133',
-        'indigo-1100': '#181727',
-      },
-      height: {
-        '60px': '60px',
-        '20rem': '20rem',
-        '25rem': '25rem',
-      },
-      maxWidth: {
-        '16rem': '16rem',
-      },
-      minWidth: {
-        '15rem': '15rem',
-      },
-      maxHeight: {
-        '90vh': '90vh',
-        '80vh': '80vh',
-        '70vh': '70vh',
-        '85%': '85%',
-      },
-      minHeight: {
-        '10rem': '10rem',
-        '18rem': '18rem',
-        '24rem': '24rem',
-        '80%': '80%',
-      },
-      width: {
-        '20rem': '20rem',
-        '30rem': '30rem',
-        '40rem': '40rem',
-      },
-      padding: {
-        '6%': '6%',
-        '60px': '60px',
-        '20%': '20%',
-        '10%': '10%',
+      screens: {
+        '3xl': '2100px',
       },
       zIndex: {
-        9999: '9999',
+        '-1': '-1',
       },
-    },
-    default: {
-      button: {
-        '&:disabled': {
-          cursor: 'not-allowed',
-          opacity: 0.4,
+      fontFamily: {
+        body: ['Open Sans', 'system-ui', 'sans-serif'],
+        heading: ['Open Sans', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        '10px': '0.625rem',
+      },
+      colors: {
+        "seafoam" : "#C9EEBE",
+        "champange" : "#F7EDE3",
+        brand: colors.emerald,
+        social: {
+          facebook: '#3b5998',
+          'facebook-hover': '#35508a',
+          twitter: '#1da1f2',
+          instagram: '#e1306c',
+          youtube: '#ff0000',
+          google: '#4285f4',
+          'google-hover': '#3574de',
         },
+      },
+      minHeight: {
+        580: '580px',
+        140: '35rem', // 560px
+        40: '10rem', // 140px
+        6: '2.5rem',
+      },
+      height: {
+        4.5: '1.125rem',
+        13: '3.125rem',
+        22: '5.25rem',
+        double: '200%',
+      },
+      maxHeight: {
+        '70vh': '70vh',
+        '85vh': '85vh',
+        140: '35rem', // 560px
+      },
+      maxWidth: {
+        1920: '1920px',
+      },
+      minWidth: {
+        150: '150px',
+      },
+      borderRadius: {
+        DEFAULT: '5px',
+      },
+      inset: {
+        22: '5.25rem',
+      },
+      strokeWidth: {
+        2.5: '2.5',
+      },
+      boxShadow: {
+        200: 'rgba(0, 0, 0, 0.16) 0px 3px 6px',
+        300: 'rgba(0, 0, 0, 0.16) 0px 0px 6px',
+        350: 'rgba(0, 0, 0, 0.16) 0px 3px 6px',
+        400: 'rgba(0, 0, 0, 0.1) 0px 0px 8px 0',
+        500: 'rgba(0, 0, 0, 0.17) 0px 0px 12px',
+        600: 'rgba(0, 0, 0, 0.1) 0px 3px 8px',
+        700: 'rgba(0, 0, 0, 0.08) 0px 2px 16px',
+        900: 'rgba(0, 0, 0, 0.05) 0px 21px 36px',
+        downfall: 'rgba(0, 0, 0, 0.14) 0px 6px 12px',
+        'downfall-xs': 'rgba(0, 0, 0, 0.14) 0px 1px 2px',
+        'downfall-sm': 'rgba(0, 0, 0, 0.14) 0px 2px 4px',
+        'downfall-lg': 'rgba(0, 0, 0, 0.16) 0px 8px 16px',
+      },
+      transitionProperty: {
+        height: 'height',
+      },
+      transitionTimingFunction: {
+        'in-expo': 'cubic-bezier(0.04, 0.62, 0.23, 0.98)',
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 };

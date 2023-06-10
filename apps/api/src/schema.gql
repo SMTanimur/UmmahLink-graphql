@@ -19,11 +19,6 @@ enum EGender {
   unspecified
 }
 
-type ImageInput {
-  public_id: String!
-  url: String!
-}
-
 type Info {
   bio: String
   birthday: DateTime!
@@ -50,7 +45,8 @@ type Query {
 }
 
 type User {
-  coverPicture: ImageInput
+  avatar: String
+  coverPicture: String
   email: String!
   firstName: String
   info: Info
@@ -58,18 +54,17 @@ type User {
   lastName: String
   password: String!
   phone: String
-  profilePicture: ImageInput
   username: String!
 }
 
 type UserWithoutPassword {
-  coverPicture: ImageInput
+  avatar: String
+  coverPicture: String
   email: String!
   firstName: String
   info: Info
   isOwnProfile: Boolean
   lastName: String
   phone: String
-  profilePicture: ImageInput
   username: String!
 }

@@ -49,12 +49,6 @@ export enum EGender {
   Unspecified = 'unspecified'
 }
 
-export type ImageInput = {
-  __typename?: 'ImageInput';
-  public_id: Scalars['String']['output'];
-  url: Scalars['String']['output'];
-};
-
 export type Info = {
   __typename?: 'Info';
   bio?: Maybe<Scalars['String']['output']>;
@@ -96,7 +90,8 @@ export type Query = {
 
 export type User = {
   __typename?: 'User';
-  coverPicture?: Maybe<ImageInput>;
+  avatar?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   info?: Maybe<Info>;
@@ -104,20 +99,19 @@ export type User = {
   lastName?: Maybe<Scalars['String']['output']>;
   password: Scalars['String']['output'];
   phone?: Maybe<Scalars['String']['output']>;
-  profilePicture?: Maybe<ImageInput>;
   username: Scalars['String']['output'];
 };
 
 export type UserWithoutPassword = {
   __typename?: 'UserWithoutPassword';
-  coverPicture?: Maybe<ImageInput>;
+  avatar?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   info?: Maybe<Info>;
   isOwnProfile?: Maybe<Scalars['Boolean']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
-  profilePicture?: Maybe<ImageInput>;
   username: Scalars['String']['output'];
 };
 

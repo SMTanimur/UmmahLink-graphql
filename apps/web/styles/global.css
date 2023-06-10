@@ -1,3 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+  overflow-x: hidden;
+}
+
+.layout-container {
+  width: 100%;
+  max-width: 1570px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+:root{
+  --scroll-thumb:#7c7c7c;
+  --scroll-thumb-hover:rgb(103, 101, 101);
+  --scroll-track:#bdbdbd;
+}
+
+[data-theme="dark"] {
+  --scroll-thumb:#908f8f;
+  --scroll-thumb-hover:#c8c7c7;
+  --scroll-track:#4b4b4b;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+
+html.dark ::-webkit-scrollbar {
+  width: 9px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #4b4b4b;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #908f8f;
+  border-radius: 25px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #c8c7c7;
+}
+
+
+.gradient-text {
+  font-size: 1.5rem;
+  background: radial-gradient(
+    circle,
+    rgba(230, 67, 138, 1) 0%,
+    rgba(50, 120, 201, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

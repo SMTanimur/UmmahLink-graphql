@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import {  ImageInput } from '@social-zone/common';
+
 import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt'
 import { Field, InputType, ObjectType, OmitType, registerEnumType } from '@nestjs/graphql';
-import { IsEmail,IsNotEmpty,IsString,IsOptional,ValidateNested,IsBoolean,Min} from 'class-validator';
+import { IsEmail,IsNotEmpty,IsString,IsOptional,IsBoolean} from 'class-validator';
 
 
 
@@ -83,17 +83,18 @@ export class User {
   username: string;
 
 
-  @Field(() => ImageInput, { nullable: true })
-  @Prop(raw({ public_id: String, url: String }))
+  @Field( { nullable: true })
+  @Prop({
+    default:
+      'https://res.cloudinary.com/dk6bdrkbv/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
+  })
   @IsOptional()
-  @ValidateNested()
-  profilePicture?: ImageInput;
+  avatar?: string
 
-  @Field(() => ImageInput, { nullable: true })
-  @Prop(raw({ public_id: String, url: String }))
+  @Field( { nullable: true })
+  @Prop()
   @IsOptional()
-  @ValidateNested()
-  coverPicture?: ImageInput
+  coverPicture?: string
 
   @Prop()
   @IsOptional()
