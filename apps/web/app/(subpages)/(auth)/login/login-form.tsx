@@ -6,7 +6,6 @@ import { FC } from 'react';
 import { object, string } from 'zod';
 import { Button, Card, Form, Input, PasswordInput, useZodForm } from '~ui';
 
-
 const newUserSchema = object({
   email: string()
     .min(1, { message: 'This field has to be filled.' })
@@ -42,24 +41,24 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
 
   return (
     <div>
-    <Form
-      form={form}
-      className="space-y-8"
-      onSubmit={({ email, password }) => {
-        console.log(email, password);
-        // createProfile({
-        //   variables: {
-        //     request: {
-        //       handle: username,
-        //       profilePictureUri: avatar
-        //         ? avatar
-        //         : getStampFyiURL(address ?? ZERO_ADDRESS)
-        //     }
-        //   }
-        // });
-      }}
-    >
-      {/* {data?.createProfile.__typename === 'RelayError' &&
+      <Form
+        form={form}
+        className="space-y-8"
+        onSubmit={({ email, password }) => {
+          console.log(email, password);
+          // createProfile({
+          //   variables: {
+          //     request: {
+          //       handle: username,
+          //       profilePictureUri: avatar
+          //         ? avatar
+          //         : getStampFyiURL(address ?? ZERO_ADDRESS)
+          //     }
+          //   }
+          // });
+        }}
+      >
+        {/* {data?.createProfile.__typename === 'RelayError' &&
         data?.createProfile.reason && (
           <ErrorMessage
             className="mb-3"
@@ -70,7 +69,7 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
             }}
           />
         )} */}
-      {/* {isModal && (
+        {/* {isModal && (
         <div className="mb-2 space-y-4">
           <img
             className="h-10 w-10"
@@ -84,44 +83,45 @@ export const LoginForm: FC<LoginFormProps> = ({ isModal = false }) => {
           </div>
         </div>
       )} */}
-      <Input
-        label="Email"
-        type="text"
-        placeholder="Email"
-        {...form.register('email')}
-      />
+        <Input
+          label="Email"
+          type="text"
+          placeholder="Email"
+          {...form.register('email')}
+        />
 
-      <PasswordInput
-        label="Password"
-        type="password"
-        placeholder="Password"
-        {...form.register('password')}
-      />
+        <PasswordInput
+          label="Password"
+          type="password"
+          placeholder="Password"
+          {...form.register('password')}
+        />
 
-      <Button
-        className="ml-auto"
-        type="submit"
-        // disabled={loading}
-        // icon={
-        //   loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
-        // }
-      >
-        <span>Login</span>
-      </Button>
-    </Form>
-    <div>
-				<Card rounded="lg" className="mt-4">
-					<Card.Body>
-						<span className="mr-1">Don’t have an account yet ?</span>
-						<Link
-							className="font-medium text-brand-600 hover:text-brand-400"
-							href="signup"
-						>
-							Join UmmahLink™
-						</Link>
-					</Card.Body>
-				</Card>
-			</div>
+        <Button
+          className="ml-auto"
+          type="submit"
+          fullWidth
+          // disabled={loading}
+          // icon={
+          //   loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
+          // }
+        >
+          <span>Login</span>
+        </Button>
+      </Form>
+      <div>
+        <Card rounded="lg" className="mt-4">
+          <Card.Body>
+            <span className="mr-1">Don’t have an account yet ?</span>
+            <Link
+              className="font-medium text-brand-600 hover:text-brand-400"
+              href="signup"
+            >
+              Join UmmahLink™
+            </Link>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };

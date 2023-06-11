@@ -37,12 +37,26 @@ type LoginResponse {
 type Mutation {
   createUser(input: CreateUserInput!): User!
   login(loginInput: LoginInput!): LoginResponse!
+  uploadMultipleFiles(files: [Upload!]!): [ResponseSingleUpload!]!
+  uploadSingleFiles(file: Upload!): ResponseSingleUpload!
 }
 
 type Query {
   logout: String!
   whoAmI: UserWithoutPassword!
 }
+
+type ResponseSingleUpload {
+  bytes: Float!
+  folder: String!
+  format: String!
+  height: Float!
+  url: String!
+  width: Float!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   avatar: String
@@ -54,6 +68,7 @@ type User {
   lastName: String
   password: String!
   phone: String
+  role: String!
   username: String!
 }
 
@@ -66,5 +81,6 @@ type UserWithoutPassword {
   isOwnProfile: Boolean
   lastName: String
   phone: String
+  role: String!
   username: String!
 }

@@ -26,7 +26,7 @@ export class UsersService {
       return await this.userModel.create(createUser);
 
     } catch (error) {
-      
+      console.log(error)
     }
   }
 

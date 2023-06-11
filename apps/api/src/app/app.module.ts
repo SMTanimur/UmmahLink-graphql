@@ -8,17 +8,17 @@ import { CoreModule } from './modules/core/core.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
     AuthModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      autoSchemaFile:join(process.cwd(), 'apps/api/src/schema.gql'),
+      autoSchemaFile:true,
       // process.env.NODE_ENV === 'development'
       // ? join(process.cwd(), 'apps/api/src/schema.gql')
       // : true,
-      debug: process.env.NODE_ENV !== 'production',
       playground: {
         settings: {
           'request.credentials': 'include',
@@ -31,6 +31,7 @@ import { join } from 'path';
       sortSchema: true,
     }),
     UsersModule,
+    UploadModule,
     CoreModule,
   ],
   controllers: [AppController],

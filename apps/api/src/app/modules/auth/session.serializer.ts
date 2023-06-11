@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
-  serializeUser(user: any, done: (err: Error, user: any) => void): any {
-    done(null, user);
+  constructor(private readonly usersService: UsersService) {
+    super();
   }
 
-  deserializeUser(
+  serializeUser(user: any, done: CallableFunction): any {
+    return done(null, user);
+  }
+  async deserializeUser(
     payload: any,
-    done: (err: Error, payload: string) => void
-  ): any {
-    done(null, payload);
+    done: CallableFunction
+  ): Promise<any> {
+    const user = await this.usersService.findOne({_id:payload._id})
+    delete user.password;
+    return done(null, user);
   }
 }

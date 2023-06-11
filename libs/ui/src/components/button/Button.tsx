@@ -14,6 +14,7 @@ export interface ButtonProps
   size?: 'xs' | 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'warning' | 'super' | 'danger';
   outline?: boolean;
+  fullWidth?: boolean;
   icon?: ReactNode;
   children?: ReactNode;
   className?: string;
@@ -26,6 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       variant = 'primary',
       outline,
+      fullWidth,
       icon,
       children,
       ...rest
@@ -61,9 +63,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'px-3 py-1.5': size === 'sm',
             'px-4 py-2.5': size === 'md',
             'px-6 py-3': size === 'lg',
+            
             'inline-flex items-center space-x-1.5': icon && children,
           },
           'rounded-lg font-bold shadow-sm outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50',
+          fullWidth && 'w-full',
           className
         )}
         type={rest.type}

@@ -22,7 +22,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  @UseGuards(LocalAuthGuard, SessionAuthGuard)
+  @UseGuards(LocalAuthGuard,SessionAuthGuard)
   async login(
     @CurrentUser() user: UserWithoutPassword,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

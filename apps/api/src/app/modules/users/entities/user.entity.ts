@@ -108,6 +108,16 @@ export class User {
   password: string;
 
 
+  @Prop({
+    enum: ['admin', 'user'],
+    default: 'user',
+  })
+  @Field(()=>String)
+  @IsNotEmpty({ message: 'Role is required' })
+  @IsString()
+  role: string;
+
+
 }
 
 export interface UserDocument extends User,Document {
