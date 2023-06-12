@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -10,11 +9,12 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@social-zone/client": ["libs/client/src/index.ts"],
       "@social-zone/common": ["libs/common/src/index.ts"],
       "@social-zone/graphql": ["libs/graphql/src/index.ts"],
       "@social-zone/types": ["libs/types/src/index.ts"],

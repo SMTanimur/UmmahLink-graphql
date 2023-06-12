@@ -8,10 +8,12 @@ import { Module } from '@nestjs/common';
 
 import { UserResolver } from './users.resolver';
 import { User, UserSchema } from './entities/user.entity';
+import { InfoModule } from '../Info/Info.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    InfoModule
   ],
   controllers: [],
   providers: [UsersService,UserResolver],

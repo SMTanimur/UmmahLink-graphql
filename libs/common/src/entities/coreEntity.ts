@@ -1,11 +1,12 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Type } from 'class-transformer';
 
-@InputType('ImageInput', { isAbstract: true })
 @ObjectType()
-export class ImageInput {
-  @Field()
-  public_id: string | undefined;
-
-  @Field()
-  url: string | undefined;
+export class CoreEntity {
+  @Field(() => ID)
+  id: number | undefined;
+  @Type(() => Date)
+  created_at: Date | undefined;
+  @Type(() => Date)
+  updated_at!: Date;
 }

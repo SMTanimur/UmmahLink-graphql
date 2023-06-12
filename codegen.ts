@@ -8,10 +8,14 @@ const config: CodegenConfig = {
         'typescript',
         'typescript-operations',
         'typescript-react-query',
+        // 'typescript-graphql-request',
       ],
       config: {
+        // fetcher: 'graphql-request',
         fetcher: {
           func: '../configs#fetcher',
+          // func: 'ui#customFetcher',
+
           fetchParams: {
             credentials: 'include',
             headers: {

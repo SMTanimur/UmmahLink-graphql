@@ -2,6 +2,8 @@ const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
+
+const brandColor = colors.pink;
 module.exports = {
   darkMode: 'class',
   content: [
@@ -31,7 +33,8 @@ module.exports = {
       colors: {
         seafoam: '#C9EEBE',
         champange: '#F7EDE3',
-        brand: colors.indigo,
+        brand: colors.pink,
+        gray: colors.trueGray,
         social: {
           facebook: '#3b5998',
           'facebook-hover': '#35508a',
@@ -41,6 +44,9 @@ module.exports = {
           google: '#4285f4',
           'google-hover': '#3574de',
         },
+      },
+      ringColor: {
+        DEFAULT: brandColor['500'],
       },
       minHeight: {
         580: '580px',

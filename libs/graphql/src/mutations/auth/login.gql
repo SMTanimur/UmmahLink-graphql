@@ -3,3 +3,4 @@ mutation Login($loginInput: LoginInput!) {
       message
    }
 }
+

@@ -1,129 +1,94 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import mongoose, { Document } from 'mongoose';
-import * as bcrypt from 'bcrypt'
-import { Field, InputType, ObjectType, OmitType, registerEnumType } from '@nestjs/graphql';
-import { IsEmail,IsNotEmpty,IsString,IsOptional,IsBoolean} from 'class-validator';
-
-
-
-export enum EGender {
-  male = 'male',
-  female = 'female',
-  unspecified = 'unspecified'
-}
-
-registerEnumType(EGender, {
-  name: 'EGender',
-})
-
-
-export interface InfoDocument
-  extends Document,
-    mongoose.Types.Subdocument,
-    Info {}
+import * as bcrypt from 'bcrypt';
+import { Field, InputType, ObjectType, OmitType } from '@nestjs/graphql';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from 'class-validator';
+import { Info } from '../../Info/entities/info';
+import { Type } from 'class-transformer';
 
 @ObjectType()
-@Schema()
-@InputType({isAbstract:true})
-export class Info {
- @Prop()
- @IsOptional()
- @IsString()
- @Field({nullable:true})
- bio?: string;
-
-  @Prop()
-  @IsOptional()
-  @Field()
-  birthday?: Date
- 
-  @IsOptional()
-  @Field(()=>EGender,{nullable:true})
-  @Prop({enum:EGender}) 
-  gender?: EGender
-}
-
-export const InfoSchema = SchemaFactory.createForClass(Info);
-
-
-@ObjectType()
+@InputType('UserInputType', { isAbstract: true })
 @Schema({ versionKey: false })
 export class User {
-  @Prop({unique:true})
+  @Prop({ unique: true })
   @IsEmail()
   @IsNotEmpty()
-  @Field(()=>String)
+  @Field(() => String)
   email: string;
 
   @Prop()
   @IsOptional()
-  @Field(()=>String,{nullable:true})
+  @Field(() => String, { nullable: true })
   firstName?: string;
 
   @Prop()
   @IsOptional()
-  @Field({nullable:true})
+  @Field({ nullable: true })
   lastName?: string;
 
   @Prop()
   @IsOptional()
-  @Field({nullable:true})
+  @Field({ nullable: true })
   phone?: string;
 
-  @Prop({ type: InfoSchema })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Info' })
+  @ValidateNested({ each: true })
+  @Type(() => Info)
   @IsOptional()
-  @Field(()=>Info,{nullable:true})
+  @Field(() => Info, { nullable: true })
   info?: Info;
 
-  @Prop({unique:true})
+  @Prop({ unique: true })
   @IsNotEmpty()
   @IsString()
-  @Field(()=>String)
+  @Field(() => String)
   username: string;
 
-
-  @Field( { nullable: true })
+  @Field({ nullable: true })
   @Prop({
     default:
       'https://res.cloudinary.com/dk6bdrkbv/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
   })
   @IsOptional()
-  avatar?: string
+  avatar?: string;
 
-  @Field( { nullable: true })
+  @Field({ nullable: true })
   @Prop()
   @IsOptional()
-  coverPicture?: string
+  coverPicture?: string;
 
   @Prop()
   @IsOptional()
   @IsBoolean()
-  @Field(()=>Boolean,{nullable:true})
+  @Field(() => Boolean, { nullable: true })
   isOwnProfile?: boolean;
 
   @Prop()
   @IsString()
-  @Field(()=>String)
+  @Field(() => String)
   password: string;
-
 
   @Prop({
     enum: ['admin', 'user'],
     default: 'user',
   })
-  @Field(()=>String)
+  @Field(() => String)
   @IsNotEmpty({ message: 'Role is required' })
   @IsString()
   role: string;
-
-
 }
 
-export interface UserDocument extends User,Document {
+export interface UserDocument extends User, Document {
   comparePassword(password: string): Promise<boolean>;
 }
-
 
 export const UserSchema = SchemaFactory.createForClass(User);
 

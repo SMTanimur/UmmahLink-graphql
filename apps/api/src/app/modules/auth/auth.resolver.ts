@@ -33,8 +33,8 @@ export class AuthResolver {
 
   @Query(() => UserWithoutPassword)
   @UseGuards(AuthenticatedGuard)
-  whoAmI(@CurrentUser() user: UserWithoutPassword) {
-    return user;
+  me(@CurrentUser() user: UserWithoutPassword) {
+    return user
   }
 
   @UseGuards(Logout)

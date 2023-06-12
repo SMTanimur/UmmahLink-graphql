@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateOrUpdateProfileInput {
+  bio: String
+  birthday: DateTime
+  contact: String
+  gender: EGender
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -19,10 +26,27 @@ enum EGender {
   unspecified
 }
 
+enum EnumService {
+  Cloudinary
+  S3Storage
+  Web3Storage
+}
+
 type Info {
   bio: String
-  birthday: DateTime!
+  birthday: DateTime
+  contact: String
   gender: EGender
+  id: ID!
+  user: User
+}
+
+input InfoInputType {
+  bio: String
+  birthday: DateTime
+  contact: String
+  gender: EGender
+  user: UserInputType
 }
 
 input LoginInput {
@@ -35,15 +59,18 @@ type LoginResponse {
 }
 
 type Mutation {
-  createUser(input: CreateUserInput!): User!
+  createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
+  createUser(createUserInput: CreateUserInput!): String!
   login(loginInput: LoginInput!): LoginResponse!
-  uploadMultipleFiles(files: [Upload!]!): [ResponseSingleUpload!]!
-  uploadSingleFiles(file: Upload!): ResponseSingleUpload!
+  updateUser(input: UpdateUserInput!): String!
+  uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
+  uploadSingleFiles(file: Upload!): ResponseSingleUpload
 }
 
 type Query {
+  item: String!
   logout: String!
-  whoAmI: UserWithoutPassword!
+  me: UserWithoutPassword!
 }
 
 type ResponseSingleUpload {
@@ -55,8 +82,27 @@ type ResponseSingleUpload {
   width: Float!
 }
 
+input UpdateUserInput {
+  avatar: String
+  coverPicture: String
+  email: String
+  firstName: String
+  info: InfoInputType
+  isOwnProfile: Boolean
+  lastName: String
+  password: String
+  phone: String
+  role: String
+  username: String
+}
+
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input UploadParamInput {
+  folder: String!
+  uploadService: EnumService!
+}
 
 type User {
   avatar: String
@@ -64,6 +110,20 @@ type User {
   email: String!
   firstName: String
   info: Info
+  isOwnProfile: Boolean
+  lastName: String
+  password: String!
+  phone: String
+  role: String!
+  username: String!
+}
+
+input UserInputType {
+  avatar: String
+  coverPicture: String
+  email: String!
+  firstName: String
+  info: InfoInputType
   isOwnProfile: Boolean
   lastName: String
   password: String!

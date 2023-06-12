@@ -6,16 +6,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoreModule } from './modules/core/core.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { UploadModule } from './modules/upload/upload.module';
+import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
     AuthModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      autoSchemaFile:true,
+      autoSchemaFile:join(process.cwd(), 'apps/api/src/graphql/schema.gql'),
       // process.env.NODE_ENV === 'development'
       // ? join(process.cwd(), 'apps/api/src/schema.gql')
       // : true,
@@ -24,6 +25,7 @@ import { UploadModule } from './modules/upload/upload.module';
           'request.credentials': 'include',
         },
       },
+      context: ({ req, res }) => ({ req, res }),
       cors: {
         credentials: true,
         origin: true,
@@ -32,6 +34,7 @@ import { UploadModule } from './modules/upload/upload.module';
     }),
     UsersModule,
     UploadModule,
+    InfoModule,
     CoreModule,
   ],
   controllers: [AppController],
