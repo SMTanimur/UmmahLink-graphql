@@ -33,6 +33,8 @@ export class UserResolver {
     @Args('createOrUpdateProfileInput')
     createOrUpdateProfileInput: CreateOrUpdateProfileInput
   ) {
+
+    createOrUpdateProfileInput.user=user._id
     return this.usersService.createOrUpdateProfile(
       user._id,
       createOrUpdateProfileInput

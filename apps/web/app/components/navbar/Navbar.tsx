@@ -24,6 +24,7 @@ export function Navbar() {
 	return (
 		<Popover
 			as="header"
+			
 			className={({ open, close }) =>
 				cn(
 					open ? 'fixed inset-0 z-40 overflow-y-auto' : '',

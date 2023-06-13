@@ -19,7 +19,7 @@ export class InfoService {
   }
 
   async update(id: string, updateProfileInput: UpdateProfileInput) {
-    await this.infoModel.updateOne({_id:id},updateProfileInput,{new:true})
+    await this.infoModel.findOneAndUpdate({_id:id},updateProfileInput,{new:true})
     return `This action updates a #${id} profile`;
   }
 }

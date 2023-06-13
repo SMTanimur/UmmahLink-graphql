@@ -2,15 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CloseRequestInput {
+  status: String!
+  target: ID
+}
+
+input CreateFriendRequestInput {
+  target: ID
+  user: ID
+}
+
 input CreateOrUpdateProfileInput {
   bio: String
   birthday: DateTime
   contact: String
   gender: EGender
+  user: UserInputType
 }
 
 input CreateUserInput {
   email: String!
+  name: String!
   password: String!
   username: String!
 }
@@ -30,6 +42,11 @@ enum EnumService {
   Cloudinary
   S3Storage
   Web3Storage
+}
+
+type FriendRequestResponse {
+  target: UserResponse!
+  user: UserResponse!
 }
 
 type Info {
@@ -59,6 +76,8 @@ type LoginResponse {
 }
 
 type Mutation {
+  closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
+  createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
   createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createUser(createUserInput: CreateUserInput!): String!
   login(loginInput: LoginInput!): LoginResponse!
@@ -86,12 +105,11 @@ input UpdateUserInput {
   avatar: String
   coverPicture: String
   email: String
-  firstName: String
+  friendRequests: UserInputType
+  friends: UserInputType
   info: InfoInputType
-  isOwnProfile: Boolean
-  lastName: String
+  name: String
   password: String
-  phone: String
   role: String
   username: String
 }
@@ -108,12 +126,11 @@ type User {
   avatar: String
   coverPicture: String
   email: String!
-  firstName: String
+  friendRequests: User
+  friends: User
   info: Info
-  isOwnProfile: Boolean
-  lastName: String
+  name: String!
   password: String!
-  phone: String
   role: String!
   username: String!
 }
@@ -122,13 +139,17 @@ input UserInputType {
   avatar: String
   coverPicture: String
   email: String!
-  firstName: String
+  friendRequests: UserInputType
+  friends: UserInputType
   info: InfoInputType
-  isOwnProfile: Boolean
-  lastName: String
+  name: String!
   password: String!
-  phone: String
   role: String!
+  username: String!
+}
+
+type UserResponse {
+  avatar: String!
   username: String!
 }
 
@@ -136,11 +157,10 @@ type UserWithoutPassword {
   avatar: String
   coverPicture: String
   email: String!
-  firstName: String
+  friendRequests: User
+  friends: User
   info: Info
-  isOwnProfile: Boolean
-  lastName: String
-  phone: String
+  name: String!
   role: String!
   username: String!
 }

@@ -4,7 +4,7 @@
 import { useAuth } from '@social-zone/client';
 import Link from 'next/link';
 
-import { Button, Card, Form, Input, PasswordInput } from '~ui';
+import { Button, Card, Form, Input, PasswordInput, Spinner } from '~ui';
 
 
 
@@ -12,7 +12,7 @@ import { Button, Card, Form, Input, PasswordInput } from '~ui';
 export const RegisterForm= () => {
 
 
-const {signup,RegisterForm}=useAuth()
+const {signup,RegisterForm,RegisterLoading}=useAuth()
   return (
     <div>
       <Form
@@ -26,6 +26,12 @@ const {signup,RegisterForm}=useAuth()
           type="text"
           placeholder="Email"
           {...RegisterForm.register('email')}
+        />
+        <Input
+          label="Name"
+          type="text"
+          placeholder="Name"
+          {...RegisterForm.register('name')}
         />
         <Input
         label='Username'
@@ -45,10 +51,10 @@ const {signup,RegisterForm}=useAuth()
           className="ml-auto"
           type="submit"
           fullWidth
-          // disabled={loading}
-          // icon={
-          //   loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
-          // }
+          disabled={RegisterLoading}
+          icon={
+            RegisterLoading && <Spinner size="xs" /> 
+          }
         >
           <span>Register</span>
         </Button>

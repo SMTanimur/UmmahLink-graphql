@@ -56,7 +56,7 @@ export class Info extends CoreEntity {
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
   @Field(() => User, { nullable: true })
-  user?: User;
+  user: User;
 }
 
 export type InfoDocument = Info & Document

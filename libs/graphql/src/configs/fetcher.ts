@@ -4,7 +4,7 @@ export const fetcher = <TData, TVariables>(
   options?: RequestInit['headers']
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch('http://localhost:8080/graphql', {
+    const res = await fetch('http://localhost:3333/graphql', {
       method: 'POST',
       credentials: 'include',
       headers: {

@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 @ObjectType()
 export class CoreEntity {
   @Field(() => ID)
-  id: number | undefined;
+  id!: number 
   @Type(() => Date)
   created_at: Date | undefined;
   @Type(() => Date)

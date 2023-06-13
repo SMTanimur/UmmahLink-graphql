@@ -33,6 +33,7 @@ import 'colors';
           });
 
           //! MongoDB AutoPopulate Plugin Initialization
+          connection.plugin(require('mongoose-autopopulate'));
 
           // //@ts-ignore
     

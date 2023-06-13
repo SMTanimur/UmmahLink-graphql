@@ -38,15 +38,27 @@ export type Scalars = {
   Upload: { input: any; output: any };
 };
 
+export type CloseRequestInput = {
+  status: Scalars['String']['input'];
+  target?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type CreateFriendRequestInput = {
+  target?: InputMaybe<Scalars['ID']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type CreateOrUpdateProfileInput = {
   bio?: InputMaybe<Scalars['String']['input']>;
   birthday?: InputMaybe<Scalars['DateTime']['input']>;
   contact?: InputMaybe<Scalars['String']['input']>;
   gender?: InputMaybe<EGender>;
+  user?: InputMaybe<UserInputType>;
 };
 
 export type CreateUserInput = {
   email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
 };
@@ -62,6 +74,12 @@ export enum EnumService {
   S3Storage = 'S3Storage',
   Web3Storage = 'Web3Storage',
 }
+
+export type FriendRequestResponse = {
+  __typename?: 'FriendRequestResponse';
+  target: UserResponse;
+  user: UserResponse;
+};
 
 export type Info = {
   __typename?: 'Info';
@@ -93,12 +111,22 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  closeFriendRequest: UserWithoutPassword;
+  createFriendRequest: FriendRequestResponse;
   createOrUpdateInfo: Scalars['String']['output'];
   createUser: Scalars['String']['output'];
   login: LoginResponse;
   updateUser: Scalars['String']['output'];
   uploadMultipleFiles: Array<ResponseSingleUpload>;
   uploadSingleFiles?: Maybe<ResponseSingleUpload>;
+};
+
+export type MutationCloseFriendRequestArgs = {
+  closeRequestInput: CloseRequestInput;
+};
+
+export type MutationCreateFriendRequestArgs = {
+  createFriendRequestInput: CreateFriendRequestInput;
 };
 
 export type MutationCreateOrUpdateInfoArgs = {
@@ -147,12 +175,11 @@ export type UpdateUserInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
+  friendRequests?: InputMaybe<UserInputType>;
+  friends?: InputMaybe<UserInputType>;
   info?: InputMaybe<InfoInputType>;
-  isOwnProfile?: InputMaybe<Scalars['Boolean']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
@@ -167,12 +194,11 @@ export type User = {
   avatar?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
-  firstName?: Maybe<Scalars['String']['output']>;
+  friendRequests?: Maybe<User>;
+  friends?: Maybe<User>;
   info?: Maybe<Info>;
-  isOwnProfile?: Maybe<Scalars['Boolean']['output']>;
-  lastName?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
   password: Scalars['String']['output'];
-  phone?: Maybe<Scalars['String']['output']>;
   role: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -181,14 +207,19 @@ export type UserInputType = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
-  firstName?: InputMaybe<Scalars['String']['input']>;
+  friendRequests?: InputMaybe<UserInputType>;
+  friends?: InputMaybe<UserInputType>;
   info?: InputMaybe<InfoInputType>;
-  isOwnProfile?: InputMaybe<Scalars['Boolean']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phone?: InputMaybe<Scalars['String']['input']>;
   role: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  avatar: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UserWithoutPassword = {
@@ -196,11 +227,10 @@ export type UserWithoutPassword = {
   avatar?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
-  firstName?: Maybe<Scalars['String']['output']>;
+  friendRequests?: Maybe<User>;
+  friends?: Maybe<User>;
   info?: Maybe<Info>;
-  isOwnProfile?: Maybe<Scalars['Boolean']['output']>;
-  lastName?: Maybe<Scalars['String']['output']>;
-  phone?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };

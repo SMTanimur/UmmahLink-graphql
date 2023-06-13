@@ -11,11 +11,13 @@ import { createHash } from '../../utils/hash';
 import { UpdateUserInput } from './dto/update-user-input';
 import { CreateOrUpdateProfileInput } from '../Info/dto/create-profile.input';
 import { InfoService } from '../Info/Info.service';
+import { Info, InfoDocument } from '../Info/entities/info';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Info.name) private infoModel: Model<InfoDocument>,
     private readonly infoService: InfoService
   ) {}
 
@@ -29,11 +31,21 @@ export class UsersService {
       throw new ConflictException('User already exists');
       }
       createUser.password = await createHash(createUser.password);
-      const userData = await this.userModel.create(createUser);
+      const userData = await (await this.userModel.create(createUser)).toJSON()
       return `Welcome ${userData.username}!`;
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async getUserInfo(username:string){
+
+    
+  const userData = await this.userModel.findOne({username})
+    .select('-password')
+
+    if(!userData) throw new ConflictException('User not found')
+    return userData
   }
 
   async updateUser(id: string, updateUserDto: UpdateUserInput) {
@@ -53,13 +65,13 @@ export class UsersService {
     userId: string,
     createOrUpdateProfileInput: CreateOrUpdateProfileInput
   ) {
-    const user = await this.findOne({ _id: userId });
+    const user = await this.infoModel.findOne({user:userId})
 
-    if (user?._id) {
+
+    if (user) {
       await this.infoService.update(user._id, createOrUpdateProfileInput);
-      return 'Profile updated';
+      return 'Profile Create';
     }
-
     const profile = await this.infoService.create(createOrUpdateProfileInput);
     await this.updateUser(userId, { info: profile._id });
     return 'Profile updated';
@@ -67,7 +79,6 @@ export class UsersService {
 
   async findUserById(id: string): Promise<User> {
     const user = await this.userModel.findOne({ _id: id }).select('-password');
-
     if (!user) return null;
 
     return user;

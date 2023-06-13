@@ -10,6 +10,8 @@ import {
   IsOptional,
   IsBoolean,
   ValidateNested,
+  IsArray,
+  IsMongoId,
 } from 'class-validator';
 import { Info } from '../../Info/entities/info';
 import { Type } from 'class-transformer';
@@ -25,22 +27,17 @@ export class User {
   email: string;
 
   @Prop()
-  @IsOptional()
-  @Field(() => String, { nullable: true })
-  firstName?: string;
+  @IsNotEmpty()
+  @IsString()
+  @Field(() => String)
+  name: string;
 
-  @Prop()
-  @IsOptional()
-  @Field({ nullable: true })
-  lastName?: string;
-
-  @Prop()
-  @IsOptional()
-  @Field({ nullable: true })
-  phone?: string;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Info' })
-  @ValidateNested({ each: true })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Info',
+    autopopulate: true,
+  })
+  @ValidateNested()
   @Type(() => Info)
   @IsOptional()
   @Field(() => Info, { nullable: true })
@@ -65,11 +62,24 @@ export class User {
   @IsOptional()
   coverPicture?: string;
 
-  @Prop()
-  @IsOptional()
-  @IsBoolean()
-  @Field(() => Boolean, { nullable: true })
-  isOwnProfile?: boolean;
+  @ValidateNested({each:true})
+  @IsMongoId({ each: true })
+  @IsArray()
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+  })
+  @Field(() => User, { nullable: true })
+  friends?: User[];
+
+
+  @ValidateNested({each:true})
+  @IsMongoId({ each: true })
+  @IsArray()
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+  })
+  @Field(() => User, { nullable: true })
+  friendRequests?: User[];
 
   @Prop()
   @IsString()

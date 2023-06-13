@@ -5,6 +5,6 @@ import { Info } from '../entities/info';
 @InputType()
 export class CreateOrUpdateProfileInput extends PickType(
   Info,
-  ['bio','birthday','gender','contact'],
+  ['bio','birthday','gender','contact','user'],
   InputType
 ) {}

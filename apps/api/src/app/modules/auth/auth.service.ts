@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor( private readonly usersService:UsersService) { }
   async validateUser(loginDto: LoginInput): Promise<UserDocument> {
-    const user = await this.usersService.findOne({ email: loginDto.email })
+    const user = await (await this.usersService.findOne({ email: loginDto.email }))
 
     if (user && (await user.comparePassword(loginDto.password))) {
       return user

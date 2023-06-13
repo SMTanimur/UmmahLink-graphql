@@ -4,13 +4,13 @@
 import { useAuth } from '@social-zone/client';
 import Link from 'next/link';
 
-import { Button, Card, Form, Input, PasswordInput } from '~ui';
+import { Button, Card, Form, Input, PasswordInput, Spinner } from '~ui';
 
 
 
 export const LoginForm = () => {
 
-  const {login,LoginForm}=useAuth()
+  const {login,LoginForm,LoginLoading}=useAuth()
 
   return (
     <div>
@@ -52,10 +52,10 @@ export const LoginForm = () => {
           className="ml-auto"
           type="submit"
           fullWidth
-          // disabled={loading}
-          // icon={
-          //   loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
-          // }
+          disabled={LoginLoading}
+          icon={
+            LoginLoading && <Spinner size="xs" /> 
+          }
         >
           Login
         </Button>

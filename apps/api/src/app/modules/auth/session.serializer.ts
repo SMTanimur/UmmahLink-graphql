@@ -16,8 +16,8 @@ export class SessionSerializer extends PassportSerializer {
     payload: any,
     done: CallableFunction
   ): Promise<any> {
-    const user = await this.usersService.findOne({_id:payload._id})
-    delete user.password;
+    const user = (await this.usersService.findUserById(payload._id))
+    delete user.password
     return done(null, user);
   }
 }

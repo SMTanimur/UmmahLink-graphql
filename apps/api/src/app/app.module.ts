@@ -1,3 +1,6 @@
+
+import { FriendRequestsModule } from './modules/friendRequest/friendrequests.module';
+import { FollowsModule } from './modules/follows/follows.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { Module } from '@nestjs/common';
@@ -13,10 +16,11 @@ import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
+    FollowsModule,
     AuthModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      autoSchemaFile:join(process.cwd(), 'apps/api/src/graphql/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'apps/api/src/graphql/schema.gql'),
       // process.env.NODE_ENV === 'development'
       // ? join(process.cwd(), 'apps/api/src/schema.gql')
       // : true,
@@ -36,8 +40,9 @@ import { InfoModule } from './modules/Info/Info.module';
     UploadModule,
     InfoModule,
     CoreModule,
+    FriendRequestsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [ AppService],
 })
 export class AppModule {}
