@@ -94,6 +94,7 @@ export function MobileMenu({ open, user, closeFx }: MobileMenuProps) {
                   // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                   href={
                     typeof link.href === 'function'
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                       ? link.href(user?.username!)
                       : link.href
                   }
