@@ -1,3 +1,4 @@
+import { PostsModule } from './modules/posts/posts.module';
 
 import { FriendRequestsModule } from './modules/friendRequest/friendrequests.module';
 import { FollowsModule } from './modules/follows/follows.module';
@@ -16,6 +17,7 @@ import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
+    PostsModule,
     FollowsModule,
     AuthModule,
     GraphQLModule.forRoot({
@@ -43,6 +45,6 @@ import { InfoModule } from './modules/Info/Info.module';
     FriendRequestsModule,
   ],
   controllers: [AppController],
-  providers: [ AppService],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -2,7 +2,9 @@ query me {
   me {
     avatar
     username
+    name
     email
+    info
     coverPicture
   }
 }

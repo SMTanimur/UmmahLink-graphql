@@ -20,6 +20,12 @@ input CreateOrUpdateProfileInput {
   user: UserInputType
 }
 
+input CreatePostInput {
+  author: ID
+  content: String
+  image: String
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -75,21 +81,37 @@ type LoginResponse {
   message: String!
 }
 
+type MessageResponse {
+  message: String!
+}
+
 type Mutation {
   closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
   createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
   createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
+  createPost(createPostInput: CreatePostInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
   login(loginInput: LoginInput!): LoginResponse!
+  updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   updateUser(input: UpdateUserInput!): String!
   uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
   uploadSingleFiles(file: Upload!): ResponseSingleUpload
+}
+
+type Post {
+  author: ID
+  comments: [User!]
+  content: String
+  id: ID!
+  image: String
+  likes: [User!]
 }
 
 type Query {
   item: String!
   logout: String!
   me: UserWithoutPassword!
+  post(postId: ID!): Post!
 }
 
 type ResponseSingleUpload {
@@ -99,6 +121,17 @@ type ResponseSingleUpload {
   height: Float!
   url: String!
   width: Float!
+}
+
+input UpdatePostInput {
+  author: ID
+  comments: [UserInputType!]
+  content: String
+  id: ID
+  image: String
+  likes: [UserInputType!]
+  postId: ID!
+  user: ID
 }
 
 input UpdateUserInput {

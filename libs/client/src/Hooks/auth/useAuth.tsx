@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import useLocalStorage from 'use-local-storage';
 import {
   useLoginMutation,
   useMeQuery,
@@ -30,6 +31,7 @@ export const useAuth = () => {
     useRegisterMutation();
   const { mutateAsync: loginMutation, isLoading: LoginLoading } =
     useLoginMutation();
+    const [isAuthenticated, setIsAuthenticated] = useLocalStorage('loggedIn', false);
   // const { mutateAsync: logoutMutation } = useLogoutMutation();
 
   const RegisterForm = useZodForm({
@@ -71,6 +73,7 @@ export const useAuth = () => {
       toast.promise(loginMutation({ loginInput: data }), {
         loading: 'Logging in...',
         success: ({ login: { message } }) => {
+          setIsAuthenticated(true)
           queryClient.invalidateQueries(useMeQuery.getKey());
           push('/');
           return <b>{message}</b>;
@@ -116,5 +119,7 @@ export const useAuth = () => {
     LoginForm,
     RegisterLoading,
     LoginLoading,
+    isAuthenticated,
+    setIsAuthenticated
   };
 };
