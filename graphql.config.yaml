@@ -1,1 +1,1 @@
-schema: 'apps/api/**/*.gql'
+schema: 'apps/api/src/**/*.gql'

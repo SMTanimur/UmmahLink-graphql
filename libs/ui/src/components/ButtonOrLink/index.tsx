@@ -20,24 +20,9 @@ export interface Props extends ButtonOrLinkProps {
 
 const ButtonOrLink = forwardRef<HTMLButtonElement & HTMLAnchorElement, Props>(
 	({ href, preserveRedirect, ...props }, ref) => {
-		const router = useRouter()
-		const isLink = typeof href !== 'undefined'
-		const ButtonOrLink = isLink ? 'a' : 'button'
-
-		const content = <ButtonOrLink ref={ref} {...props} />
-
-		if (isLink) {
-			const finalHref =
-				preserveRedirect && router.query.redirect
-					? `${href!}?redirect=${encodeURIComponent(
-							router.query.redirect as string
-					  )}`
-					: href!
-
-			return <Link href={finalHref}>{content}</Link>
-		}
-
-		return content
+	
+			return <Link href={href!}></Link>
+		
 	}
 )
 

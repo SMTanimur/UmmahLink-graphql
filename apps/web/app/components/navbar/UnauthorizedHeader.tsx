@@ -15,14 +15,14 @@ export function UnauthorizedHeader() {
         <GradientBar
           color="pink"
           size="md"
-          className="fixed max-w-full top-0 z-10"
+          className="fixed max-w-full top-0 z-40"
         />
         <Popover
           as="header"
           className={({ open, close }) =>
             cn(
               open ? 'fixed inset-0 z-40 overflow-y-auto' : '',
-              'bg-white dark:bg-gray-900 shadow-sm lg:static lg:overflow-y-visible'
+              'bg-white dark:bg-gray-900 shadow-sm lg:static lg:overflow-y-visible z-40'
             )
           }
         >

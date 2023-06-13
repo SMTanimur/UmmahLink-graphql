@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 "use client"
+import Link from 'next/link'
 import { cn } from '../../lib'
 import type { Props as ButtonOrLinkProps } from '../ButtonOrLink'
 import ButtonOrLink from '../ButtonOrLink'
@@ -27,7 +29,8 @@ export function MenuItem({
 	return (
 		<HeadlessMenu.Item>
 			{({ active }) => (
-				<ButtonOrLink
+				<Link
+				  href={ props.href ?  String(props.href!) : ''}
 					{...props}
 					className={cn(
 						active
@@ -44,7 +47,7 @@ export function MenuItem({
 						)}
 						{children}
 					</span>
-				</ButtonOrLink>
+				</Link>
 			)}
 		</HeadlessMenu.Item>
 	)

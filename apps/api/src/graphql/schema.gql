@@ -38,6 +38,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeletePostInput {
+  postId: ID!
+  user: ID
+}
+
 enum EGender {
   female
   male
@@ -91,7 +96,9 @@ type Mutation {
   createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
+  deletePost(updatePostInput: DeletePostInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
+  logout: MessageResponse!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   updateUser(input: UpdateUserInput!): String!
   uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
@@ -109,7 +116,6 @@ type Post {
 
 type Query {
   item: String!
-  logout: String!
   me: UserWithoutPassword!
   post(postId: ID!): Post!
 }

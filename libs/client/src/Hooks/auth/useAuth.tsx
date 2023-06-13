@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import useLocalStorage from 'use-local-storage';
 import {
   useLoginMutation,
+  useLogoutMutation,
   useMeQuery,
   useRegisterMutation,
 } from '@social-zone/graphql';
@@ -31,6 +32,8 @@ export const useAuth = () => {
     useRegisterMutation();
   const { mutateAsync: loginMutation, isLoading: LoginLoading } =
     useLoginMutation();
+
+     const {mutateAsync:logoutMutation} = useLogoutMutation()
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage('loggedIn', false);
   // const { mutateAsync: logoutMutation } = useLogoutMutation();
 
@@ -96,25 +99,27 @@ export const useAuth = () => {
     }
   });
 
-  // const logout = async () => {
-  //   try {
-  //     toast.promise(logoutMutation({}), {
-  //       loading: 'Logging out...',
-  //       success: ({ logout: { message } }) => {
-  //         push('/');
-  //         queryClient.resetQueries(useMeQuery.getKey());
-  //         return <b>{message}</b>;
-  //       },
-  //       error: 'Failed to Logout!',
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const logout = async () => {
+    try {
+      toast.promise(logoutMutation({}), {
+        loading: 'Logging out...',
+        success: ({ logout: { message } }) => {
+          setIsAuthenticated(false)
+          push('/login');
+          queryClient.resetQueries(useMeQuery.getKey());
+          return <b>{message}</b>;
+        },
+        error: 'Failed to Logout!',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return {
     signup,
     login,
+    logout,
     RegisterForm,
     LoginForm,
     RegisterLoading,

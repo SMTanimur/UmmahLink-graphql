@@ -4,7 +4,12 @@ query me {
     username
     name
     email
-    info
+    info {
+      bio
+      birthday
+      contact
+      gender
+    }
     coverPicture
   }
 }

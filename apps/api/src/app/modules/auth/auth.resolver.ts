@@ -8,7 +8,7 @@ import { UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { Logout } from './guards/logout.guard';
-import { CurrentUser } from '@social-zone/common';
+import { CurrentUser, MessageResponse } from '@social-zone/common';
 import {  LoginInput, LoginResponse } from './dto/login.dto';
 import {  UserWithoutPassword } from '../users/entities/user.entity';
 import { SessionAuthGuard } from './guards/session.guard';
@@ -38,9 +38,9 @@ export class AuthResolver {
   }
 
   @UseGuards(Logout)
-  @Query(() => String, { name: 'logout' })
+  @Mutation(() => MessageResponse, { name: 'logout' })
   async logout() {
-    return 'Logout Success';
+    return { message: 'Logout Success' };
   }
 
 }

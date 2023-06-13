@@ -56,11 +56,22 @@ export type CreateOrUpdateProfileInput = {
   user?: InputMaybe<UserInputType>;
 };
 
+export type CreatePostInput = {
+  author?: InputMaybe<Scalars['ID']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateUserInput = {
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export type DeletePostInput = {
+  postId: Scalars['ID']['input'];
+  user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum EGender {
@@ -109,13 +120,22 @@ export type LoginResponse = {
   message: Scalars['String']['output'];
 };
 
+export type MessageResponse = {
+  __typename?: 'MessageResponse';
+  message: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   closeFriendRequest: UserWithoutPassword;
   createFriendRequest: FriendRequestResponse;
   createOrUpdateInfo: Scalars['String']['output'];
+  createPost: MessageResponse;
   createUser: Scalars['String']['output'];
+  deletePost: MessageResponse;
   login: LoginResponse;
+  logout: MessageResponse;
+  updatePost: MessageResponse;
   updateUser: Scalars['String']['output'];
   uploadMultipleFiles: Array<ResponseSingleUpload>;
   uploadSingleFiles?: Maybe<ResponseSingleUpload>;
@@ -133,12 +153,24 @@ export type MutationCreateOrUpdateInfoArgs = {
   createOrUpdateProfileInput: CreateOrUpdateProfileInput;
 };
 
+export type MutationCreatePostArgs = {
+  createPostInput: CreatePostInput;
+};
+
 export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
 };
 
+export type MutationDeletePostArgs = {
+  updatePostInput: DeletePostInput;
+};
+
 export type MutationLoginArgs = {
   loginInput: LoginInput;
+};
+
+export type MutationUpdatePostArgs = {
+  updatePostInput: UpdatePostInput;
 };
 
 export type MutationUpdateUserArgs = {
@@ -154,11 +186,25 @@ export type MutationUploadSingleFilesArgs = {
   file: Scalars['Upload']['input'];
 };
 
+export type Post = {
+  __typename?: 'Post';
+  author?: Maybe<Scalars['ID']['output']>;
+  comments?: Maybe<Array<User>>;
+  content?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  likes?: Maybe<Array<User>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   item: Scalars['String']['output'];
-  logout: Scalars['String']['output'];
   me: UserWithoutPassword;
+  post: Post;
+};
+
+export type QueryPostArgs = {
+  postId: Scalars['ID']['input'];
 };
 
 export type ResponseSingleUpload = {
@@ -169,6 +215,17 @@ export type ResponseSingleUpload = {
   height: Scalars['Float']['output'];
   url: Scalars['String']['output'];
   width: Scalars['Float']['output'];
+};
+
+export type UpdatePostInput = {
+  author?: InputMaybe<Scalars['ID']['input']>;
+  comments?: InputMaybe<Array<UserInputType>>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  likes?: InputMaybe<Array<UserInputType>>;
+  postId: Scalars['ID']['input'];
+  user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type UpdateUserInput = {
@@ -244,6 +301,13 @@ export type LoginMutation = {
   login: { __typename?: 'LoginResponse'; message: string };
 };
 
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = {
+  __typename?: 'Mutation';
+  logout: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type RegisterMutationVariables = Exact<{
   createUserInput: CreateUserInput;
 }>;
@@ -258,8 +322,16 @@ export type MeQuery = {
     __typename?: 'UserWithoutPassword';
     avatar?: string | null;
     username: string;
+    name: string;
     email: string;
     coverPicture?: string | null;
+    info?: {
+      __typename?: 'Info';
+      bio?: string | null;
+      birthday?: any | null;
+      contact?: string | null;
+      gender?: EGender | null;
+    } | null;
   };
 };
 
@@ -295,6 +367,41 @@ useLoginMutation.fetcher = (
 ) =>
   fetcher<LoginMutation, LoginMutationVariables>(
     LoginDocument,
+    variables,
+    options
+  );
+export const LogoutDocument = /*#__PURE__*/ `
+    mutation logout {
+  logout {
+    message
+  }
+}
+    `;
+export const useLogoutMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LogoutMutation,
+    TError,
+    LogoutMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<LogoutMutation, TError, LogoutMutationVariables, TContext>(
+    ['logout'],
+    (variables?: LogoutMutationVariables) =>
+      fetcher<LogoutMutation, LogoutMutationVariables>(
+        LogoutDocument,
+        variables
+      )(),
+    options
+  );
+useLogoutMutation.getKey = () => ['logout'];
+
+useLogoutMutation.fetcher = (
+  variables?: LogoutMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
     variables,
     options
   );
@@ -336,7 +443,14 @@ export const MeDocument = /*#__PURE__*/ `
   me {
     avatar
     username
+    name
     email
+    info {
+      bio
+      birthday
+      contact
+      gender
+    }
     coverPicture
   }
 }
