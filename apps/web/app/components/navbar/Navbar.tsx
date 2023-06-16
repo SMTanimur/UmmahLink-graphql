@@ -35,8 +35,8 @@ export function Navbar() {
       as="header"
       className={({ open, close }) =>
         cn(
-          open ? 'fixed inset-0 z-40 overflow-y-auto' : '',
-          'bg-white dark:bg-gray-900 shadow-sm lg:static lg:overflow-y-visible'
+          open ? 'fixed inset-0  overflow-y-auto' : '',
+          'bg-white dark:bg-gray-900 my-5 md:h-[60px] shadow-sm lg:static lg:overflow-y-visible z-40 '
         )
       }
     >
@@ -88,10 +88,10 @@ export function Navbar() {
 							<button
                   onClick={() => setUserNotificationOpen((prev) => !prev)}
                   type="button"
-                  className="mx-3 ml-auto flex-shrink-0 bg-white dark:bg-gray-800 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="ml-auto flex-shrink-0 bg-white dark:bg-gray-800 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
                 >
                   <span className="sr-only">View User notifications</span>
-                  <UserCircleIcon className="h-6 w-6" aria-hidden="true" />
+                  <UserCircleIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
                 <button
                   onClick={() => setNotificationOpen((prev) => !prev)}
@@ -99,7 +99,7 @@ export function Navbar() {
                   className="ml-auto flex-shrink-0 bg-white dark:bg-gray-800 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
                 >
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
                 {!isAuthenticated ? (
                   <Spinner className="w-5 h-5" />

@@ -59,7 +59,7 @@ export function MobileMenu({ open, user, closeFx }: MobileMenuProps) {
     >
       <Popover.Panel
         as="nav"
-        className="lg:hidden flex flex-col justify-between h-full"
+        className="lg:hidden flex flex-col justify-between h-full z-30"
         aria-label="Global"
       >
         <div className="border-t border-gray-200 pt-4 pb-3 mt-16">

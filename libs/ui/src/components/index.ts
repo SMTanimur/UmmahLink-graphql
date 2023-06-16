@@ -24,6 +24,7 @@ export * from './Heading';
 export * from './Avatar'
 export * from './Hidden'
 export * from './Spinner'
+export * from './GridLayout'
 
 export { PasswordInput };
 export { Form, useZodForm, FieldError };

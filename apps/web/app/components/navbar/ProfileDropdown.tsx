@@ -27,7 +27,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             Home
           </MenuItem>
           <MenuItem
-            href={`/profile/${user?.username}`}
+            href={`/user/${user?.username}`}
             icon={<SparklesIcon className="w-5 h-5" />}
           >
             My Profile

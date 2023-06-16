@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 import { Model } from 'mongoose';
-import { User, UserDocument } from './entities/user.entity';
+import { User, UserDocument, UserWithoutPassword } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { createHash } from '../../utils/hash';
 import { UpdateUserInput } from './dto/update-user-input';
@@ -39,8 +39,6 @@ export class UsersService {
   }
 
   async getUserInfo(username:string){
-
-    
   const userData = await this.userModel.findOne({username})
     .select('-password')
 
@@ -82,6 +80,12 @@ export class UsersService {
     if (!user) return null;
 
     return user;
+  }
+
+  async findUserByUsername (username:string):Promise<UserWithoutPassword>{
+      const user = await this.userModel.findOne({username})
+       delete user.password
+       return user.toJSON()
   }
   async findOne(query: object): Promise<UserDocument> {
     const user = await this.userModel.findOne(query);

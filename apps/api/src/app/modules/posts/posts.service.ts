@@ -16,11 +16,13 @@ import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
 import { DeletePostInput } from './dto/delete-post-input';
 import { MessageResponse } from '@social-zone/common';
+import { Like, LikeDocument } from './entities/like';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
+    @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
     private readonly userService: UsersService
   ) {}
 

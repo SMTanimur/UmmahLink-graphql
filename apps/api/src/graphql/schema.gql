@@ -118,6 +118,7 @@ type Query {
   item: String!
   me: UserWithoutPassword!
   post(postId: ID!): Post!
+  user(username: String!): UserWithoutPassword
 }
 
 type ResponseSingleUpload {

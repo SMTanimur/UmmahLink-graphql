@@ -1,8 +1,8 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { UseGuards } from '@nestjs/common';
+import {  UseGuards } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
-import { User } from './entities/user.entity';
+import { User, UserWithoutPassword } from './entities/user.entity';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { CurrentUser } from '@social-zone/common';
 import { UpdateUserInput } from './dto/update-user-input';
@@ -40,4 +40,12 @@ export class UserResolver {
       createOrUpdateProfileInput
     );
   }
+
+  @Query((_returns) => UserWithoutPassword, { nullable: true,name:"user" })
+  @UseGuards(AuthenticatedGuard)
+  async getUserInfo(@Args('username' ,{type: ()=> String}) username:string){
+    return await this.usersService.findUserByUsername(username)
+  }
+
+  
 }
