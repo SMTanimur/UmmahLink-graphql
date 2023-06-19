@@ -7,6 +7,12 @@ input CloseRequestInput {
   target: ID
 }
 
+input CreateCommentInput {
+  authId: UserInputType
+  body: String!
+  postId: ID
+}
+
 input CreateFriendRequestInput {
   target: ID
   user: ID
@@ -30,6 +36,13 @@ input CreatePostOrCommentLikeInput {
   postId: ID
   type: String
   user: ID
+}
+
+input CreateReplyInput {
+  body: String!
+  commentId: ID!
+  postId: ID!
+  userId: ID
 }
 
 input CreateUserInput {
@@ -98,6 +111,8 @@ type MessageResponse {
 
 type Mutation {
   closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
+  createComment(createCommentInput: CreateCommentInput!): MessageResponse!
+  createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
   createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
   createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
@@ -106,6 +121,7 @@ type Mutation {
   likePost(likePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
   logout: MessageResponse!
+  updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   updateUser(input: UpdateUserInput!): String!
   uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
@@ -135,6 +151,9 @@ type NotificationPagination {
 }
 
 input NotificationQueryArgs {
+  targetId: ID
+  type: String
+  unread: Boolean
   user: ID
 }
 
@@ -143,6 +162,11 @@ enum NotificationType {
   commentLike
   like
   reply
+}
+
+input NotificationUpdateArgs {
+  notifiId: ID!
+  unread: Boolean! = false
 }
 
 type Post {

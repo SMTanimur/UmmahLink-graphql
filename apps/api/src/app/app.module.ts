@@ -1,3 +1,4 @@
+import { CommentsModule } from './modules/comments/comments.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { PostsModule } from './modules/posts/posts.module';
 
@@ -18,6 +19,7 @@ import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
+    CommentsModule,
     NotificationModule,
     PostsModule,
     FollowsModule,

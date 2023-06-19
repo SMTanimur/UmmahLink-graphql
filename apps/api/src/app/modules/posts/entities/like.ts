@@ -9,6 +9,7 @@ import {
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { CoreEntity } from '@social-zone/common';
+import { IsNotEmpty } from 'class-validator';
 
 
 export enum LikeType {
@@ -24,6 +25,7 @@ registerEnumType(LikeType, { name: 'LikeType' });
 export class Like extends CoreEntity {
   @Prop({ type: String, enum: LikeType })
   @Field(() => LikeType)
+  @IsNotEmpty()
   type: LikeType;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
