@@ -10,13 +10,14 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
 import { DeletePostInput } from './dto/delete-post-input';
 import { MessageResponse } from '@social-zone/common';
 import { Like, LikeDocument } from './entities/like';
+import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like';
 
 @Injectable()
 export class PostsService {
@@ -83,5 +84,36 @@ export class PostsService {
     throw new BadRequestException()
    }
     
+  }
+
+  async likePost(createLikeInput:CreatePostOrCommentLikeInput):Promise<MessageResponse> {
+    try {
+      const { postId, user: userId ,type} = createLikeInput;
+
+      const post = await this.postModel.findById(postId);
+      if (!post) throw new NotFoundException('Post not found');
+
+      const query = {
+        target: postId,
+        user: userId,
+        type
+    };
+      const like = await this.likeModel.findOne(query)
+      if (!like){
+        const like = await this.likeModel.create(query);
+        post.likes.push(like._id);
+        post.save()
+        return { message: 'Post liked successfully' };
+      } else {
+        await this.likeModel.findOneAndDelete(query)
+        await this.postModel.findOneAndUpdate({_id:postId},{
+          $pull:{likes:like._id}
+        })
+       return {message:'Post unLiked successfully'}
+      }
+ 
+    } catch (error) {
+      throw new BadRequestException('server error');
+    }
   }
 }

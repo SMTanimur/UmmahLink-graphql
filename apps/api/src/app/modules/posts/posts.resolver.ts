@@ -7,6 +7,7 @@ import { CreatePostInput } from './dto/craete-post-input';
 import { PostsService } from './posts.service';
 import { UpdatePostInput } from './dto/update-post-input';
 import { DeletePostInput } from './dto/delete-post-input';
+import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like';
 
 
 @Resolver(() => Post)
@@ -49,5 +50,17 @@ export class PostResolver {
   @UseGuards(AuthenticatedGuard)
   async getPost(@Args('postId', { type: () => ID }) postId: string) {
     return await this.postService.getPostById(postId);
+  }
+
+  @Mutation(() => MessageResponse)
+  @UseGuards(AuthenticatedGuard)
+  async likePost(
+    @CurrentUser() user: any,
+    @Args('likePostInput')
+    likePostInput:CreatePostOrCommentLikeInput
+  ) {
+    likePostInput.user = user._id;
+    likePostInput.type = 'Post'
+    return await this.postService.likePost(likePostInput);
   }
 }

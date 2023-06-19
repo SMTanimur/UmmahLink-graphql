@@ -26,6 +26,12 @@ input CreatePostInput {
   image: String
 }
 
+input CreatePostOrCommentLikeInput {
+  postId: ID
+  type: String
+  user: ID
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -97,6 +103,7 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
   deletePost(updatePostInput: DeletePostInput!): MessageResponse!
+  likePost(likePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
   logout: MessageResponse!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
