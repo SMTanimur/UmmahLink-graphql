@@ -1,3 +1,4 @@
+import { NotificationModule } from './modules/notification/notification.module';
 import { PostsModule } from './modules/posts/posts.module';
 
 import { FriendRequestsModule } from './modules/friendRequest/friendrequests.module';
@@ -17,6 +18,7 @@ import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
+    NotificationModule,
     PostsModule,
     FollowsModule,
     AuthModule,

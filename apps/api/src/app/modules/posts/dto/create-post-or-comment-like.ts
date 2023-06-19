@@ -1,5 +1,5 @@
-import { Field, ID, InputType, PartialType } from "@nestjs/graphql";
-import { Post } from "../entities/post";
+import { Field, ID, InputType } from "@nestjs/graphql";
+
 
 
 
