@@ -4,7 +4,8 @@ https://docs.nestjs.com/providers#services
 
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
-import { Model } from 'mongoose';
+
+import { Model, PaginateModel } from 'mongoose';
 import { User, UserDocument, UserWithoutPassword } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { createHash } from '../../utils/hash';
@@ -16,7 +17,7 @@ import { Info, InfoDocument } from '../Info/entities/info';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(User.name) private userModel: PaginateModel<UserDocument>,
     @InjectModel(Info.name) private infoModel: Model<InfoDocument>,
     private readonly infoService: InfoService
   ) {}

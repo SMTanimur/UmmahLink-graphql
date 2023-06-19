@@ -16,7 +16,7 @@ import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-vali
 export class Post extends CoreEntity {
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
-  @Field((_type) =>ID, { nullable: true })
+  @Field((_type) =>User, { nullable: true })
   author: User;
 
   @Prop()

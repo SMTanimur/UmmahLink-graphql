@@ -5215,6 +5215,13 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
+"@types/mongoose-paginate-v2@^1.4.3":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@types/mongoose-paginate-v2/-/mongoose-paginate-v2-1.6.5.tgz#907bfec2bf3fc83c1c37c9603fca8bc0669ce9ec"
+  integrity sha512-OdnsqewLwCtZvExUHuL+KDVlZ6OdnzGcUdPpEqMRVKZ6mWy7fgnt1IkLSs8Zugv5cUTLVT46hjmL2OPWtml1Rw==
+  dependencies:
+    mongoose-paginate-v2 "*"
+
 "@types/multer@^1.4.7":
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.7.tgz#89cf03547c28c7bbcc726f029e2a76a7232cc79e"
@@ -11346,6 +11353,11 @@ mongoose-autopopulate@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-1.0.1.tgz#05092e05d61c08ee868bcd0b8b05334ea36a046b"
   integrity sha512-39rN0QQinA1iz/8JNVKM3MNq/zZrjStiWi8jA15diUC2nnJsvEgRXEir4L4D1azYxY+gBTuqEzLqd7Y+MC6pHQ==
+
+mongoose-paginate-v2@*, mongoose-paginate-v2@^1.6.3:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/mongoose-paginate-v2/-/mongoose-paginate-v2-1.7.1.tgz#0b390f5eb8e5dca55ffcb1fd7b4d8078636cb8f1"
+  integrity sha512-J8DJw3zRXcXOKoZv+RvO9tt5HotRnbo2iCR3lke+TtsQsYwQvbY3EgUkPqZXw6qCX2IByvXrW5SGNdAB0od/Cw==
 
 mongoose@^7.1.2:
   version "7.1.2"

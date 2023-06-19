@@ -6,7 +6,11 @@ import { Logger, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { Connection } from 'mongoose';
+// @ts-ignore
+import mongoosePaginate  from 'mongoose-paginate-v2';
 import 'colors';
+
+
 
 @Module({
   imports: [
@@ -34,7 +38,7 @@ import 'colors';
 
           //! MongoDB AutoPopulate Plugin Initialization
           connection.plugin(require('mongoose-autopopulate'));
-
+          connection.plugin(mongoosePaginate);
           // //@ts-ignore
     
           return connection;

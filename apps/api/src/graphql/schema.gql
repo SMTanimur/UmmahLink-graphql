@@ -21,7 +21,7 @@ input CreateOrUpdateProfileInput {
 }
 
 input CreatePostInput {
-  author: ID
+  author: UserInputType
   content: String
   image: String
 }
@@ -112,8 +112,41 @@ type Mutation {
   uploadSingleFiles(file: Upload!): ResponseSingleUpload
 }
 
+type Notification {
+  id: ID!
+  initiator: ID
+  link: String
+  target: ID
+  type: NotificationType!
+  unread: Boolean
+}
+
+type NotificationPagination {
+  docs: [Notification]
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Float!
+  nextPage: Float
+  page: Float!
+  pagingCounter: Float!
+  prevPage: Float
+  totalDocs: Float!
+  totalPages: Float!
+}
+
+input NotificationQueryArgs {
+  user: ID
+}
+
+enum NotificationType {
+  comment
+  commentLike
+  like
+  reply
+}
+
 type Post {
-  author: ID
+  author: User
   comments: [User!]
   content: String
   id: ID!
@@ -124,6 +157,7 @@ type Post {
 type Query {
   item: String!
   me: UserWithoutPassword!
+  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float, offset: Float, page: Float, pagination: Boolean, query: NotificationQueryArgs!, select: String, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
   user(username: String!): UserWithoutPassword
 }
@@ -138,7 +172,7 @@ type ResponseSingleUpload {
 }
 
 input UpdatePostInput {
-  author: ID
+  author: UserInputType
   comments: [UserInputType!]
   content: String
   id: ID
