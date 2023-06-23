@@ -8,13 +8,13 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  IsBoolean,
   ValidateNested,
   IsArray,
   IsMongoId,
 } from 'class-validator';
 import { Info } from '../../Info/entities/info';
 import { Type } from 'class-transformer';
+import { FriendRequest } from '../../friendRequest/entities/friendRequest';
 
 @ObjectType()
 @InputType('UserInputType', { isAbstract: true })
@@ -62,24 +62,32 @@ export class User {
   @IsOptional()
   coverPicture?: string;
 
-  @ValidateNested({each:true})
+  @ValidateNested({ each: true })
   @IsMongoId({ each: true })
   @IsArray()
+  @IsOptional()
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
   })
   @Field(() => User, { nullable: true })
   friends?: User[];
 
-
-  @ValidateNested({each:true})
+  @ValidateNested({ each: true })
   @IsMongoId({ each: true })
+  @IsOptional()
   @IsArray()
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FriendRequest',
+        default: [],
+        autopopulate: true,
+      },
+    ],
   })
-  @Field(() => User, { nullable: true })
-  friendRequests?: User[];
+  @Field(() => [FriendRequest], { nullable: true, defaultValue: [] })
+  friendRequests: FriendRequest[];
 
   @Prop()
   @IsString()

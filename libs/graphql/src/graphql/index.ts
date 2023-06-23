@@ -43,6 +43,12 @@ export type CloseRequestInput = {
   target?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type CreateCommentInput = {
+  authId?: InputMaybe<UserInputType>;
+  body: Scalars['String']['input'];
+  postId?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type CreateFriendRequestInput = {
   target?: InputMaybe<Scalars['ID']['input']>;
   user?: InputMaybe<Scalars['ID']['input']>;
@@ -57,9 +63,22 @@ export type CreateOrUpdateProfileInput = {
 };
 
 export type CreatePostInput = {
-  author?: InputMaybe<Scalars['ID']['input']>;
+  author?: InputMaybe<UserInputType>;
   content?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreatePostOrCommentLikeInput = {
+  postId?: InputMaybe<Scalars['ID']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type CreateReplyInput = {
+  body: Scalars['String']['input'];
+  commentId: Scalars['ID']['input'];
+  postId: Scalars['ID']['input'];
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CreateUserInput = {
@@ -67,6 +86,11 @@ export type CreateUserInput = {
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export type DeleteCommentInput = {
+  commentId: Scalars['ID']['input'];
+  userID: Scalars['ID']['input'];
 };
 
 export type DeletePostInput = {
@@ -85,6 +109,18 @@ export enum EnumService {
   S3Storage = 'S3Storage',
   Web3Storage = 'Web3Storage',
 }
+
+export type FriendRequest = {
+  __typename?: 'FriendRequest';
+  id: Scalars['ID']['output'];
+  target?: Maybe<User>;
+  user?: Maybe<User>;
+};
+
+export type FriendRequestInputType = {
+  target?: InputMaybe<UserInputType>;
+  user?: InputMaybe<UserInputType>;
+};
 
 export type FriendRequestResponse = {
   __typename?: 'FriendRequestResponse';
@@ -128,13 +164,18 @@ export type MessageResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   closeFriendRequest: UserWithoutPassword;
+  createComment: MessageResponse;
+  createCommentReply: MessageResponse;
   createFriendRequest: FriendRequestResponse;
   createOrUpdateInfo: Scalars['String']['output'];
   createPost: MessageResponse;
   createUser: Scalars['String']['output'];
+  deleteComment: MessageResponse;
   deletePost: MessageResponse;
+  likePost: MessageResponse;
   login: LoginResponse;
   logout: MessageResponse;
+  updateNotification: Scalars['Boolean']['output'];
   updatePost: MessageResponse;
   updateUser: Scalars['String']['output'];
   uploadMultipleFiles: Array<ResponseSingleUpload>;
@@ -143,6 +184,14 @@ export type Mutation = {
 
 export type MutationCloseFriendRequestArgs = {
   closeRequestInput: CloseRequestInput;
+};
+
+export type MutationCreateCommentArgs = {
+  createCommentInput: CreateCommentInput;
+};
+
+export type MutationCreateCommentReplyArgs = {
+  createReplyInput: CreateReplyInput;
 };
 
 export type MutationCreateFriendRequestArgs = {
@@ -161,12 +210,24 @@ export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
 };
 
+export type MutationDeleteCommentArgs = {
+  deleteCommentInput: DeleteCommentInput;
+};
+
 export type MutationDeletePostArgs = {
   updatePostInput: DeletePostInput;
 };
 
+export type MutationLikePostArgs = {
+  likePostInput: CreatePostOrCommentLikeInput;
+};
+
 export type MutationLoginArgs = {
   loginInput: LoginInput;
+};
+
+export type MutationUpdateNotificationArgs = {
+  updateNotificationArgs: NotificationUpdateArgs;
 };
 
 export type MutationUpdatePostArgs = {
@@ -186,9 +247,52 @@ export type MutationUploadSingleFilesArgs = {
   file: Scalars['Upload']['input'];
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  id: Scalars['ID']['output'];
+  initiator?: Maybe<Scalars['ID']['output']>;
+  link?: Maybe<Scalars['String']['output']>;
+  target?: Maybe<Scalars['ID']['output']>;
+  type: NotificationType;
+  unread?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type NotificationPagination = {
+  __typename?: 'NotificationPagination';
+  docs?: Maybe<Array<Maybe<Notification>>>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Float']['output'];
+  nextPage?: Maybe<Scalars['Float']['output']>;
+  page: Scalars['Float']['output'];
+  pagingCounter: Scalars['Float']['output'];
+  prevPage?: Maybe<Scalars['Float']['output']>;
+  totalDocs: Scalars['Float']['output'];
+  totalPages: Scalars['Float']['output'];
+};
+
+export type NotificationQueryArgs = {
+  targetId?: InputMaybe<Scalars['ID']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unread?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export enum NotificationType {
+  Comment = 'comment',
+  CommentLike = 'commentLike',
+  Like = 'like',
+  Reply = 'reply',
+}
+
+export type NotificationUpdateArgs = {
+  notifiId: Scalars['ID']['input'];
+  unread?: Scalars['Boolean']['input'];
+};
+
 export type Post = {
   __typename?: 'Post';
-  author?: Maybe<Scalars['ID']['output']>;
+  author?: Maybe<User>;
   comments?: Maybe<Array<User>>;
   content?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -200,11 +304,32 @@ export type Query = {
   __typename?: 'Query';
   item: Scalars['String']['output'];
   me: UserWithoutPassword;
+  notifications: NotificationPagination;
   post: Post;
+  user?: Maybe<UserWithoutPassword>;
+};
+
+export type QueryNotificationsArgs = {
+  allowDiskUse?: InputMaybe<Scalars['Boolean']['input']>;
+  forceCountFn?: InputMaybe<Scalars['Boolean']['input']>;
+  lean?: InputMaybe<Scalars['Boolean']['input']>;
+  leanWithId?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  page?: InputMaybe<Scalars['Float']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  query: NotificationQueryArgs;
+  select?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type QueryPostArgs = {
   postId: Scalars['ID']['input'];
+};
+
+export type QueryUserArgs = {
+  username: Scalars['String']['input'];
 };
 
 export type ResponseSingleUpload = {
@@ -218,7 +343,7 @@ export type ResponseSingleUpload = {
 };
 
 export type UpdatePostInput = {
-  author?: InputMaybe<Scalars['ID']['input']>;
+  author?: InputMaybe<UserInputType>;
   comments?: InputMaybe<Array<UserInputType>>;
   content?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -232,7 +357,7 @@ export type UpdateUserInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  friendRequests?: InputMaybe<UserInputType>;
+  friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
   info?: InputMaybe<InfoInputType>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -251,7 +376,7 @@ export type User = {
   avatar?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
-  friendRequests?: Maybe<User>;
+  friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
   info?: Maybe<Info>;
   name: Scalars['String']['output'];
@@ -264,7 +389,7 @@ export type UserInputType = {
   avatar?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
-  friendRequests?: InputMaybe<UserInputType>;
+  friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
   info?: InputMaybe<InfoInputType>;
   name: Scalars['String']['input'];
@@ -284,7 +409,7 @@ export type UserWithoutPassword = {
   avatar?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
-  friendRequests?: Maybe<User>;
+  friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
   info?: Maybe<Info>;
   name: Scalars['String']['output'];
@@ -330,9 +455,33 @@ export type MeQuery = {
       bio?: string | null;
       birthday?: any | null;
       contact?: string | null;
-      gender?: EGender | null;
     } | null;
   };
+};
+
+export type UserProfileQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+}>;
+
+export type UserProfileQuery = {
+  __typename?: 'Query';
+  user?: {
+    __typename?: 'UserWithoutPassword';
+    username: string;
+    name: string;
+    avatar?: string | null;
+    coverPicture?: string | null;
+    info?: { __typename?: 'Info'; bio?: string | null } | null;
+    friendRequests?: Array<{
+      __typename?: 'FriendRequest';
+      target?: {
+        __typename?: 'User';
+        username: string;
+        name: string;
+        avatar?: string | null;
+      } | null;
+    }> | null;
+  } | null;
 };
 
 export const LoginDocument = /*#__PURE__*/ `
@@ -445,11 +594,11 @@ export const MeDocument = /*#__PURE__*/ `
     username
     name
     email
+    coverPicture
     info {
       bio
       birthday
       contact
-      gender
     }
     coverPicture
   }
@@ -471,3 +620,50 @@ useMeQuery.fetcher = (
   variables?: MeQueryVariables,
   options?: RequestInit['headers']
 ) => fetcher<MeQuery, MeQueryVariables>(MeDocument, variables, options);
+export const UserProfileDocument = /*#__PURE__*/ `
+    query UserProfile($username: String!) {
+  user(username: $username) {
+    username
+    name
+    avatar
+    coverPicture
+    info {
+      bio
+    }
+    name
+    friendRequests {
+      target {
+        username
+        name
+        avatar
+      }
+    }
+  }
+}
+    `;
+export const useUserProfileQuery = <TData = UserProfileQuery, TError = unknown>(
+  variables: UserProfileQueryVariables,
+  options?: UseQueryOptions<UserProfileQuery, TError, TData>
+) =>
+  useQuery<UserProfileQuery, TError, TData>(
+    ['UserProfile', variables],
+    fetcher<UserProfileQuery, UserProfileQueryVariables>(
+      UserProfileDocument,
+      variables
+    ),
+    options
+  );
+
+useUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => [
+  'UserProfile',
+  variables,
+];
+useUserProfileQuery.fetcher = (
+  variables: UserProfileQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UserProfileQuery, UserProfileQueryVariables>(
+    UserProfileDocument,
+    variables,
+    options
+  );

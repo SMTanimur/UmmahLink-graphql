@@ -1,0 +1,4 @@
+schema: 'apps/api/**/*.gql'
+extensions:
+  languageService:
+    cacheSchemaFileForLookup: true

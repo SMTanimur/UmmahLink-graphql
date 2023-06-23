@@ -1,6 +1,7 @@
 import { PasswordInput } from './input/InputPassword';
 import { Form, useZodForm, FieldError } from './form/Form';
 import { Checkbox } from './input/Checkbox';
+import {CButton} from './button/CButton'
 import { Toggle } from './input/Toggle';
 export * from './loading';
 export * from './icons';
@@ -30,3 +31,4 @@ export { PasswordInput };
 export { Form, useZodForm, FieldError };
 export { Checkbox };
 export { Toggle };
+export {CButton}

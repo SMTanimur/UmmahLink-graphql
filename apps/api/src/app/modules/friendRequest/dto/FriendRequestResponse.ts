@@ -1,5 +1,5 @@
-import { Field, ObjectType, PickType } from "@nestjs/graphql";
-import { FriendRequest } from "../entities/friendRequest";
+import { Field, ObjectType } from "@nestjs/graphql";
+
 
 
 @ObjectType()

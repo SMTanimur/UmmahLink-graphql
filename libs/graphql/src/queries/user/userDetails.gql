@@ -1,0 +1,22 @@
+query UserProfile ($username: String!){
+  user(username: $username){
+    username
+    name
+    avatar
+    coverPicture
+    info{
+      bio
+    }
+    name
+
+    friendRequests{
+      target{
+        username
+        name
+        avatar
+      }
+    }
+    
+
+  }
+}

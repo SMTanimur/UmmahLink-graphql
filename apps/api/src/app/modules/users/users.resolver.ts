@@ -44,7 +44,8 @@ export class UserResolver {
   @Query((_returns) => UserWithoutPassword, { nullable: true,name:"user" })
   @UseGuards(AuthenticatedGuard)
   async getUserInfo(@Args('username' ,{type: ()=> String}) username:string){
-    return await this.usersService.findUserByUsername(username)
+    const user =  await this.usersService.findUserByUsername(username)
+    return user
   }
 
   

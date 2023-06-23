@@ -6,3 +6,11 @@ export interface ICurrentUser {
   avatar: string;
   roles: string[];
 }
+
+
+export enum ProfilePostType {
+  Post = 'POSTS',
+  Info = 'INFO',
+  Friend = 'FRIENDS'
+  
+}

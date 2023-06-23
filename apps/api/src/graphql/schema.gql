@@ -57,6 +57,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeleteCommentInput {
+  commentId: ID!
+  userID: ID!
+}
+
 input DeletePostInput {
   postId: ID!
   user: ID
@@ -72,6 +77,17 @@ enum EnumService {
   Cloudinary
   S3Storage
   Web3Storage
+}
+
+type FriendRequest {
+  id: ID!
+  target: User
+  user: User
+}
+
+input FriendRequestInputType {
+  target: UserInputType
+  user: UserInputType
 }
 
 type FriendRequestResponse {
@@ -117,6 +133,7 @@ type Mutation {
   createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
+  deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
   deletePost(updatePostInput: DeletePostInput!): MessageResponse!
   likePost(likePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
@@ -210,7 +227,7 @@ input UpdateUserInput {
   avatar: String
   coverPicture: String
   email: String
-  friendRequests: UserInputType
+  friendRequests: [FriendRequestInputType!] = []
   friends: UserInputType
   info: InfoInputType
   name: String
@@ -231,7 +248,7 @@ type User {
   avatar: String
   coverPicture: String
   email: String!
-  friendRequests: User
+  friendRequests: [FriendRequest!]
   friends: User
   info: Info
   name: String!
@@ -244,7 +261,7 @@ input UserInputType {
   avatar: String
   coverPicture: String
   email: String!
-  friendRequests: UserInputType
+  friendRequests: [FriendRequestInputType!] = []
   friends: UserInputType
   info: InfoInputType
   name: String!
@@ -262,7 +279,7 @@ type UserWithoutPassword {
   avatar: String
   coverPicture: String
   email: String!
-  friendRequests: User
+  friendRequests: [FriendRequest!]
   friends: User
   info: Info
   name: String!

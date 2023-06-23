@@ -18,6 +18,7 @@ import {
 } from '../notification/entities/notification';
 import { CreateCommentInput } from './input/create-comment-input';
 import { CreateReplyInput } from './input/create-comment-replay-input';
+import { DeleteCommentInput } from './input/delete-comment-input';
 
 @Injectable()
 export class CommentsService {
@@ -111,6 +112,32 @@ export class CommentsService {
       return {
         message: `Reply successfully added`,
       };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteComment(deleteCommentInput: DeleteCommentInput) {
+    try {
+      const { commentId, userID } = deleteCommentInput;
+
+      const comment = await this.commentModel.findOne({ _id: commentId });
+      if (!comment) throw new NotFoundException('Comment not found');
+
+      // FIND THE POST TO GET AUTHOR ID
+      const post = await this.postModel.findOne({ _id: comment.postId });
+
+      const postAuthorID = post.author.toString();
+      const commentAuthorID = comment.authId.toString();
+
+      if (postAuthorID == userID || commentAuthorID == userID) {
+        await this.commentModel.deleteMany({
+          $or: [{ _id: commentId }, { parents: { $in: [commentId] } }],
+        });
+      }
+      return {
+        message: `Comment successfully deleted`,
+      }
     } catch (error) {
       console.log(error);
     }

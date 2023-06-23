@@ -4,11 +4,12 @@ query me {
     username
     name
     email
+    coverPicture
     info {
       bio
       birthday
       contact
-      gender
+      
     }
     coverPicture
   }
