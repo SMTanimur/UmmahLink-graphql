@@ -79,6 +79,17 @@ enum EnumService {
   Web3Storage
 }
 
+input FollowOrUnFollowInput {
+  follow_ID: ID!
+  userId: ID
+}
+
+input FollowQueryArgs {
+  target: ID
+  type: String
+  user: ID
+}
+
 type FriendRequest {
   id: ID!
   target: User
@@ -135,9 +146,11 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): String!
   deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
   deletePost(updatePostInput: DeletePostInput!): MessageResponse!
+  followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   likePost(likePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
   logout: MessageResponse!
+  unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   updateUser(input: UpdateUserInput!): String!
@@ -177,6 +190,7 @@ input NotificationQueryArgs {
 enum NotificationType {
   comment
   commentLike
+  follow
   like
   reply
 }
@@ -184,6 +198,29 @@ enum NotificationType {
 input NotificationUpdateArgs {
   notifiId: ID!
   unread: Boolean! = false
+}
+
+input PaginateOptionArgs {
+  allowDiskUse: Boolean
+  forceCountFn: Boolean
+  lean: Boolean
+  leanWithId: Boolean
+  limit: Float
+  offset: Float
+  page: Float
+  pagination: Boolean
+  select: String
+  sort: String
+  useEstimatedCount: Boolean
+}
+
+type Pagination {
+  avatar: String!
+  email: String!
+  id: String!
+  isFollowing: Boolean!
+  name: String!
+  username: String
 }
 
 type Post {
@@ -196,6 +233,8 @@ type Post {
 }
 
 type Query {
+  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
+  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
   item: String!
   me: UserWithoutPassword!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float, offset: Float, page: Float, pagination: Boolean, query: NotificationQueryArgs!, select: String, sort: String, useEstimatedCount: Boolean): NotificationPagination!

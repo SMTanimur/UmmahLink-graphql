@@ -10,6 +10,7 @@ query me {
       birthday
       contact
       
+      
     }
     coverPicture
   }

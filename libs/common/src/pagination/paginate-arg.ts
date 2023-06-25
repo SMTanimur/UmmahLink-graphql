@@ -1,6 +1,8 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+
+import { ArgsType, Field, InputType } from '@nestjs/graphql';
 
 @ArgsType()
+@InputType({isAbstract:true})
 export class PaginateOptionArgs {
   @Field({ nullable: true })
   select: string;

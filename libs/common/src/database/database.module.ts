@@ -8,6 +8,8 @@ import { ConfigurationService } from '../configuration/configuration.service';
 import { Connection } from 'mongoose';
 // @ts-ignore
 import mongoosePaginate  from 'mongoose-paginate-v2';
+// @ts-ignore
+import  mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
 import 'colors';
 
 
@@ -39,6 +41,7 @@ import 'colors';
           //! MongoDB AutoPopulate Plugin Initialization
           connection.plugin(require('mongoose-autopopulate'));
           connection.plugin(mongoosePaginate);
+          connection.plugin(mongooseAggregatePaginate);
           // //@ts-ignore
     
           return connection;

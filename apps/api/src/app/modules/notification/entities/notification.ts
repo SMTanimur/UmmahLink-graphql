@@ -12,6 +12,7 @@ import { CoreEntity } from '@social-zone/common';
 
 export enum NotificationType {
   like = 'like',
+  follow = 'follow',
   commentLike = 'comment-like',
   comment = 'comment',
   reply = 'reply',
