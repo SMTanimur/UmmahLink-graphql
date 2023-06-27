@@ -84,6 +84,19 @@ input FollowOrUnFollowInput {
   userId: ID
 }
 
+type FollowPagination {
+  docs: [Pagination]
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Float!
+  nextPage: Float
+  page: Float!
+  pagingCounter: Float!
+  prevPage: Float
+  totalDocs: Float!
+  totalPages: Float!
+}
+
 input FollowQueryArgs {
   target: ID
   type: String
@@ -104,6 +117,18 @@ input FriendRequestInputType {
 type FriendRequestResponse {
   target: UserResponse!
   user: UserResponse!
+}
+
+type IUser {
+  _id: ID!
+  avatar: String!
+  coverPicture: String
+  dateJoined: DateTime
+  email: String
+  info: Info
+  isFollowing: Boolean!
+  name: String!
+  username: String!
 }
 
 type Info {
@@ -232,14 +257,29 @@ type Post {
   likes: [User!]
 }
 
+type ProfileInformation {
+  avatar: String!
+  coverPicture: String
+  dateJoined: DateTime
+  email: String
+  followersCount: Float
+  followingCount: Float
+  id: ID!
+  info: Info
+  isFollowing: Boolean!
+  name: String!
+  username: String!
+}
+
 type Query {
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
+  getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination!
   item: String!
-  me: UserWithoutPassword!
+  me: IUser!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float, offset: Float, page: Float, pagination: Boolean, query: NotificationQueryArgs!, select: String, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
-  user(username: String!): UserWithoutPassword
+  user(username: String!): ProfileInformation
 }
 
 type ResponseSingleUpload {

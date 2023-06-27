@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   BadRequestException,
   ConflictException,
@@ -6,7 +7,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Follow, FollowDocument } from './entities/follow';
-import { AggregateOptions, AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
+import {
+  AggregateOptions,
+  AggregatePaginateModel,
+  FilterQuery,
+  Model,
+} from 'mongoose';
 import { FollowOrUnFollowInput } from './input/followerUnfollowInput';
 import { User, UserDocument } from '../users/entities/user.entity';
 import {
@@ -25,7 +31,7 @@ export class FollowsService {
     private followModel: AggregatePaginateModel<FollowDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(NewsFeed.name) private newsFeedModel: Model<NewsFeedDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(User.name) private userModel: AggregatePaginateModel<UserDocument>,
     @InjectModel(Notification.name)
     private notificationModel: Model<NotificationDocument>
   ) {}
@@ -132,60 +138,94 @@ export class FollowsService {
     query?: FilterQuery<FollowQueryArgs>,
     options?: AggregateOptions
   ) {
-
     try {
-      const {user,type}=query
-      const myFollowingDocs = await this.followModel.find({user:user})
-      const myFollowing = myFollowingDocs.map((follow) => follow.target);
-     
+      const { user, type } = query;
+      const myFollowingDoc = this.followModel.find({ user: user });
+      const myFollowing = (await myFollowingDoc).map((user) => user.target); // map to array of user IDs
       const aggregate = await this.followModel.aggregate([
         {
           $match: {
-            ...(user ? {user } : {}),
-
-          }
-      },
-      {
-        $limit: options.limit | 5
-
-      },
-      {
+            ...(user ? { user: user } : {}),
+          },
+        },
+        {
+          $limit: options.limit | 5,
+        },
+        {
           $lookup: {
-              from: 'users',
-              localField: type === 'following' ? 'target' : 'user',
-              foreignField: '_id',
-              as: 'user'
-          }
-      },
-      {
-          $unwind: '$user'
-      },
-      {
+            from: 'users',
+            localField: type === 'following' ? 'target' : 'user',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        {
+          $unwind: '$user',
+        },
+        {
           $addFields: {
-              isFollowing: { $in: ['$user._id', myFollowing] }
-          }
-      },
-      {
+            isFollowing: { $in: ['$user._id', myFollowing] },
+          },
+        },
+        {
           $project: {
-              _id: 0,
-              id: '$user._id',
-              username: '$user.username',
-              name: '$user.name',
-              email: '$user.email',
-              avatar: '$user.avatar',
-              isFollowing: 1
-          }
-      }
-  
-      ])
-     
+            _id: 0,
+            id: '$user._id',
+            username: '$user.username',
+            name: '$user.name',
+            email: '$user.email',
+            avatar: '$user.avatar',
+            isFollowing: 1,
+          },
+        },
+      ]);
 
-   
-     return aggregate
-      
+      return aggregate;
     } catch (error) {
       console.log(error);
     }
   }
 
+  async getPeopleSuggestions(
+    query?: FilterQuery<FollowQueryArgs>,
+    options?: AggregateOptions
+  ) {
+
+    try {
+      const { user, type } = query;
+      const myFollowingDoc = this.followModel.find({ user: user });
+      const myFollowing = (await myFollowingDoc).map((user) => user.target); // map to array of user IDs
+      const people:any = [
+        {
+            $match: {
+                _id: {
+                    $nin: [...myFollowing, user]
+                }
+            }
+        },
+      
+        {
+            $addFields: {
+                isFollowing: false,
+            }
+        },
+        {
+          $project: {
+            _id: 0,
+            id: '$user._id',
+            username: '$user.username',
+            name: '$user.name',
+            email: '$user.email',
+            avatar: '$user.avatar',
+            isFollowing: 1,
+          },
+        }
+    ]
+   
+     const aggregate = await this.userModel.aggregatePaginate(people,options)as FollowPagination
+     return aggregate
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

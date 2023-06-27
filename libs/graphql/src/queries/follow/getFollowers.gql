@@ -1,0 +1,10 @@
+query GetFollowers($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowers(option: $options, query: $query) {
+    avatar
+    email
+    id
+    isFollowing
+    name
+    username
+  }
+}

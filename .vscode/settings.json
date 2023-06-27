@@ -1,3 +1,4 @@
 {
-  "conventionalCommits.scopes": ["web", "api"]
+  "conventionalCommits.scopes": ["web", "api"],
+  "cSpell.words": ["Attemt"]
 }

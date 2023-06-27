@@ -6,19 +6,17 @@ query UserProfile ($username: String!){
     coverPicture
     info{
       bio
+      birthday
+      contact
+      gender
     }
     name
-
-    friendRequests{
-      target{
-        username
-        name
-        avatar
-      }
-    }
-    
-    
-    
-
+    dateJoined
+    email
+    followersCount
+    followingCount
+    id
+    isFollowing
+    __typename
   }
 }

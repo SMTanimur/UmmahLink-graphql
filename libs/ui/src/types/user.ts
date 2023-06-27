@@ -14,3 +14,9 @@ export enum ProfilePostType {
   Friend = 'FRIENDS'
   
 }
+
+
+export interface MarkupLinkProps {
+  href?: string;
+  title?: string;
+}

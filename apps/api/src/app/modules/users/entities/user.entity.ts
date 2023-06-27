@@ -11,6 +11,7 @@ import {
   ValidateNested,
   IsArray,
   IsMongoId,
+  IsDate,
 } from 'class-validator';
 import { Info } from '../../Info/entities/info';
 import { Type } from 'class-transformer';
@@ -94,6 +95,11 @@ export class User {
   @Field(() => String)
   password: string;
 
+
+  @Prop({ type:Date, default: Date.now })
+  @IsDate()
+  dateJoined: Date;
+
   @Prop({
     enum: ['admin', 'user'],
     default: 'user',
@@ -106,6 +112,8 @@ export class User {
 
 export interface UserDocument extends User, Document {
   comparePassword(password: string): Promise<boolean>;
+  isFollowing?: boolean;
+  isOwnProfile?: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -117,5 +125,9 @@ UserSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, user.password);
 };
 
+
+
 @ObjectType()
 export class UserWithoutPassword extends OmitType(User, ['password']) {}
+
+

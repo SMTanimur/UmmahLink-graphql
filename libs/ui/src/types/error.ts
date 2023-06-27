@@ -1,4 +1,4 @@
 export enum Errors {
   SomethingWentWrong = 'Something went wrong!',
-  SignWallet = 'Please sign in your wallet.'
+  Sign = 'Please sign in your account.'
 }

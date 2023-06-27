@@ -110,6 +110,31 @@ export enum EnumService {
   Web3Storage = 'Web3Storage',
 }
 
+export type FollowOrUnFollowInput = {
+  follow_ID: Scalars['ID']['input'];
+  userId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type FollowPagination = {
+  __typename?: 'FollowPagination';
+  docs?: Maybe<Array<Maybe<Pagination>>>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Float']['output'];
+  nextPage?: Maybe<Scalars['Float']['output']>;
+  page: Scalars['Float']['output'];
+  pagingCounter: Scalars['Float']['output'];
+  prevPage?: Maybe<Scalars['Float']['output']>;
+  totalDocs: Scalars['Float']['output'];
+  totalPages: Scalars['Float']['output'];
+};
+
+export type FollowQueryArgs = {
+  target?: InputMaybe<Scalars['ID']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type FriendRequest = {
   __typename?: 'FriendRequest';
   id: Scalars['ID']['output'];
@@ -126,6 +151,19 @@ export type FriendRequestResponse = {
   __typename?: 'FriendRequestResponse';
   target: UserResponse;
   user: UserResponse;
+};
+
+export type IUser = {
+  __typename?: 'IUser';
+  _id: Scalars['ID']['output'];
+  avatar: Scalars['String']['output'];
+  coverPicture?: Maybe<Scalars['String']['output']>;
+  dateJoined?: Maybe<Scalars['DateTime']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  info?: Maybe<Info>;
+  isFollowing: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type Info = {
@@ -172,9 +210,11 @@ export type Mutation = {
   createUser: Scalars['String']['output'];
   deleteComment: MessageResponse;
   deletePost: MessageResponse;
+  followUser: MessageResponse;
   likePost: MessageResponse;
   login: LoginResponse;
   logout: MessageResponse;
+  unFollowUser: MessageResponse;
   updateNotification: Scalars['Boolean']['output'];
   updatePost: MessageResponse;
   updateUser: Scalars['String']['output'];
@@ -218,12 +258,20 @@ export type MutationDeletePostArgs = {
   updatePostInput: DeletePostInput;
 };
 
+export type MutationFollowUserArgs = {
+  followOrUnFollowInput: FollowOrUnFollowInput;
+};
+
 export type MutationLikePostArgs = {
   likePostInput: CreatePostOrCommentLikeInput;
 };
 
 export type MutationLoginArgs = {
   loginInput: LoginInput;
+};
+
+export type MutationUnFollowUserArgs = {
+  followOrUnFollowInput: FollowOrUnFollowInput;
 };
 
 export type MutationUpdateNotificationArgs = {
@@ -281,6 +329,7 @@ export type NotificationQueryArgs = {
 export enum NotificationType {
   Comment = 'comment',
   CommentLike = 'commentLike',
+  Follow = 'follow',
   Like = 'like',
   Reply = 'reply',
 }
@@ -288,6 +337,30 @@ export enum NotificationType {
 export type NotificationUpdateArgs = {
   notifiId: Scalars['ID']['input'];
   unread?: Scalars['Boolean']['input'];
+};
+
+export type PaginateOptionArgs = {
+  allowDiskUse?: InputMaybe<Scalars['Boolean']['input']>;
+  forceCountFn?: InputMaybe<Scalars['Boolean']['input']>;
+  lean?: InputMaybe<Scalars['Boolean']['input']>;
+  leanWithId?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  page?: InputMaybe<Scalars['Float']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Pagination = {
+  __typename?: 'Pagination';
+  avatar: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  isFollowing: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 export type Post = {
@@ -300,13 +373,46 @@ export type Post = {
   likes?: Maybe<Array<User>>;
 };
 
+export type ProfileInformation = {
+  __typename?: 'ProfileInformation';
+  avatar: Scalars['String']['output'];
+  coverPicture?: Maybe<Scalars['String']['output']>;
+  dateJoined?: Maybe<Scalars['DateTime']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  followersCount?: Maybe<Scalars['Float']['output']>;
+  followingCount?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['ID']['output'];
+  info?: Maybe<Info>;
+  isFollowing: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  getFollowers: Array<Pagination>;
+  getFollowing: Array<Pagination>;
+  getSuggestionPeople: FollowPagination;
   item: Scalars['String']['output'];
-  me: UserWithoutPassword;
+  me: IUser;
   notifications: NotificationPagination;
   post: Post;
-  user?: Maybe<UserWithoutPassword>;
+  user?: Maybe<ProfileInformation>;
+};
+
+export type QueryGetFollowersArgs = {
+  option: PaginateOptionArgs;
+  query: FollowQueryArgs;
+};
+
+export type QueryGetFollowingArgs = {
+  option: PaginateOptionArgs;
+  query: FollowQueryArgs;
+};
+
+export type QueryGetSuggestionPeopleArgs = {
+  option: PaginateOptionArgs;
+  query: FollowQueryArgs;
 };
 
 export type QueryNotificationsArgs = {
@@ -439,17 +545,97 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation'; createUser: string };
 
+export type FollowUserMutationVariables = Exact<{
+  followOrUnFollowInput: FollowOrUnFollowInput;
+}>;
+
+export type FollowUserMutation = {
+  __typename?: 'Mutation';
+  followUser: { __typename: 'MessageResponse'; message: string };
+};
+
+export type UnFollowUserMutationVariables = Exact<{
+  followOrUnFollowInput: FollowOrUnFollowInput;
+}>;
+
+export type UnFollowUserMutation = {
+  __typename?: 'Mutation';
+  unFollowUser: { __typename: 'MessageResponse'; message: string };
+};
+
+export type GetFollowersQueryVariables = Exact<{
+  options: PaginateOptionArgs;
+  query: FollowQueryArgs;
+}>;
+
+export type GetFollowersQuery = {
+  __typename?: 'Query';
+  getFollowers: Array<{
+    __typename?: 'Pagination';
+    avatar: string;
+    email: string;
+    id: string;
+    isFollowing: boolean;
+    name: string;
+    username?: string | null;
+  }>;
+};
+
+export type GetFollowingQueryVariables = Exact<{
+  options: PaginateOptionArgs;
+  query: FollowQueryArgs;
+}>;
+
+export type GetFollowingQuery = {
+  __typename?: 'Query';
+  getFollowing: Array<{
+    __typename?: 'Pagination';
+    avatar: string;
+    email: string;
+    id: string;
+    isFollowing: boolean;
+    name: string;
+    username?: string | null;
+  }>;
+};
+
+export type GetSuggestionPeopleQueryVariables = Exact<{
+  options: PaginateOptionArgs;
+  query: FollowQueryArgs;
+}>;
+
+export type GetSuggestionPeopleQuery = {
+  __typename?: 'Query';
+  getSuggestionPeople: {
+    __typename?: 'FollowPagination';
+    limit: number;
+    page: number;
+    totalDocs: number;
+    totalPages: number;
+    docs?: Array<{
+      __typename: 'Pagination';
+      avatar: string;
+      email: string;
+      id: string;
+      isFollowing: boolean;
+      name: string;
+      username?: string | null;
+    } | null> | null;
+  };
+};
+
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
   __typename?: 'Query';
   me: {
-    __typename?: 'UserWithoutPassword';
-    avatar?: string | null;
+    __typename?: 'IUser';
+    avatar: string;
     username: string;
     name: string;
-    email: string;
+    email?: string | null;
     coverPicture?: string | null;
+    _id: string;
     info?: {
       __typename?: 'Info';
       bio?: string | null;
@@ -466,21 +652,24 @@ export type UserProfileQueryVariables = Exact<{
 export type UserProfileQuery = {
   __typename?: 'Query';
   user?: {
-    __typename?: 'UserWithoutPassword';
+    __typename: 'ProfileInformation';
     username: string;
     name: string;
-    avatar?: string | null;
+    avatar: string;
     coverPicture?: string | null;
-    info?: { __typename?: 'Info'; bio?: string | null } | null;
-    friendRequests?: Array<{
-      __typename?: 'FriendRequest';
-      target?: {
-        __typename?: 'User';
-        username: string;
-        name: string;
-        avatar?: string | null;
-      } | null;
-    }> | null;
+    dateJoined?: any | null;
+    email?: string | null;
+    followersCount?: number | null;
+    followingCount?: number | null;
+    id: string;
+    isFollowing: boolean;
+    info?: {
+      __typename?: 'Info';
+      bio?: string | null;
+      birthday?: any | null;
+      contact?: string | null;
+      gender?: EGender | null;
+    } | null;
   } | null;
 };
 
@@ -587,6 +776,217 @@ useRegisterMutation.fetcher = (
     variables,
     options
   );
+export const FollowUserDocument = /*#__PURE__*/ `
+    mutation FollowUser($followOrUnFollowInput: FollowOrUnFollowInput!) {
+  followUser(followOrUnFollowInput: $followOrUnFollowInput) {
+    message
+    __typename
+  }
+}
+    `;
+export const useFollowUserMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    FollowUserMutation,
+    TError,
+    FollowUserMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    FollowUserMutation,
+    TError,
+    FollowUserMutationVariables,
+    TContext
+  >(
+    ['FollowUser'],
+    (variables?: FollowUserMutationVariables) =>
+      fetcher<FollowUserMutation, FollowUserMutationVariables>(
+        FollowUserDocument,
+        variables
+      )(),
+    options
+  );
+useFollowUserMutation.getKey = () => ['FollowUser'];
+
+useFollowUserMutation.fetcher = (
+  variables: FollowUserMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<FollowUserMutation, FollowUserMutationVariables>(
+    FollowUserDocument,
+    variables,
+    options
+  );
+export const UnFollowUserDocument = /*#__PURE__*/ `
+    mutation unFollowUser($followOrUnFollowInput: FollowOrUnFollowInput!) {
+  unFollowUser(followOrUnFollowInput: $followOrUnFollowInput) {
+    message
+    __typename
+  }
+}
+    `;
+export const useUnFollowUserMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UnFollowUserMutation,
+    TError,
+    UnFollowUserMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UnFollowUserMutation,
+    TError,
+    UnFollowUserMutationVariables,
+    TContext
+  >(
+    ['unFollowUser'],
+    (variables?: UnFollowUserMutationVariables) =>
+      fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(
+        UnFollowUserDocument,
+        variables
+      )(),
+    options
+  );
+useUnFollowUserMutation.getKey = () => ['unFollowUser'];
+
+useUnFollowUserMutation.fetcher = (
+  variables: UnFollowUserMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(
+    UnFollowUserDocument,
+    variables,
+    options
+  );
+export const GetFollowersDocument = /*#__PURE__*/ `
+    query GetFollowers($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowers(option: $options, query: $query) {
+    avatar
+    email
+    id
+    isFollowing
+    name
+    username
+  }
+}
+    `;
+export const useGetFollowersQuery = <
+  TData = GetFollowersQuery,
+  TError = unknown
+>(
+  variables: GetFollowersQueryVariables,
+  options?: UseQueryOptions<GetFollowersQuery, TError, TData>
+) =>
+  useQuery<GetFollowersQuery, TError, TData>(
+    ['GetFollowers', variables],
+    fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
+      GetFollowersDocument,
+      variables
+    ),
+    options
+  );
+
+useGetFollowersQuery.getKey = (variables: GetFollowersQueryVariables) => [
+  'GetFollowers',
+  variables,
+];
+useGetFollowersQuery.fetcher = (
+  variables: GetFollowersQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
+    GetFollowersDocument,
+    variables,
+    options
+  );
+export const GetFollowingDocument = /*#__PURE__*/ `
+    query GetFollowing($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowing(option: $options, query: $query) {
+    avatar
+    email
+    id
+    isFollowing
+    name
+    username
+  }
+}
+    `;
+export const useGetFollowingQuery = <
+  TData = GetFollowingQuery,
+  TError = unknown
+>(
+  variables: GetFollowingQueryVariables,
+  options?: UseQueryOptions<GetFollowingQuery, TError, TData>
+) =>
+  useQuery<GetFollowingQuery, TError, TData>(
+    ['GetFollowing', variables],
+    fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
+      GetFollowingDocument,
+      variables
+    ),
+    options
+  );
+
+useGetFollowingQuery.getKey = (variables: GetFollowingQueryVariables) => [
+  'GetFollowing',
+  variables,
+];
+useGetFollowingQuery.fetcher = (
+  variables: GetFollowingQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
+    GetFollowingDocument,
+    variables,
+    options
+  );
+export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
+    query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getSuggestionPeople(option: $options, query: $query) {
+    docs {
+      avatar
+      email
+      id
+      isFollowing
+      name
+      username
+      __typename
+    }
+    limit
+    page
+    totalDocs
+    totalPages
+  }
+}
+    `;
+export const useGetSuggestionPeopleQuery = <
+  TData = GetSuggestionPeopleQuery,
+  TError = unknown
+>(
+  variables: GetSuggestionPeopleQueryVariables,
+  options?: UseQueryOptions<GetSuggestionPeopleQuery, TError, TData>
+) =>
+  useQuery<GetSuggestionPeopleQuery, TError, TData>(
+    ['GetSuggestionPeople', variables],
+    fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
+      GetSuggestionPeopleDocument,
+      variables
+    ),
+    options
+  );
+
+useGetSuggestionPeopleQuery.getKey = (
+  variables: GetSuggestionPeopleQueryVariables
+) => ['GetSuggestionPeople', variables];
+useGetSuggestionPeopleQuery.fetcher = (
+  variables: GetSuggestionPeopleQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
+    GetSuggestionPeopleDocument,
+    variables,
+    options
+  );
 export const MeDocument = /*#__PURE__*/ `
     query me {
   me {
@@ -600,6 +1000,7 @@ export const MeDocument = /*#__PURE__*/ `
       birthday
       contact
     }
+    _id
     coverPicture
   }
 }
@@ -629,15 +1030,18 @@ export const UserProfileDocument = /*#__PURE__*/ `
     coverPicture
     info {
       bio
+      birthday
+      contact
+      gender
     }
     name
-    friendRequests {
-      target {
-        username
-        name
-        avatar
-      }
-    }
+    dateJoined
+    email
+    followersCount
+    followingCount
+    id
+    isFollowing
+    __typename
   }
 }
     `;

@@ -1,0 +1,6 @@
+mutation FollowUser ($followOrUnFollowInput:FollowOrUnFollowInput!){
+  followUser(followOrUnFollowInput:$followOrUnFollowInput){
+    message
+    __typename
+  }
+}

@@ -9,9 +9,8 @@ query me {
       bio
       birthday
       contact
-      
-      
     }
+    _id
     coverPicture
   }
 }

@@ -5,8 +5,9 @@ import '../styles/global.css';
 import { defaultMetadata } from '~ui';
 
 import dynamic from 'next/dynamic';
-import { Navbar } from './components/navbar/Navbar';
 import { Toaster } from 'react-hot-toast';
+import Navbar from './components/Navbar';
+import BottomNavigation from './components/Navbar/BottomNavigation';
 
 const Providers = dynamic(() => import('./Provider'), {
   ssr: false,
@@ -31,10 +32,11 @@ export default function RootLayout({
             position="top-right"
             // toastOptions={getToastOptions(resolvedTheme)}
           />
-          <div className="flex min-h-screen flex-col pb-14 md:pb-0 w-full">
-            <Navbar />
-            {children}
-          </div>
+         < div className="flex min-h-screen flex-col pb-14 md:pb-0">
+        <Navbar />
+        <BottomNavigation />
+        {children}
+      </div>
         </Providers>
       </body>
     </html>
