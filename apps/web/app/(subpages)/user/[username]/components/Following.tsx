@@ -4,7 +4,8 @@ import { Virtuoso } from 'react-virtuoso';
 import { Pagination, ProfileInformation, useGetFollowingQuery } from '@social-zone/graphql';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { EmptyState, ErrorMessage } from '~ui';
+import { EmptyState } from '~ui';
+import UserProfile from './UserProfile';
 
 interface FollowingProps {
   profile: ProfileInformation
@@ -14,15 +15,16 @@ interface FollowingProps {
 const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
   const [hasMore, setHasMore] = useState(true);
 
-    const {data,isFetched,refetch} =useGetFollowingQuery({options:{limit:15},query:{target:profile.id}})
+    const {data} =useGetFollowingQuery({options:{limit:15},query:{target:profile.id}})
 
   const followings = data?.getFollowing
   
-
   const onEndReached = async () => {
-    if (!hasMore) {
-      return;
-    }
+    // if (!hasMore) {
+    //   return;
+    // }
+
+    // setHasMore(data?.getFollowing?.length > 0)
 
     // await refetch({
       
@@ -57,12 +59,13 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       className="max-h-[80vh] overflow-y-auto"
       data-testid="followings-modal"
     >
+      <h2>hellod</h2>
     
       <Virtuoso
         className="virtual-profile-list"
-        data={followings}
+        data={followings as Pagination[] }
         endReached={onEndReached}
-        itemContent={(index: any, following:any) => {
+        itemContent={(index: any, following:Pagination) => {
           return (
             <div
               className={`p-5 ${
@@ -78,16 +81,16 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
               }
               aria-hidden="true"
             >
-              {/* <UserProfile
-                profile={following}
+              <UserProfile
+                profile={following as Pagination }
                 linkToProfile={!onProfileSelected}
-                isFollowing={following?.profile?.isFollowedByMe}
+                isFollowing={following?.isFollowing}
                 followUnfollowPosition={index + 1}
-                followUnfollowSource={FollowUnfollowSource.FOLLOWING_MODAL}
+                // followUnfollowSource={FollowUnfollowSource.FOLLOWING_MODAL}
                 showBio
                 showFollow
                 showUserPreview={false}
-              /> */}
+              />
             </div>
           );
         }}

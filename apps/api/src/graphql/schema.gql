@@ -243,6 +243,7 @@ type Pagination {
   avatar: String!
   email: String!
   id: String!
+  info: Info
   isFollowing: Boolean!
   name: String!
   username: String

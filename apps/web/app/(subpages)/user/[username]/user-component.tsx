@@ -25,7 +25,7 @@ export default function UserComponent( { username,type } : UserComponentProps) {
     <>
 
     {
-      data?.user?.coverPicture && (
+      data?.user && (
         <Cover
         cover={
           data?.user?.coverPicture

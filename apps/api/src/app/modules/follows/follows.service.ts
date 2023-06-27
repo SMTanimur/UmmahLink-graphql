@@ -175,6 +175,7 @@ export class FollowsService {
             name: '$user.name',
             email: '$user.email',
             avatar: '$user.avatar',
+            info: 1,
             isFollowing: 1,
           },
         },

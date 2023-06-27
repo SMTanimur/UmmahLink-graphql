@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
@@ -10,6 +11,7 @@ import {
 } from '@social-zone/graphql';
 import { object, string } from 'zod';
 import { ErrorMessage, useZodForm } from '~ui';
+
 
 const newUserSchema = object({
   email: string()

@@ -358,6 +358,7 @@ export type Pagination = {
   avatar: Scalars['String']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  info?: Maybe<Info>;
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username?: Maybe<Scalars['String']['output']>;
@@ -578,6 +579,13 @@ export type GetFollowersQuery = {
     isFollowing: boolean;
     name: string;
     username?: string | null;
+    info?: {
+      __typename?: 'Info';
+      bio?: string | null;
+      birthday?: any | null;
+      contact?: string | null;
+      gender?: EGender | null;
+    } | null;
   }>;
 };
 
@@ -596,6 +604,13 @@ export type GetFollowingQuery = {
     isFollowing: boolean;
     name: string;
     username?: string | null;
+    info?: {
+      __typename?: 'Info';
+      bio?: string | null;
+      birthday?: any | null;
+      contact?: string | null;
+      gender?: EGender | null;
+    } | null;
   }>;
 };
 
@@ -867,6 +882,12 @@ export const GetFollowersDocument = /*#__PURE__*/ `
     isFollowing
     name
     username
+    info {
+      bio
+      birthday
+      contact
+      gender
+    }
   }
 }
     `;
@@ -908,6 +929,12 @@ export const GetFollowingDocument = /*#__PURE__*/ `
     isFollowing
     name
     username
+    info {
+      bio
+      birthday
+      contact
+      gender
+    }
   }
 }
     `;

@@ -1,8 +1,10 @@
 import { UsersIcon } from "@heroicons/react/24/outline";
-import { ProfileInformation, useGetFollowersQuery } from "@social-zone/graphql";
+import { Pagination, ProfileInformation, useGetFollowersQuery } from "@social-zone/graphql";
 import { Virtuoso } from 'react-virtuoso';
 import { FC, useState } from "react";
 import { EmptyState, ErrorMessage } from "~ui";
+import UserProfile from "./UserProfile";
+import { useProfileQuery } from "@social-zone/client";
 
 
 interface FollowersProps {
@@ -13,13 +15,15 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
   const [hasMore, setHasMore] = useState(true);
  
 
+
+
   // Variables
  
   const { data, error } = useGetFollowersQuery({
     options: { limit: 15 },
     query: { target: profile.id },
   });
-
+ const {data:currentProfile}=useProfileQuery()
   const followers = data?.getFollowers
   const pageInfo = data?.getFollowers
 
@@ -61,14 +65,25 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
       />
       <Virtuoso
         className="virtual-profile-list"
-        data={followers}
+        data={followers as Pagination[]}
         endReached={onEndReached}
-        itemContent={(index: any, following:any) => {
+        itemContent={(index: any, follower:Pagination) => {
           return (
             <div className="p-5">
-             
-              
-              
+              {profile ? (
+                <UserProfile
+                  profile={follower as Pagination}
+                  isFollowing={follower?.isFollowing}
+                  followUnfollowPosition={index + 1}
+                  showBio
+                  showFollow={
+                    currentProfile?.me?._id !== follower?.id
+                  }
+                  showUserPreview={false}
+                />
+              ) : 
+                null
+              }
             </div>
           );
         }}

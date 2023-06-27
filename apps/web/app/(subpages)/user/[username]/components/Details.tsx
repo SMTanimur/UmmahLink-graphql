@@ -18,8 +18,6 @@ interface DetailsProps {
 
 const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
   const {data}=useProfileQuery()
-  const [showMutualFollowersModal, setShowMutualFollowersModal] =
-    useState(false);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const { resolvedTheme } = useTheme();
   const router = useRouter();

@@ -1,6 +1,6 @@
-
+"use client"
 import { ProfileInformation } from '@social-zone/graphql';
-import { Modal, humanize } from '~ui';
+import { Heading, Modal, humanize } from '~ui';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { UsersIcon } from '@heroicons/react/24/outline';
@@ -29,7 +29,7 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
           {humanize(profile?.followingCount as number)}
         </div>
         <div className="lt-text-gray-500">
-         <span>{profile?.followingCount}</span>
+         <Heading size='h5'>following</Heading>
         </div>
       </button>
       <button
@@ -45,7 +45,7 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
           {humanize(profile?.followersCount as number)}
         </div>
         <div className="lt-text-gray-500">
-          <span>{profile?.followersCount}</span>
+        <Heading size='h5'>followers</Heading>
         </div>
       </button>
       <Modal
