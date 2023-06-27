@@ -18,12 +18,15 @@ import { UpdateUserInput } from './dto/update-user-input';
 import { CreateOrUpdateProfileInput } from '../Info/dto/create-profile.input';
 import { InfoService } from '../Info/Info.service';
 import { Info, InfoDocument } from '../Info/entities/info';
+import { Follow, FollowDocument } from '../follows/entities/follow';
+import { ProfileInformation } from './dto/ProfileData';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: PaginateModel<UserDocument>,
     @InjectModel(Info.name) private infoModel: Model<InfoDocument>,
+    @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
     private readonly infoService: InfoService
   ) {}
 
@@ -89,10 +92,70 @@ export class UsersService {
     return user;
   }
 
-  async findUserByUsername(username: string): Promise<UserWithoutPassword> {
-    const user = await this.userModel.findOne({ username });
-    delete user.password;
-    return user.toJSON();
+  async findUserByUsername(username: string,userDocs:UserDocument): Promise<ProfileInformation> {
+    try {
+      const user = await this.userModel.findOne({ username });
+      if(!user) throw new ConflictException('User not found');
+
+
+      const myFollowingDoc = await this.followModel.find({ user:userDocs._id });
+      const myFollowing = myFollowingDoc.map(user => user.target);
+
+      const [agg] = await this.userModel.aggregate([
+        {
+            $match: { _id: user._id }
+        },
+        {
+            $lookup: { // lookup for followers
+                from: 'follows',
+                localField: '_id',
+                foreignField: 'target',
+                as: 'followers'
+            }
+        },
+        {
+            $lookup: { // lookup for following
+                from: 'follows',
+                localField: '_id',
+                foreignField: 'user',
+                as: 'following'
+            }
+        },
+        {
+            $addFields: {
+                isFollowing: { $in: ['$_id', myFollowing] },
+                isOwnProfile: {
+                    $eq: ['$$CURRENT.username', userDocs.username]
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                id: '$_id',
+                info: 1,
+                email: 1,
+                avatar: 1,
+                coverPicture: 1,
+                username: 1,
+                name: 1,
+                dateJoined: 1,
+                followingCount: { $size: '$following' },
+                followersCount: { $size: '$followers' },
+                isFollowing: 1,
+                isOwnProfile: 1
+            }
+        },
+    ]);
+
+    return agg;
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+   
   }
   async findOne(query: object): Promise<UserDocument> {
     const user = await this.userModel.findOne(query);

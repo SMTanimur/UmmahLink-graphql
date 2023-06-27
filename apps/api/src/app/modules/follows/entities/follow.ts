@@ -22,10 +22,10 @@ export class Follow extends CoreEntity {
   @Field(() => User)
   user: User;
 
-  @IsArray()
-  @Prop({type:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' ,default:[] }]})
-  @Field(() => [User], { nullable: true })
-  target:User[]
+
+  @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
+  @Field(() => User)
+  target:User
 }
 
 export type FollowDocument = Follow & Document

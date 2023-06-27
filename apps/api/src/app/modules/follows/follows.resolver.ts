@@ -53,5 +53,18 @@ export class FollowsResolver {
     return await this.followService.getFollowers(query, options);
   }
 
+  @UseGuards(AuthenticatedGuard)
+  @Query(() =>FollowPagination ,{name:'getSuggestionPeople'})
+  async  getSuggestionPeople(
+    @Args('query') query: FollowQueryArgs,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any,
+  ) {
+    query.user = user._id;
+    return await this.followService.getPeopleSuggestions(query, options);
+  }
+
+
+
   
 }

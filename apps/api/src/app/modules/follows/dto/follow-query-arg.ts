@@ -15,6 +15,6 @@ export class FollowQueryArgs {
   target: string;
 
   @Field((_type) => String,{nullable:true} )
-  type: string;
+  type?: string;
 
 }

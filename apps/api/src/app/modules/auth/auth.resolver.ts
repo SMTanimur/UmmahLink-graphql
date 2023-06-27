@@ -9,10 +9,14 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { Logout } from './guards/logout.guard';
 import { CurrentUser, MessageResponse } from '@social-zone/common';
-import {  LoginInput, LoginResponse } from './dto/login.dto';
-import {  UserWithoutPassword } from '../users/entities/user.entity';
+import { LoginInput, LoginResponse } from './dto/login.dto';
+import {
+  User,
+  UserDocument,
+  UserWithoutPassword,
+} from '../users/entities/user.entity';
 import { SessionAuthGuard } from './guards/session.guard';
-
+import { IUser } from '../users/dto/user';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -22,7 +26,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  @UseGuards(LocalAuthGuard,SessionAuthGuard)
+  @UseGuards(LocalAuthGuard, SessionAuthGuard)
   async login(
     @CurrentUser() user: UserWithoutPassword,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,10 +35,11 @@ export class AuthResolver {
     return { message: `Welcome back! ${user.username}` };
   }
 
-  @Query(() => UserWithoutPassword)
+  @Query(() => IUser, { name: 'me' })
   @UseGuards(AuthenticatedGuard)
-  me(@CurrentUser() user: UserWithoutPassword) {
-    return user
+  me(@CurrentUser() user: UserDocument) {
+    delete user.password;
+    return user;
   }
 
   @UseGuards(Logout)
@@ -42,5 +47,4 @@ export class AuthResolver {
   async logout() {
     return { message: 'Logout Success' };
   }
-
 }
