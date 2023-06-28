@@ -1,4 +1,5 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+
+
 import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC} from "react";
 import { useGlobalModalStateStore } from "../store";
@@ -22,13 +23,12 @@ export const Follow: FC<FollowProps> = ({
   outline = true
 }) => {
 
-  const {data}=useMeQuery()
-  const {FollowLoading,attemptToFollow} =useFollowOrUnFollow()
- 
   const setShowAuthModal = useGlobalModalStateStore(
     (state) => state.setLoginModal
   );
+  const {FollowLoading,attemptToFollow} =useFollowOrUnFollow()
  
+  const {data}=useMeQuery()
   const createFollow = async () => {
     if (!data?.me) {
       setShowAuthModal(true);

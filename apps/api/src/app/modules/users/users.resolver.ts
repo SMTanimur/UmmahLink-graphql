@@ -2,9 +2,9 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
-import { User, UserWithoutPassword } from './entities/user.entity';
+import { User } from './entities/user.entity';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
-import { CurrentUser } from '@social-zone/common';
+import { CurrentUser, MessageResponse } from '@social-zone/common';
 import { UpdateUserInput } from './dto/update-user-input';
 import { CreateOrUpdateProfileInput } from '../Info/dto/create-profile.input';
 import { ProfileInformation } from './dto/ProfileData';
@@ -19,7 +19,7 @@ export class UserResolver {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Mutation(() => String)
+  @Mutation(() => MessageResponse)
   async updateUser(
     @CurrentUser() user: any,
     @Args('input') updateUser: UpdateUserInput

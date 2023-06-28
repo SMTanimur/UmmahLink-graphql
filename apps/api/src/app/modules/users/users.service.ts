@@ -82,7 +82,9 @@ export class UsersService {
     }
     const profile = await this.infoService.create(createOrUpdateProfileInput);
     await this.updateUser(userId, { info: profile._id });
-    return 'Profile updated';
+    return {
+      message: 'Profile updated successfully',
+    }
   }
 
   async findUserById(id: string): Promise<User> {

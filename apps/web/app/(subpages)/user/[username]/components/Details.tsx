@@ -1,23 +1,21 @@
-import { CogIcon } from "@heroicons/react/24/outline";
-import { ProfileInformation } from "@social-zone/graphql";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Dispatch, FC, useState } from "react";
-import { Button, Follow, Image, LightBox, Unfollow } from "~ui";
-import Followerings from "./Followerings";
-import { useProfileQuery } from "@social-zone/client";
-
+import { CogIcon } from '@heroicons/react/24/outline';
+import { ProfileInformation } from '@social-zone/graphql';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Dispatch, FC, useState } from 'react';
+import { Button, Follow, Image, LightBox, Slug, Unfollow } from '~ui';
+import Followerings from './Followerings';
+import { useProfileQuery } from '@social-zone/client';
 
 interface DetailsProps {
-  profile: ProfileInformation
+  profile: ProfileInformation;
   following: boolean;
   setFollowing: Dispatch<boolean>;
-  
 }
 
-const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
-  const {data}=useProfileQuery()
+const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
+  const { data } = useProfileQuery();
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const { resolvedTheme } = useTheme();
   const router = useRouter();
@@ -41,10 +39,6 @@ const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
   //   setSelectedTab(selectedTab);
   //   router.push(`/messages/${conversationKey}`);
   // };
-
- 
-
-
 
   return (
     <div className="mb-4 space-y-5 px-5 sm:px-0">
@@ -82,14 +76,24 @@ const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
           className="flex items-center space-x-3"
           data-testid="profile-handle"
         >
-         
-          {data?.me &&
-            data.me?._id !== profile?.id &&
-            profile?.isFollowing && (
-              <div className="rounded-full bg-gray-200 px-2 py-0.5 text-xs dark:bg-gray-700">
-                <span>Follows you</span>
-              </div>
-            )}
+          {profile?.name ? (
+            <Slug
+              className="text-sm sm:text-base"
+              slug={profile?.username as any}
+              prefix="@"
+            />
+          ) : (
+            <Slug
+              className="text-sm sm:text-base"
+              slug={profile?.username as any}
+            />
+          )}
+
+          {data?.me && data.me?._id !== profile?.id && profile?.isFollowing && (
+            <div className="rounded-full bg-gray-200 px-2 py-0.5 text-xs dark:bg-gray-700">
+              <span>Follows you</span>
+            </div>
+          )}
         </div>
       </div>
       {profile?.info && (
@@ -113,26 +117,20 @@ const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
                 <span>Edit Profile</span>
               </Button>
             </Link>
+          ) : profile?.isFollowing ? (
+            <div className="flex space-x-2">
+              <Unfollow
+                profile={profile}
+                setFollowing={setFollowing}
+                showText
+              />
+              {/* {currentProfile && <Message onClick={onMessageClick} />} */}
+            </div>
           ) : (
-            profile?.isFollowing ? (
-              <div className="flex space-x-2">
-                <Unfollow
-                  profile={profile}
-                  setFollowing={setFollowing}
-                  showText
-                />
-                {/* {currentProfile && <Message onClick={onMessageClick} />} */}
-              </div>
-            )  : (
-              <div className="flex space-x-2">
-                <Follow
-                  profile={profile}
-                  setFollowing={setFollowing}
-                  showText
-                />
-                {/* {currentProfile && <Message onClick={onMessageClick} />} */}
-              </div>
-            )
+            <div className="flex space-x-2">
+              <Follow profile={profile} setFollowing={setFollowing} showText />
+              {/* {currentProfile && <Message onClick={onMessageClick} />} */}
+            </div>
           )}
         </div>
         {/* {currentProfile?.id !== profile?.id && (
@@ -152,7 +150,6 @@ const Details: FC<DetailsProps> = ({ profile,following,setFollowing}) => {
           </>
         )} */}
       </div>
-    
     </div>
   );
 };

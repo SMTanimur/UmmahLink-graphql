@@ -25,6 +25,7 @@ export * from './Heading';
 export * from './Avatar'
 export * from './Hidden'
 export * from './Spinner'
+export * from './TabButton'
 export * from './GridLayout'
 export * from './shared'
 export * from './EmptyState'

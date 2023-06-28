@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {  useFollowUserMutation, useMeQuery, useUnFollowUserMutation } from "@social-zone/graphql";
+import {  useFollowUserMutation, useGetFollowersQuery, useMeQuery, useUnFollowUserMutation } from "@social-zone/graphql";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { ErrorMessage, errorToast } from "~ui";
@@ -26,6 +26,7 @@ const queryClient = useQueryClient();
       loading: 'Logging in...',
       success: ( {followUser:{message} }) => {
         queryClient.invalidateQueries(useMeQuery.getKey());
+        queryClient.invalidateQueries(['UserProfile'])
         return <b>{message}</b>;
       },
       error: (data) => {
@@ -54,6 +55,7 @@ const queryClient = useQueryClient();
         loading: 'Logging in...',
         success: ( {unFollowUser:{message}}) => {
           queryClient.invalidateQueries(useMeQuery.getKey());
+          queryClient.invalidateQueries(['UserProfile'])
           return <b>{message}</b>;
         },
         error: (data) => {

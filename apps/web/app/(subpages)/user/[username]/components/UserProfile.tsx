@@ -1,6 +1,6 @@
 
 "user client"
-import { Pagination, ProfileInformation } from '@social-zone/graphql';
+import { IUser, Pagination, ProfileInformation } from '@social-zone/graphql';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { memo, useState } from 'react';
@@ -8,7 +8,7 @@ import { Follow, Image, Slug, UserPreview, cn, sanitizeDisplayName } from '~ui';
 
 
 interface UserProfileProps {
-  profile: Pagination
+  profile: Pagination 
   followStatusLoading?: boolean;
   isFollowing?: boolean;
   isBig?: boolean;

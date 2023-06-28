@@ -1,3 +1,5 @@
+"use client"
+
 import { Menu } from '@headlessui/react';
 import type { FC } from 'react';
 import { NextLink } from './MenuItems';
@@ -6,10 +8,12 @@ import Logout from './NavItems/Logout';
 
 import YourProfile from './NavItems/YourProfile';
 import { Image, MenuTransition, Slug, cn } from '~ui';
-import { useProfileQuery } from '@social-zone/client';
 import Status from './NavItems/Status';
-import SwitchTheme from './SwitchTheme';
+
 import ThemeSwitch from './ThemeSwitch';
+import { forwardRef } from 'react'
+import { useProfileQuery } from '@social-zone/client';
+import Link from 'next/link';
 
 const SignedUser: FC = () => {
   const {data}=useProfileQuery()
@@ -52,10 +56,10 @@ const SignedUser: FC = () => {
             className="absolute right-0 mt-2 w-48 rounded-xl border bg-white py-1 shadow-sm focus:outline-none dark:border-gray-700 dark:bg-black"
           >
             <Menu.Item
-              as={NextLink}
-              href={`/user/${currentProfile?.username}`}
+              as="div"
               className="m-2 flex items-center rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
             >
+              <Link href={`/user/${currentProfile?.username}`}>
               <span>
                 <span>Logged in as</span>
                 <div className="truncate">
@@ -66,6 +70,7 @@ const SignedUser: FC = () => {
                   />
                 </div>
               </span>
+              </Link>
             </Menu.Item>
             <div className="divider" />
             {/* <Menu.Item
@@ -92,13 +97,15 @@ const SignedUser: FC = () => {
             </Menu.Item>
             <div className="divider" />
             <Menu.Item
-              as={NextLink}
-              href={`/user/${currentProfile?.username}`}
+              
+              as="div"
               className={({ active }: { active: boolean }) =>
                 cn({ 'dropdown-active': active }, 'menu-item ')
               }
             >
+              <Link href={`/user/${currentProfile?.username}`}>
               <YourProfile />
+              </Link>
             </Menu.Item>
           
             <div className="divider" />
@@ -128,4 +135,4 @@ const SignedUser: FC = () => {
   );
 };
 
-export default SignedUser;
+export default SignedUser

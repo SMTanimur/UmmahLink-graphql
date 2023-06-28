@@ -1,0 +1,5 @@
+mutation profileUpdate ($updateUserInput: UpdateUserInput!){
+  updateUser(input: $updateUserInput){
+     message
+  }
+}

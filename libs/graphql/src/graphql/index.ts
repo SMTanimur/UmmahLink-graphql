@@ -217,7 +217,7 @@ export type Mutation = {
   unFollowUser: MessageResponse;
   updateNotification: Scalars['Boolean']['output'];
   updatePost: MessageResponse;
-  updateUser: Scalars['String']['output'];
+  updateUser: MessageResponse;
   uploadMultipleFiles: Array<ResponseSingleUpload>;
   uploadSingleFiles?: Maybe<ResponseSingleUpload>;
 };
@@ -379,7 +379,7 @@ export type ProfileInformation = {
   avatar: Scalars['String']['output'];
   coverPicture?: Maybe<Scalars['String']['output']>;
   dateJoined?: Maybe<Scalars['DateTime']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
   followersCount?: Maybe<Scalars['Float']['output']>;
   followingCount?: Maybe<Scalars['Float']['output']>;
   id: Scalars['ID']['output'];
@@ -564,6 +564,15 @@ export type UnFollowUserMutation = {
   unFollowUser: { __typename: 'MessageResponse'; message: string };
 };
 
+export type ProfileUpdateMutationVariables = Exact<{
+  updateUserInput: UpdateUserInput;
+}>;
+
+export type ProfileUpdateMutation = {
+  __typename?: 'Mutation';
+  updateUser: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type GetFollowersQueryVariables = Exact<{
   options: PaginateOptionArgs;
   query: FollowQueryArgs;
@@ -673,7 +682,7 @@ export type UserProfileQuery = {
     avatar: string;
     coverPicture?: string | null;
     dateJoined?: any | null;
-    email?: string | null;
+    email: string;
     followersCount?: number | null;
     followingCount?: number | null;
     id: string;
@@ -870,6 +879,46 @@ useUnFollowUserMutation.fetcher = (
 ) =>
   fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(
     UnFollowUserDocument,
+    variables,
+    options
+  );
+export const ProfileUpdateDocument = /*#__PURE__*/ `
+    mutation profileUpdate($updateUserInput: UpdateUserInput!) {
+  updateUser(input: $updateUserInput) {
+    message
+  }
+}
+    `;
+export const useProfileUpdateMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ProfileUpdateMutation,
+    TError,
+    ProfileUpdateMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ProfileUpdateMutation,
+    TError,
+    ProfileUpdateMutationVariables,
+    TContext
+  >(
+    ['profileUpdate'],
+    (variables?: ProfileUpdateMutationVariables) =>
+      fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(
+        ProfileUpdateDocument,
+        variables
+      )(),
+    options
+  );
+useProfileUpdateMutation.getKey = () => ['profileUpdate'];
+
+useProfileUpdateMutation.fetcher = (
+  variables: ProfileUpdateMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(
+    ProfileUpdateDocument,
     variables,
     options
   );

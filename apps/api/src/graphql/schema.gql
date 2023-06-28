@@ -178,7 +178,7 @@ type Mutation {
   unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
-  updateUser(input: UpdateUserInput!): String!
+  updateUser(input: UpdateUserInput!): MessageResponse!
   uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
   uploadSingleFiles(file: Upload!): ResponseSingleUpload
 }
@@ -262,7 +262,7 @@ type ProfileInformation {
   avatar: String!
   coverPicture: String
   dateJoined: DateTime
-  email: String
+  email: String!
   followersCount: Float
   followingCount: Float
   id: ID!
