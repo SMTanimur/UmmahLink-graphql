@@ -4,7 +4,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { FC, useState } from "react";
 import { EmptyState, ErrorMessage } from "~ui";
 import UserProfile from "./UserProfile";
-import { useProfileQuery } from "@social-zone/client";
+import { useProfileQuery } from "~ui";
 
 
 interface FollowersProps {

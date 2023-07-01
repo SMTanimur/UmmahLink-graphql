@@ -2,17 +2,14 @@
 
 import { Menu } from '@headlessui/react';
 import type { FC } from 'react';
-import { NextLink } from './MenuItems';
-import AppVersion from './NavItems/AppVersion';
 import Logout from './NavItems/Logout';
 
 import YourProfile from './NavItems/YourProfile';
-import { Image, MenuTransition, Slug, cn } from '~ui';
+import { Image, MenuTransition, Slug, cn, useProfileQuery } from '~ui';
 import Status from './NavItems/Status';
 
 import ThemeSwitch from './ThemeSwitch';
 import { forwardRef } from 'react'
-import { useProfileQuery } from '@social-zone/client';
 import Link from 'next/link';
 
 const SignedUser: FC = () => {
@@ -124,10 +121,6 @@ const SignedUser: FC = () => {
             >
               <ThemeSwitch />
             </Menu.Item>
-            
-        
-            <div className="divider" />
-            <AppVersion />
           </Menu.Items>
         </MenuTransition>
       </Menu>

@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 
 "use client"
 
@@ -8,7 +9,7 @@ import { errorToast } from "../lib";
 import { Button, Spinner } from "../components";
 import { UserMinusIcon } from "@heroicons/react/24/outline";
 import { Errors } from "../types";
-import { useFollowOrUnFollow } from "@social-zone/client";
+import { useFollowOrUnFollow } from "../hooks/follow";
 
 
 interface UnfollowProps {

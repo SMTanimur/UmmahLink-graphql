@@ -2,7 +2,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { Field, InputType, ObjectType, OmitType } from '@nestjs/graphql';
+import {
+  Field,
+  GraphQLISODateTime,
+  InputType,
+  ObjectType,
+  OmitType,
+  registerEnumType,
+} from '@nestjs/graphql';
 import {
   IsEmail,
   IsNotEmpty,
@@ -12,11 +19,29 @@ import {
   IsArray,
   IsMongoId,
   IsDate,
+  IsPhoneNumber
 } from 'class-validator';
-import { Info } from '../../Info/entities/info';
-import { Type } from 'class-transformer';
+
 import { FriendRequest } from '../../friendRequest/entities/friendRequest';
 
+export enum EGender {
+  male = 'male',
+  female = 'female',
+  unspecified = 'unspecified',
+}
+
+registerEnumType(EGender, {
+  name: 'EGender',
+});
+
+// @ObjectType()
+// @InputType()
+// export class UserInformation {
+  
+
+// }
+
+// export const UserInfoSchema = SchemaFactory.createForClass(UserInfo);
 @ObjectType()
 @InputType('UserInputType', { isAbstract: true })
 @Schema({ versionKey: false })
@@ -27,23 +52,33 @@ export class User {
   @Field(() => String)
   email: string;
 
-  @Prop()
+  @Prop({type:String})
   @IsNotEmpty()
   @IsString()
   @Field(() => String)
   name: string;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Info',
-    autopopulate: true,
-  })
-  @ValidateNested()
-  @Type(() => Info)
+  @Prop({type:Date})
   @IsOptional()
-  @Field(() => Info, { nullable: true })
-  info?: Info;
+  @IsDate()
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  birthday?: Date;
 
+  @Prop({ enum: EGender,type:String,default:EGender.unspecified })
+  @Field(() => EGender,{nullable:true})
+  gender: EGender;
+
+  @Prop({type:String})
+  @Field(()=>String,{ nullable: true })
+  @IsString()
+  @IsOptional()
+  bio?: string;
+
+  @Prop({type:String})
+  @Field(()=>String,{ nullable: true })
+  @IsOptional()
+  contact?: string;
+ 
   @Prop({ unique: true })
   @IsNotEmpty()
   @IsString()
@@ -51,7 +86,7 @@ export class User {
   username: string;
 
   @Field({ nullable: true })
-  @Prop({
+  @Prop({type:String,
     default:
       'https://res.cloudinary.com/dk6bdrkbv/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
   })
@@ -59,7 +94,7 @@ export class User {
   avatar?: string;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({type:String})
   @IsOptional()
   coverPicture?: string;
 
@@ -90,15 +125,10 @@ export class User {
   @Field(() => [FriendRequest], { nullable: true, defaultValue: [] })
   friendRequests: FriendRequest[];
 
-  @Prop()
+  @Prop({type:String})
   @IsString()
   @Field(() => String)
   password: string;
-
-
-  @Prop({ type:Date, default: Date.now })
-  @IsDate()
-  dateJoined: Date;
 
   @Prop({
     enum: ['admin', 'user'],
@@ -125,9 +155,5 @@ UserSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, user.password);
 };
 
-
-
 @ObjectType()
 export class UserWithoutPassword extends OmitType(User, ['password']) {}
-
-

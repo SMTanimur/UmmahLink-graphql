@@ -1,7 +1,7 @@
 "use client"
 
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { Image, Slug } from '~ui';

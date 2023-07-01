@@ -6,11 +6,9 @@ query GetFollowers($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
     isFollowing
     name
     username
-    info{
-      bio
-      birthday
-      contact
-      gender
-    }
+    bio
+    birthday
+    contact
+    gender
   }
 }

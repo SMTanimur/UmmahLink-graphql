@@ -1,5 +1,6 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Info } from "../../Info/entities/info";
+import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
+// import { UserInfo } from "../entities/user.entity";
+
 
 
 
@@ -15,8 +16,19 @@ export class ProfileInformation {
   @Field(() => String)
   name:string
 
-  @Field(()=> Info,{nullable:true})
-  info:Info
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  birthday: Date;
+
+
+  @Field(() => String,{nullable:true})
+  gender: string
+
+
+  @Field(()=>String,{ nullable: true })
+  bio: string;
+
+  @Field(()=>String,{ nullable: true })
+  contact?: string;
 
   @Field(() => String)
   avatar:string
@@ -32,9 +44,6 @@ export class ProfileInformation {
 
   @Field(()=>Number,{nullable:true})
   followersCount:number
-  
-  @Field(()=>Date,{nullable:true})
-  dateJoined:Date
 
   @Field(() =>Boolean)
   isFollowing:boolean

@@ -13,12 +13,16 @@ import {
   Notification,
   NotificationSchema,
 } from '../notification/entities/notification';
+import { Follow, FollowSchema } from '../follows/entities/follow';
+import { NewsFeed, NewsFeedSchema } from '../newsFeed/entities/newsFeed';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Post.name, schema: PostSchema },
       { name: Like.name, schema: LikeSchema },
+      { name: Follow.name, schema: FollowSchema },
+      { name: NewsFeed.name, schema: NewsFeedSchema },
       { name: Notification.name, schema: NotificationSchema },
     ]),
     UsersModule,

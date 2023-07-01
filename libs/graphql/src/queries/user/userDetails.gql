@@ -1,17 +1,14 @@
-query UserProfile ($username: String!){
-  user(username: $username){
+query UserProfile($username: String!) {
+  user(username: $username) {
     username
     name
     avatar
     coverPicture
-    info{
-      bio
-      birthday
-      contact
-      gender
-    }
+    bio
+    birthday
+    contact
+    gender
     name
-    dateJoined
     email
     followersCount
     followingCount

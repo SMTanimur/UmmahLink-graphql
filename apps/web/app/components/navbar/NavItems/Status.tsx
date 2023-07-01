@@ -1,6 +1,6 @@
 "use client"
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 
 import clsx from 'clsx';
 import type { FC } from 'react';

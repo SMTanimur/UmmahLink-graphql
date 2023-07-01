@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import SignedUser from './SignedUser';
-import { useAuth } from '@social-zone/client';
+import { useAuth } from '~ui';
 import { LoginButton } from '../modals/LoginButton';
 
 export const NextLink = ({ href, children, ...rest }: Record<string, any>) => (

@@ -1,6 +1,6 @@
 "use client"
 
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 import { IUser, useUserProfileQuery } from '@social-zone/graphql';
 import React, { useState } from 'react'
 import { Card, GridItemEight, GridItemFour, GridLayout, PageLoading, TabButton } from '~ui';

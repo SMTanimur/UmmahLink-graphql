@@ -18,14 +18,6 @@ input CreateFriendRequestInput {
   user: ID
 }
 
-input CreateOrUpdateProfileInput {
-  bio: String
-  birthday: DateTime
-  contact: String
-  gender: EGender
-  user: UserInputType
-}
-
 input CreatePostInput {
   author: UserInputType
   content: String
@@ -122,30 +114,15 @@ type FriendRequestResponse {
 type IUser {
   _id: ID!
   avatar: String!
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
-  dateJoined: DateTime
   email: String
-  info: Info
+  gender: String
   isFollowing: Boolean!
   name: String!
   username: String!
-}
-
-type Info {
-  bio: String
-  birthday: DateTime
-  contact: String
-  gender: EGender
-  id: ID!
-  user: User
-}
-
-input InfoInputType {
-  bio: String
-  birthday: DateTime
-  contact: String
-  gender: EGender
-  user: UserInputType
 }
 
 input LoginInput {
@@ -166,7 +143,6 @@ type Mutation {
   createComment(createCommentInput: CreateCommentInput!): MessageResponse!
   createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
   createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
-  createOrUpdateInfo(createOrUpdateProfileInput: CreateOrUpdateProfileInput!): String!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
   deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
@@ -241,9 +217,12 @@ input PaginateOptionArgs {
 
 type Pagination {
   avatar: String!
+  bio: String
+  birthday: DateTime
+  contact: String
   email: String!
+  gender: String
   id: String!
-  info: Info
   isFollowing: Boolean!
   name: String!
   username: String
@@ -260,13 +239,15 @@ type Post {
 
 type ProfileInformation {
   avatar: String!
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
-  dateJoined: DateTime
   email: String!
   followersCount: Float
   followingCount: Float
+  gender: String
   id: ID!
-  info: Info
   isFollowing: Boolean!
   name: String!
   username: String!
@@ -305,11 +286,14 @@ input UpdatePostInput {
 
 input UpdateUserInput {
   avatar: String
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
   email: String
   friendRequests: [FriendRequestInputType!] = []
   friends: UserInputType
-  info: InfoInputType
+  gender: EGender
   name: String
   password: String
   role: String
@@ -326,11 +310,14 @@ input UploadParamInput {
 
 type User {
   avatar: String
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
   email: String!
   friendRequests: [FriendRequest!]
   friends: User
-  info: Info
+  gender: EGender
   name: String!
   password: String!
   role: String!
@@ -339,11 +326,14 @@ type User {
 
 input UserInputType {
   avatar: String
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
   email: String!
   friendRequests: [FriendRequestInputType!] = []
   friends: UserInputType
-  info: InfoInputType
+  gender: EGender
   name: String!
   password: String!
   role: String!
@@ -357,11 +347,14 @@ type UserResponse {
 
 type UserWithoutPassword {
   avatar: String
+  bio: String
+  birthday: DateTime
+  contact: String
   coverPicture: String
   email: String!
   friendRequests: [FriendRequest!]
   friends: User
-  info: Info
+  gender: EGender
   name: String!
   role: String!
   username: String!

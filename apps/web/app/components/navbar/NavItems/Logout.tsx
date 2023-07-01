@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { useAuth } from '@social-zone/client';
+import { useAuth } from '~ui';
 import clsx from 'clsx';
 import type { FC } from 'react';
 

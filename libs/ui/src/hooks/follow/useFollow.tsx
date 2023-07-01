@@ -1,9 +1,13 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+
+
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {  useFollowUserMutation, useGetFollowersQuery, useMeQuery, useUnFollowUserMutation } from "@social-zone/graphql";
+import {  useFollowUserMutation,  useMeQuery, useUnFollowUserMutation } from "@social-zone/graphql";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { ErrorMessage, errorToast } from "~ui";
+import { errorToast } from "../../lib";
+import { ErrorMessage } from "../../components";
+
 
 
 

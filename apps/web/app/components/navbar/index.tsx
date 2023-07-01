@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { Disclosure } from '@headlessui/react';
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 import {
   BellIcon,
   XMarkIcon,

@@ -1,4 +1,3 @@
-
 import { NewsFeedModule } from './modules/newsFeed/newsfeed.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NotificationModule } from './modules/notification/notification.module';
@@ -17,7 +16,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { UploadModule } from './modules/upload/upload.module';
-import { InfoModule } from './modules/Info/Info.module';
 
 @Module({
   imports: [
@@ -47,7 +45,6 @@ import { InfoModule } from './modules/Info/Info.module';
     }),
     UsersModule,
     UploadModule,
-    InfoModule,
     CoreModule,
     FriendRequestsModule,
   ],

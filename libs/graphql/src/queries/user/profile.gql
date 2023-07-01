@@ -5,12 +5,10 @@ query me {
     name
     email
     coverPicture
-    info {
-      bio
-      birthday
-      contact
-    }
     _id
-    coverPicture
+    bio
+    birthday
+    contact
+    gender
   }
 }

@@ -10,8 +10,7 @@ import {
   useRegisterMutation,
 } from '@social-zone/graphql';
 import { object, string } from 'zod';
-import { ErrorMessage, useZodForm } from '~ui';
-
+import { ErrorMessage, useZodForm } from '../../components';
 
 
 

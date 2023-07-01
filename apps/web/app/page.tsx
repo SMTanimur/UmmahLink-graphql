@@ -4,7 +4,7 @@ import { useMeQuery } from "@social-zone/graphql";
 import { Metadata } from "next";
 import Link from "next/link";
 import WithoutUser from "./home/WithoutUser";
-import { useAuth } from "@social-zone/client";
+import { useAuth } from "~ui";
 
 
 const HomePage = () => {

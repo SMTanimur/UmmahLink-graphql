@@ -98,7 +98,7 @@ const UserProfile: FC<UserProfileProps> = ({
           <UserAvatar />
           <div>
             <UserName />
-            {showBio && profile?.info && (
+            {showBio && profile && (
               <div
                 // Replace with Tailwind
                 style={{ wordBreak: 'break-word' }}

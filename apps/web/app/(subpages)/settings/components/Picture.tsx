@@ -6,7 +6,7 @@ import { ChangeEvent, FC, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Area, Button, ChooseFile,  Errors, Image, Modal, Spinner, errorToast, getCroppedImg, readFile } from '~ui';
 import ImageCropperController from './ImageCropperController';
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 
 
 

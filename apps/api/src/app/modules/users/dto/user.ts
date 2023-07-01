@@ -1,6 +1,24 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql"
-import { Info } from "../../Info/entities/info"
+import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql"
+// import { UserInfo } from "../entities/user.entity"
 
+
+export class UserInformation {
+  
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  birthday: Date;
+
+
+  @Field(() => String)
+  gender: string
+
+
+  @Field(()=>String,{ nullable: true })
+  bio: string;
+
+  @Field(()=>String,{ nullable: true })
+  contact?: string;
+}
 
 
 @ObjectType()
@@ -15,8 +33,17 @@ export class IUser {
   @Field(() => String)
   name:string
 
-  @Field(()=> Info,{nullable:true})
-  info:Info
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  birthday: Date;
+
+  @Field(() => String,{nullable:true})
+  gender: string
+
+  @Field(()=>String,{ nullable: true })
+  bio: string;
+
+  @Field(()=>String,{ nullable: true })
+  contact?: string;
 
   @Field(() => String)
   avatar:string
@@ -27,8 +54,6 @@ export class IUser {
   @Field(()=>String,{nullable:true})
   coverPicture:string
 
-  @Field(()=>Date,{nullable:true})
-  dateJoined:Date
 
   @Field(() =>Boolean)
   isFollowing:boolean

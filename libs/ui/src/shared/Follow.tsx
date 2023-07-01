@@ -1,11 +1,12 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 
 
 import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC} from "react";
 import { useGlobalModalStateStore } from "../store";
-import { useFollowOrUnFollow } from "@social-zone/client";
 import { Button, Spinner } from "../components";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
+import { useFollowOrUnFollow } from "../hooks/follow";
 
 
 

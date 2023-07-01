@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
@@ -19,12 +19,16 @@ import {
   NotificationDocument,
   NotificationType,
 } from '../notification/entities/notification';
+import { Follow, FollowDocument } from '../follows/entities/follow';
+import { NewsFeed, NewsFeedDocument } from '../newsFeed/entities/newsFeed';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
+    @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
+    @InjectModel(NewsFeed.name) private newsModel: Model<NewsFeedDocument>,
     @InjectModel(Notification.name)
     private notificationModel: Model<NotificationDocument>,
     private readonly userService: UsersService
@@ -35,7 +39,28 @@ export class PostsService {
       String(createPostInput.author)
     );
     if (!user) throw new UnauthorizedException('User not found');
-    await this.postModel.create(createPostInput);
+
+  const post=  await this.postModel.create(createPostInput);
+    const myFollowersDoc = await this.followModel.find({ target: createPostInput.author }); // target is yourself
+    const myFollowers = myFollowersDoc.map(user => user.user); // so user property must be used 
+
+    const newsFeeds = myFollowers
+    .map(follower => ({ // add post to follower's newsfeed
+        follower: follower,
+        post: post._id,
+        post_owner: createPostInput.author,
+        createdAt: post.created_at
+    }))
+    .concat({ // append own post on newsfeed
+        follower: createPostInput.author,
+        post_owner: createPostInput.author,
+        post: post._id,
+        createdAt: post.created_at
+    });
+
+if (newsFeeds.length !== 0) {
+    await this.newsModel.insertMany(newsFeeds);
+}
     return { message: 'Post created successfully' };
   }
 

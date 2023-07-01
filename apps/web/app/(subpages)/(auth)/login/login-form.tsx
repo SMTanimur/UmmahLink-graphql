@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useAuth } from '@social-zone/client';
+import { useAuth } from '~ui';
 import Link from 'next/link';
 
 import { Button, Card, Form, Input, PasswordInput, Spinner } from '~ui';

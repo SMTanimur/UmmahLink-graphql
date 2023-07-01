@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+
 
 const BottomNavigation = () => {
   const pathname = usePathname();

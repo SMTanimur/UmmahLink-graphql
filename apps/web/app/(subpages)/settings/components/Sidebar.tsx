@@ -6,8 +6,8 @@ import {
 } from '@heroicons/react/24/outline';
 import UserProfile from '../../user/[username]/components/UserProfile';
 import { FC } from 'react';
-import { useProfileQuery } from '@social-zone/client';
-import { Sidebar } from '~ui';
+
+import { Sidebar,useProfileQuery } from '~ui';
 
 export const SettingsSidebar: FC = () => {
    const {data}= useProfileQuery()

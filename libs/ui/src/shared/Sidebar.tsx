@@ -1,4 +1,4 @@
-
+"use client"
 import Link from 'next/link';
 import type { FC, ReactNode } from 'react';
 import { cn } from '../lib';

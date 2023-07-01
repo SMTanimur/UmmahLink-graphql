@@ -54,14 +54,6 @@ export type CreateFriendRequestInput = {
   user?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type CreateOrUpdateProfileInput = {
-  bio?: InputMaybe<Scalars['String']['input']>;
-  birthday?: InputMaybe<Scalars['DateTime']['input']>;
-  contact?: InputMaybe<Scalars['String']['input']>;
-  gender?: InputMaybe<EGender>;
-  user?: InputMaybe<UserInputType>;
-};
-
 export type CreatePostInput = {
   author?: InputMaybe<UserInputType>;
   content?: InputMaybe<Scalars['String']['input']>;
@@ -157,31 +149,15 @@ export type IUser = {
   __typename?: 'IUser';
   _id: Scalars['ID']['output'];
   avatar: Scalars['String']['output'];
-  coverPicture?: Maybe<Scalars['String']['output']>;
-  dateJoined?: Maybe<Scalars['DateTime']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
-  info?: Maybe<Info>;
-  isFollowing: Scalars['Boolean']['output'];
-  name: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
-
-export type Info = {
-  __typename?: 'Info';
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
-  gender?: Maybe<EGender>;
-  id: Scalars['ID']['output'];
-  user?: Maybe<User>;
-};
-
-export type InfoInputType = {
-  bio?: InputMaybe<Scalars['String']['input']>;
-  birthday?: InputMaybe<Scalars['DateTime']['input']>;
-  contact?: InputMaybe<Scalars['String']['input']>;
-  gender?: InputMaybe<EGender>;
-  user?: InputMaybe<UserInputType>;
+  coverPicture?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
+  isFollowing: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type LoginInput = {
@@ -205,7 +181,6 @@ export type Mutation = {
   createComment: MessageResponse;
   createCommentReply: MessageResponse;
   createFriendRequest: FriendRequestResponse;
-  createOrUpdateInfo: Scalars['String']['output'];
   createPost: MessageResponse;
   createUser: Scalars['String']['output'];
   deleteComment: MessageResponse;
@@ -236,10 +211,6 @@ export type MutationCreateCommentReplyArgs = {
 
 export type MutationCreateFriendRequestArgs = {
   createFriendRequestInput: CreateFriendRequestInput;
-};
-
-export type MutationCreateOrUpdateInfoArgs = {
-  createOrUpdateProfileInput: CreateOrUpdateProfileInput;
 };
 
 export type MutationCreatePostArgs = {
@@ -356,9 +327,12 @@ export type PaginateOptionArgs = {
 export type Pagination = {
   __typename?: 'Pagination';
   avatar: Scalars['String']['output'];
+  bio?: Maybe<Scalars['String']['output']>;
+  birthday?: Maybe<Scalars['DateTime']['output']>;
+  contact?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
+  gender?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  info?: Maybe<Info>;
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username?: Maybe<Scalars['String']['output']>;
@@ -377,13 +351,15 @@ export type Post = {
 export type ProfileInformation = {
   __typename?: 'ProfileInformation';
   avatar: Scalars['String']['output'];
+  bio?: Maybe<Scalars['String']['output']>;
+  birthday?: Maybe<Scalars['DateTime']['output']>;
+  contact?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
-  dateJoined?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
   followersCount?: Maybe<Scalars['Float']['output']>;
   followingCount?: Maybe<Scalars['Float']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  info?: Maybe<Info>;
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -462,11 +438,14 @@ export type UpdatePostInput = {
 
 export type UpdateUserInput = {
   avatar?: InputMaybe<Scalars['String']['input']>;
+  bio?: InputMaybe<Scalars['String']['input']>;
+  birthday?: InputMaybe<Scalars['DateTime']['input']>;
+  contact?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
-  info?: InputMaybe<InfoInputType>;
+  gender?: InputMaybe<EGender>;
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
@@ -481,11 +460,14 @@ export type UploadParamInput = {
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']['output']>;
+  bio?: Maybe<Scalars['String']['output']>;
+  birthday?: Maybe<Scalars['DateTime']['output']>;
+  contact?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
-  info?: Maybe<Info>;
+  gender?: Maybe<EGender>;
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
   role: Scalars['String']['output'];
@@ -494,11 +476,14 @@ export type User = {
 
 export type UserInputType = {
   avatar?: InputMaybe<Scalars['String']['input']>;
+  bio?: InputMaybe<Scalars['String']['input']>;
+  birthday?: InputMaybe<Scalars['DateTime']['input']>;
+  contact?: InputMaybe<Scalars['String']['input']>;
   coverPicture?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
-  info?: InputMaybe<InfoInputType>;
+  gender?: InputMaybe<EGender>;
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   role: Scalars['String']['input'];
@@ -514,11 +499,14 @@ export type UserResponse = {
 export type UserWithoutPassword = {
   __typename?: 'UserWithoutPassword';
   avatar?: Maybe<Scalars['String']['output']>;
+  bio?: Maybe<Scalars['String']['output']>;
+  birthday?: Maybe<Scalars['DateTime']['output']>;
+  contact?: Maybe<Scalars['String']['output']>;
   coverPicture?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
-  info?: Maybe<Info>;
+  gender?: Maybe<EGender>;
   name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -588,13 +576,10 @@ export type GetFollowersQuery = {
     isFollowing: boolean;
     name: string;
     username?: string | null;
-    info?: {
-      __typename?: 'Info';
-      bio?: string | null;
-      birthday?: any | null;
-      contact?: string | null;
-      gender?: EGender | null;
-    } | null;
+    bio?: string | null;
+    birthday?: any | null;
+    contact?: string | null;
+    gender?: string | null;
   }>;
 };
 
@@ -606,20 +591,17 @@ export type GetFollowingQueryVariables = Exact<{
 export type GetFollowingQuery = {
   __typename?: 'Query';
   getFollowing: Array<{
-    __typename?: 'Pagination';
+    __typename: 'Pagination';
     avatar: string;
     email: string;
     id: string;
     isFollowing: boolean;
     name: string;
     username?: string | null;
-    info?: {
-      __typename?: 'Info';
-      bio?: string | null;
-      birthday?: any | null;
-      contact?: string | null;
-      gender?: EGender | null;
-    } | null;
+    contact?: string | null;
+    birthday?: any | null;
+    bio?: string | null;
+    gender?: string | null;
   }>;
 };
 
@@ -660,12 +642,10 @@ export type MeQuery = {
     email?: string | null;
     coverPicture?: string | null;
     _id: string;
-    info?: {
-      __typename?: 'Info';
-      bio?: string | null;
-      birthday?: any | null;
-      contact?: string | null;
-    } | null;
+    bio?: string | null;
+    birthday?: any | null;
+    contact?: string | null;
+    gender?: string | null;
   };
 };
 
@@ -681,19 +661,15 @@ export type UserProfileQuery = {
     name: string;
     avatar: string;
     coverPicture?: string | null;
-    dateJoined?: any | null;
+    bio?: string | null;
+    birthday?: any | null;
+    contact?: string | null;
+    gender?: string | null;
     email: string;
     followersCount?: number | null;
     followingCount?: number | null;
     id: string;
     isFollowing: boolean;
-    info?: {
-      __typename?: 'Info';
-      bio?: string | null;
-      birthday?: any | null;
-      contact?: string | null;
-      gender?: EGender | null;
-    } | null;
   } | null;
 };
 
@@ -931,12 +907,10 @@ export const GetFollowersDocument = /*#__PURE__*/ `
     isFollowing
     name
     username
-    info {
-      bio
-      birthday
-      contact
-      gender
-    }
+    bio
+    birthday
+    contact
+    gender
   }
 }
     `;
@@ -978,12 +952,11 @@ export const GetFollowingDocument = /*#__PURE__*/ `
     isFollowing
     name
     username
-    info {
-      bio
-      birthday
-      contact
-      gender
-    }
+    contact
+    birthday
+    bio
+    gender
+    __typename
   }
 }
     `;
@@ -1071,13 +1044,11 @@ export const MeDocument = /*#__PURE__*/ `
     name
     email
     coverPicture
-    info {
-      bio
-      birthday
-      contact
-    }
     _id
-    coverPicture
+    bio
+    birthday
+    contact
+    gender
   }
 }
     `;
@@ -1104,14 +1075,11 @@ export const UserProfileDocument = /*#__PURE__*/ `
     name
     avatar
     coverPicture
-    info {
-      bio
-      birthday
-      contact
-      gender
-    }
+    bio
+    birthday
+    contact
+    gender
     name
-    dateJoined
     email
     followersCount
     followingCount

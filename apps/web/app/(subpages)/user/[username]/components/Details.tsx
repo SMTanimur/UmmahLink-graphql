@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, FC, useState } from 'react';
 import { Button, Follow, Image, LightBox, Slug, Unfollow } from '~ui';
 import Followerings from './Followerings';
-import { useProfileQuery } from '@social-zone/client';
+import { useProfileQuery } from '~ui';
 
 interface DetailsProps {
   profile: ProfileInformation;
@@ -96,12 +96,12 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
           )}
         </div>
       </div>
-      {profile?.info && (
+      {profile && (
         <div
           className="markup linkify text-md mr-0 break-words sm:mr-10"
           data-testid="profile-bio"
         >
-          <span>{profile?.info?.bio}</span>
+          <span>{profile?.bio}</span>
         </div>
       )}
       <div className="space-y-5">
