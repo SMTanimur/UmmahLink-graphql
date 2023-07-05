@@ -38,6 +38,15 @@ export type Scalars = {
   Upload: { input: any; output: any };
 };
 
+export type Author = {
+  __typename?: 'Author';
+  avatar: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
 export type CloseRequestInput = {
   status: Scalars['String']['input'];
   target?: InputMaybe<Scalars['ID']['input']>;
@@ -55,9 +64,9 @@ export type CreateFriendRequestInput = {
 };
 
 export type CreatePostInput = {
-  author?: InputMaybe<UserInputType>;
+  _author_id?: InputMaybe<UserInputType>;
   content?: InputMaybe<Scalars['String']['input']>;
-  image?: InputMaybe<Scalars['String']['input']>;
+  photos?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type CreatePostOrCommentLikeInput = {
@@ -122,9 +131,8 @@ export type FollowPagination = {
 };
 
 export type FollowQueryArgs = {
-  target?: InputMaybe<Scalars['ID']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<Scalars['ID']['input']>;
+  user?: InputMaybe<UserInputType>;
 };
 
 export type FriendRequest = {
@@ -266,6 +274,38 @@ export type MutationUploadSingleFilesArgs = {
   file: Scalars['Upload']['input'];
 };
 
+export type NewsFeedPaginate = {
+  __typename?: 'NewsFeedPaginate';
+  author: Author;
+  commentsCount?: Maybe<Scalars['Float']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  isLiked?: Maybe<Scalars['Boolean']['output']>;
+  isOwnPost?: Maybe<Scalars['Boolean']['output']>;
+  likesCount?: Maybe<Scalars['Float']['output']>;
+  photos?: Maybe<Array<Scalars['String']['output']>>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NewsFeedPagination = {
+  __typename?: 'NewsFeedPagination';
+  docs?: Maybe<Array<Maybe<NewsFeedPaginate>>>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Float']['output'];
+  nextPage?: Maybe<Scalars['Float']['output']>;
+  page: Scalars['Float']['output'];
+  pagingCounter: Scalars['Float']['output'];
+  prevPage?: Maybe<Scalars['Float']['output']>;
+  totalDocs: Scalars['Float']['output'];
+  totalPages: Scalars['Float']['output'];
+};
+
+export type NewsFeedQueryArgs = {
+  user?: InputMaybe<UserInputType>;
+};
+
 export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID']['output'];
@@ -320,6 +360,7 @@ export type PaginateOptionArgs = {
   page?: InputMaybe<Scalars['Float']['input']>;
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
   select?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -340,12 +381,15 @@ export type Pagination = {
 
 export type Post = {
   __typename?: 'Post';
-  author?: Maybe<User>;
+  _author_id?: Maybe<User>;
   comments?: Maybe<Array<User>>;
   content?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  image?: Maybe<Scalars['String']['output']>;
+  /** Created At */
+  createdAt: Scalars['DateTime']['output'];
   likes?: Maybe<Array<User>>;
+  photos?: Maybe<Array<Scalars['String']['output']>>;
+  /** Updated At */
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type ProfileInformation = {
@@ -367,8 +411,10 @@ export type ProfileInformation = {
 
 export type Query = {
   __typename?: 'Query';
+  getFeeds?: Maybe<NewsFeedPagination>;
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
+  getPosts?: Maybe<NewsFeedPagination>;
   getSuggestionPeople: FollowPagination;
   item: Scalars['String']['output'];
   me: IUser;
@@ -377,14 +423,27 @@ export type Query = {
   user?: Maybe<ProfileInformation>;
 };
 
+export type QueryGetFeedsArgs = {
+  option: PaginateOptionArgs;
+  query: NewsFeedQueryArgs;
+};
+
 export type QueryGetFollowersArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
+  username: Scalars['String']['input'];
 };
 
 export type QueryGetFollowingArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
+  username: Scalars['String']['input'];
+};
+
+export type QueryGetPostsArgs = {
+  option: PaginateOptionArgs;
+  query: NewsFeedQueryArgs;
+  username: Scalars['String']['input'];
 };
 
 export type QueryGetSuggestionPeopleArgs = {
@@ -403,6 +462,7 @@ export type QueryNotificationsArgs = {
   pagination?: InputMaybe<Scalars['Boolean']['input']>;
   query: NotificationQueryArgs;
   select?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -426,13 +486,16 @@ export type ResponseSingleUpload = {
 };
 
 export type UpdatePostInput = {
-  author?: InputMaybe<UserInputType>;
+  _author_id?: InputMaybe<UserInputType>;
   comments?: InputMaybe<Array<UserInputType>>;
   content?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  image?: InputMaybe<Scalars['String']['input']>;
+  /** Created At */
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   likes?: InputMaybe<Array<UserInputType>>;
+  photos?: InputMaybe<Array<Scalars['String']['input']>>;
   postId: Scalars['ID']['input'];
+  /** Updated At */
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   user?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -552,6 +615,15 @@ export type UnFollowUserMutation = {
   unFollowUser: { __typename: 'MessageResponse'; message: string };
 };
 
+export type CreatePostMutationVariables = Exact<{
+  createPost: CreatePostInput;
+}>;
+
+export type CreatePostMutation = {
+  __typename?: 'Mutation';
+  createPost: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type ProfileUpdateMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
 }>;
@@ -562,6 +634,7 @@ export type ProfileUpdateMutation = {
 };
 
 export type GetFollowersQueryVariables = Exact<{
+  username: Scalars['String']['input'];
   options: PaginateOptionArgs;
   query: FollowQueryArgs;
 }>;
@@ -584,6 +657,7 @@ export type GetFollowersQuery = {
 };
 
 export type GetFollowingQueryVariables = Exact<{
+  username: Scalars['String']['input'];
   options: PaginateOptionArgs;
   query: FollowQueryArgs;
 }>;
@@ -858,6 +932,46 @@ useUnFollowUserMutation.fetcher = (
     variables,
     options
   );
+export const CreatePostDocument = /*#__PURE__*/ `
+    mutation CreatePost($createPost: CreatePostInput!) {
+  createPost(createPostInput: $createPost) {
+    message
+  }
+}
+    `;
+export const useCreatePostMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreatePostMutation,
+    TError,
+    CreatePostMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreatePostMutation,
+    TError,
+    CreatePostMutationVariables,
+    TContext
+  >(
+    ['CreatePost'],
+    (variables?: CreatePostMutationVariables) =>
+      fetcher<CreatePostMutation, CreatePostMutationVariables>(
+        CreatePostDocument,
+        variables
+      )(),
+    options
+  );
+useCreatePostMutation.getKey = () => ['CreatePost'];
+
+useCreatePostMutation.fetcher = (
+  variables: CreatePostMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<CreatePostMutation, CreatePostMutationVariables>(
+    CreatePostDocument,
+    variables,
+    options
+  );
 export const ProfileUpdateDocument = /*#__PURE__*/ `
     mutation profileUpdate($updateUserInput: UpdateUserInput!) {
   updateUser(input: $updateUserInput) {
@@ -899,8 +1013,8 @@ useProfileUpdateMutation.fetcher = (
     options
   );
 export const GetFollowersDocument = /*#__PURE__*/ `
-    query GetFollowers($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
-  getFollowers(option: $options, query: $query) {
+    query GetFollowers($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowers(username: $username, option: $options, query: $query) {
     avatar
     email
     id
@@ -944,8 +1058,8 @@ useGetFollowersQuery.fetcher = (
     options
   );
 export const GetFollowingDocument = /*#__PURE__*/ `
-    query GetFollowing($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
-  getFollowing(option: $options, query: $query) {
+    query GetFollowing($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowing(username: $username, option: $options, query: $query) {
     avatar
     email
     id

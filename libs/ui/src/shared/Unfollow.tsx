@@ -1,6 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-
-"use client"
 
 import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC } from "react";

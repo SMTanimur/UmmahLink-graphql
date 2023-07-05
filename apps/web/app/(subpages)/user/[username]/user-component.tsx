@@ -2,9 +2,10 @@
 
 import { ProfileInformation, useUserProfileQuery } from "@social-zone/graphql";
 import { useState } from "react";
-import { GridItemFour, GridLayout, ProfilePostType, STATIC_IMAGES_URL } from "~ui";
+import { GridItemEight, GridItemFour, GridLayout, NewPost, ProfilePostType, STATIC_IMAGES_URL, useProfileQuery } from "~ui";
 import Cover from "./components/Cover";
 import Details from "./components/Details";
+import FeedType from "./components/FeedType";
 
 type UserComponentProps = {
    username: string;
@@ -14,8 +15,9 @@ export default function UserComponent( { username,type } : UserComponentProps) {
 
   const {data}= useUserProfileQuery({username})
   const [following, setFollowing] = useState<boolean | null>(null);
+  const {data:me}=useProfileQuery()
 
-  const [postType, setPostType] = useState(
+  const [feedType, setFeedType] = useState(
     type &&
       ['posts', 'info', 'friends'].includes(type as string)
       ? type.toString().toUpperCase()
@@ -44,23 +46,15 @@ export default function UserComponent( { username,type } : UserComponentProps) {
             setFollowing={setFollowing}
           />
         </GridItemFour>
-        {/* <GridItemEight className="space-y-5">
+        <GridItemEight className="space-y-5">
           <FeedType setFeedType={setFeedType} feedType={feedType} />
-          {currentProfile?.id === profile?.id ? <NewPost /> : null}
-          {(feedType === ProfileFeedType.Feed ||
-            feedType === ProfileFeedType.Replies ||
-            feedType === ProfileFeedType.Media ||
-            feedType === ProfileFeedType.Collects) && (
+          {me?.me?._id === data?.user?.id ? <NewPost /> : null}
+          {/* {(feedType === ProfilePostType.Post ||
+            feedType === ProfilePostType.Followers ||
+            feedType === ProfilePostType.Following) && (
             <Feed profile={profile as Profile} type={feedType} />
-          )}
-          {feedType === ProfileFeedType.Nft ? (
-            isNftGalleryEnabled ? (
-              <NftGallery profile={profile as Profile} />
-            ) : (
-              <NftFeed profile={profile as Profile} />
-            )
-          ) : null}
-        </GridItemEight> */}
+          )} */}
+        </GridItemEight>
       </GridLayout>
     </>
   )

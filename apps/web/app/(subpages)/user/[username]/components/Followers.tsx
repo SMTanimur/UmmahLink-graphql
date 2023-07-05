@@ -20,8 +20,9 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
   // Variables
  
   const { data, error } = useGetFollowersQuery({
+    username: profile.username,
     options: { limit: 15 },
-    query: { target: profile.id },
+    query: {type:'followers'},
   });
  const {data:currentProfile}=useProfileQuery()
   const followers = data?.getFollowers

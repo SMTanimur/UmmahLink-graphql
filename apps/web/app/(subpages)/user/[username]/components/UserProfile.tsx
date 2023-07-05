@@ -1,14 +1,20 @@
-
-"user client"
+'user client';
 import { IUser, Pagination, ProfileInformation } from '@social-zone/graphql';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { memo, useState } from 'react';
-import { Follow, Image, Slug, UserPreview, cn, sanitizeDisplayName } from '~ui';
-
+import {
+  Follow,
+  Image,
+  Slug,
+  Unfollow,
+  UserPreview,
+  cn,
+  sanitizeDisplayName,
+} from '~ui';
 
 interface UserProfileProps {
-  profile: Pagination 
+  profile: Pagination;
   followStatusLoading?: boolean;
   isFollowing?: boolean;
   isBig?: boolean;
@@ -32,14 +38,10 @@ const UserProfile: FC<UserProfileProps> = ({
   linkToProfile = true,
   showBio = false,
   showFollow = false,
-  showStatus = false,
   showUserPreview = true,
   timestamp = '',
-  followUnfollowPosition,
-  followUnfollowSource
 }) => {
   const [following, setFollowing] = useState(isFollowing);
-  
 
   const UserAvatar = () => (
     <Image
@@ -60,8 +62,7 @@ const UserProfile: FC<UserProfileProps> = ({
       <div className="flex max-w-sm items-center">
         <div className={cn(isBig ? 'font-bold' : 'text-md', 'grid')}>
           <div className="truncate">
-            {sanitizeDisplayName(profile?.name) ??
-              profile?.name}
+            {sanitizeDisplayName(profile?.name) ?? profile?.name}
           </div>
         </div>
         {/* {isVerified(profile?.id) && (
@@ -69,11 +70,7 @@ const UserProfile: FC<UserProfileProps> = ({
         )} */}
       </div>
       <div>
-        <Slug
-          className="text-sm"
-          slug={profile?.username as any}
-          prefix="@"
-        />
+        <Slug className="text-sm" slug={profile?.username as any} prefix="@" />
         {timestamp ? (
           <span className="lt-text-gray-500">
             <span className="mx-1.5">·</span>
@@ -129,15 +126,27 @@ const UserProfile: FC<UserProfileProps> = ({
       ) : (
         <UserInfo />
       )}
-      {showFollow &&
-        
-          (
-            <Follow
+
+      {following ? (
+        <Unfollow
+          profile={profile as ProfileInformation}
+          setFollowing={setFollowing}
+        />
+      ) : (
+        showFollow && (
+          <Follow
             profile={profile as ProfileInformation}
             setFollowing={setFollowing}
           />
-          )
-       }
+        )
+      )}
+      {/* {showFollow && (
+        <Follow
+          profile={profile as ProfileInformation}
+          setFollowing={setFollowing}
+        />
+      )}
+      {} */}
     </div>
   );
 };

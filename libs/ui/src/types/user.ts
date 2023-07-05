@@ -11,7 +11,9 @@ export interface ICurrentUser {
 export enum ProfilePostType {
   Post = 'POSTS',
   Info = 'INFO',
-  Friend = 'FRIENDS'
+  Friend = 'FRIENDS',
+  Followers = 'FOLLOWERS',
+  Following = 'FOLLOWING',
   
 }
 

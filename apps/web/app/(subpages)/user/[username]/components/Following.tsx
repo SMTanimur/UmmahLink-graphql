@@ -1,51 +1,49 @@
-
 import { UsersIcon } from '@heroicons/react/24/outline';
 import { Virtuoso } from 'react-virtuoso';
-import { Pagination, ProfileInformation, useGetFollowingQuery } from '@social-zone/graphql';
+import {
+  Pagination,
+  ProfileInformation,
+  useGetFollowingQuery,
+} from '@social-zone/graphql';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { EmptyState } from '~ui';
 import UserProfile from './UserProfile';
 
 interface FollowingProps {
-  profile: ProfileInformation
+  profile: ProfileInformation;
   onProfileSelected?: (profile: Pagination) => void;
 }
 
 const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
   const [hasMore, setHasMore] = useState(true);
 
-    const {data} =useGetFollowingQuery({options:{limit:15},query:{target:profile.id}})
+  const { data } = useGetFollowingQuery({
+    username: profile.username,
+    options: { limit: 15 },
+    query: { type: 'following' },
+  });
 
-  const followings = data?.getFollowing
-  
+  const followings = data?.getFollowing;
+
   const onEndReached = async () => {
     // if (!hasMore) {
     //   return;
     // }
-
     // setHasMore(data?.getFollowing?.length > 0)
-
     // await refetch({
-      
     // }).then(({ data }) => {
     //   setHasMore(data?.following?.length > 0);
     // });
   };
-
- 
 
   if (followings?.length === 0) {
     return (
       <EmptyState
         message={
           <div>
-            <span className="mr-1 font-bold">
-              @{profile.username}
-            </span>
-            <span>
-              doesn’t follow anyone.
-            </span>
+            <span className="mr-1 font-bold">@{profile.username}</span>
+            <span>doesn’t follow anyone.</span>
           </div>
         }
         icon={<UsersIcon className="text-brand h-8 w-8" />}
@@ -60,12 +58,12 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       data-testid="followings-modal"
     >
       <h2>hellod</h2>
-    
+
       <Virtuoso
         className="virtual-profile-list"
-        data={followings as Pagination[] }
+        data={followings as Pagination[]}
         endReached={onEndReached}
-        itemContent={(index: any, following:Pagination) => {
+        itemContent={(index: any, following: Pagination) => {
           return (
             <div
               className={`p-5 ${
@@ -82,7 +80,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
               aria-hidden="true"
             >
               <UserProfile
-                profile={following as Pagination }
+                profile={following as Pagination}
                 linkToProfile={!onProfileSelected}
                 isFollowing={following?.isFollowing}
                 followUnfollowPosition={index + 1}

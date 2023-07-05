@@ -1,5 +1,5 @@
-query GetFollowing($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
-  getFollowing(option: $options, query: $query) {
+query GetFollowing($username:String!,$options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
+  getFollowing(username: $username,option: $options, query: $query) {
     avatar
     email
     id

@@ -11,6 +11,7 @@ export * from './input/Input';
 export * from './input/TextArea';
 export * from './helpToolTip';
 export * from './Card';
+export * from './composer'
 export * from './image';
 export * from './lightbox';
 export * from './menu';

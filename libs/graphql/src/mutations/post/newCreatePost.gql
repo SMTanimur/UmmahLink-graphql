@@ -1,0 +1,5 @@
+mutation CreatePost ($createPost:CreatePostInput!){
+  createPost(createPostInput: $createPost){
+    message
+  }
+}
