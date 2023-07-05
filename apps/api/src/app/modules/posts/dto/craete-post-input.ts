@@ -8,6 +8,6 @@ import { Post } from "../entities/post";
 @InputType()
 export class CreatePostInput extends PickType(
   Post,
-  ['author','content','image'],
+  ['_author_id','content','photos'],
   InputType
 ) {}

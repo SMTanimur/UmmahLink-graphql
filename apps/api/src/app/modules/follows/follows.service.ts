@@ -93,8 +93,8 @@ export class FollowsService {
           return {
             follower: currentUser._id,
             post: post._id,
-            post_owner: post.author,
-            createdAt: post.created_at,
+            post_owner: post._author_id,
+            createdAt: post.createdAt,
           };
         });
 
@@ -135,38 +135,43 @@ export class FollowsService {
   }
 
   async getFollowers(
+    username:string,
     query?: FilterQuery<FollowQueryArgs>,
     options?: AggregateOptions
   ) {
     try {
       const { user, type } = query;
-      const myFollowingDoc = this.followModel.find({ user: user });
-      const myFollowing = (await myFollowingDoc).map((user) => user.target); // map to array of user IDs
+      const userInfo = await this.userModel.findOne({username})
+      if(!userInfo) throw new NotFoundException('User not found')
+
+
+      const myFollowingDoc = await this.followModel.find({ user: user._id });
+      const myFollowing =  myFollowingDoc.map((user) => user.target); // map to array of user IDs
+      const matchCondition = type === 'followers' ? { target: user._id } : { user: user._id }
       const aggregate = await this.followModel.aggregate([
         {
-          $match: {
-            ...(user ? { user: user } : {}),
-          },
+          $match: matchCondition
+          
         },
         {
           $limit: options.limit | 5,
         },
         {
           $lookup: {
-            from: 'users',
-            localField: type === 'following' ? 'target' : 'user',
-            foreignField: '_id',
-            as: 'user',
-          },
-        },
-        {
-          $unwind: '$user',
-        },
-        {
+              from: 'users',
+              localField: type === 'following' ? 'target' : 'user',
+              foreignField: '_id',
+              as: 'user'
+          }
+      },
+      {
+          $unwind: '$user'
+      },
+      {
           $addFields: {
-            isFollowing: { $in: ['$user._id', myFollowing] },
-          },
-        },
+              isFollowing: { $in: ['$user._id', myFollowing] }
+          }
+      },
         {
           $project: {
             _id: 0,

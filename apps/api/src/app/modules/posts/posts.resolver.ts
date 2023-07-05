@@ -1,13 +1,15 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
-import { CurrentUser, MessageResponse } from '@social-zone/common';
+import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
 import { Post } from './entities/post';
 import { CreatePostInput } from './dto/craete-post-input';
 import { PostsService } from './posts.service';
 import { UpdatePostInput } from './dto/update-post-input';
 import { DeletePostInput } from './dto/delete-post-input';
 import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like';
+import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
+import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 
 
 @Resolver(() => Post)
@@ -21,7 +23,7 @@ export class PostResolver {
     @Args('createPostInput')
     createPostInput: CreatePostInput
   ) {
-    createPostInput.author = user._id;
+    createPostInput._author_id = user._id;
     return await this.postService.createPost(createPostInput);
   }
 
@@ -62,5 +64,18 @@ export class PostResolver {
     likePostInput.user = user._id;
     likePostInput.type = 'Post'
     return await this.postService.likePost(likePostInput);
+  }
+
+
+  @UseGuards(AuthenticatedGuard)
+  @Query(() =>NewsFeedPagination ,{name:'getPosts',nullable:true})
+  async  getSuggestionPeople(
+    @Args('username', { type: () => String }) username: string,
+    @Args('query') query: NewsFeedQueryArgs,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any,
+  ) {
+    query.user = user
+    return await this.postService.getPosts(username,query, options);
   }
 }

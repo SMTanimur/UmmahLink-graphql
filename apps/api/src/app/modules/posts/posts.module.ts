@@ -15,6 +15,7 @@ import {
 } from '../notification/entities/notification';
 import { Follow, FollowSchema } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedSchema } from '../newsFeed/entities/newsFeed';
+import { User, UserSchema } from '../users/entities/user.entity';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { NewsFeed, NewsFeedSchema } from '../newsFeed/entities/newsFeed';
       { name: Post.name, schema: PostSchema },
       { name: Like.name, schema: LikeSchema },
       { name: Follow.name, schema: FollowSchema },
+      { name: User.name, schema: UserSchema },
       { name: NewsFeed.name, schema: NewsFeedSchema },
       { name: Notification.name, schema: NotificationSchema },
     ]),

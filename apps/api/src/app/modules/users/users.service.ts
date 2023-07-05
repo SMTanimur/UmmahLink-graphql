@@ -3,7 +3,7 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 
 import { Model, PaginateModel } from 'mongoose';
@@ -25,8 +25,10 @@ export class UsersService {
   async createUser(createUser: CreateUserInput): Promise<string> {
     try {
       const user = await this.userModel.findOne({
-        email: createUser.email,
-        username: createUser.username,
+      $or:[
+        {email:createUser.email},
+        {username:createUser.username}
+      ]
       });
       if (user) {
         throw new ConflictException('User already exists');
@@ -35,7 +37,7 @@ export class UsersService {
       const userData = await (await this.userModel.create(createUser)).toJSON();
       return `Welcome ${userData.username}!`;
     } catch (error) {
-      console.log(error);
+     throw new BadRequestException()
     }
   }
 
@@ -81,7 +83,7 @@ export class UsersService {
 
   async findUserById(id: string): Promise<User> {
     const user = await this.userModel.findOne({ _id: id }).select('-password');
-    if (!user) return null;
+    if (!user) throw new ConflictException('User not found');
 
     return user;
   }

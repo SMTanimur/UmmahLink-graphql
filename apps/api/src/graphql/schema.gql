@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Author {
+  avatar: String!
+  email: String!
+  id: ID
+  name: String!
+  username: String!
+}
+
 input CloseRequestInput {
   status: String!
   target: ID
@@ -19,9 +27,9 @@ input CreateFriendRequestInput {
 }
 
 input CreatePostInput {
-  author: UserInputType
+  _author_id: UserInputType
   content: String
-  image: String
+  photos: [String!]
 }
 
 input CreatePostOrCommentLikeInput {
@@ -90,9 +98,8 @@ type FollowPagination {
 }
 
 input FollowQueryArgs {
-  target: ID
   type: String
-  user: ID
+  user: UserInputType
 }
 
 type FriendRequest {
@@ -159,6 +166,36 @@ type Mutation {
   uploadSingleFiles(file: Upload!): ResponseSingleUpload
 }
 
+type NewsFeedPaginate {
+  author: Author!
+  commentsCount: Float
+  content: String
+  createdAt: DateTime
+  id: String
+  isLiked: Boolean
+  isOwnPost: Boolean
+  likesCount: Float
+  photos: [String!]
+  updatedAt: DateTime
+}
+
+type NewsFeedPagination {
+  docs: [NewsFeedPaginate]
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Float!
+  nextPage: Float
+  page: Float!
+  pagingCounter: Float!
+  prevPage: Float
+  totalDocs: Float!
+  totalPages: Float!
+}
+
+input NewsFeedQueryArgs {
+  user: UserInputType
+}
+
 type Notification {
   id: ID!
   initiator: ID
@@ -206,11 +243,12 @@ input PaginateOptionArgs {
   forceCountFn: Boolean
   lean: Boolean
   leanWithId: Boolean
-  limit: Float
+  limit: Float = 15
   offset: Float
-  page: Float
+  page: Float = 1
   pagination: Boolean
   select: String
+  skip: Float
   sort: String
   useEstimatedCount: Boolean
 }
@@ -229,12 +267,17 @@ type Pagination {
 }
 
 type Post {
-  author: User
+  _author_id: User
   comments: [User!]
   content: String
-  id: ID!
-  image: String
+
+  """Created At"""
+  createdAt: DateTime!
   likes: [User!]
+  photos: [String!]
+
+  """Updated At"""
+  updatedAt: DateTime!
 }
 
 type ProfileInformation {
@@ -254,12 +297,14 @@ type ProfileInformation {
 }
 
 type Query {
-  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
-  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!): [Pagination!]!
+  getFeeds(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!): NewsFeedPagination
+  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
+  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
+  getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination!
   item: String!
   me: IUser!
-  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float, offset: Float, page: Float, pagination: Boolean, query: NotificationQueryArgs!, select: String, sort: String, useEstimatedCount: Boolean): NotificationPagination!
+  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 15, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
   user(username: String!): ProfileInformation
 }
@@ -274,13 +319,18 @@ type ResponseSingleUpload {
 }
 
 input UpdatePostInput {
-  author: UserInputType
+  _author_id: UserInputType
   comments: [UserInputType!]
   content: String
-  id: ID
-  image: String
+
+  """Created At"""
+  createdAt: DateTime
   likes: [UserInputType!]
+  photos: [String!]
   postId: ID!
+
+  """Updated At"""
+  updatedAt: DateTime
   user: ID
 }
 

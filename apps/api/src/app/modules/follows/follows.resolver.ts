@@ -33,24 +33,26 @@ export class FollowsResolver {
   @UseGuards(AuthenticatedGuard)
   @Query(() => [Pagination],{name:'getFollowers'})
   async  getFollowers(
+    @Args('username', { type: () => String }) username: string,
     @Args('query') query: FollowQueryArgs,
     @Args('option') options: PaginateOptionArgs,
     @CurrentUser() user: any,
   ) {
-    query.user = user._id;
+    query.user = user
     query.type = 'followers'
-    return await this.followService.getFollowers(query, options);
+    return await this.followService.getFollowers(username,query, options);
   }
   @UseGuards(AuthenticatedGuard)
   @Query(() => [Pagination],{name:'getFollowing'})
   async  getFollowing(
+    @Args('username', { type: () => String }) username: string,
     @Args('query') query: FollowQueryArgs,
     @Args('option') options: PaginateOptionArgs,
     @CurrentUser() user: any,
   ) {
-    query.user = user._id;
+    query.user = user;
     query.type = 'following'
-    return await this.followService.getFollowers(query, options);
+    return await this.followService.getFollowers(username,query, options);
   }
 
   @UseGuards(AuthenticatedGuard)

@@ -54,10 +54,10 @@ export class CommentsService {
         { new: true }
       );
 
-      if (String(post.author) !== String(authId)) {
+      if (String(post._author_id) !== String(authId)) {
         await this.notificationModel.create({
           type: 'comment',
-          target: post.author,
+          target: post._author_id,
           initiator: authId,
           link: `/post/${postId}`,
         });
@@ -95,7 +95,7 @@ export class CommentsService {
       if (String(comment.authId) !== String(userId)) {
         const notify = await this.notificationModel.create({
           type: 'comment',
-          target: post.author,
+          target: post._author_id,
           initiator: userId,
           link: `/post/${postId}`,
         });
@@ -127,7 +127,7 @@ export class CommentsService {
       // FIND THE POST TO GET AUTHOR ID
       const post = await this.postModel.findOne({ _id: comment.postId });
 
-      const postAuthorID = post.author.toString();
+      const postAuthorID = post._author_id.toString();
       const commentAuthorID = comment.authId.toString();
 
       if (postAuthorID == userID || commentAuthorID == userID) {

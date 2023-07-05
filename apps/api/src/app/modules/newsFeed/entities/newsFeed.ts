@@ -20,7 +20,7 @@ export class NewsFeed extends CoreEntity {
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
   @Field(() => ID)
-  follower: string;
+  follower: User
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'Post'})
   @Field(() => ID)

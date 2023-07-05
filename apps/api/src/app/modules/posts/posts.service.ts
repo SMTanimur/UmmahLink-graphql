@@ -1,12 +1,13 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import { Model, Types } from 'mongoose';
+import { AggregateOptions, AggregatePaginateModel, FilterQuery, Model, PaginateOptions } from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
@@ -21,11 +22,13 @@ import {
 } from '../notification/entities/notification';
 import { Follow, FollowDocument } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedDocument } from '../newsFeed/entities/newsFeed';
+import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
+import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectModel(Post.name) private postModel: Model<PostDocument>,
+    @InjectModel(Post.name) private postModel: AggregatePaginateModel<PostDocument>,
     @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
     @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
     @InjectModel(NewsFeed.name) private newsModel: Model<NewsFeedDocument>,
@@ -36,26 +39,33 @@ export class PostsService {
 
   async createPost(createPostInput: CreatePostInput) {
     const user = await this.userService.findUserById(
-      String(createPostInput.author)
+      String(createPostInput._author_id)
     );
     if (!user) throw new UnauthorizedException('User not found');
 
   const post=  await this.postModel.create(createPostInput);
-    const myFollowersDoc = await this.followModel.find({ target: createPostInput.author }); // target is yourself
+  await post.save()
+  await post
+  .populate({
+      path: 'author',
+      select: 'avatar username name'
+  })
+
+    const myFollowersDoc = await this.followModel.find({ target: createPostInput._author_id }); // target is yourself
     const myFollowers = myFollowersDoc.map(user => user.user); // so user property must be used 
 
     const newsFeeds = myFollowers
     .map(follower => ({ // add post to follower's newsfeed
         follower: follower,
         post: post._id,
-        post_owner: createPostInput.author,
-        createdAt: post.created_at
+        post_owner: createPostInput._author_id,
+        createdAt: post.createdAt
     }))
     .concat({ // append own post on newsfeed
-        follower: createPostInput.author,
-        post_owner: createPostInput.author,
+        follower: createPostInput._author_id,
+        post_owner: createPostInput._author_id,
         post: post._id,
-        createdAt: post.created_at
+        createdAt: post.createdAt
     });
 
 if (newsFeeds.length !== 0) {
@@ -69,8 +79,10 @@ if (newsFeeds.length !== 0) {
   }
 
   async getPostById(postId: string): Promise<Post> {
+
     const post = await this.postModel.findById(postId);
-    return post;
+    if(!post) throw new NotFoundException('Post not found')
+    return post.populate('author')
   }
 
   async updatePost(updatePostInput: UpdatePostInput) {
@@ -78,7 +90,7 @@ if (newsFeeds.length !== 0) {
       const { postId, user } = updatePostInput;
       const postExited = await this.postModel.findOne({ _id: postId });
       if (!postExited) throw new NotFoundException('Post not Found');
-      if (String(postExited.author) == String(user)) {
+      if (String(postExited._author_id) == String(user)) {
         await this.postModel.findOneAndUpdate(
           { _id: postId },
           updatePostInput,
@@ -100,14 +112,14 @@ if (newsFeeds.length !== 0) {
       const post = await this.postModel.findOne({ _id: postId });
       if (!post) throw new NotFoundException('Post not found');
 
-      if (String(post.author) == String(user)) {
+      if (String(post._author_id) == String(user)) {
         await this.likeModel.findOneAndDelete({
           target: post._id,
-          user: post.author,
+          user: post._author_id,
           type: 'Post',
         });
         await this.notificationModel.findOneAndDelete({
-          initiator: post.author,
+          initiator: post._author_id,
           target: post._id,
           type: NotificationType.like,
         });
@@ -138,11 +150,11 @@ if (newsFeeds.length !== 0) {
         const like = await this.likeModel.create(query);
         post.likes.push(like._id);
         post.save();
-        if (String(post.author) !== String(userId)) {
+        if (String(post._author_id) !== String(userId)) {
           const newNotif = {
             type: NotificationType.like,
             initiator: userId,
-            target: post.author,
+            target: post._author_id,
             link: `/post/${post._id}`,
           };
           const exitedNotif = await this.notificationModel.findOne(newNotif);
@@ -167,6 +179,116 @@ if (newsFeeds.length !== 0) {
         );
         return { message: 'Post unLiked successfully' };
       }
+    } catch (error) {
+      throw new BadRequestException('server error');
+    }
+  }
+
+
+
+  async getPosts(
+    username:string,
+    query?: FilterQuery<NewsFeedQueryArgs>,
+    options?: AggregateOptions
+  ) {
+
+    try {
+      const userExit = await this.userService.getUserInfo(username)
+      if(!userExit) throw new NotFoundException('User not found')
+      const { user} = query;
+
+      if(user.username === userExit.username){
+        const agg = this.postModel.aggregate([ {
+          $match: {
+            _author_id: userExit._id,
+          },
+        },
+        { // lookup from Comments collection to get total
+          $lookup: {
+              from: 'comments',
+              localField: '_id',
+              foreignField: 'postId',
+              as: 'comments'
+          }
+      },
+      { // lookup from Likes collection to get total
+          $lookup: {
+              from: 'likes',
+              localField: '_id',
+              foreignField: 'target',
+              as: 'likes'
+          }
+      },
+      {
+          $lookup: {
+              from: 'users',
+              let: { authorID: '$_author_id' },
+              pipeline: [
+                  {
+                      $match: {
+                          $expr: {
+                              $eq: ['$_id', '$$authorID']
+                          }
+                      }
+                  },
+                  {
+                      $project: {
+                          _id: 0,
+                          id: '$_id',
+                          email: 1,
+                          name:1,
+                          avatar: 1,
+                          username: 1,
+                      }
+                  }
+              ],
+              as: 'author'
+          }
+      },
+      {
+          $addFields: {
+              likeIDs: {
+                  $map: {
+                      input: "$likes",
+                      as: "postLike",
+                      in: '$$postLike.user'
+                  }
+              },
+          }
+      },
+      { // add isLiked field by checking if user id exists in $likes array from lookup
+          $addFields: {
+              isLiked: { $in: [user._id, '$likeIDs'] },
+              isOwnPost: { $eq: ['$$CURRENT._author_id', user._id ]}
+          }
+      },
+      {
+          $project: {
+              _id: 0,
+              id: '$_id',
+              photos: 1,
+              content: 1,
+              createdAt: 1,
+              updatedAt: 1,
+              author: { $first: '$author' },
+              isLiked: 1,
+              isOwnPost: 1,
+              commentsCount: {
+                  $size: '$comments'
+              },
+              likesCount: {
+                  $size: '$likes'
+              }
+          }
+      }])
+      
+       const data = await this.postModel.aggregatePaginate(agg,options)as NewsFeedPagination
+       return data
+      }else{
+        throw new ConflictException('please login to view this page')
+      }
+      
+     
     } catch (error) {
       throw new BadRequestException('server error');
     }
