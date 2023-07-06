@@ -415,7 +415,7 @@ export type Query = {
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
   getPosts?: Maybe<NewsFeedPagination>;
-  getSuggestionPeople: FollowPagination;
+  getSuggestionPeople?: Maybe<FollowPagination>;
   item: Scalars['String']['output'];
   me: IUser;
   notifications: NotificationPagination;
@@ -686,10 +686,11 @@ export type GetSuggestionPeopleQueryVariables = Exact<{
 
 export type GetSuggestionPeopleQuery = {
   __typename?: 'Query';
-  getSuggestionPeople: {
+  getSuggestionPeople?: {
     __typename?: 'FollowPagination';
     limit: number;
     page: number;
+    hasPrevPage: boolean;
     totalDocs: number;
     totalPages: number;
     docs?: Array<{
@@ -701,7 +702,7 @@ export type GetSuggestionPeopleQuery = {
       name: string;
       username?: string | null;
     } | null> | null;
-  };
+  } | null;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1117,6 +1118,7 @@ export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
     }
     limit
     page
+    hasPrevPage
     totalDocs
     totalPages
   }

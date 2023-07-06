@@ -8,6 +8,7 @@ import { errorToast } from "../../lib";
 import { ErrorMessage, useZodForm } from "../../components";
 import { CreatePostInput, useCreatePostMutation } from "@social-zone/graphql";
 import { object, string } from "zod";
+import { useGlobalModalStateStore } from "../../store";
 
 const newPostSchema = object({
   content: string()
@@ -15,6 +16,9 @@ const newPostSchema = object({
 });
 export const usePost = ()=> {
 
+  const setShowNewPostModal = useGlobalModalStateStore(
+    (state) => state.setShowNewPostModal
+  );
   const onError = (error: any) => {
  
     errorToast(error);
@@ -35,6 +39,7 @@ const postForm = useZodForm({
       success: ( {createPost:{message} }) => {
         queryClient.invalidateQueries();
         queryClient.invalidateQueries(['UserProfile'])
+        setShowNewPostModal(false)
         return <b>{message}</b>;
       },
       error: (data) => {

@@ -14,6 +14,7 @@ export * from './Card';
 export * from './composer'
 export * from './image';
 export * from './lightbox';
+export * from './loader'
 export * from './menu';
 export * from './modal';
 export * from './tooltip/Tooltip';

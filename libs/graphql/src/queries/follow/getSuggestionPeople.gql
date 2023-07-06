@@ -1,5 +1,5 @@
 query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
- getSuggestionPeople(option: $options,query: $query){
+ getSuggestionPeople(option: $options, query: $query){
   docs{
     avatar
     email
@@ -11,6 +11,7 @@ query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs
   }
   limit
   page
+  hasPrevPage
   totalDocs
   totalPages
   

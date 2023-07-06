@@ -301,7 +301,7 @@ type Query {
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination
-  getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination!
+  getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
   item: String!
   me: IUser!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 15, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!

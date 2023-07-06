@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { ElementType } from 'react'
 import { CardBody  } from './CardBody'
 
 import { cn } from '../../lib'
@@ -10,6 +10,7 @@ import { CardFooter } from './CardFooter'
 interface CardProps {
 	noPadding?: boolean
 	children: React.ReactNode
+	as?: ElementType;
 	className?: string
 	container?: boolean
 	rounded?: 'sm' | 'md' | 'lg' | 'xl'
@@ -19,12 +20,13 @@ interface CardProps {
 export function Card({
 	children,
 	container = true,
+	as: Tag = 'div',
 	rounded = 'sm',
 	shadow = 'none',
 	className,
 }: CardProps) {
 	return (
-		<div
+		<Tag
 			className={cn(
 				'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 ',
 				container ? 'mx-auto' : '',
@@ -34,7 +36,7 @@ export function Card({
 			)}
 		>
 			{children}
-		</div>
+		</Tag>
 	)
 }
 
