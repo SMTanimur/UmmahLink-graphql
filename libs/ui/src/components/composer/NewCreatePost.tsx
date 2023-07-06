@@ -1,34 +1,38 @@
-"use client"
+'use client';
 
-import React from 'react'
-import { Card } from '../Card'
-import { cn } from '../../lib'
-import { ErrorMessage } from '../messages/ErrorMessage'
-import { CardBody } from '../Card/CardBody'
-import { Form } from '../form/Form'
-import { Input } from '../input/Input'
-import { TextArea } from '../input/TextArea'
-import { Button } from '../button/Button'
-import { usePost } from '../../hooks'
-import { Spinner } from '../loading'
-import { PencilIcon } from '@heroicons/react/24/outline'
+import React from 'react';
+import { Card } from '../Card';
+import { cn } from '../../lib';
+import { CardBody } from '../Card/CardBody';
+import { Form } from '../form/Form';
+import { TextArea } from '../input/TextArea';
+import { Button } from '../button/Button';
+import { usePost } from '../../hooks';
+import { Spinner } from '../loading';
+import { PencilIcon } from '@heroicons/react/24/outline';
+import 'emoji-mart/css/emoji-mart.css';
+import { EmojiPicker } from '../../emoji';
 
 export const NewCreatePost = () => {
+  const { attemptToCreatePost, createPostLoading, postForm } = usePost();
 
-  const {attemptToCreatePost,createPostLoading,postForm}=usePost()
+  function handleEmojiPick(emote: any) {
+    //The types provided by these types are incorrect. I promise there's a native obj here
+
+    postForm.setValue('content', postForm.watch('content') + emote?.native);
+  }
   return (
     <Card
       className={cn(
-        { '!rounded-b-xl !rounded-t-none border-none':'' },
+        { '!rounded-b-xl !rounded-t-none border-none': '' },
         'pb-3'
       )}
     >
       <CardBody>
-
         <Form
           form={postForm}
           className="space-y-4"
-          onSubmit={async ()=> await attemptToCreatePost()}
+          onSubmit={async () => await attemptToCreatePost()}
         >
           {/* {error && (
             <ErrorMessage
@@ -37,21 +41,25 @@ export const NewCreatePost = () => {
               error={error}
             />
           )} */}
-        
-         
-          
-          <TextArea
-            label={`Bio`}
-            placeholder={`Tell us something about you!`}
-            {...postForm.register('content')}
-          />
-       
+
+          <div className="relative">
+            <TextArea
+              label={`Bio`}
+              placeholder={`Tell us something about you!`}
+              {...postForm.register('content')}
+            />
+            <div className="absolute bottom-3 right-3 flex space-x-3">
+							<EmojiPicker onEmojiPick={handleEmojiPick} />
+							
+						</div>
+          </div>
+
           <Button
             className="ml-auto"
             type="submit"
             disabled={createPostLoading}
             icon={
-              createPostLoading? (
+              createPostLoading ? (
                 <Spinner size="xs" />
               ) : (
                 <PencilIcon className="h-4 w-4" />
@@ -62,8 +70,6 @@ export const NewCreatePost = () => {
           </Button>
         </Form>
       </CardBody>
-
-      </Card>
-  )
-}
-
+    </Card>
+  );
+};

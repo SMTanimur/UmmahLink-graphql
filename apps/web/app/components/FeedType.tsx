@@ -1,6 +1,6 @@
 import {
   LightBulbIcon,
-  SparklesIcon,
+
   UserGroupIcon
 } from '@heroicons/react/24/outline';
 import { Dispatch, FC } from 'react';
@@ -10,7 +10,8 @@ import { TabButton } from '~ui';
 export enum Type {
   FOR_YOU = 'FOR_YOU',
   FOLLOWING = 'FOLLOWING',
-  HIGHLIGHTS = 'HIGHLIGHTS'
+  HIGHLIGHTS = 'HIGHLIGHTS',
+  FOLLOWERS = 'FOLLOWERS'
 }
 
 interface FeedTypeProps {
@@ -33,12 +34,12 @@ const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
           }}
         />
         <TabButton
-          name={`Highlights`}
+          name={`Followers`}
           icon={<LightBulbIcon className="h-4 w-4" />}
-          active={feedType === Type.HIGHLIGHTS}
+          active={feedType === Type.FOLLOWERS}
           showOnSm={false}
           onClick={() => {
-            setFeedType(Type.HIGHLIGHTS);
+            setFeedType(Type.FOLLOWERS);
            
           }}
         />

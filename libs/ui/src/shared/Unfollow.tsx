@@ -62,7 +62,7 @@ export const Unfollow: FC<UnfollowProps> = ({
         )
       }
     >
-      {showText && `Unfollow`}
+    Unfollow
     </Button>
   );
 };

@@ -17,7 +17,7 @@ interface FollowProps {
 
 export const Follow: FC<FollowProps> = ({
   profile,
-  showText = false,
+  showText = true,
   setFollowing,
   outline = true
 }) => {
@@ -49,7 +49,7 @@ export const Follow: FC<FollowProps> = ({
         FollowLoading ? <Spinner size="xs" /> : <UserPlusIcon className="h-4 w-4" />
       }
     >
-      {showText && `Follow`}
+    Follow
     </Button>
   );
 };
