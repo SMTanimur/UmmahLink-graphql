@@ -1,3 +1,5 @@
+"use client"
+
 import { UsersIcon } from "@heroicons/react/24/outline";
 import { Pagination, ProfileInformation, useGetFollowersQuery } from "@social-zone/graphql";
 import { Virtuoso } from 'react-virtuoso';

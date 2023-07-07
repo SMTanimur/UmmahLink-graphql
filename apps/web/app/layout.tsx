@@ -1,8 +1,8 @@
+
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '../styles/global.css';
-
-import { GlobalModals, defaultMetadata } from '~ui';
+import {  defaultMetadata } from '~ui';
 
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
@@ -32,7 +32,6 @@ export default function RootLayout({
             position="top-right"
             // toastOptions={getToastOptions(resolvedTheme)}
           />
-           <GlobalModals />
          < div className="flex min-h-screen flex-col pb-14 md:pb-0">
         <Navbar />
         <BottomNavigation />

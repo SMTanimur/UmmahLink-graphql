@@ -1,4 +1,4 @@
-
+"use client"
 import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC } from "react";
 import { toast } from "react-hot-toast";

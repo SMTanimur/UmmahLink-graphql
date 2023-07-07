@@ -1,5 +1,5 @@
 
-
+"use client"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {  useFollowUserMutation,  useGetSuggestionPeopleQuery,  useMeQuery, useUnFollowUserMutation } from "@social-zone/graphql";
@@ -7,9 +7,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../../lib";
 import { ErrorMessage } from "../../components";
-
-
-
 
 export const useFollowOrUnFollow = ()=> {
 

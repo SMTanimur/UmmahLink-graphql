@@ -1,4 +1,4 @@
-
+"use client"
 import type { FC } from 'react';
 import colors from 'tailwindcss/colors';
 import { STATIC_IMAGES_URL } from '~ui';

@@ -48,7 +48,7 @@ export const NewCreatePost = () => {
               placeholder={`Tell us something about you!`}
               {...postForm.register('content')}
             />
-            <div className="absolute bottom-3 right-3 flex space-x-3">
+            <div className="absolute top-5 right-2 flex space-x-3">
 							<EmojiPicker onEmojiPick={handleEmojiPick} />
 							
 						</div>

@@ -12,12 +12,12 @@ import { NewCreatePost } from '../components/composer/NewCreatePost';
 
 export  const GlobalModals: FC = () => {
  
-  const showProfileSwitchModal = useGlobalModalStateStore(
-    (state) => state.showProfileSwitchModal
-  );
-  const setShowProfileSwitchModal = useGlobalModalStateStore(
-    (state) => state.setShowProfileSwitchModal
-  );
+  // const showProfileSwitchModal = useGlobalModalStateStore(
+  //   (state) => state.showProfileSwitchModal
+  // );
+  // const setShowProfileSwitchModal = useGlobalModalStateStore(
+  //   (state) => state.setShowProfileSwitchModal
+  // );
   const showNewPostModal = useGlobalModalStateStore(
     (state) => state.showNewPostModal
   );

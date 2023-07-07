@@ -1,3 +1,5 @@
+"use client"
+
 import { ProfileInformation } from "@social-zone/graphql";
 import { Dispatch, FC } from "react";
 import { Button, Follow, Image, Slug } from "~ui";
