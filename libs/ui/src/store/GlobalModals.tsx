@@ -3,14 +3,10 @@
 
 
 import { useGlobalModalStateStore } from './modal';
-import { FC } from 'react';
 import { Modal } from '../components';
 import { NewCreatePost } from '../components/composer/NewCreatePost';
 
-
-
-
-export  const GlobalModals: FC = () => {
+export  const GlobalModals = () => {
  
   // const showProfileSwitchModal = useGlobalModalStateStore(
   //   (state) => state.showProfileSwitchModal

@@ -15,12 +15,13 @@ export class NewsFeedResolver {
   constructor(private readonly newsFeedService: NewsFeedService) {}
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>NewsFeedPagination ,{name:'getFeeds',nullable:true})
+  @Query(() =>NewsFeedPagination ,{name:'getFeeds',defaultValue:{docs:[],totalDocs:0,totalPages:0,page:0,limit:0}})
   async  getSuggestionPeople(
     @Args('query') query: NewsFeedQueryArgs,
     @Args('option') options: PaginateOptionArgs,
     @CurrentUser() user: any,
   ) {
+  
     query.user = user
     return await this.newsFeedService.getFeeds(query, options);
   }

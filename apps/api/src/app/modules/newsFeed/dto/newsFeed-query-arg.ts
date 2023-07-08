@@ -9,6 +9,5 @@ import { User } from "../../users/entities/user.entity";
 export class NewsFeedQueryArgs {
 
   @Field((_type) => User,{nullable:true} )
-  user?: User
-
+  user: User
 }

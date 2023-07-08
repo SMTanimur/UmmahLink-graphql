@@ -1,3 +1,5 @@
 export * from './auth'
 export * from './follow'
 export * from './post'
+export * from './feed'
+export * from'./like'

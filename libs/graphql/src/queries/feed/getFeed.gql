@@ -1,0 +1,31 @@
+query GetFeed ($query:NewsFeedQueryArgs!,$option:PaginateOptionArgs!) {
+getFeeds(query:$query,option: $option) {
+    docs{
+      author{
+        avatar
+        username
+        email
+        id
+        name
+      }
+      commentsCount
+      content
+      createdAt
+      id
+      isLiked
+      isOwnPost
+      likesCount
+      photos
+      updatedAt
+    }
+    __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    nextPage
+    
+  }
+}

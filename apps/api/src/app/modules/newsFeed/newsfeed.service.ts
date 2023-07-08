@@ -32,7 +32,7 @@ export class NewsFeedService {
       const agg = this.newsFeedModel.aggregate([
         {
           $match: {
-            follower: user?._id,
+            follower: user._id,
           },
         },
 
@@ -60,68 +60,65 @@ export class NewsFeedService {
             updatedAt: '$post.updatedAt',
           },
         },
-        {
-          // lookup from Comments collection to get total
+        { // lookup from Comments collection to get total
           $lookup: {
-            from: 'comments',
-            localField: '_id',
-            foreignField: 'postId',
-            as: 'comments',
-          },
-        },
-        {
-          // lookup from Likes collection to get total
+              from: 'comments',
+              localField: 'id',
+              foreignField: 'postId',
+              as: 'comments'
+          }
+      },
+      { // lookup from Likes collection to get total
           $lookup: {
-            from: 'likes',
-            localField: '_id',
-            foreignField: 'target',
-            as: 'likes',
-          },
-        },
-        {
+              from: 'likes',
+              localField: 'id',
+              foreignField: 'target',
+              as: 'likes'
+          }
+      },
+      {
           $lookup: {
-            from: 'users',
-            let: { authorID: '$_author_id' },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $eq: ['$_id', '$$authorID'],
+              from: 'users',
+              let: { authorID: '$_author_id' },
+              pipeline: [
+                  {
+                      $match: {
+                          $expr: {
+                              $eq: ['$_id', '$$authorID']
+                          }
+                      }
                   },
-                },
-              },
-              {
-                $project: {
-                  _id: 0,
-                  id: '$_id',
-                  email: 1,
-                  avatar: 1,
-                  name:1,
-                  username: 1,
-                },
-              },
-            ],
-            as: 'author',
-          },
-        },
-        {
+                  {
+                      $project: {
+                          _id: 0,
+                          id: '$_id',
+                          email: 1,
+                          name:1,
+                          avatar: 1,
+                          username: 1,
+                      }
+                  }
+              ],
+              as: 'author'
+          }
+      },
+      {
           $addFields: {
-            likeIDs: {
-              $map: {
-                input: '$likes',
-                as: 'postLike',
-                in: '$$postLike.user',
+              likeIDs: {
+                  $map: {
+                      input: "$likes",
+                      as: "postLike",
+                      in: '$$postLike.user'
+                  }
               },
-            },
-          },
-        },
-        {
-          // add isLiked field by checking if user id exists in $likes array from lookup
+          }
+      },
+      { // add isLiked field by checking if user id exists in $likes array from lookup
           $addFields: {
-            isLiked: { $in: [user._id, '$likeIDs'] },
-            isOwnPost: { $eq: ['$_author_id', user._id] },
-          },
-        },
+              isLiked: { $in: [user._id, '$likeIDs'] },
+              isOwnPost: { $eq: ['$$CURRENT._author_id', user._id ]}
+          }
+      },
         {
           $project: {
             _id: 0,
@@ -133,16 +130,17 @@ export class NewsFeedService {
             author: { $first: '$author' },
             isLiked: 1,
             isOwnPost: 1,
-            commentsCount: { $size: '$comments' },
-            likesCount: { $size: '$likes' },
+            commentsCount: {
+              $size: '$comments',
+            },
+            likesCount: {
+              $size: '$likes',
+            },
           },
         },
       ]);
-      const data = (await this.newsFeedModel.aggregatePaginate(agg, {
-        ...(limit ? { limit } : {}),
-        ...(page ? { page } : {}),
-      })) as unknown as NewsFeedPagination;
-      return data;
+      return await this.newsFeedModel.aggregatePaginate(agg,options) as NewsFeedPagination;
+     
     } catch (error) {
       console.log(error);
     }

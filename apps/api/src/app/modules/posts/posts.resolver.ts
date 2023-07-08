@@ -56,14 +56,14 @@ export class PostResolver {
 
   @Mutation(() => MessageResponse)
   @UseGuards(AuthenticatedGuard)
-  async likePost(
+  async likeOrUnlikePost(
     @CurrentUser() user: any,
-    @Args('likePostInput')
-    likePostInput:CreatePostOrCommentLikeInput
+    @Args('likeOrUnlikePostInput')
+    likeOrUnlikePostInput:CreatePostOrCommentLikeInput
   ) {
-    likePostInput.user = user._id;
-    likePostInput.type = 'Post'
-    return await this.postService.likePost(likePostInput);
+    likeOrUnlikePostInput.user = user._id;
+    likeOrUnlikePostInput.type = 'Post'
+    return await this.postService.likePost(likeOrUnlikePostInput);
   }
 
 

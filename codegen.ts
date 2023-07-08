@@ -1,4 +1,3 @@
-
 import { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   schema: 'apps/api/src/**/*.gql',
@@ -13,6 +12,7 @@ const config: CodegenConfig = {
       ],
       config: {
         // fetcher: 'graphql-request',
+        addInfiniteQuery: true,
         fetcher: {
           func: '../configs#fetcher',
           // func: 'ui#customFetcher',

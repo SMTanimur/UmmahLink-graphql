@@ -155,7 +155,7 @@ type Mutation {
   deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
   deletePost(updatePostInput: DeletePostInput!): MessageResponse!
   followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
-  likePost(likePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
+  likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
   logout: MessageResponse!
   unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
@@ -297,7 +297,7 @@ type ProfileInformation {
 }
 
 type Query {
-  getFeeds(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!): NewsFeedPagination
+  getFeeds(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!): NewsFeedPagination!
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination

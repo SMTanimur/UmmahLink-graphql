@@ -1,12 +1,10 @@
 "use client"
-import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC} from "react";
+import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { useGlobalModalStateStore } from "../store";
 import { Button, Spinner } from "../components";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { useFollowOrUnFollow } from "../hooks/follow";
-
-
 
 interface FollowProps {
   profile: ProfileInformation

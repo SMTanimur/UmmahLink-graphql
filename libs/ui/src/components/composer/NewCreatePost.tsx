@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Card } from '../Card';
 import { cn } from '../../lib';
 import { CardBody } from '../Card/CardBody';

@@ -1,4 +1,4 @@
-
+"use client"
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '../styles/global.css';
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={poppins.className}>
+      <body  className={poppins.className}>
         <Providers>
           <Toaster
             position="top-right"

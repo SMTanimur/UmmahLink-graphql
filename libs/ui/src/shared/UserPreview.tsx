@@ -52,11 +52,11 @@ export const UserPreview: FC<UserPreviewProps> = ({
           <BadgeCheckIcon className="text-brand h-4 w-4" />
         )} */}
       </div>
-      <Slug
+      {/* <Slug
         className="text-sm"
         slug={profile?.username as any}
         prefix="@"
-      />
+      /> */}
     </>
   );
 
@@ -64,7 +64,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex items-center justify-between">
         <UserAvatar />
-        <div onClick={stopEventPropagation} aria-hidden="true">
+        {/* <div onClick={stopEventPropagation} aria-hidden="true">
           {!profile.isFollowing &&
             (followStatusLoading ? (
               <div className="shimmer h-8 w-10 rounded-lg" />
@@ -74,7 +74,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
                 setFollowing={setFollowing}
               />
             ))}
-        </div>
+        </div> */}
       </div>
       <div className="space-y-3 p-1">
         <UserName />

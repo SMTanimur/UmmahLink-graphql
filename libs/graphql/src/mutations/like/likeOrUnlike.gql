@@ -1,0 +1,5 @@
+mutation likeOrUnlikePost ($createLikeOrUnlike:CreatePostOrCommentLikeInput!){
+  likeOrUnlikePost(likeOrUnlikePostInput: $createLikeOrUnlike){
+    message
+  }
+}
