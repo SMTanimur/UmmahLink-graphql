@@ -6,6 +6,7 @@ import { AuthenticatedGuard } from "../auth/guards/authenticated.guard";
 import {  NewsFeedPagination } from "./dto/newsFeed-paginate";
 import { NewsFeedQueryArgs } from "./dto/newsFeed-query-arg";
 import { CurrentUser, PaginateOptionArgs } from "@social-zone/common";
+import { GetFeedDto } from "./dto/optionArgs";
 
 
 
@@ -18,7 +19,7 @@ export class NewsFeedResolver {
   @Query(() =>NewsFeedPagination ,{name:'getFeeds',defaultValue:{docs:[],totalDocs:0,totalPages:0,page:0,limit:0}})
   async  getSuggestionPeople(
     @Args('query') query: NewsFeedQueryArgs,
-    @Args('option') options: PaginateOptionArgs,
+    @Args('option') options: GetFeedDto,
     @CurrentUser() user: any,
   ) {
   

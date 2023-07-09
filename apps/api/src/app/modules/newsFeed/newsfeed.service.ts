@@ -27,13 +27,15 @@ export class NewsFeedService {
   ) {
     try {
       const { user } = query;
-
-      const { limit, page } = options;
+      const { limit, page, orderBy,sortedBy} = options;
       const agg = this.newsFeedModel.aggregate([
         {
           $match: {
             follower: user._id,
           },
+        },
+        {
+          $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
         },
 
         {
@@ -139,7 +141,10 @@ export class NewsFeedService {
           },
         },
       ]);
-      return await this.newsFeedModel.aggregatePaginate(agg,options) as NewsFeedPagination;
+      return await this.newsFeedModel.aggregatePaginate(agg,{
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      }) as NewsFeedPagination;
      
     } catch (error) {
       console.log(error);

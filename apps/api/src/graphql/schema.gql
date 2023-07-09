@@ -118,6 +118,30 @@ type FriendRequestResponse {
   user: UserResponse!
 }
 
+input GetFeedDto {
+  allowDiskUse: Boolean
+  forceCountFn: Boolean
+  lean: Boolean
+  leanWithId: Boolean
+  limit: Float = 15
+  offset: Float
+  orderBy: QueryPostOrderByColumn = CREATED_AT
+  page: Float = 1
+  pagination: Boolean
+  select: String
+  skip: Float
+  sort: String
+  sortedBy: SortOrder = DESC
+  useEstimatedCount: Boolean
+}
+
+type GetLikeResponse {
+  avatar: String!
+  isFollowing: Boolean!
+  name: String!
+  username: String!
+}
+
 type IUser {
   _id: ID!
   avatar: String!
@@ -130,6 +154,12 @@ type IUser {
   isFollowing: Boolean!
   name: String!
   username: String!
+}
+
+input LikesQueryArgs {
+  commentId: ID
+  postId: ID
+  user: ID
 }
 
 input LoginInput {
@@ -297,9 +327,10 @@ type ProfileInformation {
 }
 
 type Query {
-  getFeeds(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!): NewsFeedPagination!
+  getFeeds(option: GetFeedDto!, query: NewsFeedQueryArgs!): NewsFeedPagination!
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
+  getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
   getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
   item: String!
@@ -309,6 +340,13 @@ type Query {
   user(username: String!): ProfileInformation
 }
 
+enum QueryPostOrderByColumn {
+  CREATED_AT
+  ORDERS
+  RATING
+  UPDATED_AT
+}
+
 type ResponseSingleUpload {
   bytes: Float!
   folder: String!
@@ -316,6 +354,11 @@ type ResponseSingleUpload {
   height: Float!
   url: String!
   width: Float!
+}
+
+enum SortOrder {
+  ASC
+  DESC
 }
 
 input UpdatePostInput {

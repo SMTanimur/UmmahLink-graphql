@@ -21,7 +21,7 @@ export class PaginateOptionArgs {
   leanWithId: boolean;
 
   @Field({ nullable: true })
-  offset: number;
+  offset: number
 
   @IsOptional()
   @Field({ nullable: true })

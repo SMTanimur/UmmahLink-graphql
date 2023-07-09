@@ -14,7 +14,7 @@ import { User } from '../../users/entities/user.entity';
 
 
 @ObjectType()
-@Schema({ versionKey: false })
+@Schema({ versionKey: false, timestamps: true })
 @InputType('NewsFeedInputType', { isAbstract: true })
 export class NewsFeed extends CoreEntity {
 

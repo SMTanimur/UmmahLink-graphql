@@ -155,6 +155,23 @@ export type FriendRequestResponse = {
   user: UserResponse;
 };
 
+export type GetFeedDto = {
+  allowDiskUse?: InputMaybe<Scalars['Boolean']['input']>;
+  forceCountFn?: InputMaybe<Scalars['Boolean']['input']>;
+  lean?: InputMaybe<Scalars['Boolean']['input']>;
+  leanWithId?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  orderBy?: InputMaybe<QueryPostOrderByColumn>;
+  page?: InputMaybe<Scalars['Float']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  sortedBy?: InputMaybe<SortOrder>;
+  useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type IUser = {
   __typename?: 'IUser';
   _id: Scalars['ID']['output'];
@@ -426,7 +443,7 @@ export type Query = {
 };
 
 export type QueryGetFeedsArgs = {
-  option: PaginateOptionArgs;
+  option: GetFeedDto;
   query: NewsFeedQueryArgs;
 };
 
@@ -477,6 +494,13 @@ export type QueryUserArgs = {
   username: Scalars['String']['input'];
 };
 
+export enum QueryPostOrderByColumn {
+  CreatedAt = 'CREATED_AT',
+  Orders = 'ORDERS',
+  Rating = 'RATING',
+  UpdatedAt = 'UPDATED_AT',
+}
+
 export type ResponseSingleUpload = {
   __typename?: 'ResponseSingleUpload';
   bytes: Scalars['Float']['output'];
@@ -486,6 +510,11 @@ export type ResponseSingleUpload = {
   url: Scalars['String']['output'];
   width: Scalars['Float']['output'];
 };
+
+export enum SortOrder {
+  Asc = 'ASC',
+  Desc = 'DESC',
+}
 
 export type UpdatePostInput = {
   _author_id?: InputMaybe<UserInputType>;
@@ -646,7 +675,7 @@ export type ProfileUpdateMutation = {
 
 export type GetFeedQueryVariables = Exact<{
   query: NewsFeedQueryArgs;
-  option: PaginateOptionArgs;
+  option: GetFeedDto;
 }>;
 
 export type GetFeedQuery = {
@@ -1107,7 +1136,7 @@ useProfileUpdateMutation.fetcher = (
     options
   );
 export const GetFeedDocument = /*#__PURE__*/ `
-    query GetFeed($query: NewsFeedQueryArgs!, $option: PaginateOptionArgs!) {
+    query GetFeed($query: NewsFeedQueryArgs!, $option: GetFeedDto!) {
   getFeeds(query: $query, option: $option) {
     docs {
       author {

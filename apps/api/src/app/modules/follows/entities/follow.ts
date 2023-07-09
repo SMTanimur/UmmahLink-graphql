@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType} from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 
 import {
   IsArray
@@ -24,8 +24,8 @@ export class Follow extends CoreEntity {
 
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
-  @Field(() => User)
-  target:User
+  @Field(() => ID)
+  target:mongoose.Schema.Types.ObjectId
 }
 
 export type FollowDocument = Follow & Document

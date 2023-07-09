@@ -7,12 +7,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import { AggregateOptions, AggregatePaginateModel, FilterQuery, Model, PaginateOptions } from 'mongoose';
+import mongoose, { AggregateOptions, AggregatePaginateModel, FilterQuery, Model, PaginateOptions, Types } from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
 import { DeletePostInput } from './dto/delete-post-input';
-import { MessageResponse } from '@social-zone/common';
+import { MessageResponse, PaginateOptionArgs } from '@social-zone/common';
 import { Like, LikeDocument } from './entities/like';
 import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like';
 import {
@@ -24,6 +24,7 @@ import { Follow, FollowDocument } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedDocument } from '../newsFeed/entities/newsFeed';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
+import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
 
 @Injectable()
 export class PostsService {
@@ -293,4 +294,48 @@ if (newsFeeds.length !== 0) {
       throw new BadRequestException('server error');
     }
   }
+
+  async getPostLikes (query:LikesQueryArgs,options:PaginateOptionArgs):Promise<GetLikeResponse[]>{
+    try {
+      const {postId,user} = query
+      const {limit,offset}=options
+      const offse = offset|| 0;
+      const skip = offse * limit;
+      const post = await this.postModel.findById(postId)
+      if(!post) throw new NotFoundException('Post not found')
+        
+      const likers = await this.likeModel.find({target:postId,type:'Post'})
+                              .sort({createdAt:-1})
+                              .skip(skip)
+                              .limit(limit)
+                              .populate({
+                                path: 'user',
+                                select: 'avatar username name'
+                            })
+
+                            if (likers.length === 0 && offse < 1) {
+                              throw new NotFoundException(404, 'No likes found.')
+                          }
+              
+                          if (likers.length === 0 && offse > 0) {
+                              throw new NotFoundException(404, 'No more likes found.')
+                          }
+
+                          const myFollowingDoc = await this.followModel.find({ user: user })
+                   const myFollowing = myFollowingDoc.map(user => user.target.toString());
+                   
+                    const result = likers.map((like: any) => {
+                      return {
+                        ...like.user.toObject(),
+                        isFollowing: myFollowing.includes(String(like.user._id)),
+                      };
+                    });
+
+                return result
+
+       
+    } catch (error) {
+      console.log(error)
+  }
+}
 }

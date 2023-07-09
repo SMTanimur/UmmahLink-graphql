@@ -59,8 +59,6 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       className="max-h-[80vh] overflow-y-auto"
       data-testid="followings-modal"
     >
-      <h2>hellod</h2>
-
       <Virtuoso
         className="virtual-profile-list"
         data={followings as Pagination[]}

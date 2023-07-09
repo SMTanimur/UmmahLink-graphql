@@ -25,15 +25,16 @@ const queryClient = useQueryClient();
       loading: 'LikeOrUnlike Processing ...',
       success: ( {likeOrUnlikePost:{message}}) => {
         queryClient.invalidateQueries(['UserProfile'])
+        queryClient.invalidateQueries(['GetFeed.infinite'])
         return <b>{message}</b>;
       },
       error: (data) => {
         return (
           <ErrorMessage
             className="mb-3"
-            title=" Follow failed!"
+            title=" Like failed!"
             error={{
-              name: ' Follow failed!',
+              name: ' Like failed!',
               message: data.message,
             }}
           />

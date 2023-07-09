@@ -12,7 +12,7 @@ export const useFeedQuery = () => {
   } = useInfiniteGetFeedQuery(
     'option',
    {
-    option:{limit:10,page:1},
+    option:{limit:3},
     query:{}
    },
     {
@@ -34,7 +34,6 @@ export const useFeedQuery = () => {
   }
 
   const flattenedData = data?.pages.flatMap((page) => page.getFeeds.docs) ?? [];
-  const lastPage = data?.pages[data.pages.length - 1];
   const paginatorInfo = Array.isArray(data?.pages)? mapPaginatorData(data?.pages[data.pages.length - 1]) : null;
 
   return {

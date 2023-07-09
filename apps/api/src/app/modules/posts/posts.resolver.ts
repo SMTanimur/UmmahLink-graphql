@@ -10,6 +10,7 @@ import { DeletePostInput } from './dto/delete-post-input';
 import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like';
 import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
+import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
 
 
 @Resolver(() => Post)
@@ -77,5 +78,16 @@ export class PostResolver {
   ) {
     query.user = user
     return await this.postService.getPosts(username,query, options);
+  }
+  @UseGuards(AuthenticatedGuard)
+  @Query(() =>[GetLikeResponse] ,{name:'getPostLikes',defaultValue:[]})
+  async  getPostLikes(
+    
+    @Args('query') query: LikesQueryArgs,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any,
+  ) {
+    query.user = user._id
+    return await this.postService.getPostLikes(query, options);
   }
 }

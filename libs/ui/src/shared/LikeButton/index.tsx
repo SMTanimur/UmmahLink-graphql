@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import LoadingIcon from '../../components/Spinner/LoadingIcon';
 import { HandThumbUpIcon } from '@heroicons/react/24/outline';
 import { Spinner } from '../../components';
 import { usePostLikeOrUnlike } from '../../hooks';

@@ -23,6 +23,7 @@ interface IProps {
  export const PostItem: React.FC<IProps> = (props) => {
   const { post, isAuth } = props;
   const [isCommentVisible, setCommentVisible] = useState(false);
+  const [isLikesModal, setIsLikesModal] = useState(false);
 
   const commentInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -59,7 +60,7 @@ interface IProps {
     <div className="flex flex-col bg-white tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
-        <div className="flex">
+        <div className="flex gap-2">
         <Image
           src={post?.author?.avatar}
           className="h-32 w-32 cursor-pointer rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52"
@@ -68,7 +69,7 @@ interface IProps {
           alt={post?.author?.username}
           data-testid="profile-avatar"
         />
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <Link className="dark:text-indigo-400" href={`/user/${post.author.username}`}>
               <h5 className="font-bold">{post.author.username}</h5>
             </Link>

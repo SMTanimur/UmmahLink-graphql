@@ -1,4 +1,4 @@
-query GetFeed ($query:NewsFeedQueryArgs!,$option:PaginateOptionArgs!) {
+query GetFeed ($query:NewsFeedQueryArgs!,$option:GetFeedDto!) {
 getFeeds(query:$query,option: $option) {
     docs{
       author{
