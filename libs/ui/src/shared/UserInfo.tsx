@@ -2,7 +2,7 @@
 
 import { GetLikeResponse, ProfileInformation } from '@social-zone/graphql';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import  { FC, useState } from 'react';
 import { Image, Slug } from '../components';
 import { cn, sanitizeDisplayName } from '../lib';
 import { useProfileQuery } from '../hooks';
@@ -65,12 +65,12 @@ const UserInfo: FC<UserInfoProps> = ({ profile, isBig }) => {
           <h4 className="text-gray-400">Me</h4>
         ) : following ? (
           <Unfollow
-            profile={profile as ProfileInformation}
+            profile={profile as any}
             setFollowing={setFollowing}
           />
         ) : (
             <Follow
-              profile={profile as ProfileInformation}
+              profile={profile as any}
               setFollowing={setFollowing}
             />
         )}

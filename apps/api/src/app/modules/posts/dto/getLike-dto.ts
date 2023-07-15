@@ -1,7 +1,5 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 
-import { User } from "../../users/entities/user.entity";
-
 
 
 
@@ -25,9 +23,13 @@ export class LikesQueryArgs {
 
 @ObjectType({isAbstract:true})
 export class GetLikeResponse {
-
+  
   @Field((_type) =>String)
   username:string
+
+  
+  @Field((_type) =>ID)
+  _id:string
 
   @Field((_type) =>String)
   avatar:string

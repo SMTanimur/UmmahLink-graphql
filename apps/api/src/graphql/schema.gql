@@ -130,6 +130,7 @@ input GetFeedDto {
 }
 
 type GetLikeResponse {
+  _id: ID!
   avatar: String!
   isFollowing: Boolean!
   name: String!

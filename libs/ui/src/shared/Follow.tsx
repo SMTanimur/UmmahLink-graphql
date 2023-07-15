@@ -7,7 +7,7 @@ import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { useFollowOrUnFollow } from "../hooks/follow";
 
 interface FollowProps {
-  profile: ProfileInformation
+  profile: ProfileInformation | any
   setFollowing: Dispatch<boolean>;
   showText?: boolean;
   outline?: boolean;
@@ -20,6 +20,8 @@ export const Follow: FC<FollowProps> = ({
   outline = true
 }) => {
 
+  const userId = profile?.id  ? profile?.id as string : profile?._id as string
+
   const setShowAuthModal = useGlobalModalStateStore(
     (state) => state.setLoginModal
   );
@@ -31,7 +33,7 @@ export const Follow: FC<FollowProps> = ({
       setShowAuthModal(true);
       return;
     }
-    await  attemptToFollow(profile.id).then(()=>{
+    await  attemptToFollow(userId).then(()=>{
       setFollowing(true)
     })
   };

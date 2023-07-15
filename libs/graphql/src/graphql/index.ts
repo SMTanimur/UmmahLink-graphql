@@ -107,12 +107,6 @@ export enum EGender {
   Unspecified = 'unspecified',
 }
 
-export enum EnumService {
-  Cloudinary = 'Cloudinary',
-  S3Storage = 'S3Storage',
-  Web3Storage = 'Web3Storage',
-}
-
 export type FollowOrUnFollowInput = {
   follow_ID: Scalars['ID']['input'];
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -174,6 +168,7 @@ export type GetFeedDto = {
 
 export type GetLikeResponse = {
   __typename?: 'GetLikeResponse';
+  _id: Scalars['ID']['output'];
   avatar: Scalars['String']['output'];
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
@@ -235,7 +230,7 @@ export type Mutation = {
   updatePost: MessageResponse;
   updateUser: MessageResponse;
   uploadMultipleFiles: Array<ResponseSingleUpload>;
-  uploadSingleFiles?: Maybe<ResponseSingleUpload>;
+  uploadSingleFiles: ResponseSingleUpload;
 };
 
 export type MutationCloseFriendRequestArgs = {
@@ -300,7 +295,6 @@ export type MutationUpdateUserArgs = {
 
 export type MutationUploadMultipleFilesArgs = {
   files: Array<Scalars['Upload']['input']>;
-  setting: UploadParamInput;
 };
 
 export type MutationUploadSingleFilesArgs = {
@@ -450,7 +444,6 @@ export type Query = {
   getPostLikes: Array<GetLikeResponse>;
   getPosts?: Maybe<NewsFeedPagination>;
   getSuggestionPeople?: Maybe<FollowPagination>;
-  item: Scalars['String']['output'];
   me: IUser;
   notifications: NotificationPagination;
   post: Post;
@@ -523,12 +516,7 @@ export enum QueryPostOrderByColumn {
 
 export type ResponseSingleUpload = {
   __typename?: 'ResponseSingleUpload';
-  bytes: Scalars['Float']['output'];
-  folder: Scalars['String']['output'];
-  format: Scalars['String']['output'];
-  height: Scalars['Float']['output'];
   url: Scalars['String']['output'];
-  width: Scalars['Float']['output'];
 };
 
 export enum SortOrder {
@@ -564,11 +552,6 @@ export type UpdateUserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type UploadParamInput = {
-  folder: Scalars['String']['input'];
-  uploadService: EnumService;
 };
 
 export type User = {
@@ -817,6 +800,7 @@ export type GetPostLikesQuery = {
     isFollowing: boolean;
     name: string;
     username: string;
+    _id: string;
   }>;
 };
 
@@ -1458,6 +1442,7 @@ export const GetPostLikesDocument = /*#__PURE__*/ `
     isFollowing
     name
     username
+    _id
     __typename
   }
 }

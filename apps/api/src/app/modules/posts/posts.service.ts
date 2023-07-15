@@ -307,7 +307,7 @@ if (newsFeeds.length !== 0) {
                               .limit(limit)
                               .populate({
                                 path: 'user',
-                                select: 'avatar username name'
+                                select: 'avatar username name _id'
                             })
 
                             if (likers.length === 0 && offse < 1) {

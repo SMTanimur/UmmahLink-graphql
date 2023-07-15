@@ -1,5 +1,5 @@
 "use client"
-import { ProfileInformation, useMeQuery } from "@social-zone/graphql";
+import { GetLikeResponse, ProfileInformation, useMeQuery } from "@social-zone/graphql";
 import { Dispatch, FC } from "react";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../lib";
@@ -10,7 +10,7 @@ import { useFollowOrUnFollow } from "../hooks/follow";
 
 
 interface UnfollowProps {
-  profile: ProfileInformation
+  profile: ProfileInformation | any
   setFollowing: Dispatch<boolean>;
   showText?: boolean;
 }
@@ -20,10 +20,10 @@ export const Unfollow: FC<UnfollowProps> = ({
   showText = false,
   setFollowing
 }) => {
-  const {data}=useMeQuery()
-  
+  const {data}=useMeQuery() 
 
- 
+  const userId = profile?.id  ? profile?.id as string : profile?._id as string
+
 
  
   const onError = (error: any) => {
@@ -38,7 +38,7 @@ export const Unfollow: FC<UnfollowProps> = ({
     }
 
     try {
-     await attemptToUnFollow(profile.id).then(()=>{
+     await attemptToUnFollow(userId).then(()=>{
       setFollowing(false)
      })
     } catch (error) {

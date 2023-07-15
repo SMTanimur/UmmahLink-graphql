@@ -12,9 +12,6 @@ interface IProps {
 
 const LikeButton: React.FC<IProps> = (props) => {
   const [isLiked, setIsLiked] = useState(props.isLiked);
-  console.log(isLiked)
- 
-  
 const {LikeLoading,attemtToPostLikeOrUnlike}=usePostLikeOrUnlike()
 
   useEffect(() => {
@@ -25,11 +22,7 @@ const {LikeLoading,attemtToPostLikeOrUnlike}=usePostLikeOrUnlike()
     if (LikeLoading) return;
 
     try {
-   
-
       attemtToPostLikeOrUnlike(props.postID )
-
-  
     } catch (e) {
       console.log(e);
     }
