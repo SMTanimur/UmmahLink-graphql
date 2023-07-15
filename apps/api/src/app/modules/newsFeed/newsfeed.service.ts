@@ -145,7 +145,6 @@ export class NewsFeedService {
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
       }) 
-      console.log(res);
       return res;
      
     } catch (error) {

@@ -10,24 +10,13 @@ import { useGetPostLikes } from '../hooks';
 import UserInfo from './UserInfo';
 
 interface UserProfileProps {
-  postItem: NewsFeedPaginate;
-  followStatusLoading?: boolean;
+  postItem: NewsFeedPaginate
   isBig?: boolean;
-  linkToProfile?: boolean;
-  showBio?: boolean;
-  showFollow?: boolean;
-  showStatus?: boolean;
-  showUserPreview?: boolean;
-  timestamp?: Date;
-
-  // For data analytics
-  followUnfollowPosition?: number;
-  followUnfollowSource?: string;
+  
 }
 
 const UserCard: FC<UserProfileProps> = ({
   postItem,
-  followStatusLoading = false,
   isBig = false,
 }) => {
   const [offset, setOffset] = useState(0);

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import mongoose, { AggregateOptions, AggregatePaginateModel, FilterQuery, Model, PaginateOptions, Types } from 'mongoose';
+import  { AggregateOptions, AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
@@ -75,9 +75,6 @@ if (newsFeeds.length !== 0) {
     return { message: 'Post created successfully' };
   }
 
-  findAll() {
-    return `This action returns all posts`;
-  }
 
   async getPostById(postId: string): Promise<Post> {
 
