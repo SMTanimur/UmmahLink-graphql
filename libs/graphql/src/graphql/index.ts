@@ -442,7 +442,7 @@ export type Query = {
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
   getPostLikes: Array<GetLikeResponse>;
-  getPosts?: Maybe<NewsFeedPagination>;
+  getPosts: NewsFeedPagination;
   getSuggestionPeople?: Maybe<FollowPagination>;
   me: IUser;
   notifications: NotificationPagination;

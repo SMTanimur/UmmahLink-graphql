@@ -54,12 +54,12 @@ export const PostItem: React.FC<IProps> = (props) => {
     <div className="flex flex-col bg-white tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
-        <div className="flex gap-2">
+        <div className="flex gap-4 items-center">
           <Image
             src={post?.author?.avatar}
-            className="h-32 w-32 cursor-pointer rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52"
-            height={70}
-            width={70}
+            className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
+            height={60}
+            width={60}
             alt={post?.author?.username}
             data-testid="profile-avatar"
           />

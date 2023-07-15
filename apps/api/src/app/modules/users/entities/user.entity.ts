@@ -18,8 +18,7 @@ import {
   ValidateNested,
   IsArray,
   IsMongoId,
-  IsDate,
-  IsPhoneNumber
+  IsDate
 } from 'class-validator';
 
 import { FriendRequest } from '../../friendRequest/entities/friendRequest';
@@ -88,7 +87,7 @@ export class User {
   @Field({ nullable: true })
   @Prop({type:String,
     default:
-      'https://res.cloudinary.com/dk6bdrkbv/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
+      'https://res.cloudinary.com/smtanimur/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
   })
   @IsOptional()
   avatar?: string;

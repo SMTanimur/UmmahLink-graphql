@@ -1,6 +1,6 @@
 'use client';
 
-import { GetLikeResponse, ProfileInformation } from '@social-zone/graphql';
+import { GetLikeResponse } from '@social-zone/graphql';
 import Link from 'next/link';
 import  { FC, useState } from 'react';
 import { Image, Slug } from '../components';

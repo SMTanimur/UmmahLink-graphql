@@ -69,7 +69,7 @@ export class PostResolver {
 
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>NewsFeedPagination ,{name:'getPosts',nullable:true})
+  @Query(() =>NewsFeedPagination ,{name:'getPosts'})
   async  getSuggestionPeople(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: NewsFeedQueryArgs,
@@ -80,7 +80,7 @@ export class PostResolver {
     return await this.postService.getPosts(username,query, options);
   }
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>[GetLikeResponse] ,{name:'getPostLikes',defaultValue:[]})
+  @Query(() =>[GetLikeResponse] ,{name:'getPostLikes'})
   async  getPostLikes(
     
     @Args('query') query: LikesQueryArgs,

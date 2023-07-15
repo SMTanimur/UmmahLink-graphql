@@ -311,11 +311,11 @@ if (newsFeeds.length !== 0) {
                             })
 
                             if (likers.length === 0 && offse < 1) {
-                              throw new NotFoundException(404, 'No likes found.')
+                               new  NotFoundException(404, 'No likes found.')
                           }
               
                           if (likers.length === 0 && offse > 0) {
-                              throw new NotFoundException(404, 'No more likes found.')
+                             new NotFoundException(404, 'No more likes found.')
                           }
 
                           const myFollowingDoc = await this.followModel.find({ user: user })
