@@ -1,9 +1,9 @@
 "use client"
 
 import { UsersIcon } from "@heroicons/react/24/outline";
-import { Pagination, ProfileInformation, useGetFollowersQuery } from "@social-zone/graphql";
+import { Pagination, ProfileInformation,  useInfiniteGetFollowersQuery } from "@social-zone/graphql";
 import { Virtuoso } from 'react-virtuoso';
-import { FC, useState } from "react";
+import { FC } from "react";
 import { EmptyState, ErrorMessage } from "~ui";
 import UserProfile from "./UserProfile";
 import { useProfileQuery } from "~ui";
@@ -14,32 +14,25 @@ interface FollowersProps {
 }
 
 const Followers: FC<FollowersProps> = ({ profile }) => {
-  const [hasMore, setHasMore] = useState(true);
- 
-
-
-
+  
   // Variables
  
-  const { data, error } = useGetFollowersQuery({
+  const { data,hasNextPage, error ,fetchNextPage} = useInfiniteGetFollowersQuery('username',{
     username: profile.username,
-    options: { limit: 15 },
+    options: { limit: 1 },
     query: {type:'followers'},
   });
  const {data:currentProfile}=useProfileQuery()
-  const followers = data?.getFollowers
-  const pageInfo = data?.getFollowers
+  const followers = data?.pages?.flatMap((page) => page?.getFollowers) as Pagination[];
+  const hasMore = hasNextPage
 
   const onEndReached = async () => {
     if (!hasMore) {
       return;
     }
-
+   fetchNextPage({pageParam:hasNextPage})
    
   };
-
- 
-
   if (followers?.length === 0) {
     return (
       <EmptyState

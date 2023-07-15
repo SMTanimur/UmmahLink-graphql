@@ -1,84 +1,46 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/*
------------------------------------------------------------------------------- 
-Author: devhoangkien 
-Website: https://devhoangkien.com
-------------------------------------------------------------------------------
-*/
-
 import { Injectable } from '@nestjs/common';
-import { EnumService } from './EnumService';
 import { Readable } from 'stream';
 import toStream = require('buffer-to-stream');
 import { v2 } from 'cloudinary';
+import { FileUpload } from 'graphql-upload';
 
 @Injectable()
 export class UploadService {
-
-    /**
-   * @upload GRAPHQL
-   * @param files upload  file with multer with GRAPHQL
-   * @param setting setting folder, service upload
-   * @returns 
-   */
-    async uploadSingleGraphql(
-      args: any
-    ): Promise<any>
-    {
-      if(args.setting.uploadService === EnumService.Cloudinary){
-        return this.uploadSingleToCloudinaryGraphql(args)
-      }
-    }
-
-     /**
-   * 
+  /**
+   *
    * @param args upload with GRAPHQL
-   * @returns 
+   * @returns
    */
   // upload single to cloudinary with graphql
-  async uploadSingleToCloudinaryGraphql(args: any): Promise<any>{
-    const {  createReadStream } = await args.file
-    const buffer = await this.streamToBuffer(createReadStream())
-    return this.cloudinary(buffer, args.setting.folder)
-  }
-
-  /**
-   * @upload GRAPHQL
-   * @param files upload mutiple file with multer with GRAPHQL
-   * @param setting setting folder, service upload
-   * @returns 
-   */
-  async uploadMultipleGraphql(
-    args: any
-  ): Promise<any>
-  {
-   
-      return this.uploadMultipleToCloudinaryGraphql(args)
-    
-
-  }
-
-
-  // upload multiple to cloudinary with graphql
-  async uploadMultipleToCloudinaryGraphql(args: any): Promise<any>{
+  async uploadSingleToCloudinaryGraphql(file: FileUpload): Promise<any> {
     try {
-
-      let arrayResponse: any[] = []
-      await Promise.all(args.files.map(async (file: any) => {
-        const argsReq = {
-          file,
-          setting: args.setting
-        }
-       const result = await this.uploadSingleToCloudinaryGraphql(argsReq)
-       arrayResponse.push(result)
-      }))
-      return arrayResponse
+      const { createReadStream } = await file;
+      const buffer = await this.streamToBuffer(createReadStream());
+      // const data = this.cloudinary(buffer);
+      console.log(buffer);
+      return 'dfjkdj';
+      // return data
     } catch (error) {
-      console.log(error)
+      return error;
     }
   }
-  
+
+  // upload multiple to cloudinary with graphql
+  async uploadMultipleToCloudinaryGraphql(files: [FileUpload]): Promise<any> {
+    try {
+      const arrayResponse: any[] = [];
+      await Promise.all(
+        files.map(async (file: FileUpload) => {
+          const result = await this.uploadSingleToCloudinaryGraphql(file);
+          arrayResponse.push(result);
+        })
+      );
+      return arrayResponse;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async streamToBuffer(stream: Readable): Promise<Buffer> {
     const buffer: Uint8Array[] = [];
 
@@ -86,16 +48,19 @@ export class UploadService {
       stream
         .on('error', (error) => reject(error))
         .on('data', (data) => buffer.push(data))
-        .on('end', () => resolve(Buffer.concat(buffer))),
+        .on('end', () => resolve(Buffer.concat(buffer)))
     );
   }
 
-  async cloudinary(buffer: any, folder: any){
+  async cloudinary(buffer: any, folder = ''): Promise<any> {
     return await new Promise((resolve, reject) => {
-      const upload = v2.uploader.upload_stream({folder: folder},(error, result) => {
-        if (error) return reject(error);
-        resolve(result);
-      });
+      const upload = v2.uploader.upload_stream(
+        { folder: 'ummahlink/' + folder },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
       toStream(buffer).pipe(upload);
     });
   }

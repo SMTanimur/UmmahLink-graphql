@@ -11,9 +11,10 @@ import { NewsFeedPaginate } from "@social-zone/graphql";
 
 
 const Home: NextPage = () => {
+  
   const {isAuthenticated}=useAuth()
   const [feedType, setFeedType] = useState<Type>(Type.FOLLOWING);
-  const {Feed,error,hasMore,isFetching,isLoading,isLoadingMore,loadMore,paginatorInfo}=useFeedQuery()
+  const {Feed,hasMore,isLoadingMore,loadMore}=useFeedQuery()
   return (
     <>
   
@@ -44,6 +45,7 @@ const Home: NextPage = () => {
           <Button
             onClick={loadMore}
             className="h-11 text-sm font-semibold md:text-base"
+            disabled={isLoadingMore}
           >
            Loading More
           </Button>

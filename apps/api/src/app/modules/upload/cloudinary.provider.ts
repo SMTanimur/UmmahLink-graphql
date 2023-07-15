@@ -1,15 +1,7 @@
-/*
------------------------------------------------------------------------------- 
-Author: devhoangkien 
-Website: https://devhoangkien.com
-------------------------------------------------------------------------------
-*/
-
 import { v2 } from 'cloudinary';
-import { CLOUDINARY } from './constants';
 
 export const CloudinaryProvider = {
-  provide: CLOUDINARY,
+  provide: 'Cloudinary',
   useFactory: (): any => {
     return v2.config({
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

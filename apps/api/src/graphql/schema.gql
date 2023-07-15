@@ -73,12 +73,6 @@ enum EGender {
   unspecified
 }
 
-enum EnumService {
-  Cloudinary
-  S3Storage
-  Web3Storage
-}
-
 input FollowOrUnFollowInput {
   follow_ID: ID!
   userId: ID
@@ -192,8 +186,8 @@ type Mutation {
   updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   updateUser(input: UpdateUserInput!): MessageResponse!
-  uploadMultipleFiles(files: [Upload!]!, setting: UploadParamInput!): [ResponseSingleUpload!]!
-  uploadSingleFiles(file: Upload!): ResponseSingleUpload
+  uploadMultipleFiles(files: [Upload!]!): [ResponseSingleUpload!]!
+  uploadSingleFiles(file: Upload!): ResponseSingleUpload!
 }
 
 type NewsFeedPaginate {
@@ -333,7 +327,6 @@ type Query {
   getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
   getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
-  item: String!
   me: IUser!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 15, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
@@ -348,12 +341,7 @@ enum QueryPostOrderByColumn {
 }
 
 type ResponseSingleUpload {
-  bytes: Float!
-  folder: String!
-  format: String!
-  height: Float!
   url: String!
-  width: Float!
 }
 
 enum SortOrder {
@@ -395,11 +383,6 @@ input UpdateUserInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
-
-input UploadParamInput {
-  folder: String!
-  uploadService: EnumService!
-}
 
 type User {
   avatar: String

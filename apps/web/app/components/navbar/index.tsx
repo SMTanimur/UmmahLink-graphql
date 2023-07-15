@@ -60,21 +60,7 @@ const Navbar: FC = () => {
     );
   };
 
-  const NavItems = () => {
-    const  pathname  = usePathname();
 
-    return (
-      <>
-        <NavItem url="/" name={`Home`} current={pathname === '/'} />
-        <NavItem
-          url="/explore"
-          name={`Explore`}
-          current={pathname === '/explore'}
-        />
-        <MoreNavItems />
-      </>
-    );
-  };
 
   return (
     <Disclosure
@@ -104,7 +90,6 @@ const Navbar: FC = () => {
                     <div className="hidden md:block">
                       <Search onProfileSelected={onProfileSelected} />
                     </div>
-                    <NavItems />
                   </div>
                 </div>
               </div>

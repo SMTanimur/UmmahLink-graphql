@@ -1,17 +1,10 @@
-/*
------------------------------------------------------------------------------- 
-Author: devhoangkien 
-Website: https://devhoangkien.com
-------------------------------------------------------------------------------
-*/
-
 import { Module } from '@nestjs/common';
-import { UploadService } from './upload.service';
 import { UploadResolver } from './upload.resolver';
+import { UploadService } from './upload.service';
 import { CloudinaryProvider } from './cloudinary.provider';
 
 @Module({
-  providers: [CloudinaryProvider, UploadService, UploadResolver],
-  exports: [CloudinaryProvider]
+  providers: [UploadResolver, UploadService, CloudinaryProvider],
+  exports: [CloudinaryProvider],
 })
 export class UploadModule {}

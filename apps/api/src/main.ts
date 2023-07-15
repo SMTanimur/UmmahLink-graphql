@@ -12,7 +12,7 @@ import { ConfigurationService } from '@social-zone/common';
 import passport from 'passport';
 import MongoDBStore from 'connect-mongodb-session';
 import session from 'express-session';
-import { graphqlUploadExpress } from 'graphql-upload-minimal';
+import { graphqlUploadExpress } from 'graphql-upload';
 import bodyParser from 'body-parser';
 
 const MongoStore = MongoDBStore(session);
@@ -35,7 +35,7 @@ async function bootstrap() {
     if (req.url.includes('/graphql')) {
       // only graphql request
       graphqlUploadExpress({
-        maxFileSize: 10485760,
+        maxFileSize: 100000000,
         maxFiles: 10,
       })(req, res, next);
     } else {

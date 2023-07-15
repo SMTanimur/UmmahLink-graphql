@@ -172,6 +172,14 @@ export type GetFeedDto = {
   useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type GetLikeResponse = {
+  __typename?: 'GetLikeResponse';
+  avatar: Scalars['String']['output'];
+  isFollowing: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
 export type IUser = {
   __typename?: 'IUser';
   _id: Scalars['ID']['output'];
@@ -185,6 +193,12 @@ export type IUser = {
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
+};
+
+export type LikesQueryArgs = {
+  commentId?: InputMaybe<Scalars['ID']['input']>;
+  postId?: InputMaybe<Scalars['ID']['input']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type LoginInput = {
@@ -433,6 +447,7 @@ export type Query = {
   getFeeds: NewsFeedPagination;
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
+  getPostLikes: Array<GetLikeResponse>;
   getPosts?: Maybe<NewsFeedPagination>;
   getSuggestionPeople?: Maybe<FollowPagination>;
   item: Scalars['String']['output'];
@@ -457,6 +472,11 @@ export type QueryGetFollowingArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
   username: Scalars['String']['input'];
+};
+
+export type QueryGetPostLikesArgs = {
+  option: PaginateOptionArgs;
+  query: LikesQueryArgs;
 };
 
 export type QueryGetPostsArgs = {
@@ -782,6 +802,22 @@ export type GetSuggestionPeopleQuery = {
       username?: string | null;
     } | null> | null;
   } | null;
+};
+
+export type GetPostLikesQueryVariables = Exact<{
+  query: LikesQueryArgs;
+  option: PaginateOptionArgs;
+}>;
+
+export type GetPostLikesQuery = {
+  __typename?: 'Query';
+  getPostLikes: Array<{
+    __typename: 'GetLikeResponse';
+    avatar: string;
+    isFollowing: boolean;
+    name: string;
+    username: string;
+  }>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1412,6 +1448,68 @@ useGetSuggestionPeopleQuery.fetcher = (
 ) =>
   fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
     GetSuggestionPeopleDocument,
+    variables,
+    options
+  );
+export const GetPostLikesDocument = /*#__PURE__*/ `
+    query GetPostLikes($query: LikesQueryArgs!, $option: PaginateOptionArgs!) {
+  getPostLikes(query: $query, option: $option) {
+    avatar
+    isFollowing
+    name
+    username
+    __typename
+  }
+}
+    `;
+export const useGetPostLikesQuery = <
+  TData = GetPostLikesQuery,
+  TError = unknown
+>(
+  variables: GetPostLikesQueryVariables,
+  options?: UseQueryOptions<GetPostLikesQuery, TError, TData>
+) =>
+  useQuery<GetPostLikesQuery, TError, TData>(
+    ['GetPostLikes', variables],
+    fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
+      GetPostLikesDocument,
+      variables
+    ),
+    options
+  );
+
+useGetPostLikesQuery.getKey = (variables: GetPostLikesQueryVariables) => [
+  'GetPostLikes',
+  variables,
+];
+export const useInfiniteGetPostLikesQuery = <
+  TData = GetPostLikesQuery,
+  TError = unknown
+>(
+  pageParamKey: keyof GetPostLikesQueryVariables,
+  variables: GetPostLikesQueryVariables,
+  options?: UseInfiniteQueryOptions<GetPostLikesQuery, TError, TData>
+) => {
+  return useInfiniteQuery<GetPostLikesQuery, TError, TData>(
+    ['GetPostLikes.infinite', variables],
+    (metaData) =>
+      fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
+        GetPostLikesDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) }
+      )(),
+    options
+  );
+};
+
+useInfiniteGetPostLikesQuery.getKey = (
+  variables: GetPostLikesQueryVariables
+) => ['GetPostLikes.infinite', variables];
+useGetPostLikesQuery.fetcher = (
+  variables: GetPostLikesQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
+    GetPostLikesDocument,
     variables,
     options
   );

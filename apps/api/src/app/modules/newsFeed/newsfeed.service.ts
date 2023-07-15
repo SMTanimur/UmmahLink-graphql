@@ -141,10 +141,12 @@ export class NewsFeedService {
           },
         },
       ]);
-      return await this.newsFeedModel.aggregatePaginate(agg,{
+      const res = await this.newsFeedModel.aggregatePaginate(agg,{
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
-      }) as NewsFeedPagination;
+      }) 
+      console.log(res);
+      return res;
      
     } catch (error) {
       console.log(error);

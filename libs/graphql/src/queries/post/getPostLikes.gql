@@ -1,0 +1,9 @@
+query GetPostLikes ($query:LikesQueryArgs!,$option:PaginateOptionArgs! ){
+  getPostLikes(query: $query,option: $option){
+    avatar
+    isFollowing
+    name
+    username
+    __typename
+  }
+}

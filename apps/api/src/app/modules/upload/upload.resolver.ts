@@ -1,32 +1,23 @@
-/*
------------------------------------------------------------------------------- 
-Author: devhoangkien 
-Website: https://devhoangkien.com
-------------------------------------------------------------------------------
-*/
-
-import { ResponseSingleUpload } from './response';
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { UploadInputArgs, UploadMultipleInputArgs } from './uploadInputArgs';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { UploadService } from './upload.service';
+import { ResponseSingleUpload } from './dto/upload.dto';
+import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 @Resolver()
 export class UploadResolver {
   constructor(private readonly uploadService: UploadService) {}
 
-  @Query((returns) => String)
-  async item(): Promise<string> {
-    return 'Hello world!';
-  }
-  @Mutation(() => ResponseSingleUpload,{nullable:true})
-  async uploadSingleFiles(@Args() args: UploadInputArgs): Promise<any> {
-    return this.uploadService.uploadSingleGraphql(args);
+  @Mutation(() => ResponseSingleUpload)
+  async uploadSingleFiles(
+    @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
+  ): Promise<any> {
+    return this.uploadService.uploadSingleToCloudinaryGraphql(file);
   }
 
   @Mutation(() => [ResponseSingleUpload])
   async uploadMultipleFiles(
-    @Args() args: UploadMultipleInputArgs
+    @Args({ name: 'files', type: () => [GraphQLUpload] }) files: [FileUpload],
   ): Promise<any> {
-    return this.uploadService.uploadMultipleGraphql(args);
+    return this.uploadService.uploadMultipleToCloudinaryGraphql(files);
   }
 }
