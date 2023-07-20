@@ -29,9 +29,16 @@ const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
         <TabButton
           name={`Feed`}
           icon={<PencilSquareIcon className="h-4 w-4" />}
-          active={feedType === ProfilePostType.Post}
-          type={ProfilePostType.Post.toLowerCase()}
-          onClick={() => switchTab(ProfilePostType.Post)}
+          active={feedType === ProfilePostType.FEED}
+          type={ProfilePostType.FEED.toLowerCase()}
+          onClick={() => switchTab(ProfilePostType.FEED)}
+        />
+        <TabButton
+          name={`Info`}
+          icon={<PencilSquareIcon className="h-4 w-4" />}
+          active={feedType === ProfilePostType.Info}
+          type={ProfilePostType.Info.toLowerCase()}
+          onClick={() => switchTab(ProfilePostType.Info as string)}
         />
         <TabButton
           name={`Following`}

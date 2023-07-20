@@ -322,7 +322,7 @@ type ProfileInformation {
 }
 
 type Query {
-  getFeeds(option: GetFeedDto!, query: NewsFeedQueryArgs!): NewsFeedPagination!
+  getFeeds(option: GetFeedDto!, query: NewsFeedQueryArgs!): NewsFeedPagination
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!

@@ -9,9 +9,9 @@ import { TabButton } from '~ui';
 
 
 export enum Type {
-  FOR_YOU = 'FOR_YOU',
+  FEED = 'Post',
   FOLLOWING = 'FOLLOWING',
-  HIGHLIGHTS = 'HIGHLIGHTS',
+  INFO = 'INFO',
   FOLLOWERS = 'FOLLOWERS'
 }
 

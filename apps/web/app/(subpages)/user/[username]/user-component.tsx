@@ -6,6 +6,9 @@ import { GridItemEight, GridItemFour, GridLayout, NewPost, ProfilePostType, STAT
 import Cover from "./components/Cover";
 import Details from "./components/Details";
 import FeedType from "./components/FeedType";
+import Followers from "./components/Followers";
+import Following from "./components/Following";
+import Info from "./components/Info";
 
 type UserComponentProps = {
    username: string;
@@ -16,12 +19,13 @@ export default function UserComponent( { username,type } : UserComponentProps) {
   const {data}= useUserProfileQuery({username})
   const [following, setFollowing] = useState<boolean | null>(null);
   const {data:me}=useProfileQuery()
+  console.log(data?.user)
 
   const [feedType, setFeedType] = useState(
     type &&
-      ['posts', 'info', 'friends'].includes(type as string)
+      ['feed', 'info', 'following','followers'].includes(type as string)
       ? type.toString().toUpperCase()
-      : ProfilePostType.Post
+      : ProfilePostType
   );
   return (
     <>
@@ -47,8 +51,26 @@ export default function UserComponent( { username,type } : UserComponentProps) {
           />
         </GridItemFour>
         <GridItemEight className="space-y-5">
-          <FeedType setFeedType={setFeedType} feedType={feedType} />
+          <FeedType setFeedType={setFeedType} feedType={feedType as string} />
           {me?.me?._id === data?.user?.id ? <NewPost /> : null}
+   
+          {
+            feedType ===  ProfilePostType.Followers ? 
+            (
+            <Followers profile={data?.user as ProfileInformation }/>
+            )
+            : feedType === ProfilePostType.Following ? 
+            (
+              <Following profile={data?.user as ProfileInformation }/>
+            )
+            : feedType === ProfilePostType.Info ?
+            (
+              <Info profile={data?.user as ProfileInformation}/>
+            )
+            :
+            null
+        
+          }
           {/* {(feedType === ProfilePostType.Post ||
             feedType === ProfilePostType.Followers ||
             feedType === ProfilePostType.Following) && (

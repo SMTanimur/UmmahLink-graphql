@@ -70,7 +70,7 @@ export class PostResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Query(() =>NewsFeedPagination ,{name:'getPosts'})
-  async  getSuggestionPeople(
+  async  getPosts(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: NewsFeedQueryArgs,
     @Args('option') options: PaginateOptionArgs,

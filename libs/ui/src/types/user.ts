@@ -9,9 +9,8 @@ export interface ICurrentUser {
 
 
 export enum ProfilePostType {
-  Post = 'POSTS',
+  FEED = 'FEED',
   Info = 'INFO',
-  Friend = 'FRIENDS',
   Followers = 'FOLLOWERS',
   Following = 'FOLLOWING',
   
@@ -47,3 +46,5 @@ export interface Area {
   x: number;
   y: number;
 }
+
+
