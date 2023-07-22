@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-"use client"
+
 
 
 import { useGlobalModalStateStore } from './modal';

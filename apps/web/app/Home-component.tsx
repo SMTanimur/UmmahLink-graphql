@@ -4,6 +4,8 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import {
   Button,
+  Card,
+  Footer,
   GridItemEight,
   GridItemFour,
   GridLayout,
@@ -11,37 +13,45 @@ import {
   PostItem,
   useAuth,
   useFeedQuery,
-
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
-import InfiniteScroll from 'react-infinite-scroller';
 import RecommendedProfiles from './components/RecommendedProfiles';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 import EnableMessages from './components/EnableMessages';
+import WithoutUser from './home/WithoutUser';
 
 const Home: NextPage = () => {
   const { isAuthenticated } = useAuth();
   const [feedType, setFeedType] = useState<Type>(Type.FOLLOWING);
-  const { Feed, hasMore, isLoadingMore, loadMore,isFetching } = useFeedQuery();
+  const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
+    useFeedQuery();
+
+  const [sentryRef] = useInfiniteScroll({
+    loading: isFetching,
+    hasNextPage: hasMore ?? false,
+    onLoadMore: loadMore,
+    disabled: isError,
+    rootMargin: '0px 0px 400px 0px',
+  });
+
+  if (!isAuthenticated) return <WithoutUser />;
   return (
-    <>
+    <div className='relative'>
       {/* {!isAuthenticated && <Hero />} */}
       <GridLayout>
-        <GridItemEight className="space-y-5">
-          {(isAuthenticated && (
+        <GridItemEight className="space-y-5  ">
+          {isAuthenticated && (
             <>
               <NewPost />
               <FeedType feedType={feedType} setFeedType={setFeedType} />
               {/* ---- NEWS FEED ---- */}
-              {Feed?.length !== 0 && (
-                <>
-                  <InfiniteScroll
-                    hasMore={hasMore}
-                    loadMore={() => loadMore}
-                    className=""
-                  >
+
+              <Card className="divide-y-[1px] dark:divide-gray-700">
+                {Feed?.length !== 0 && (
+                  <>
                     {Feed?.map(
                       (post: any, index) =>
-                        post.author && ( // avoid render posts with null author
+                        post?.author && ( // avoid render posts with null author
                           <PostItem
                             key={index}
                             post={post!}
@@ -49,48 +59,34 @@ const Home: NextPage = () => {
                           />
                         )
                     )}
-
-                    {isFetching && <div>Loading more...</div>}
-                    {hasMore && (
-                      <Button
-                          onClick={() => loadMore()}
-                          className="h-11 text-sm font-semibold md:text-base"
-                          disabled={isLoadingMore}
-                        >
-                          Loading More
-                        </Button>
-                    )}
-                  
-                  </InfiniteScroll>
-
-                  {/* {state.isLoadingFeed && (
-              <div className="flex justify-center py-10">
-                <Loader />
-              </div>
-            )}
-            {state.error && (
-              <div className="flex justify-center py-6">
-                <p className="text-gray-400 italic">
-                  {state.error.error?.message || 'Something went wrong.'}
-                </p>
-              </div>
-            )} */}
-                </>
-              )}
+                  </>
+                )}
+                {isFetching && <div>Loading more...</div>}
+                {hasMore && (
+                  <Button
+                    ref={sentryRef}
+                    className="h-11 text-sm font-semibold md:text-base"
+                  >
+                    Loading More
+                  </Button>
+                )}
+              </Card>
             </>
-          )) ||
-            null}
+          )}
         </GridItemEight>
-        <GridItemFour>
+        <GridItemFour className="space-y-5">
+          <div className='sticky text-sm leading-7 top-20'>
           {isAuthenticated ? (
             <>
               <EnableMessages />
               <RecommendedProfiles />
             </>
           ) : null}
+          <Footer />
+          </div>
         </GridItemFour>
       </GridLayout>
-    </>
+    </div>
   );
 };
 

@@ -185,11 +185,8 @@ export class NewsFeedService {
         {
           $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
         },
+        { $skip: skip},
         
-        { $skip: skip },
-        { $limit: limit },
-        
-
         {
           $lookup: {
             from: 'posts',
@@ -296,7 +293,10 @@ export class NewsFeedService {
           },
         },
       ]);
-      const res = await this.newsFeedModel.aggregatePaginate(agg, {});
+      const res = await this.newsFeedModel.aggregatePaginate(agg,{
+        ...(limit ? { limit } : {}),
+      });
+     
       return res;
     } catch (error) {
       console.log(error);

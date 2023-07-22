@@ -2,25 +2,42 @@
 
 import { ProfileInformation, useUserProfileQuery } from "@social-zone/graphql";
 import { useState } from "react";
-import { GridItemEight, GridItemFour, GridLayout, NewPost, ProfilePostType, STATIC_IMAGES_URL, useProfileQuery } from "~ui";
+import { Button, GridItemEight, GridItemFour, GridLayout, NewPost, PostItem, ProfilePostType, STATIC_IMAGES_URL, useAuth, usePostQuery, useProfileQuery, useUserProfile } from "~ui";
 import Cover from "./components/Cover";
 import Details from "./components/Details";
 import FeedType from "./components/FeedType";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
 import Info from "./components/Info";
+import useInfiniteScroll from "react-infinite-scroll-hook";
 
 type UserComponentProps = {
    username: string;
     type: string;
 }
+
+
 export default function UserComponent( { username,type } : UserComponentProps) {
 
-  const {data}= useUserProfileQuery({username})
+
+
+const {isAuthenticated}=useAuth()
+    const {data}=useUserProfile(username)
+  
+  const{Posts,error,hasMore,isError,isFetching,isLoadingMore,isLoading,loadMore}=usePostQuery(data?.user?.username as string)
+  console.log(data?.user)
+
+  const [sentryRef] = useInfiniteScroll({
+    loading: isFetching,
+    hasNextPage: hasMore ?? false,
+    onLoadMore: loadMore,
+    disabled: isError,
+    rootMargin: '0px 0px 400px 0px',
+  });
   const [following, setFollowing] = useState<boolean | null>(null);
   const {data:me}=useProfileQuery()
   console.log(data?.user)
-
+   
   const [feedType, setFeedType] = useState(
     type &&
       ['feed', 'info', 'following','followers'].includes(type as string)
@@ -67,15 +84,35 @@ export default function UserComponent( { username,type } : UserComponentProps) {
             (
               <Info profile={data?.user as ProfileInformation}/>
             )
-            :
-            null
+            : (
+
+              <>
+             
+                  {Posts?.map(
+                    (post: any, index) =>
+                      post?.author && ( // avoid render posts with null author
+                        <PostItem
+                          key={index}
+                          post={post!}
+                          isAuth={isAuthenticated}
+                        />
+                      )
+                  )}
+
+                  {isFetching && <div>Loading more...</div>}
+                  {hasMore && (
+                    <Button
+                      ref={sentryRef}
+                      className="h-11 text-sm font-semibold md:text-base"
+                    >
+                      Loading More
+                    </Button>
+                  )}
+              </>
+            )
+           
         
           }
-          {/* {(feedType === ProfilePostType.Post ||
-            feedType === ProfilePostType.Followers ||
-            feedType === ProfilePostType.Following) && (
-            <Feed profile={profile as Profile} type={feedType} />
-          )} */}
         </GridItemEight>
       </GridLayout>
     </>

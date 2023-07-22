@@ -11,6 +11,7 @@ import { CreatePostOrCommentLikeInput } from './dto/create-post-or-comment-like'
 import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
+import { GetFeedDto } from '../newsFeed/dto/optionArgs';
 
 
 @Resolver(() => Post)
@@ -73,7 +74,7 @@ export class PostResolver {
   async  getPosts(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: NewsFeedQueryArgs,
-    @Args('option') options: PaginateOptionArgs,
+    @Args('option') options: GetFeedDto,
     @CurrentUser() user: any,
   ) {
     query.user = user

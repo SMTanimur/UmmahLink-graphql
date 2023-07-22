@@ -438,7 +438,7 @@ export type ProfileInformation = {
 
 export type Query = {
   __typename?: 'Query';
-  getFeeds: NewsFeedPagination;
+  getFeeds?: Maybe<NewsFeedPagination>;
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
   getPostLikes: Array<GetLikeResponse>;
@@ -473,7 +473,7 @@ export type QueryGetPostLikesArgs = {
 };
 
 export type QueryGetPostsArgs = {
-  option: PaginateOptionArgs;
+  option: GetFeedDto;
   query: NewsFeedQueryArgs;
   username: Scalars['String']['input'];
 };
@@ -683,7 +683,7 @@ export type GetFeedQueryVariables = Exact<{
 
 export type GetFeedQuery = {
   __typename?: 'Query';
-  getFeeds: {
+  getFeeds?: {
     __typename: 'NewsFeedPagination';
     limit: number;
     page: number;
@@ -691,6 +691,8 @@ export type GetFeedQuery = {
     totalPages: number;
     pagingCounter: number;
     prevPage?: number | null;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
     nextPage?: number | null;
     docs?: Array<{
       __typename?: 'NewsFeedPaginate';
@@ -712,7 +714,7 @@ export type GetFeedQuery = {
         name: string;
       };
     } | null> | null;
-  };
+  } | null;
 };
 
 export type GetFollowersQueryVariables = Exact<{
@@ -802,6 +804,48 @@ export type GetPostLikesQuery = {
     username: string;
     _id: string;
   }>;
+};
+
+export type GetPostsQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+  query: NewsFeedQueryArgs;
+  option: GetFeedDto;
+}>;
+
+export type GetPostsQuery = {
+  __typename?: 'Query';
+  getPosts: {
+    __typename: 'NewsFeedPagination';
+    limit: number;
+    page: number;
+    totalDocs: number;
+    totalPages: number;
+    pagingCounter: number;
+    prevPage?: number | null;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    docs?: Array<{
+      __typename?: 'NewsFeedPaginate';
+      commentsCount?: number | null;
+      content?: string | null;
+      createdAt?: any | null;
+      id?: string | null;
+      isLiked?: boolean | null;
+      isOwnPost?: boolean | null;
+      likesCount?: number | null;
+      photos?: Array<string> | null;
+      updatedAt?: any | null;
+      author: {
+        __typename?: 'Author';
+        avatar: string;
+        username: string;
+        email: string;
+        id?: string | null;
+        name: string;
+      };
+    } | null> | null;
+  };
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1183,6 +1227,8 @@ export const GetFeedDocument = /*#__PURE__*/ `
     totalPages
     pagingCounter
     prevPage
+    hasNextPage
+    hasPrevPage
     nextPage
   }
 }
@@ -1495,6 +1541,86 @@ useGetPostLikesQuery.fetcher = (
 ) =>
   fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
     GetPostLikesDocument,
+    variables,
+    options
+  );
+export const GetPostsDocument = /*#__PURE__*/ `
+    query GetPosts($username: String!, $query: NewsFeedQueryArgs!, $option: GetFeedDto!) {
+  getPosts(username: $username, query: $query, option: $option) {
+    docs {
+      author {
+        avatar
+        username
+        email
+        id
+        name
+      }
+      commentsCount
+      content
+      createdAt
+      id
+      isLiked
+      isOwnPost
+      likesCount
+      photos
+      updatedAt
+    }
+    __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
+  }
+}
+    `;
+export const useGetPostsQuery = <TData = GetPostsQuery, TError = unknown>(
+  variables: GetPostsQueryVariables,
+  options?: UseQueryOptions<GetPostsQuery, TError, TData>
+) =>
+  useQuery<GetPostsQuery, TError, TData>(
+    ['GetPosts', variables],
+    fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, variables),
+    options
+  );
+
+useGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
+  'GetPosts',
+  variables,
+];
+export const useInfiniteGetPostsQuery = <
+  TData = GetPostsQuery,
+  TError = unknown
+>(
+  pageParamKey: keyof GetPostsQueryVariables,
+  variables: GetPostsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetPostsQuery, TError, TData>
+) => {
+  return useInfiniteQuery<GetPostsQuery, TError, TData>(
+    ['GetPosts.infinite', variables],
+    (metaData) =>
+      fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options
+  );
+};
+
+useInfiniteGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
+  'GetPosts.infinite',
+  variables,
+];
+useGetPostsQuery.fetcher = (
+  variables: GetPostsQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetPostsQuery, GetPostsQueryVariables>(
+    GetPostsDocument,
     variables,
     options
   );

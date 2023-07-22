@@ -1,10 +1,11 @@
 "use client"
-import { useInfiniteGetFeedQuery } from '@social-zone/graphql';
+
+import { useInfiniteGetPostsQuery } from '@social-zone/graphql';
 import React, { useState } from 'react';
 
-export const useFeedQuery = () => {
+export const usePostQuery = (username:string) => {
 
-  const [cursor, setCursor] = useState<number>(1);
+  const [cursor, setCursor] = useState<number>(2);
 
 const pageSize=5
 
@@ -17,10 +18,11 @@ const pageSize=5
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-  } = useInfiniteGetFeedQuery(
+  } = useInfiniteGetPostsQuery(
     'option', 
-    {
-      option: {limit:pageSize},
+    { 
+      username,
+      option: {limit:pageSize,page:cursor},
       query: {},
     },
     {
@@ -28,9 +30,9 @@ const pageSize=5
         // if (Math.ceil(lastPage?.getFeeds!.totalPages / pageSize) > pages.length)
         // return pages.length;
         //  return undefined;
-        console.log(lastPage?.getFeeds?.nextPage,"nextsjs")
+        console.log(lastPage?.getPosts?.nextPage,"nextsjs")
 
-        if(lastPage?.getFeeds?.hasNextPage) return lastPage.getFeeds.nextPage
+        if(lastPage?.getPosts?.hasNextPage) return lastPage.getPosts.nextPage
       },
     }
 
@@ -41,12 +43,14 @@ const pageSize=5
 
 
  
-  const flattenedData = data?.pages.flatMap((page) => page.getFeeds?.docs) ?? [];
+  const flattenedData = data?.pages.flatMap((page) => page.getPosts?.docs) ?? [];
 
-
+  // React.useEffect(()=>{
+  //   if(hasNextPage) setCursor(cursor+1)
+  // },[cursor, hasNextPage])
 
     return {
-      Feed: flattenedData,
+      Posts: flattenedData,
       isLoading,
       error,
       isError,

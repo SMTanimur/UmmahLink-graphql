@@ -26,7 +26,7 @@ export class PaginateOptionArgs {
   @IsOptional()
   @Field({ nullable: true })
   @Transform((val) => parseInt(val.value))
-  public limit?: number = 15;
+  public limit?: number = 10
 
   @Field({ nullable: true })
   @IsOptional()

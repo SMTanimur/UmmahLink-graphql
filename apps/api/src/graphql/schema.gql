@@ -117,7 +117,7 @@ input GetFeedDto {
   forceCountFn: Boolean
   lean: Boolean
   leanWithId: Boolean
-  limit: Float = 15
+  limit: Float = 10
   offset: Float
   orderBy: QueryPostOrderByColumn = CREATED_AT
   page: Float = 1
@@ -268,7 +268,7 @@ input PaginateOptionArgs {
   forceCountFn: Boolean
   lean: Boolean
   leanWithId: Boolean
-  limit: Float = 15
+  limit: Float = 10
   offset: Float
   page: Float = 1
   pagination: Boolean
@@ -326,10 +326,10 @@ type Query {
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
-  getPosts(option: PaginateOptionArgs!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination!
+  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination!
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
   me: IUser!
-  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 15, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
+  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 10, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
   user(username: String!): ProfileInformation
 }

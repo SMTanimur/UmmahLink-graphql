@@ -1,4 +1,4 @@
-"use client"
+
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '../styles/global.css';
@@ -7,6 +7,7 @@ import {  defaultMetadata } from '~ui';
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
+
 import BottomNavigation from './components/Navbar/BottomNavigation';
 
 const Providers = dynamic(() => import('./Provider'), {
@@ -17,6 +18,8 @@ const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
 });
+
+
 export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
@@ -32,7 +35,8 @@ export default function RootLayout({
             position="top-right"
             // toastOptions={getToastOptions(resolvedTheme)}
           />
-         < div className="flex min-h-screen flex-col pb-14 md:pb-0">
+        {/* <GlobalModals/>   */}
+         < div className="flex min-h-screen flex-col pb-14 md:pb-0 ">
         <Navbar />
         <BottomNavigation />
         {children}

@@ -11,6 +11,8 @@ interface InfoProps {
 
 const Info:FC<InfoProps> = ({profile}) => {
   const {data}=useProfileQuery()
+ 
+
 
   const {push}=useRouter()
 

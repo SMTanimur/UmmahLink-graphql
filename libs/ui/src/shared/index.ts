@@ -8,6 +8,7 @@ export * from './ChooseFile'
 export * from './Shimmer'
 export * from './post'
 export * from './Options'
+export * from './Footer/Footer'
 
 
 export { UserCard }

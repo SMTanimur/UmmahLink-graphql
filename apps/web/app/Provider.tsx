@@ -7,12 +7,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GlobalModals } from '~ui';
 
 
+
 const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <GlobalModals/>
+      <GlobalModals/>
         {children}
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={true} />

@@ -1,5 +1,5 @@
-query GetFeed ($query:NewsFeedQueryArgs!,$option:GetFeedDto!) {
-getFeeds(query:$query,option: $option) {
+query GetPosts ($username:String!,$query:NewsFeedQueryArgs!,$option:GetFeedDto!) {
+getPosts(username: $username,query:$query,option: $option) {
     docs{
       author{
         avatar
