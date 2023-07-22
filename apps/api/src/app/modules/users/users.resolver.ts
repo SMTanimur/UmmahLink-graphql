@@ -4,9 +4,11 @@ import { UseGuards } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 import { User } from './entities/user.entity';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
-import { CurrentUser, MessageResponse } from '@social-zone/common';
+import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
 import { UpdateUserInput } from './dto/update-user-input';
 import { ProfileInformation } from './dto/ProfileData';
+import { IUser } from './dto/user';
+import { SearchDto } from './dto/search.query.dto';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -47,5 +49,16 @@ export class UserResolver {
     @CurrentUser() user: any
   ) {
     return await this.usersService.findUserByUsername(username, user);
+  }
+
+  @Query((_returns) => [IUser], {nullable:true, name: 'searchUser' })
+  @UseGuards(AuthenticatedGuard)
+  async searchUser(
+    @Args('query') query: SearchDto,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any
+  ) {
+    query.user = user;
+    return await this.usersService.searchUser(query, options);
   }
 }

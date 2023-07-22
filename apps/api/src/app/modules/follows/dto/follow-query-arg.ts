@@ -1,5 +1,4 @@
-import { Field, ID, InputType } from "@nestjs/graphql";
-import {  IsOptional } from "class-validator";
+import { Field,  InputType } from "@nestjs/graphql";
 import { User } from "../../users/entities/user.entity";
 
 

@@ -3,10 +3,10 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 
-import { Model, PaginateModel } from 'mongoose';
+import { FilterQuery, Model, PaginateModel } from 'mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { createHash } from '../../utils/hash';
@@ -14,12 +14,17 @@ import { UpdateUserInput } from './dto/update-user-input';
 
 import { Follow, FollowDocument } from '../follows/entities/follow';
 import { ProfileInformation } from './dto/ProfileData';
+import { PostsService } from '../posts/posts.service';
+import { SearchDto } from './dto/search.query.dto';
+import { PaginateOptionArgs } from '@social-zone/common';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: PaginateModel<UserDocument>,
-    @InjectModel(Follow.name) private followModel: Model<FollowDocument>
+    @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
+    @Inject(forwardRef(() => PostsService))
+    private readonly postsService: PostsService
   ) {}
 
   async createUser(createUser: CreateUserInput): Promise<string> {
@@ -164,4 +169,40 @@ export class UsersService {
 
     return user;
   }
+
+async searchUser (query?: FilterQuery<SearchDto>,options?:PaginateOptionArgs){
+
+  try {
+    const {keyword ,user} = query;
+    const { limit,offset} = options;
+    const skip = offset * limit;
+
+    const users = await this.userModel.find({
+      $or: [
+          { name: { $regex: keyword as string, $options: 'i' } },
+          { username: { $regex: keyword as string, $options: 'i' } }
+      ]
+  })
+  .limit(limit)
+  .skip(skip);
+
+  if(users.length === 0){
+    throw new NotFoundException('No user found')
+  }
+  console.log(users,'users')
+  const myFollowersDoc = await this.followModel.find({ target: user?._id }); // target is yourself
+  const myFollowing = myFollowersDoc.map(user => user.target); 
+  const usersResult = users.map((user) => {
+    return {
+        ...user.toObject(),
+        isFollowing: myFollowing.includes(user._id)
+    }
+});
+return usersResult
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
 }

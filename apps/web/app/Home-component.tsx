@@ -13,16 +13,23 @@ import {
   PostItem,
   useAuth,
   useFeedQuery,
+  useProfileQuery,
+  useUserProfile,
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
 import RecommendedProfiles from './components/RecommendedProfiles';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import EnableMessages from './components/EnableMessages';
 import WithoutUser from './home/WithoutUser';
+import Followers from './(subpages)/user/[username]/components/Followers';
+import { ProfileInformation } from '@social-zone/graphql';
+import Following from './(subpages)/user/[username]/components/Following';
 
 const Home: NextPage = () => {
   const { isAuthenticated } = useAuth();
-  const [feedType, setFeedType] = useState<Type>(Type.FOLLOWING);
+  const [feedType, setFeedType] = useState<Type>(Type.FEED);
+  const {data:me}=useProfileQuery()
+  const {data}=useUserProfile(me?.me.username as string)
   const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
     useFeedQuery();
 
@@ -47,29 +54,45 @@ const Home: NextPage = () => {
               {/* ---- NEWS FEED ---- */}
 
               <Card className="divide-y-[1px] dark:divide-gray-700">
-                {Feed?.length !== 0 && (
-                  <>
-                    {Feed?.map(
-                      (post: any, index) =>
-                        post?.author && ( // avoid render posts with null author
-                          <PostItem
-                            key={index}
-                            post={post!}
-                            isAuth={isAuthenticated}
-                          />
-                        )
-                    )}
-                  </>
-                )}
-                {isFetching && <div>Loading more...</div>}
-                {hasMore && (
-                  <Button
-                    ref={sentryRef}
-                    className="h-11 text-sm font-semibold md:text-base"
-                  >
-                    Loading More
-                  </Button>
-                )}
+              {
+            feedType ===  Type.FOLLOWERS ? 
+            (
+            <Followers profile={data?.user as ProfileInformation }/>
+            )
+            : feedType === Type.FOLLOWING ? 
+            (
+              <Following profile={data?.user as ProfileInformation }/>
+            )
+          
+            : (
+
+              <>
+             
+                  {Feed?.map(
+                    (post: any, index) =>
+                      post?.author && ( // avoid render posts with null author
+                        <PostItem
+                          key={index}
+                          post={post!}
+                          isAuth={isAuthenticated}
+                        />
+                      )
+                  )}
+
+                  
+                  {hasMore && (
+                    <Button
+                      ref={sentryRef}
+                      className="h-11 text-sm font-semibold md:text-base"
+                    >
+                      Loading More
+                    </Button>
+                  )}
+              </>
+            )
+           
+        
+          }
               </Card>
             </>
           )}

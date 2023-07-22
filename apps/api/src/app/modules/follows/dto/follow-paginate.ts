@@ -1,7 +1,6 @@
 import { Field,  GraphQLISODateTime,  ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
-// import { UserInfo } from '../../users/entities/user.entity';
-import { UserInformation } from '../../users/dto/user';
+
 
 
 @ObjectType()

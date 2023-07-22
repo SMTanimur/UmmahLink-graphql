@@ -31,5 +31,6 @@ import { User, UserSchema } from '../users/entities/user.entity';
   ],
   controllers: [],
   providers: [PostsService, PostResolver],
+  exports: [PostsService],
 })
 export class PostsModule {}

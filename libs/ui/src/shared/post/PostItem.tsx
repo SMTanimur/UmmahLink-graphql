@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 
 'use client';
 import { CommandLineIcon } from '@heroicons/react/24/outline';
-import { NewsFeedPaginate, ProfileInformation } from '@social-zone/graphql';
+import { NewsFeedPaginate } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Image, Modal } from 'libs/ui/src/components';
@@ -51,7 +50,7 @@ export const PostItem: React.FC<IProps> = (props) => {
   };
 
   return (
-    <div className="flex flex-col bg-white tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
+    <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
         <div className="flex gap-4 items-center">

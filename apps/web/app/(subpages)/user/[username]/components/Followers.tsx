@@ -18,7 +18,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
   // Variables
  
   const { data,hasNextPage, error ,fetchNextPage} = useInfiniteGetFollowersQuery('username',{
-    username: profile.username,
+    username: profile?.username,
     options: { limit: 1 },
     query: {type:'followers'},
   });

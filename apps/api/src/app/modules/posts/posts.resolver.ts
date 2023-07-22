@@ -12,6 +12,8 @@ import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
 import { GetFeedDto } from '../newsFeed/dto/optionArgs';
+import { PostsResponse } from './dto/getPosts.dto';
+
 
 
 @Resolver(() => Post)
@@ -70,7 +72,7 @@ export class PostResolver {
 
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>NewsFeedPagination ,{name:'getPosts'})
+  @Query(() =>PostsResponse ,{name:'getPosts'})
   async  getPosts(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: NewsFeedQueryArgs,

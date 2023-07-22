@@ -305,6 +305,11 @@ type Post {
   updatedAt: DateTime!
 }
 
+type PostsResponse {
+  docs: [NewsFeedPaginate!]!
+  next: Float
+}
+
 type ProfileInformation {
   avatar: String!
   bio: String
@@ -326,11 +331,12 @@ type Query {
   getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
   getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
-  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination!
+  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): PostsResponse!
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
   me: IUser!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 10, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
+  searchUser(option: PaginateOptionArgs!, query: SearchDto!): [IUser!]
   user(username: String!): ProfileInformation
 }
 
@@ -343,6 +349,11 @@ enum QueryPostOrderByColumn {
 
 type ResponseSingleUpload {
   url: String!
+}
+
+input SearchDto {
+  keyword: String
+  user: UserInputType
 }
 
 enum SortOrder {

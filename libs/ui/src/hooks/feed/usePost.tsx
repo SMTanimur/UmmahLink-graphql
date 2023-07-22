@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 
 export const usePostQuery = (username:string) => {
 
-  const [cursor, setCursor] = useState<number>(2);
 
 const pageSize=5
 
@@ -22,7 +21,7 @@ const pageSize=5
     'option', 
     { 
       username,
-      option: {limit:pageSize,page:cursor},
+      option: {limit:pageSize,page:1},
       query: {},
     },
     {
@@ -30,9 +29,9 @@ const pageSize=5
         // if (Math.ceil(lastPage?.getFeeds!.totalPages / pageSize) > pages.length)
         // return pages.length;
         //  return undefined;
-        console.log(lastPage?.getPosts?.nextPage,"nextsjs")
+      
 
-        if(lastPage?.getPosts?.hasNextPage) return lastPage.getPosts.nextPage
+         return lastPage.getPosts.next
       },
     }
 
@@ -56,7 +55,7 @@ const pageSize=5
       isError,
       isFetching,
       isLoadingMore: isFetchingNextPage,
-      loadMore: fetchNextPage,
+      loadMore:fetchNextPage,
       hasMore: Boolean(hasNextPage),
     };
 };

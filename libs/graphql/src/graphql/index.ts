@@ -1,43 +1,23 @@
-import {
-  useMutation,
-  useQuery,
-  useInfiniteQuery,
-  UseMutationOptions,
-  UseQueryOptions,
-  UseInfiniteQueryOptions,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useInfiniteQuery, UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions } from '@tanstack/react-query';
 import { fetcher } from '../configs';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: { input: any; output: any };
+  DateTime: { input: any; output: any; }
   /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any };
+  Upload: { input: any; output: any; }
 };
 
 export type Author = {
@@ -104,7 +84,7 @@ export type DeletePostInput = {
 export enum EGender {
   Female = 'female',
   Male = 'male',
-  Unspecified = 'unspecified',
+  Unspecified = 'unspecified'
 }
 
 export type FollowOrUnFollowInput = {
@@ -233,69 +213,86 @@ export type Mutation = {
   uploadSingleFiles: ResponseSingleUpload;
 };
 
+
 export type MutationCloseFriendRequestArgs = {
   closeRequestInput: CloseRequestInput;
 };
+
 
 export type MutationCreateCommentArgs = {
   createCommentInput: CreateCommentInput;
 };
 
+
 export type MutationCreateCommentReplyArgs = {
   createReplyInput: CreateReplyInput;
 };
+
 
 export type MutationCreateFriendRequestArgs = {
   createFriendRequestInput: CreateFriendRequestInput;
 };
 
+
 export type MutationCreatePostArgs = {
   createPostInput: CreatePostInput;
 };
+
 
 export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
 };
 
+
 export type MutationDeleteCommentArgs = {
   deleteCommentInput: DeleteCommentInput;
 };
+
 
 export type MutationDeletePostArgs = {
   updatePostInput: DeletePostInput;
 };
 
+
 export type MutationFollowUserArgs = {
   followOrUnFollowInput: FollowOrUnFollowInput;
 };
+
 
 export type MutationLikeOrUnlikePostArgs = {
   likeOrUnlikePostInput: CreatePostOrCommentLikeInput;
 };
 
+
 export type MutationLoginArgs = {
   loginInput: LoginInput;
 };
+
 
 export type MutationUnFollowUserArgs = {
   followOrUnFollowInput: FollowOrUnFollowInput;
 };
 
+
 export type MutationUpdateNotificationArgs = {
   updateNotificationArgs: NotificationUpdateArgs;
 };
+
 
 export type MutationUpdatePostArgs = {
   updatePostInput: UpdatePostInput;
 };
 
+
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
 
+
 export type MutationUploadMultipleFilesArgs = {
   files: Array<Scalars['Upload']['input']>;
 };
+
 
 export type MutationUploadSingleFilesArgs = {
   file: Scalars['Upload']['input'];
@@ -369,7 +366,7 @@ export enum NotificationType {
   CommentLike = 'commentLike',
   Follow = 'follow',
   Like = 'like',
-  Reply = 'reply',
+  Reply = 'reply'
 }
 
 export type NotificationUpdateArgs = {
@@ -419,6 +416,12 @@ export type Post = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type PostsResponse = {
+  __typename?: 'PostsResponse';
+  docs: Array<NewsFeedPaginate>;
+  next?: Maybe<Scalars['Float']['output']>;
+};
+
 export type ProfileInformation = {
   __typename?: 'ProfileInformation';
   avatar: Scalars['String']['output'];
@@ -442,7 +445,7 @@ export type Query = {
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
   getPostLikes: Array<GetLikeResponse>;
-  getPosts: NewsFeedPagination;
+  getPosts: PostsResponse;
   getSuggestionPeople?: Maybe<FollowPagination>;
   me: IUser;
   notifications: NotificationPagination;
@@ -450,10 +453,12 @@ export type Query = {
   user?: Maybe<ProfileInformation>;
 };
 
+
 export type QueryGetFeedsArgs = {
   option: GetFeedDto;
   query: NewsFeedQueryArgs;
 };
+
 
 export type QueryGetFollowersArgs = {
   option: PaginateOptionArgs;
@@ -461,16 +466,19 @@ export type QueryGetFollowersArgs = {
   username: Scalars['String']['input'];
 };
 
+
 export type QueryGetFollowingArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
   username: Scalars['String']['input'];
 };
 
+
 export type QueryGetPostLikesArgs = {
   option: PaginateOptionArgs;
   query: LikesQueryArgs;
 };
+
 
 export type QueryGetPostsArgs = {
   option: GetFeedDto;
@@ -478,10 +486,12 @@ export type QueryGetPostsArgs = {
   username: Scalars['String']['input'];
 };
 
+
 export type QueryGetSuggestionPeopleArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
 };
+
 
 export type QueryNotificationsArgs = {
   allowDiskUse?: InputMaybe<Scalars['Boolean']['input']>;
@@ -499,9 +509,11 @@ export type QueryNotificationsArgs = {
   useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+
 export type QueryPostArgs = {
   postId: Scalars['ID']['input'];
 };
+
 
 export type QueryUserArgs = {
   username: Scalars['String']['input'];
@@ -511,7 +523,7 @@ export enum QueryPostOrderByColumn {
   CreatedAt = 'CREATED_AT',
   Orders = 'ORDERS',
   Rating = 'RATING',
-  UpdatedAt = 'UPDATED_AT',
+  UpdatedAt = 'UPDATED_AT'
 }
 
 export type ResponseSingleUpload = {
@@ -521,7 +533,7 @@ export type ResponseSingleUpload = {
 
 export enum SortOrder {
   Asc = 'ASC',
-  Desc = 'DESC',
+  Desc = 'DESC'
 }
 
 export type UpdatePostInput = {
@@ -613,109 +625,63 @@ export type LoginMutationVariables = Exact<{
   loginInput: LoginInput;
 }>;
 
-export type LoginMutation = {
-  __typename?: 'Mutation';
-  login: { __typename?: 'LoginResponse'; message: string };
-};
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', message: string } };
 
-export type LogoutMutation = {
-  __typename?: 'Mutation';
-  logout: { __typename?: 'MessageResponse'; message: string };
-};
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout: { __typename?: 'MessageResponse', message: string } };
 
 export type RegisterMutationVariables = Exact<{
   createUserInput: CreateUserInput;
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation'; createUser: string };
+
+export type RegisterMutation = { __typename?: 'Mutation', createUser: string };
 
 export type FollowUserMutationVariables = Exact<{
   followOrUnFollowInput: FollowOrUnFollowInput;
 }>;
 
-export type FollowUserMutation = {
-  __typename?: 'Mutation';
-  followUser: { __typename: 'MessageResponse'; message: string };
-};
+
+export type FollowUserMutation = { __typename?: 'Mutation', followUser: { __typename: 'MessageResponse', message: string } };
 
 export type UnFollowUserMutationVariables = Exact<{
   followOrUnFollowInput: FollowOrUnFollowInput;
 }>;
 
-export type UnFollowUserMutation = {
-  __typename?: 'Mutation';
-  unFollowUser: { __typename: 'MessageResponse'; message: string };
-};
+
+export type UnFollowUserMutation = { __typename?: 'Mutation', unFollowUser: { __typename: 'MessageResponse', message: string } };
 
 export type LikeOrUnlikePostMutationVariables = Exact<{
   createLikeOrUnlike: CreatePostOrCommentLikeInput;
 }>;
 
-export type LikeOrUnlikePostMutation = {
-  __typename?: 'Mutation';
-  likeOrUnlikePost: { __typename?: 'MessageResponse'; message: string };
-};
+
+export type LikeOrUnlikePostMutation = { __typename?: 'Mutation', likeOrUnlikePost: { __typename?: 'MessageResponse', message: string } };
 
 export type CreatePostMutationVariables = Exact<{
   createPost: CreatePostInput;
 }>;
 
-export type CreatePostMutation = {
-  __typename?: 'Mutation';
-  createPost: { __typename?: 'MessageResponse'; message: string };
-};
+
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'MessageResponse', message: string } };
 
 export type ProfileUpdateMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
 }>;
 
-export type ProfileUpdateMutation = {
-  __typename?: 'Mutation';
-  updateUser: { __typename?: 'MessageResponse'; message: string };
-};
+
+export type ProfileUpdateMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'MessageResponse', message: string } };
 
 export type GetFeedQueryVariables = Exact<{
   query: NewsFeedQueryArgs;
   option: GetFeedDto;
 }>;
 
-export type GetFeedQuery = {
-  __typename?: 'Query';
-  getFeeds?: {
-    __typename: 'NewsFeedPagination';
-    limit: number;
-    page: number;
-    totalDocs: number;
-    totalPages: number;
-    pagingCounter: number;
-    prevPage?: number | null;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
-    nextPage?: number | null;
-    docs?: Array<{
-      __typename?: 'NewsFeedPaginate';
-      commentsCount?: number | null;
-      content?: string | null;
-      createdAt?: any | null;
-      id?: string | null;
-      isLiked?: boolean | null;
-      isOwnPost?: boolean | null;
-      likesCount?: number | null;
-      photos?: Array<string> | null;
-      updatedAt?: any | null;
-      author: {
-        __typename?: 'Author';
-        avatar: string;
-        username: string;
-        email: string;
-        id?: string | null;
-        name: string;
-      };
-    } | null> | null;
-  } | null;
-};
+
+export type GetFeedQuery = { __typename?: 'Query', getFeeds?: { __typename: 'NewsFeedPagination', limit: number, page: number, totalDocs: number, totalPages: number, pagingCounter: number, prevPage?: number | null, hasNextPage: boolean, hasPrevPage: boolean, nextPage?: number | null, docs?: Array<{ __typename?: 'NewsFeedPaginate', commentsCount?: number | null, content?: string | null, createdAt?: any | null, id?: string | null, isLiked?: boolean | null, isOwnPost?: boolean | null, likesCount?: number | null, photos?: Array<string> | null, updatedAt?: any | null, author: { __typename?: 'Author', avatar: string, username: string, email: string, id?: string | null, name: string } } | null> | null } | null };
 
 export type GetFollowersQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -723,22 +689,8 @@ export type GetFollowersQueryVariables = Exact<{
   query: FollowQueryArgs;
 }>;
 
-export type GetFollowersQuery = {
-  __typename?: 'Query';
-  getFollowers: Array<{
-    __typename?: 'Pagination';
-    avatar: string;
-    email: string;
-    id: string;
-    isFollowing: boolean;
-    name: string;
-    username?: string | null;
-    bio?: string | null;
-    birthday?: any | null;
-    contact?: string | null;
-    gender?: string | null;
-  }>;
-};
+
+export type GetFollowersQuery = { __typename?: 'Query', getFollowers: Array<{ __typename?: 'Pagination', avatar: string, email: string, id: string, isFollowing: boolean, name: string, username?: string | null, bio?: string | null, birthday?: any | null, contact?: string | null, gender?: string | null }> };
 
 export type GetFollowingQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -746,65 +698,24 @@ export type GetFollowingQueryVariables = Exact<{
   query: FollowQueryArgs;
 }>;
 
-export type GetFollowingQuery = {
-  __typename?: 'Query';
-  getFollowing: Array<{
-    __typename: 'Pagination';
-    avatar: string;
-    email: string;
-    id: string;
-    isFollowing: boolean;
-    name: string;
-    username?: string | null;
-    contact?: string | null;
-    birthday?: any | null;
-    bio?: string | null;
-    gender?: string | null;
-  }>;
-};
+
+export type GetFollowingQuery = { __typename?: 'Query', getFollowing: Array<{ __typename: 'Pagination', avatar: string, email: string, id: string, isFollowing: boolean, name: string, username?: string | null, contact?: string | null, birthday?: any | null, bio?: string | null, gender?: string | null }> };
 
 export type GetSuggestionPeopleQueryVariables = Exact<{
   options: PaginateOptionArgs;
   query: FollowQueryArgs;
 }>;
 
-export type GetSuggestionPeopleQuery = {
-  __typename?: 'Query';
-  getSuggestionPeople?: {
-    __typename?: 'FollowPagination';
-    limit: number;
-    page: number;
-    hasPrevPage: boolean;
-    totalDocs: number;
-    totalPages: number;
-    docs?: Array<{
-      __typename: 'Pagination';
-      avatar: string;
-      email: string;
-      id: string;
-      isFollowing: boolean;
-      name: string;
-      username?: string | null;
-    } | null> | null;
-  } | null;
-};
+
+export type GetSuggestionPeopleQuery = { __typename?: 'Query', getSuggestionPeople?: { __typename?: 'FollowPagination', limit: number, page: number, hasPrevPage: boolean, totalDocs: number, totalPages: number, docs?: Array<{ __typename: 'Pagination', avatar: string, email: string, id: string, isFollowing: boolean, name: string, username?: string | null } | null> | null } | null };
 
 export type GetPostLikesQueryVariables = Exact<{
   query: LikesQueryArgs;
   option: PaginateOptionArgs;
 }>;
 
-export type GetPostLikesQuery = {
-  __typename?: 'Query';
-  getPostLikes: Array<{
-    __typename: 'GetLikeResponse';
-    avatar: string;
-    isFollowing: boolean;
-    name: string;
-    username: string;
-    _id: string;
-  }>;
-};
+
+export type GetPostLikesQuery = { __typename?: 'Query', getPostLikes: Array<{ __typename: 'GetLikeResponse', avatar: string, isFollowing: boolean, name: string, username: string, _id: string }> };
 
 export type GetPostsQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -812,84 +723,21 @@ export type GetPostsQueryVariables = Exact<{
   option: GetFeedDto;
 }>;
 
-export type GetPostsQuery = {
-  __typename?: 'Query';
-  getPosts: {
-    __typename: 'NewsFeedPagination';
-    limit: number;
-    page: number;
-    totalDocs: number;
-    totalPages: number;
-    pagingCounter: number;
-    prevPage?: number | null;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
-    nextPage?: number | null;
-    docs?: Array<{
-      __typename?: 'NewsFeedPaginate';
-      commentsCount?: number | null;
-      content?: string | null;
-      createdAt?: any | null;
-      id?: string | null;
-      isLiked?: boolean | null;
-      isOwnPost?: boolean | null;
-      likesCount?: number | null;
-      photos?: Array<string> | null;
-      updatedAt?: any | null;
-      author: {
-        __typename?: 'Author';
-        avatar: string;
-        username: string;
-        email: string;
-        id?: string | null;
-        name: string;
-      };
-    } | null> | null;
-  };
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type GetPostsQuery = { __typename?: 'Query', getPosts: { __typename: 'PostsResponse', next?: number | null, docs: Array<{ __typename?: 'NewsFeedPaginate', commentsCount?: number | null, content?: string | null, createdAt?: any | null, id?: string | null, isLiked?: boolean | null, isOwnPost?: boolean | null, likesCount?: number | null, photos?: Array<string> | null, updatedAt?: any | null, author: { __typename?: 'Author', avatar: string, username: string, email: string, id?: string | null, name: string } }> } };
 
-export type MeQuery = {
-  __typename?: 'Query';
-  me: {
-    __typename?: 'IUser';
-    avatar: string;
-    username: string;
-    name: string;
-    email?: string | null;
-    coverPicture?: string | null;
-    _id: string;
-    bio?: string | null;
-    birthday?: any | null;
-    contact?: string | null;
-    gender?: string | null;
-  };
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'IUser', avatar: string, username: string, name: string, email?: string | null, coverPicture?: string | null, _id: string, bio?: string | null, birthday?: any | null, contact?: string | null, gender?: string | null } };
 
 export type UserProfileQueryVariables = Exact<{
   username: Scalars['String']['input'];
 }>;
 
-export type UserProfileQuery = {
-  __typename?: 'Query';
-  user?: {
-    __typename: 'ProfileInformation';
-    username: string;
-    name: string;
-    avatar: string;
-    coverPicture?: string | null;
-    bio?: string | null;
-    birthday?: any | null;
-    contact?: string | null;
-    gender?: string | null;
-    email: string;
-    followersCount?: number | null;
-    followingCount?: number | null;
-    id: string;
-    isFollowing: boolean;
-  } | null;
-};
+
+export type UserProfileQuery = { __typename?: 'Query', user?: { __typename: 'ProfileInformation', username: string, name: string, avatar: string, coverPicture?: string | null, bio?: string | null, birthday?: any | null, contact?: string | null, gender?: string | null, email: string, followersCount?: number | null, followingCount?: number | null, id: string, isFollowing: boolean } | null };
+
 
 export const LoginDocument = /*#__PURE__*/ `
     mutation Login($loginInput: LoginInput!) {
@@ -898,34 +746,18 @@ export const LoginDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useLoginMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    LoginMutation,
-    TError,
-    LoginMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-    ['Login'],
-    (variables?: LoginMutationVariables) =>
-      fetcher<LoginMutation, LoginMutationVariables>(
-        LoginDocument,
-        variables
-      )(),
-    options
-  );
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['Login'],
+      (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(LoginDocument, variables)(),
+      options
+    );
 useLoginMutation.getKey = () => ['Login'];
 
-useLoginMutation.fetcher = (
-  variables: LoginMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    variables,
-    options
-  );
+useLoginMutation.fetcher = (variables: LoginMutationVariables, options?: RequestInit['headers']) => fetcher<LoginMutation, LoginMutationVariables>(LoginDocument, variables, options);
 export const LogoutDocument = /*#__PURE__*/ `
     mutation logout {
   logout {
@@ -933,67 +765,35 @@ export const LogoutDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useLogoutMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    LogoutMutation,
-    TError,
-    LogoutMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<LogoutMutation, TError, LogoutMutationVariables, TContext>(
-    ['logout'],
-    (variables?: LogoutMutationVariables) =>
-      fetcher<LogoutMutation, LogoutMutationVariables>(
-        LogoutDocument,
-        variables
-      )(),
-    options
-  );
+export const useLogoutMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LogoutMutation, TError, LogoutMutationVariables, TContext>) =>
+    useMutation<LogoutMutation, TError, LogoutMutationVariables, TContext>(
+      ['logout'],
+      (variables?: LogoutMutationVariables) => fetcher<LogoutMutation, LogoutMutationVariables>(LogoutDocument, variables)(),
+      options
+    );
 useLogoutMutation.getKey = () => ['logout'];
 
-useLogoutMutation.fetcher = (
-  variables?: LogoutMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument,
-    variables,
-    options
-  );
+useLogoutMutation.fetcher = (variables?: LogoutMutationVariables, options?: RequestInit['headers']) => fetcher<LogoutMutation, LogoutMutationVariables>(LogoutDocument, variables, options);
 export const RegisterDocument = /*#__PURE__*/ `
     mutation Register($createUserInput: CreateUserInput!) {
   createUser(createUserInput: $createUserInput)
 }
     `;
-export const useRegisterMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    RegisterMutation,
-    TError,
-    RegisterMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
-    ['Register'],
-    (variables?: RegisterMutationVariables) =>
-      fetcher<RegisterMutation, RegisterMutationVariables>(
-        RegisterDocument,
-        variables
-      )(),
-    options
-  );
+export const useRegisterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>) =>
+    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
+      ['Register'],
+      (variables?: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(RegisterDocument, variables)(),
+      options
+    );
 useRegisterMutation.getKey = () => ['Register'];
 
-useRegisterMutation.fetcher = (
-  variables: RegisterMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
-    variables,
-    options
-  );
+useRegisterMutation.fetcher = (variables: RegisterMutationVariables, options?: RequestInit['headers']) => fetcher<RegisterMutation, RegisterMutationVariables>(RegisterDocument, variables, options);
 export const FollowUserDocument = /*#__PURE__*/ `
     mutation FollowUser($followOrUnFollowInput: FollowOrUnFollowInput!) {
   followUser(followOrUnFollowInput: $followOrUnFollowInput) {
@@ -1002,39 +802,18 @@ export const FollowUserDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useFollowUserMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    FollowUserMutation,
-    TError,
-    FollowUserMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    FollowUserMutation,
-    TError,
-    FollowUserMutationVariables,
-    TContext
-  >(
-    ['FollowUser'],
-    (variables?: FollowUserMutationVariables) =>
-      fetcher<FollowUserMutation, FollowUserMutationVariables>(
-        FollowUserDocument,
-        variables
-      )(),
-    options
-  );
+export const useFollowUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<FollowUserMutation, TError, FollowUserMutationVariables, TContext>) =>
+    useMutation<FollowUserMutation, TError, FollowUserMutationVariables, TContext>(
+      ['FollowUser'],
+      (variables?: FollowUserMutationVariables) => fetcher<FollowUserMutation, FollowUserMutationVariables>(FollowUserDocument, variables)(),
+      options
+    );
 useFollowUserMutation.getKey = () => ['FollowUser'];
 
-useFollowUserMutation.fetcher = (
-  variables: FollowUserMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<FollowUserMutation, FollowUserMutationVariables>(
-    FollowUserDocument,
-    variables,
-    options
-  );
+useFollowUserMutation.fetcher = (variables: FollowUserMutationVariables, options?: RequestInit['headers']) => fetcher<FollowUserMutation, FollowUserMutationVariables>(FollowUserDocument, variables, options);
 export const UnFollowUserDocument = /*#__PURE__*/ `
     mutation unFollowUser($followOrUnFollowInput: FollowOrUnFollowInput!) {
   unFollowUser(followOrUnFollowInput: $followOrUnFollowInput) {
@@ -1043,39 +822,18 @@ export const UnFollowUserDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useUnFollowUserMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    UnFollowUserMutation,
-    TError,
-    UnFollowUserMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    UnFollowUserMutation,
-    TError,
-    UnFollowUserMutationVariables,
-    TContext
-  >(
-    ['unFollowUser'],
-    (variables?: UnFollowUserMutationVariables) =>
-      fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(
-        UnFollowUserDocument,
-        variables
-      )(),
-    options
-  );
+export const useUnFollowUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnFollowUserMutation, TError, UnFollowUserMutationVariables, TContext>) =>
+    useMutation<UnFollowUserMutation, TError, UnFollowUserMutationVariables, TContext>(
+      ['unFollowUser'],
+      (variables?: UnFollowUserMutationVariables) => fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(UnFollowUserDocument, variables)(),
+      options
+    );
 useUnFollowUserMutation.getKey = () => ['unFollowUser'];
 
-useUnFollowUserMutation.fetcher = (
-  variables: UnFollowUserMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(
-    UnFollowUserDocument,
-    variables,
-    options
-  );
+useUnFollowUserMutation.fetcher = (variables: UnFollowUserMutationVariables, options?: RequestInit['headers']) => fetcher<UnFollowUserMutation, UnFollowUserMutationVariables>(UnFollowUserDocument, variables, options);
 export const LikeOrUnlikePostDocument = /*#__PURE__*/ `
     mutation likeOrUnlikePost($createLikeOrUnlike: CreatePostOrCommentLikeInput!) {
   likeOrUnlikePost(likeOrUnlikePostInput: $createLikeOrUnlike) {
@@ -1084,41 +842,17 @@ export const LikeOrUnlikePostDocument = /*#__PURE__*/ `
 }
     `;
 export const useLikeOrUnlikePostMutation = <
-  TError = unknown,
-  TContext = unknown
->(
-  options?: UseMutationOptions<
-    LikeOrUnlikePostMutation,
-    TError,
-    LikeOrUnlikePostMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    LikeOrUnlikePostMutation,
-    TError,
-    LikeOrUnlikePostMutationVariables,
-    TContext
-  >(
-    ['likeOrUnlikePost'],
-    (variables?: LikeOrUnlikePostMutationVariables) =>
-      fetcher<LikeOrUnlikePostMutation, LikeOrUnlikePostMutationVariables>(
-        LikeOrUnlikePostDocument,
-        variables
-      )(),
-    options
-  );
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LikeOrUnlikePostMutation, TError, LikeOrUnlikePostMutationVariables, TContext>) =>
+    useMutation<LikeOrUnlikePostMutation, TError, LikeOrUnlikePostMutationVariables, TContext>(
+      ['likeOrUnlikePost'],
+      (variables?: LikeOrUnlikePostMutationVariables) => fetcher<LikeOrUnlikePostMutation, LikeOrUnlikePostMutationVariables>(LikeOrUnlikePostDocument, variables)(),
+      options
+    );
 useLikeOrUnlikePostMutation.getKey = () => ['likeOrUnlikePost'];
 
-useLikeOrUnlikePostMutation.fetcher = (
-  variables: LikeOrUnlikePostMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<LikeOrUnlikePostMutation, LikeOrUnlikePostMutationVariables>(
-    LikeOrUnlikePostDocument,
-    variables,
-    options
-  );
+useLikeOrUnlikePostMutation.fetcher = (variables: LikeOrUnlikePostMutationVariables, options?: RequestInit['headers']) => fetcher<LikeOrUnlikePostMutation, LikeOrUnlikePostMutationVariables>(LikeOrUnlikePostDocument, variables, options);
 export const CreatePostDocument = /*#__PURE__*/ `
     mutation CreatePost($createPost: CreatePostInput!) {
   createPost(createPostInput: $createPost) {
@@ -1126,39 +860,18 @@ export const CreatePostDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useCreatePostMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CreatePostMutation,
-    TError,
-    CreatePostMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    CreatePostMutation,
-    TError,
-    CreatePostMutationVariables,
-    TContext
-  >(
-    ['CreatePost'],
-    (variables?: CreatePostMutationVariables) =>
-      fetcher<CreatePostMutation, CreatePostMutationVariables>(
-        CreatePostDocument,
-        variables
-      )(),
-    options
-  );
+export const useCreatePostMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreatePostMutation, TError, CreatePostMutationVariables, TContext>) =>
+    useMutation<CreatePostMutation, TError, CreatePostMutationVariables, TContext>(
+      ['CreatePost'],
+      (variables?: CreatePostMutationVariables) => fetcher<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, variables)(),
+      options
+    );
 useCreatePostMutation.getKey = () => ['CreatePost'];
 
-useCreatePostMutation.fetcher = (
-  variables: CreatePostMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<CreatePostMutation, CreatePostMutationVariables>(
-    CreatePostDocument,
-    variables,
-    options
-  );
+useCreatePostMutation.fetcher = (variables: CreatePostMutationVariables, options?: RequestInit['headers']) => fetcher<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, variables, options);
 export const ProfileUpdateDocument = /*#__PURE__*/ `
     mutation profileUpdate($updateUserInput: UpdateUserInput!) {
   updateUser(input: $updateUserInput) {
@@ -1166,39 +879,18 @@ export const ProfileUpdateDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useProfileUpdateMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    ProfileUpdateMutation,
-    TError,
-    ProfileUpdateMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    ProfileUpdateMutation,
-    TError,
-    ProfileUpdateMutationVariables,
-    TContext
-  >(
-    ['profileUpdate'],
-    (variables?: ProfileUpdateMutationVariables) =>
-      fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(
-        ProfileUpdateDocument,
-        variables
-      )(),
-    options
-  );
+export const useProfileUpdateMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ProfileUpdateMutation, TError, ProfileUpdateMutationVariables, TContext>) =>
+    useMutation<ProfileUpdateMutation, TError, ProfileUpdateMutationVariables, TContext>(
+      ['profileUpdate'],
+      (variables?: ProfileUpdateMutationVariables) => fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(ProfileUpdateDocument, variables)(),
+      options
+    );
 useProfileUpdateMutation.getKey = () => ['profileUpdate'];
 
-useProfileUpdateMutation.fetcher = (
-  variables: ProfileUpdateMutationVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(
-    ProfileUpdateDocument,
-    variables,
-    options
-  );
+useProfileUpdateMutation.fetcher = (variables: ProfileUpdateMutationVariables, options?: RequestInit['headers']) => fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(ProfileUpdateDocument, variables, options);
 export const GetFeedDocument = /*#__PURE__*/ `
     query GetFeed($query: NewsFeedQueryArgs!, $option: GetFeedDto!) {
   getFeeds(query: $query, option: $option) {
@@ -1233,49 +925,42 @@ export const GetFeedDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useGetFeedQuery = <TData = GetFeedQuery, TError = unknown>(
-  variables: GetFeedQueryVariables,
-  options?: UseQueryOptions<GetFeedQuery, TError, TData>
-) =>
-  useQuery<GetFeedQuery, TError, TData>(
-    ['GetFeed', variables],
-    fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, variables),
-    options
-  );
+export const useGetFeedQuery = <
+      TData = GetFeedQuery,
+      TError = unknown
+    >(
+      variables: GetFeedQueryVariables,
+      options?: UseQueryOptions<GetFeedQuery, TError, TData>
+    ) =>
+    useQuery<GetFeedQuery, TError, TData>(
+      ['GetFeed', variables],
+      fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, variables),
+      options
+    );
 
-useGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => [
-  'GetFeed',
-  variables,
-];
-export const useInfiniteGetFeedQuery = <TData = GetFeedQuery, TError = unknown>(
-  pageParamKey: keyof GetFeedQueryVariables,
-  variables: GetFeedQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFeedQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFeedQuery, TError, TData>(
-    ['GetFeed.infinite', variables],
-    (metaData) =>
-      fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
+useGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => ['GetFeed', variables];
+;
 
-useInfiniteGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => [
-  'GetFeed.infinite',
-  variables,
-];
-useGetFeedQuery.fetcher = (
-  variables: GetFeedQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetFeedQuery, GetFeedQueryVariables>(
-    GetFeedDocument,
-    variables,
-    options
-  );
+export const useInfiniteGetFeedQuery = <
+      TData = GetFeedQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetFeedQueryVariables,
+      variables: GetFeedQueryVariables,
+      options?: UseInfiniteQueryOptions<GetFeedQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetFeedQuery, TError, TData>(
+      ['GetFeed.infinite', variables],
+      (metaData) => fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
+
+
+useInfiniteGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => ['GetFeed.infinite', variables];
+;
+
+useGetFeedQuery.fetcher = (variables: GetFeedQueryVariables, options?: RequestInit['headers']) => fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, variables, options);
 export const GetFollowersDocument = /*#__PURE__*/ `
     query GetFollowers($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowers(username: $username, option: $options, query: $query) {
@@ -1293,56 +978,41 @@ export const GetFollowersDocument = /*#__PURE__*/ `
 }
     `;
 export const useGetFollowersQuery = <
-  TData = GetFollowersQuery,
-  TError = unknown
->(
-  variables: GetFollowersQueryVariables,
-  options?: UseQueryOptions<GetFollowersQuery, TError, TData>
-) =>
-  useQuery<GetFollowersQuery, TError, TData>(
-    ['GetFollowers', variables],
-    fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
-      GetFollowersDocument,
-      variables
-    ),
-    options
-  );
+      TData = GetFollowersQuery,
+      TError = unknown
+    >(
+      variables: GetFollowersQueryVariables,
+      options?: UseQueryOptions<GetFollowersQuery, TError, TData>
+    ) =>
+    useQuery<GetFollowersQuery, TError, TData>(
+      ['GetFollowers', variables],
+      fetcher<GetFollowersQuery, GetFollowersQueryVariables>(GetFollowersDocument, variables),
+      options
+    );
 
-useGetFollowersQuery.getKey = (variables: GetFollowersQueryVariables) => [
-  'GetFollowers',
-  variables,
-];
+useGetFollowersQuery.getKey = (variables: GetFollowersQueryVariables) => ['GetFollowers', variables];
+;
+
 export const useInfiniteGetFollowersQuery = <
-  TData = GetFollowersQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetFollowersQueryVariables,
-  variables: GetFollowersQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFollowersQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFollowersQuery, TError, TData>(
-    ['GetFollowers.infinite', variables],
-    (metaData) =>
-      fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
-        GetFollowersDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
+      TData = GetFollowersQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetFollowersQueryVariables,
+      variables: GetFollowersQueryVariables,
+      options?: UseInfiniteQueryOptions<GetFollowersQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetFollowersQuery, TError, TData>(
+      ['GetFollowers.infinite', variables],
+      (metaData) => fetcher<GetFollowersQuery, GetFollowersQueryVariables>(GetFollowersDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteGetFollowersQuery.getKey = (
-  variables: GetFollowersQueryVariables
-) => ['GetFollowers.infinite', variables];
-useGetFollowersQuery.fetcher = (
-  variables: GetFollowersQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
-    GetFollowersDocument,
-    variables,
-    options
-  );
+
+useInfiniteGetFollowersQuery.getKey = (variables: GetFollowersQueryVariables) => ['GetFollowers.infinite', variables];
+;
+
+useGetFollowersQuery.fetcher = (variables: GetFollowersQueryVariables, options?: RequestInit['headers']) => fetcher<GetFollowersQuery, GetFollowersQueryVariables>(GetFollowersDocument, variables, options);
 export const GetFollowingDocument = /*#__PURE__*/ `
     query GetFollowing($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowing(username: $username, option: $options, query: $query) {
@@ -1361,56 +1031,41 @@ export const GetFollowingDocument = /*#__PURE__*/ `
 }
     `;
 export const useGetFollowingQuery = <
-  TData = GetFollowingQuery,
-  TError = unknown
->(
-  variables: GetFollowingQueryVariables,
-  options?: UseQueryOptions<GetFollowingQuery, TError, TData>
-) =>
-  useQuery<GetFollowingQuery, TError, TData>(
-    ['GetFollowing', variables],
-    fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
-      GetFollowingDocument,
-      variables
-    ),
-    options
-  );
+      TData = GetFollowingQuery,
+      TError = unknown
+    >(
+      variables: GetFollowingQueryVariables,
+      options?: UseQueryOptions<GetFollowingQuery, TError, TData>
+    ) =>
+    useQuery<GetFollowingQuery, TError, TData>(
+      ['GetFollowing', variables],
+      fetcher<GetFollowingQuery, GetFollowingQueryVariables>(GetFollowingDocument, variables),
+      options
+    );
 
-useGetFollowingQuery.getKey = (variables: GetFollowingQueryVariables) => [
-  'GetFollowing',
-  variables,
-];
+useGetFollowingQuery.getKey = (variables: GetFollowingQueryVariables) => ['GetFollowing', variables];
+;
+
 export const useInfiniteGetFollowingQuery = <
-  TData = GetFollowingQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetFollowingQueryVariables,
-  variables: GetFollowingQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFollowingQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFollowingQuery, TError, TData>(
-    ['GetFollowing.infinite', variables],
-    (metaData) =>
-      fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
-        GetFollowingDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
+      TData = GetFollowingQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetFollowingQueryVariables,
+      variables: GetFollowingQueryVariables,
+      options?: UseInfiniteQueryOptions<GetFollowingQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetFollowingQuery, TError, TData>(
+      ['GetFollowing.infinite', variables],
+      (metaData) => fetcher<GetFollowingQuery, GetFollowingQueryVariables>(GetFollowingDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteGetFollowingQuery.getKey = (
-  variables: GetFollowingQueryVariables
-) => ['GetFollowing.infinite', variables];
-useGetFollowingQuery.fetcher = (
-  variables: GetFollowingQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
-    GetFollowingDocument,
-    variables,
-    options
-  );
+
+useInfiniteGetFollowingQuery.getKey = (variables: GetFollowingQueryVariables) => ['GetFollowing.infinite', variables];
+;
+
+useGetFollowingQuery.fetcher = (variables: GetFollowingQueryVariables, options?: RequestInit['headers']) => fetcher<GetFollowingQuery, GetFollowingQueryVariables>(GetFollowingDocument, variables, options);
 export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
     query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getSuggestionPeople(option: $options, query: $query) {
@@ -1432,55 +1087,41 @@ export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
 }
     `;
 export const useGetSuggestionPeopleQuery = <
-  TData = GetSuggestionPeopleQuery,
-  TError = unknown
->(
-  variables: GetSuggestionPeopleQueryVariables,
-  options?: UseQueryOptions<GetSuggestionPeopleQuery, TError, TData>
-) =>
-  useQuery<GetSuggestionPeopleQuery, TError, TData>(
-    ['GetSuggestionPeople', variables],
-    fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
-      GetSuggestionPeopleDocument,
-      variables
-    ),
-    options
-  );
+      TData = GetSuggestionPeopleQuery,
+      TError = unknown
+    >(
+      variables: GetSuggestionPeopleQueryVariables,
+      options?: UseQueryOptions<GetSuggestionPeopleQuery, TError, TData>
+    ) =>
+    useQuery<GetSuggestionPeopleQuery, TError, TData>(
+      ['GetSuggestionPeople', variables],
+      fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(GetSuggestionPeopleDocument, variables),
+      options
+    );
 
-useGetSuggestionPeopleQuery.getKey = (
-  variables: GetSuggestionPeopleQueryVariables
-) => ['GetSuggestionPeople', variables];
+useGetSuggestionPeopleQuery.getKey = (variables: GetSuggestionPeopleQueryVariables) => ['GetSuggestionPeople', variables];
+;
+
 export const useInfiniteGetSuggestionPeopleQuery = <
-  TData = GetSuggestionPeopleQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetSuggestionPeopleQueryVariables,
-  variables: GetSuggestionPeopleQueryVariables,
-  options?: UseInfiniteQueryOptions<GetSuggestionPeopleQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetSuggestionPeopleQuery, TError, TData>(
-    ['GetSuggestionPeople.infinite', variables],
-    (metaData) =>
-      fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
-        GetSuggestionPeopleDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
+      TData = GetSuggestionPeopleQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetSuggestionPeopleQueryVariables,
+      variables: GetSuggestionPeopleQueryVariables,
+      options?: UseInfiniteQueryOptions<GetSuggestionPeopleQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetSuggestionPeopleQuery, TError, TData>(
+      ['GetSuggestionPeople.infinite', variables],
+      (metaData) => fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(GetSuggestionPeopleDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteGetSuggestionPeopleQuery.getKey = (
-  variables: GetSuggestionPeopleQueryVariables
-) => ['GetSuggestionPeople.infinite', variables];
-useGetSuggestionPeopleQuery.fetcher = (
-  variables: GetSuggestionPeopleQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
-    GetSuggestionPeopleDocument,
-    variables,
-    options
-  );
+
+useInfiniteGetSuggestionPeopleQuery.getKey = (variables: GetSuggestionPeopleQueryVariables) => ['GetSuggestionPeople.infinite', variables];
+;
+
+useGetSuggestionPeopleQuery.fetcher = (variables: GetSuggestionPeopleQueryVariables, options?: RequestInit['headers']) => fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(GetSuggestionPeopleDocument, variables, options);
 export const GetPostLikesDocument = /*#__PURE__*/ `
     query GetPostLikes($query: LikesQueryArgs!, $option: PaginateOptionArgs!) {
   getPostLikes(query: $query, option: $option) {
@@ -1494,56 +1135,41 @@ export const GetPostLikesDocument = /*#__PURE__*/ `
 }
     `;
 export const useGetPostLikesQuery = <
-  TData = GetPostLikesQuery,
-  TError = unknown
->(
-  variables: GetPostLikesQueryVariables,
-  options?: UseQueryOptions<GetPostLikesQuery, TError, TData>
-) =>
-  useQuery<GetPostLikesQuery, TError, TData>(
-    ['GetPostLikes', variables],
-    fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
-      GetPostLikesDocument,
-      variables
-    ),
-    options
-  );
+      TData = GetPostLikesQuery,
+      TError = unknown
+    >(
+      variables: GetPostLikesQueryVariables,
+      options?: UseQueryOptions<GetPostLikesQuery, TError, TData>
+    ) =>
+    useQuery<GetPostLikesQuery, TError, TData>(
+      ['GetPostLikes', variables],
+      fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(GetPostLikesDocument, variables),
+      options
+    );
 
-useGetPostLikesQuery.getKey = (variables: GetPostLikesQueryVariables) => [
-  'GetPostLikes',
-  variables,
-];
+useGetPostLikesQuery.getKey = (variables: GetPostLikesQueryVariables) => ['GetPostLikes', variables];
+;
+
 export const useInfiniteGetPostLikesQuery = <
-  TData = GetPostLikesQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetPostLikesQueryVariables,
-  variables: GetPostLikesQueryVariables,
-  options?: UseInfiniteQueryOptions<GetPostLikesQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetPostLikesQuery, TError, TData>(
-    ['GetPostLikes.infinite', variables],
-    (metaData) =>
-      fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
-        GetPostLikesDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
+      TData = GetPostLikesQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetPostLikesQueryVariables,
+      variables: GetPostLikesQueryVariables,
+      options?: UseInfiniteQueryOptions<GetPostLikesQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetPostLikesQuery, TError, TData>(
+      ['GetPostLikes.infinite', variables],
+      (metaData) => fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(GetPostLikesDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteGetPostLikesQuery.getKey = (
-  variables: GetPostLikesQueryVariables
-) => ['GetPostLikes.infinite', variables];
-useGetPostLikesQuery.fetcher = (
-  variables: GetPostLikesQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
-    GetPostLikesDocument,
-    variables,
-    options
-  );
+
+useInfiniteGetPostLikesQuery.getKey = (variables: GetPostLikesQueryVariables) => ['GetPostLikes.infinite', variables];
+;
+
+useGetPostLikesQuery.fetcher = (variables: GetPostLikesQueryVariables, options?: RequestInit['headers']) => fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(GetPostLikesDocument, variables, options);
 export const GetPostsDocument = /*#__PURE__*/ `
     query GetPosts($username: String!, $query: NewsFeedQueryArgs!, $option: GetFeedDto!) {
   getPosts(username: $username, query: $query, option: $option) {
@@ -1566,64 +1192,46 @@ export const GetPostsDocument = /*#__PURE__*/ `
       updatedAt
     }
     __typename
-    limit
-    page
-    totalDocs
-    totalPages
-    pagingCounter
-    prevPage
-    hasNextPage
-    hasPrevPage
-    nextPage
+    next
   }
 }
     `;
-export const useGetPostsQuery = <TData = GetPostsQuery, TError = unknown>(
-  variables: GetPostsQueryVariables,
-  options?: UseQueryOptions<GetPostsQuery, TError, TData>
-) =>
-  useQuery<GetPostsQuery, TError, TData>(
-    ['GetPosts', variables],
-    fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, variables),
-    options
-  );
+export const useGetPostsQuery = <
+      TData = GetPostsQuery,
+      TError = unknown
+    >(
+      variables: GetPostsQueryVariables,
+      options?: UseQueryOptions<GetPostsQuery, TError, TData>
+    ) =>
+    useQuery<GetPostsQuery, TError, TData>(
+      ['GetPosts', variables],
+      fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, variables),
+      options
+    );
 
-useGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
-  'GetPosts',
-  variables,
-];
+useGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => ['GetPosts', variables];
+;
+
 export const useInfiniteGetPostsQuery = <
-  TData = GetPostsQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetPostsQueryVariables,
-  variables: GetPostsQueryVariables,
-  options?: UseInfiniteQueryOptions<GetPostsQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetPostsQuery, TError, TData>(
-    ['GetPosts.infinite', variables],
-    (metaData) =>
-      fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
+      TData = GetPostsQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetPostsQueryVariables,
+      variables: GetPostsQueryVariables,
+      options?: UseInfiniteQueryOptions<GetPostsQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<GetPostsQuery, TError, TData>(
+      ['GetPosts.infinite', variables],
+      (metaData) => fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
-  'GetPosts.infinite',
-  variables,
-];
-useGetPostsQuery.fetcher = (
-  variables: GetPostsQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    variables,
-    options
-  );
+
+useInfiniteGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => ['GetPosts.infinite', variables];
+;
+
+useGetPostsQuery.fetcher = (variables: GetPostsQueryVariables, options?: RequestInit['headers']) => fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, variables, options);
 export const MeDocument = /*#__PURE__*/ `
     query me {
   me {
@@ -1640,40 +1248,42 @@ export const MeDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useMeQuery = <TData = MeQuery, TError = unknown>(
-  variables?: MeQueryVariables,
-  options?: UseQueryOptions<MeQuery, TError, TData>
-) =>
-  useQuery<MeQuery, TError, TData>(
-    variables === undefined ? ['me'] : ['me', variables],
-    fetcher<MeQuery, MeQueryVariables>(MeDocument, variables),
-    options
-  );
+export const useMeQuery = <
+      TData = MeQuery,
+      TError = unknown
+    >(
+      variables?: MeQueryVariables,
+      options?: UseQueryOptions<MeQuery, TError, TData>
+    ) =>
+    useQuery<MeQuery, TError, TData>(
+      variables === undefined ? ['me'] : ['me', variables],
+      fetcher<MeQuery, MeQueryVariables>(MeDocument, variables),
+      options
+    );
 
-useMeQuery.getKey = (variables?: MeQueryVariables) =>
-  variables === undefined ? ['me'] : ['me', variables];
-export const useInfiniteMeQuery = <TData = MeQuery, TError = unknown>(
-  pageParamKey: keyof MeQueryVariables,
-  variables?: MeQueryVariables,
-  options?: UseInfiniteQueryOptions<MeQuery, TError, TData>
-) => {
-  return useInfiniteQuery<MeQuery, TError, TData>(
-    variables === undefined ? ['me.infinite'] : ['me.infinite', variables],
-    (metaData) =>
-      fetcher<MeQuery, MeQueryVariables>(MeDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
+useMeQuery.getKey = (variables?: MeQueryVariables) => variables === undefined ? ['me'] : ['me', variables];
+;
 
-useInfiniteMeQuery.getKey = (variables?: MeQueryVariables) =>
-  variables === undefined ? ['me.infinite'] : ['me.infinite', variables];
-useMeQuery.fetcher = (
-  variables?: MeQueryVariables,
-  options?: RequestInit['headers']
-) => fetcher<MeQuery, MeQueryVariables>(MeDocument, variables, options);
+export const useInfiniteMeQuery = <
+      TData = MeQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof MeQueryVariables,
+      variables?: MeQueryVariables,
+      options?: UseInfiniteQueryOptions<MeQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<MeQuery, TError, TData>(
+      variables === undefined ? ['me.infinite'] : ['me.infinite', variables],
+      (metaData) => fetcher<MeQuery, MeQueryVariables>(MeDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
+
+
+useInfiniteMeQuery.getKey = (variables?: MeQueryVariables) => variables === undefined ? ['me.infinite'] : ['me.infinite', variables];
+;
+
+useMeQuery.fetcher = (variables?: MeQueryVariables, options?: RequestInit['headers']) => fetcher<MeQuery, MeQueryVariables>(MeDocument, variables, options);
 export const UserProfileDocument = /*#__PURE__*/ `
     query UserProfile($username: String!) {
   user(username: $username) {
@@ -1695,52 +1305,39 @@ export const UserProfileDocument = /*#__PURE__*/ `
   }
 }
     `;
-export const useUserProfileQuery = <TData = UserProfileQuery, TError = unknown>(
-  variables: UserProfileQueryVariables,
-  options?: UseQueryOptions<UserProfileQuery, TError, TData>
-) =>
-  useQuery<UserProfileQuery, TError, TData>(
-    ['UserProfile', variables],
-    fetcher<UserProfileQuery, UserProfileQueryVariables>(
-      UserProfileDocument,
-      variables
-    ),
-    options
-  );
+export const useUserProfileQuery = <
+      TData = UserProfileQuery,
+      TError = unknown
+    >(
+      variables: UserProfileQueryVariables,
+      options?: UseQueryOptions<UserProfileQuery, TError, TData>
+    ) =>
+    useQuery<UserProfileQuery, TError, TData>(
+      ['UserProfile', variables],
+      fetcher<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, variables),
+      options
+    );
 
-useUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => [
-  'UserProfile',
-  variables,
-];
+useUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => ['UserProfile', variables];
+;
+
 export const useInfiniteUserProfileQuery = <
-  TData = UserProfileQuery,
-  TError = unknown
->(
-  pageParamKey: keyof UserProfileQueryVariables,
-  variables: UserProfileQueryVariables,
-  options?: UseInfiniteQueryOptions<UserProfileQuery, TError, TData>
-) => {
-  return useInfiniteQuery<UserProfileQuery, TError, TData>(
-    ['UserProfile.infinite', variables],
-    (metaData) =>
-      fetcher<UserProfileQuery, UserProfileQueryVariables>(
-        UserProfileDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
+      TData = UserProfileQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof UserProfileQueryVariables,
+      variables: UserProfileQueryVariables,
+      options?: UseInfiniteQueryOptions<UserProfileQuery, TError, TData>
+    ) =>{
+    
+    return useInfiniteQuery<UserProfileQuery, TError, TData>(
+      ['UserProfile.infinite', variables],
+      (metaData) => fetcher<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
 
-useInfiniteUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => [
-  'UserProfile.infinite',
-  variables,
-];
-useUserProfileQuery.fetcher = (
-  variables: UserProfileQueryVariables,
-  options?: RequestInit['headers']
-) =>
-  fetcher<UserProfileQuery, UserProfileQueryVariables>(
-    UserProfileDocument,
-    variables,
-    options
-  );
+
+useInfiniteUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => ['UserProfile.infinite', variables];
+;
+
+useUserProfileQuery.fetcher = (variables: UserProfileQueryVariables, options?: RequestInit['headers']) => fetcher<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, variables, options);

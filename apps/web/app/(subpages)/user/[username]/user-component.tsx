@@ -1,6 +1,6 @@
 "use client"
 
-import { ProfileInformation, useUserProfileQuery } from "@social-zone/graphql";
+import { ProfileInformation } from "@social-zone/graphql";
 import { useState } from "react";
 import { Button, GridItemEight, GridItemFour, GridLayout, NewPost, PostItem, ProfilePostType, STATIC_IMAGES_URL, useAuth, usePostQuery, useProfileQuery, useUserProfile } from "~ui";
 import Cover from "./components/Cover";
@@ -30,7 +30,7 @@ const {isAuthenticated}=useAuth()
   const [sentryRef] = useInfiniteScroll({
     loading: isFetching,
     hasNextPage: hasMore ?? false,
-    onLoadMore: loadMore,
+    onLoadMore:loadMore,
     disabled: isError,
     rootMargin: '0px 0px 400px 0px',
   });
@@ -99,7 +99,7 @@ const {isAuthenticated}=useAuth()
                       )
                   )}
 
-                  {isFetching && <div>Loading more...</div>}
+                  
                   {hasMore && (
                     <Button
                       ref={sentryRef}

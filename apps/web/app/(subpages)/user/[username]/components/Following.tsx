@@ -21,7 +21,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
   const [hasMore, setHasMore] = useState(true);
 
   const { data } = useGetFollowingQuery({
-    username: profile.username,
+    username: profile?.username,
     options: { limit: 15 },
     query: { type: 'following' },
   });

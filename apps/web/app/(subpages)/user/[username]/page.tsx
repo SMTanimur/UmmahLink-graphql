@@ -14,20 +14,20 @@ type Params = {
 
 
 // META DATA
-// import type { Metadata } from "next";
-// import { useUserProfile } from '~ui';
-// /** @type {import("next").Metadata} */
+import type { Metadata } from "next";
 
-// export async function  generateMetadata({
-//   params,
-// }: Params): Promise<Metadata>  {
+/** @type {import("next").Metadata} */
+
+export async function  generateMetadata({
+  params,
+}: Params): Promise<Metadata>  {
   
-//   const {data}=useUserProfile(params.username)
-//   return {
-//     title: "My Account | " + data?.user?.username,
-//     description: "My account page",
-//   };
-// }
+  
+  return {
+    title: "My Account | " + params.username,
+    description: "My account page",
+  };
+}
 
 
 
