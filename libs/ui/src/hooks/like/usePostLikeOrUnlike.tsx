@@ -26,6 +26,7 @@ const queryClient = useQueryClient();
       success: ( {likeOrUnlikePost:{message}}) => {
         queryClient.invalidateQueries(['UserProfile'])
         queryClient.invalidateQueries(['GetFeed.infinite'])
+        queryClient.invalidateQueries(['GetPosts.infinite']);
         return <b>{message}</b>;
       },
       error: (data) => {

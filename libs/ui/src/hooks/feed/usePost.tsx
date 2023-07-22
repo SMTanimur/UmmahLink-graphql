@@ -1,7 +1,7 @@
 "use client"
 
 import { useInfiniteGetPostsQuery } from '@social-zone/graphql';
-import React, { useState } from 'react';
+
 
 export const usePostQuery = (username:string) => {
 

@@ -352,7 +352,7 @@ type ResponseSingleUpload {
 }
 
 input SearchDto {
-  keyword: String
+  keyword: String!
   user: UserInputType
 }
 

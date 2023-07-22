@@ -36,7 +36,7 @@ export default function RootLayout({
             // toastOptions={getToastOptions(resolvedTheme)}
           />
         {/* <GlobalModals/>   */}
-         < div className="flex min-h-screen flex-col pb-14 md:pb-0 ">
+         < div className="flex min-h-screen flex-col pb-14 md:pb-0 relative ">
         <Navbar />
         <BottomNavigation />
         {children}

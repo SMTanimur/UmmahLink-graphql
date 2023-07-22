@@ -1,0 +1,16 @@
+query searchUser($query: SearchDto!, $option: PaginateOptionArgs!) {
+  searchUser(query: $query, option: $option) {
+    _id
+    username
+    avatar
+    bio
+    birthday
+    contact
+    coverPicture
+    email
+    gender
+    isFollowing
+    name
+    __typename
+  }
+}

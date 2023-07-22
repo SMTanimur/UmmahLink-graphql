@@ -17,6 +17,7 @@ import { ProfileInformation } from './dto/ProfileData';
 import { PostsService } from '../posts/posts.service';
 import { SearchDto } from './dto/search.query.dto';
 import { PaginateOptionArgs } from '@social-zone/common';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -177,19 +178,20 @@ async searchUser (query?: FilterQuery<SearchDto>,options?:PaginateOptionArgs){
     const { limit,offset} = options;
     const skip = offset * limit;
 
-    const users = await this.userModel.find({
-      $or: [
-          { name: { $regex: keyword as string, $options: 'i' } },
-          { username: { $regex: keyword as string, $options: 'i' } }
-      ]
-  })
-  .limit(limit)
-  .skip(skip);
+    let users 
 
-  if(users.length === 0){
-    throw new NotFoundException('No user found')
-  }
-  console.log(users,'users')
+    if(!isEmpty(keyword)){
+       users = await this.userModel.find({
+        $or: [
+            { name: { $regex: keyword as string, $options: 'i' } },
+            { username: { $regex: keyword as string, $options: 'i' } }
+        ]
+    })
+    .limit(limit)
+    .skip(skip);
+    }
+
+    
   const myFollowersDoc = await this.followModel.find({ target: user?._id }); // target is yourself
   const myFollowing = myFollowersDoc.map(user => user.target); 
   const usersResult = users.map((user) => {

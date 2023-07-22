@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { GradientBar, Heading,  cn } from '~ui';
+import { GradientBar, Heading, cn } from '~ui';
 
 import MoreNavItems from './MoreNavItems';
 import { IUser } from '@social-zone/graphql';
@@ -27,7 +27,7 @@ const Navbar: FC = () => {
   const router = useRouter();
 
   const onProfileSelected = (profile: IUser) => {
-    router.push(`/u/${profile?.username}`);
+    router.push(`/user/${profile?.username}`);
   };
 
   interface NavItemProps {
@@ -60,16 +60,14 @@ const Navbar: FC = () => {
     );
   };
 
-
-
   return (
     <Disclosure
       as="header"
-      className="divider sticky top-0 z-50 w-full bg-white dark:bg-black"
+      className="divider sticky top-0 z-30 w-full bg-white dark:bg-black"
     >
       {({ open }) => (
         <>
-        <GradientBar color="indigo" />
+          <GradientBar color="indigo" />
           <div className="container mx-auto max-w-screen-xl px-5">
             <div className="relative flex h-14 items-center justify-between sm:h-16">
               <div className="flex items-center justify-start">
@@ -86,29 +84,22 @@ const Navbar: FC = () => {
                   </Heading>
                 </Link>
                 <div className="hidden sm:ml-6 md:block">
-                  <div className="flex items-center space-x-4">
-                    <div className="hidden md:block">
-                      <Search onProfileSelected={onProfileSelected} />
-                    </div>
-                  </div>
+                  <Search onProfileSelected={onProfileSelected} />
                 </div>
               </div>
               <Link
                 href="/"
-                className={cn(
-                  'md:hidden',
-                  !currentProfile?._id && 'ml-[60px]'
-                )}
+                className={cn('md:hidden', !currentProfile?._id && 'ml-[60px]')}
               >
                 <Heading size="h5" className="gradient-text">
-                    UmmahLink
-                  </Heading>
+                  UmmahLink
+                </Heading>
               </Link>
               <div className="flex items-center gap-4">
                 {currentProfile ? (
                   <>
-                    <InboxIcon className='h-5 w-5' />
-                    <BellIcon className='h-5 w-5' />
+                    <InboxIcon className="h-5 w-5" />
+                    <BellIcon className="h-5 w-5" />
                   </>
                 ) : null}
                 <MenuItems />

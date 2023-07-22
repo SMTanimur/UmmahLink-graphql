@@ -5,7 +5,7 @@ import { User } from "../entities/user.entity";
 
 @InputType({isAbstract:true})
 export class SearchDto  {
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   keyword:string
 
   @Field((_type) => User,{nullable:true} )
