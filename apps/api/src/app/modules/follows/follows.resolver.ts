@@ -31,7 +31,7 @@ export class FollowsResolver {
 
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() => [Pagination],{name:'getFollowers'})
+  @Query(() => FollowPagination,{name:'getFollowers'})
   async  getFollowers(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: FollowQueryArgs,
@@ -43,7 +43,7 @@ export class FollowsResolver {
     return await this.followService.getFollowers(username,query, options);
   }
   @UseGuards(AuthenticatedGuard)
-  @Query(() => [Pagination],{name:'getFollowing'})
+  @Query(() => FollowPagination,{name:'getFollowing'})
   async  getFollowing(
     @Args('username', { type: () => String }) username: string,
     @Args('query') query: FollowQueryArgs,

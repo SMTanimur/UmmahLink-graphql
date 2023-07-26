@@ -23,7 +23,6 @@ import {
 import { Follow, FollowDocument } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedDocument } from '../newsFeed/entities/newsFeed';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
-import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
 
 @Injectable()
@@ -193,17 +192,13 @@ if (newsFeeds.length !== 0) {
     try {
       const { limit, page, orderBy, sortedBy } = options;
 
-      const skip = (page -1) * limit
-      console.log(skip)
-    const endIndex = page * limit;
       const userExit = await this.userService.getUserInfo(username)
       if(!userExit) throw new NotFoundException('User not found')
       const { user} = query;
 
-      const total = await this.postModel.countDocuments({ _author_id: userExit._id });
-
+     
       if(user.username === userExit.username){
-        const agg =await this.postModel.aggregate([ {
+        const agg = this.postModel.aggregate([ {
           $match: {
             _author_id: userExit._id,
           },
@@ -211,8 +206,6 @@ if (newsFeeds.length !== 0) {
         {
           $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
         },
-        { $skip: skip},
-        { $limit: limit },
         { // lookup from Comments collection to get total
           $lookup: {
               from: 'comments',
@@ -293,14 +286,11 @@ if (newsFeeds.length !== 0) {
       }])
 
       
-      let next = null;
-      if (endIndex < total) {
-        next = page + 1;
-      }
-       return {
-        docs: agg,
-        next,
-       }
+      const res = await this.postModel.aggregatePaginate(agg,{
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      });
+      return res
       }else{
         throw new ConflictException('please login to view this page')
       }

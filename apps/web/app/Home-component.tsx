@@ -12,7 +12,7 @@ import {
   NewPost,
   PostItem,
   useAuth,
-  useFeedQuery,
+  useInfiniteFeeds,
   useProfileQuery,
   useUserProfile,
 } from '~ui';
@@ -28,22 +28,43 @@ import Following from './(subpages)/user/[username]/components/Following';
 const Home: NextPage = () => {
   const { isAuthenticated } = useAuth();
   const [feedType, setFeedType] = useState<Type>(Type.FEED);
-  const {data:me}=useProfileQuery()
-  const {data}=useUserProfile(me?.me.username as string)
-  const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
-    useFeedQuery();
+  const { data: me } = useProfileQuery();
+  const { data } = useUserProfile(me?.me.username as string);
+
+  const {
+    data: feed,
+    isError,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteFeeds(
+    {
+      option: { limit: 2 },
+      query: {},
+    },
+    {
+      // Infinite query
+      getNextPageParam: (lastPage) => {
+        return lastPage?.getFeeds?.nextPage;
+      },
+    }
+  );
+
+  const FeedData = feed?.pages.flatMap((page) => page.getFeeds?.docs) ?? [];
+  // const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
+  //   useFeedQuery();
 
   const [sentryRef] = useInfiniteScroll({
-    loading: isFetching,
-    hasNextPage: hasMore ?? false,
-    onLoadMore: loadMore,
+    loading: isLoading,
+    hasNextPage: hasNextPage ?? false,
+    onLoadMore: ()=>fetchNextPage(),
     disabled: isError,
     rootMargin: '0px 0px 400px 0px',
   });
 
   if (!isAuthenticated) return <WithoutUser />;
   return (
-    <div className='relative'>
+    <div className="relative">
       {/* {!isAuthenticated && <Hero />} */}
       <GridLayout>
         <GridItemEight className="space-y-5  ">
@@ -54,58 +75,46 @@ const Home: NextPage = () => {
               {/* ---- NEWS FEED ---- */}
 
               <Card className="divide-y-[1px] dark:divide-gray-700">
-              {
-            feedType ===  Type.FOLLOWERS ? 
-            (
-            <Followers profile={data?.user as ProfileInformation }/>
-            )
-            : feedType === Type.FOLLOWING ? 
-            (
-              <Following profile={data?.user as ProfileInformation }/>
-            )
-          
-            : (
+                {feedType === Type.FOLLOWERS ? (
+                  <Followers profile={data?.user as ProfileInformation} />
+                ) : feedType === Type.FOLLOWING ? (
+                  <Following profile={data?.user as ProfileInformation} />
+                ) : (
+                  <>
+                    {FeedData?.map(
+                      (post: any, index) =>
+                        post?.author && ( // avoid render posts with null author
+                          <PostItem
+                            key={index}
+                            post={post!}
+                            isAuth={isAuthenticated}
+                          />
+                        )
+                    )}
 
-              <>
-             
-                  {Feed?.map(
-                    (post: any, index) =>
-                      post?.author && ( // avoid render posts with null author
-                        <PostItem
-                          key={index}
-                          post={post!}
-                          isAuth={isAuthenticated}
-                        />
-                      )
-                  )}
-
-                  
-                  {hasMore && (
-                    <Button
-                      ref={sentryRef}
-                      className="h-11 text-sm font-semibold md:text-base"
-                    >
-                      Loading More
-                    </Button>
-                  )}
-              </>
-            )
-           
-        
-          }
+                    {hasNextPage && (
+                      <Button
+                        ref={sentryRef}
+                        className="h-11 text-sm font-semibold md:text-base"
+                      >
+                        Loading More
+                      </Button>
+                    )}
+                  </>
+                )}
               </Card>
             </>
           )}
         </GridItemEight>
         <GridItemFour className="space-y-5">
-          <div className='sticky text-sm leading-7 top-20'>
-          {isAuthenticated ? (
-            <>
-              <EnableMessages />
-              <RecommendedProfiles />
-            </>
-          ) : null}
-          <Footer />
+          <div className="sticky text-sm leading-7 top-20">
+            {isAuthenticated ? (
+              <>
+                <EnableMessages />
+                <RecommendedProfiles />
+              </>
+            ) : null}
+            <Footer />
           </div>
         </GridItemFour>
       </GridLayout>

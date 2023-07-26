@@ -19,7 +19,15 @@ getPosts(username: $username,query:$query,option: $option) {
       updatedAt
     }
     __typename
-   next
+   hasNextPage
+   hasPrevPage
+   limit
+   nextPage
+   page
+   pagingCounter
+   prevPage
+   totalDocs
+   totalPages
     
   }
 }

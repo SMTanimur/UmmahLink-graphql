@@ -305,11 +305,6 @@ type Post {
   updatedAt: DateTime!
 }
 
-type PostsResponse {
-  docs: [NewsFeedPaginate!]!
-  next: Float
-}
-
 type ProfileInformation {
   avatar: String!
   bio: String
@@ -328,10 +323,10 @@ type ProfileInformation {
 
 type Query {
   getFeeds(option: GetFeedDto!, query: NewsFeedQueryArgs!): NewsFeedPagination
-  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
-  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): [Pagination!]!
+  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): FollowPagination!
+  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): FollowPagination!
   getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
-  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): PostsResponse!
+  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination!
   getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
   me: IUser!
   notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 10, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!

@@ -110,6 +110,8 @@ export const useAuth = () => {
           setIsAuthenticated(false)
           push('/login');
           queryClient.resetQueries(useMeQuery.getKey());
+          queryClient.resetQueries();
+          queryClient. removeQueries()
           return <b>{message}</b>;
         },
         error: 'Failed to Logout!',

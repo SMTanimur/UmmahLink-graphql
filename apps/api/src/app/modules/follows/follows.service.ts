@@ -141,6 +141,7 @@ export class FollowsService {
   ) {
     try {
       const { user, type } = query;
+      const {limit,page}=options
       const userInfo = await this.userModel.findOne({username})
       if(!userInfo) throw new NotFoundException('User not found')
 
@@ -148,13 +149,10 @@ export class FollowsService {
       const myFollowingDoc = await this.followModel.find({ user: user._id });
       const myFollowing =  myFollowingDoc.map((user) => user.target); // map to array of user IDs
       const matchCondition = type === 'followers' ? { target: user._id } : { user: user._id }
-      const aggregate = await this.followModel.aggregate([
+      const aggregate =   this.followModel.aggregate([
         {
           $match: matchCondition
           
-        },
-        {
-          $limit: options.limit | 5,
         },
         {
           $lookup: {
@@ -188,8 +186,12 @@ export class FollowsService {
           },
         },
       ]);
+    console.log(aggregate)
 
-      return aggregate;
+      return await  this.followModel.aggregatePaginate(aggregate,{
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      })as FollowPagination
     } catch (error) {
       console.log(error);
     }
@@ -215,8 +217,6 @@ export class FollowsService {
             }
         },
 
-        ...(limit < 10 ? ([{ $sample: { size: limit } }]) : []),
-        { $limit: limit },
       
         {
             $addFields: {

@@ -32,20 +32,35 @@ type UserComponentProps = {
 export default function UserComponent({ username, type }: UserComponentProps) {
   const { isAuthenticated } = useAuth();
   const { data } = useUserProfile(username);
-  const { Posts,  hasMore, isError, isFetching, loadMore } = usePostQuery(
-    data?.user?.username as string
+  const {
+    data: post,
+    isError,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+  } = usePostQuery(
+    {
+      option: {limit:5 },
+      query: {},
+      username: data?.user?.username as string,
+    },
+    {
+      // Infinite query
+      getNextPageParam: (lastPage) => {
+        return lastPage?.getPosts?.nextPage;
+      },
+    }
   );
- 
-  const {data:me}=useProfileQuery()
+  const PostsData = post?.pages.flatMap((page) => page.getPosts?.docs) ?? [];
+  const { data: me } = useProfileQuery();
   const [sentryRef] = useInfiniteScroll({
-    loading: isFetching,
-    hasNextPage: hasMore ?? false,
-    onLoadMore: loadMore,
+    loading: isLoading,
+    hasNextPage: hasNextPage ?? false,
+    onLoadMore: ()=>fetchNextPage(),
     disabled: isError,
     rootMargin: '0px 0px 400px 0px',
   });
   const [following, setFollowing] = useState<boolean | null>(null);
-
 
   const [feedType, setFeedType] = useState(
     type && ['feed', 'info', 'following', 'followers'].includes(type as string)
@@ -84,7 +99,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
             <Info profile={data?.user as ProfileInformation} />
           ) : (
             <>
-              {Posts?.map(
+              {PostsData?.map(
                 (post: any, index) =>
                   post?.author && ( // avoid render posts with null author
                     <PostItem
@@ -95,7 +110,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
                   )
               )}
 
-              {hasMore && (
+              {hasNextPage && (
                 <Button
                   ref={sentryRef}
                   className="h-11 text-sm font-semibold md:text-base"

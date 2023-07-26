@@ -1,10 +1,8 @@
 import {
   useMutation,
   useQuery,
-  useInfiniteQuery,
   UseMutationOptions,
   UseQueryOptions,
-  UseInfiniteQueryOptions,
 } from '@tanstack/react-query';
 import { fetcher } from '../configs';
 export type Maybe<T> = T | null;
@@ -419,12 +417,6 @@ export type Post = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type PostsResponse = {
-  __typename?: 'PostsResponse';
-  docs: Array<NewsFeedPaginate>;
-  next?: Maybe<Scalars['Float']['output']>;
-};
-
 export type ProfileInformation = {
   __typename?: 'ProfileInformation';
   avatar: Scalars['String']['output'];
@@ -448,7 +440,7 @@ export type Query = {
   getFollowers: Array<Pagination>;
   getFollowing: Array<Pagination>;
   getPostLikes: Array<GetLikeResponse>;
-  getPosts: PostsResponse;
+  getPosts: NewsFeedPagination;
   getSuggestionPeople?: Maybe<FollowPagination>;
   me: IUser;
   notifications: NotificationPagination;
@@ -532,7 +524,7 @@ export type ResponseSingleUpload = {
 };
 
 export type SearchDto = {
-  keyword?: InputMaybe<Scalars['String']['input']>;
+  keyword: Scalars['String']['input'];
   user?: InputMaybe<UserInputType>;
 };
 
@@ -832,9 +824,17 @@ export type GetPostsQueryVariables = Exact<{
 export type GetPostsQuery = {
   __typename?: 'Query';
   getPosts: {
-    __typename: 'PostsResponse';
-    next?: number | null;
-    docs: Array<{
+    __typename: 'NewsFeedPagination';
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    limit: number;
+    nextPage?: number | null;
+    page: number;
+    pagingCounter: number;
+    prevPage?: number | null;
+    totalDocs: number;
+    totalPages: number;
+    docs?: Array<{
       __typename?: 'NewsFeedPaginate';
       commentsCount?: number | null;
       content?: string | null;
@@ -853,7 +853,7 @@ export type GetPostsQuery = {
         id?: string | null;
         name: string;
       };
-    }>;
+    } | null> | null;
   };
 };
 
@@ -1279,26 +1279,6 @@ useGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => [
   'GetFeed',
   variables,
 ];
-export const useInfiniteGetFeedQuery = <TData = GetFeedQuery, TError = unknown>(
-  pageParamKey: keyof GetFeedQueryVariables,
-  variables: GetFeedQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFeedQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFeedQuery, TError, TData>(
-    ['GetFeed.infinite', variables],
-    (metaData) =>
-      fetcher<GetFeedQuery, GetFeedQueryVariables>(GetFeedDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
-
-useInfiniteGetFeedQuery.getKey = (variables: GetFeedQueryVariables) => [
-  'GetFeed.infinite',
-  variables,
-];
 useGetFeedQuery.fetcher = (
   variables: GetFeedQueryVariables,
   options?: RequestInit['headers']
@@ -1344,28 +1324,6 @@ useGetFollowersQuery.getKey = (variables: GetFollowersQueryVariables) => [
   'GetFollowers',
   variables,
 ];
-export const useInfiniteGetFollowersQuery = <
-  TData = GetFollowersQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetFollowersQueryVariables,
-  variables: GetFollowersQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFollowersQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFollowersQuery, TError, TData>(
-    ['GetFollowers.infinite', variables],
-    (metaData) =>
-      fetcher<GetFollowersQuery, GetFollowersQueryVariables>(
-        GetFollowersDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
-
-useInfiniteGetFollowersQuery.getKey = (
-  variables: GetFollowersQueryVariables
-) => ['GetFollowers.infinite', variables];
 useGetFollowersQuery.fetcher = (
   variables: GetFollowersQueryVariables,
   options?: RequestInit['headers']
@@ -1412,28 +1370,6 @@ useGetFollowingQuery.getKey = (variables: GetFollowingQueryVariables) => [
   'GetFollowing',
   variables,
 ];
-export const useInfiniteGetFollowingQuery = <
-  TData = GetFollowingQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetFollowingQueryVariables,
-  variables: GetFollowingQueryVariables,
-  options?: UseInfiniteQueryOptions<GetFollowingQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetFollowingQuery, TError, TData>(
-    ['GetFollowing.infinite', variables],
-    (metaData) =>
-      fetcher<GetFollowingQuery, GetFollowingQueryVariables>(
-        GetFollowingDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
-
-useInfiniteGetFollowingQuery.getKey = (
-  variables: GetFollowingQueryVariables
-) => ['GetFollowing.infinite', variables];
 useGetFollowingQuery.fetcher = (
   variables: GetFollowingQueryVariables,
   options?: RequestInit['headers']
@@ -1482,28 +1418,6 @@ export const useGetSuggestionPeopleQuery = <
 useGetSuggestionPeopleQuery.getKey = (
   variables: GetSuggestionPeopleQueryVariables
 ) => ['GetSuggestionPeople', variables];
-export const useInfiniteGetSuggestionPeopleQuery = <
-  TData = GetSuggestionPeopleQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetSuggestionPeopleQueryVariables,
-  variables: GetSuggestionPeopleQueryVariables,
-  options?: UseInfiniteQueryOptions<GetSuggestionPeopleQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetSuggestionPeopleQuery, TError, TData>(
-    ['GetSuggestionPeople.infinite', variables],
-    (metaData) =>
-      fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
-        GetSuggestionPeopleDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
-
-useInfiniteGetSuggestionPeopleQuery.getKey = (
-  variables: GetSuggestionPeopleQueryVariables
-) => ['GetSuggestionPeople.infinite', variables];
 useGetSuggestionPeopleQuery.fetcher = (
   variables: GetSuggestionPeopleQueryVariables,
   options?: RequestInit['headers']
@@ -1545,28 +1459,6 @@ useGetPostLikesQuery.getKey = (variables: GetPostLikesQueryVariables) => [
   'GetPostLikes',
   variables,
 ];
-export const useInfiniteGetPostLikesQuery = <
-  TData = GetPostLikesQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetPostLikesQueryVariables,
-  variables: GetPostLikesQueryVariables,
-  options?: UseInfiniteQueryOptions<GetPostLikesQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetPostLikesQuery, TError, TData>(
-    ['GetPostLikes.infinite', variables],
-    (metaData) =>
-      fetcher<GetPostLikesQuery, GetPostLikesQueryVariables>(
-        GetPostLikesDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
-
-useInfiniteGetPostLikesQuery.getKey = (
-  variables: GetPostLikesQueryVariables
-) => ['GetPostLikes.infinite', variables];
 useGetPostLikesQuery.fetcher = (
   variables: GetPostLikesQueryVariables,
   options?: RequestInit['headers']
@@ -1598,7 +1490,15 @@ export const GetPostsDocument = /*#__PURE__*/ `
       updatedAt
     }
     __typename
-    next
+    hasNextPage
+    hasPrevPage
+    limit
+    nextPage
+    page
+    pagingCounter
+    prevPage
+    totalDocs
+    totalPages
   }
 }
     `;
@@ -1614,29 +1514,6 @@ export const useGetPostsQuery = <TData = GetPostsQuery, TError = unknown>(
 
 useGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
   'GetPosts',
-  variables,
-];
-export const useInfiniteGetPostsQuery = <
-  TData = GetPostsQuery,
-  TError = unknown
->(
-  pageParamKey: keyof GetPostsQueryVariables,
-  variables: GetPostsQueryVariables,
-  options?: UseInfiniteQueryOptions<GetPostsQuery, TError, TData>
-) => {
-  return useInfiniteQuery<GetPostsQuery, TError, TData>(
-    ['GetPosts.infinite', variables],
-    (metaData) =>
-      fetcher<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
-
-useInfiniteGetPostsQuery.getKey = (variables: GetPostsQueryVariables) => [
-  'GetPosts.infinite',
   variables,
 ];
 useGetPostsQuery.fetcher = (
@@ -1676,24 +1553,6 @@ export const useMeQuery = <TData = MeQuery, TError = unknown>(
 
 useMeQuery.getKey = (variables?: MeQueryVariables) =>
   variables === undefined ? ['me'] : ['me', variables];
-export const useInfiniteMeQuery = <TData = MeQuery, TError = unknown>(
-  pageParamKey: keyof MeQueryVariables,
-  variables?: MeQueryVariables,
-  options?: UseInfiniteQueryOptions<MeQuery, TError, TData>
-) => {
-  return useInfiniteQuery<MeQuery, TError, TData>(
-    variables === undefined ? ['me.infinite'] : ['me.infinite', variables],
-    (metaData) =>
-      fetcher<MeQuery, MeQueryVariables>(MeDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
-
-useInfiniteMeQuery.getKey = (variables?: MeQueryVariables) =>
-  variables === undefined ? ['me.infinite'] : ['me.infinite', variables];
 useMeQuery.fetcher = (
   variables?: MeQueryVariables,
   options?: RequestInit['headers']
@@ -1731,29 +1590,6 @@ export const useSearchUserQuery = <TData = SearchUserQuery, TError = unknown>(
 
 useSearchUserQuery.getKey = (variables: SearchUserQueryVariables) => [
   'searchUser',
-  variables,
-];
-export const useInfiniteSearchUserQuery = <
-  TData = SearchUserQuery,
-  TError = unknown
->(
-  pageParamKey: keyof SearchUserQueryVariables,
-  variables: SearchUserQueryVariables,
-  options?: UseInfiniteQueryOptions<SearchUserQuery, TError, TData>
-) => {
-  return useInfiniteQuery<SearchUserQuery, TError, TData>(
-    ['searchUser.infinite', variables],
-    (metaData) =>
-      fetcher<SearchUserQuery, SearchUserQueryVariables>(SearchUserDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
-  );
-};
-
-useInfiniteSearchUserQuery.getKey = (variables: SearchUserQueryVariables) => [
-  'searchUser.infinite',
   variables,
 ];
 useSearchUserQuery.fetcher = (
@@ -1801,29 +1637,6 @@ export const useUserProfileQuery = <TData = UserProfileQuery, TError = unknown>(
 
 useUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => [
   'UserProfile',
-  variables,
-];
-export const useInfiniteUserProfileQuery = <
-  TData = UserProfileQuery,
-  TError = unknown
->(
-  pageParamKey: keyof UserProfileQueryVariables,
-  variables: UserProfileQueryVariables,
-  options?: UseInfiniteQueryOptions<UserProfileQuery, TError, TData>
-) => {
-  return useInfiniteQuery<UserProfileQuery, TError, TData>(
-    ['UserProfile.infinite', variables],
-    (metaData) =>
-      fetcher<UserProfileQuery, UserProfileQueryVariables>(
-        UserProfileDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
-      )(),
-    options
-  );
-};
-
-useInfiniteUserProfileQuery.getKey = (variables: UserProfileQueryVariables) => [
-  'UserProfile.infinite',
   variables,
 ];
 useUserProfileQuery.fetcher = (

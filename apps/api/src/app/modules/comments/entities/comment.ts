@@ -60,3 +60,9 @@ export class Comment extends CoreEntity {
 
 export type CommentDocument = Comment & Document;
 export const CommentSchema = SchemaFactory.createForClass(Comment);
+CommentSchema.virtual('author', {
+  ref: 'User',
+  localField: 'authId',
+  foreignField: '_id',
+  justOne: true
+});

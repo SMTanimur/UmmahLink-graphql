@@ -12,7 +12,6 @@ const config: CodegenConfig = {
       ],
       config: {
         // fetcher: 'graphql-request',
-        addInfiniteQuery: true,
         fetcher: {
           func: '../configs#fetcher',
           // func: 'ui#customFetcher',

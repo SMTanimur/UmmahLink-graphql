@@ -193,8 +193,8 @@ async searchUser (query?: FilterQuery<SearchDto>,options?:PaginateOptionArgs){
 
     
   const myFollowersDoc = await this.followModel.find({ target: user?._id }); // target is yourself
-  const myFollowing = myFollowersDoc.map(user => user.target); 
-  const usersResult = users.map((user) => {
+  const myFollowing = myFollowersDoc?.map(user => user.target); 
+  const usersResult = users?.map((user) => {
     return {
         ...user.toObject(),
         isFollowing: myFollowing.includes(user._id)
