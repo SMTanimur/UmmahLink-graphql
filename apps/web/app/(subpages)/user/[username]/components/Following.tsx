@@ -4,12 +4,10 @@ import { UsersIcon } from '@heroicons/react/24/outline';
 import { Virtuoso } from 'react-virtuoso';
 import {
   Pagination,
-  ProfileInformation,
-  useGetFollowingQuery,
+  ProfileInformation
 } from '@social-zone/graphql';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { EmptyState } from '~ui';
+import { EmptyState, useGetFollowingQuery, useProfileQuery } from '~ui';
 import UserProfile from './UserProfile';
 
 interface FollowingProps {
@@ -18,28 +16,39 @@ interface FollowingProps {
 }
 
 const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
-  const [hasMore, setHasMore] = useState(true);
-
-  const { data } = useGetFollowingQuery({
-    username: profile?.username,
-    options: { limit: 15 },
-    query: { type: 'following' },
-  });
-
-  const followings = data?.getFollowing;
+ 
+  const {
+    data:followers,
+    error,
+    isError,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+   
+  } = useGetFollowingQuery(
+    {
+      options: {limit:5 },
+      query: {},
+      username: profile?.username as string,
+    },
+    {
+      // Infinite query
+      getNextPageParam: (lastPage) => {
+         return lastPage?.getFollowing?.nextPage
+      },
+    }
+  );
+ const {data:currentProfile}=useProfileQuery()
+ const FollowingData = followers?.pages.flatMap((page) => page.getFollowing?.docs) ?? [];
 
   const onEndReached = async () => {
-    // if (!hasMore) {
-    //   return;
-    // }
-    // setHasMore(data?.getFollowing?.length > 0)
-    // await refetch({
-    // }).then(({ data }) => {
-    //   setHasMore(data?.following?.length > 0);
-    // });
+    if (!hasNextPage) {
+      return;
+    }
+    fetchNextPage()
   };
 
-  if (followings?.length === 0) {
+  if (FollowingData?.length === 0) {
     return (
       <EmptyState
         message={
@@ -61,7 +70,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
     >
       <Virtuoso
         className="virtual-profile-list"
-        data={followings as Pagination[]}
+        data={FollowingData as Pagination[]}
         endReached={onEndReached}
         itemContent={(index: any, following: Pagination) => {
           return (

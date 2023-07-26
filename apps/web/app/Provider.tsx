@@ -8,6 +8,7 @@ import { GlobalModals } from '~ui';
 
 
 
+
 const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   return (

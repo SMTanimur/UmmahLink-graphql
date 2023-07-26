@@ -1,10 +1,10 @@
 "use client"
 
 import { UsersIcon } from "@heroicons/react/24/outline";
-import { Pagination, ProfileInformation, useGetFollowersQuery } from "@social-zone/graphql";
+import { Pagination, ProfileInformation } from "@social-zone/graphql";
 import { Virtuoso } from 'react-virtuoso';
 import { FC } from "react";
-import { EmptyState, ErrorMessage } from "~ui";
+import { EmptyState, ErrorMessage, useGetFollowersQuery } from "~ui";
 import UserProfile from "./UserProfile";
 import { useProfileQuery } from "~ui";
 
@@ -14,12 +14,18 @@ interface FollowersProps {
 }
 
 const Followers: FC<FollowersProps> = ({ profile }) => {
+
+  
   
   // Variables
  
   const {
     data:followers,
-    
+    error,
+    isError,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
    
   } = useGetFollowersQuery(
     {
@@ -30,19 +36,19 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
     {
       // Infinite query
       getNextPageParam: (lastPage) => {
-        return lastPage?.getFollowers
+         return lastPage?.getFollowers?.nextPage
       },
     }
   );
  const {data:currentProfile}=useProfileQuery()
- const Followers = followers?.getFollowers
+ const FollowersData = followers?.pages.flatMap((page) => page.getFollowers?.docs) ?? [];
   const hasMore = hasNextPage
 
   const onEndReached = async () => {
     if (!hasMore) {
       return;
     }
-   fetchNextPage({pageParam:hasNextPage})
+   fetchNextPage()
    
   };
   if (Followers?.length === 0) {
@@ -73,7 +79,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
       />
       <Virtuoso
         className="virtual-profile-list"
-        data={Followers as Pagination[]}
+        data={FollowersData as Pagination[]}
         endReached={onEndReached}
         itemContent={(index: any, follower:Pagination) => {
           return (

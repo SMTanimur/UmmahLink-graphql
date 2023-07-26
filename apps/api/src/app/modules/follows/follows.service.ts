@@ -186,7 +186,7 @@ export class FollowsService {
           },
         },
       ]);
-    console.log(aggregate)
+      
 
       return await  this.followModel.aggregatePaginate(aggregate,{
         ...(limit ? { limit } : {}),

@@ -437,8 +437,8 @@ export type ProfileInformation = {
 export type Query = {
   __typename?: 'Query';
   getFeeds?: Maybe<NewsFeedPagination>;
-  getFollowers: Array<Pagination>;
-  getFollowing: Array<Pagination>;
+  getFollowers: FollowPagination;
+  getFollowing: FollowPagination;
   getPostLikes: Array<GetLikeResponse>;
   getPosts: NewsFeedPagination;
   getSuggestionPeople?: Maybe<FollowPagination>;
@@ -734,19 +734,31 @@ export type GetFollowersQueryVariables = Exact<{
 
 export type GetFollowersQuery = {
   __typename?: 'Query';
-  getFollowers: Array<{
-    __typename?: 'Pagination';
-    avatar: string;
-    email: string;
-    id: string;
-    isFollowing: boolean;
-    name: string;
-    username?: string | null;
-    bio?: string | null;
-    birthday?: any | null;
-    contact?: string | null;
-    gender?: string | null;
-  }>;
+  getFollowers: {
+    __typename: 'FollowPagination';
+    limit: number;
+    page: number;
+    totalDocs: number;
+    totalPages: number;
+    pagingCounter: number;
+    prevPage?: number | null;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    docs?: Array<{
+      __typename: 'Pagination';
+      avatar: string;
+      email: string;
+      id: string;
+      isFollowing: boolean;
+      name: string;
+      username?: string | null;
+      contact?: string | null;
+      birthday?: any | null;
+      bio?: string | null;
+      gender?: string | null;
+    } | null> | null;
+  };
 };
 
 export type GetFollowingQueryVariables = Exact<{
@@ -757,19 +769,31 @@ export type GetFollowingQueryVariables = Exact<{
 
 export type GetFollowingQuery = {
   __typename?: 'Query';
-  getFollowing: Array<{
-    __typename: 'Pagination';
-    avatar: string;
-    email: string;
-    id: string;
-    isFollowing: boolean;
-    name: string;
-    username?: string | null;
-    contact?: string | null;
-    birthday?: any | null;
-    bio?: string | null;
-    gender?: string | null;
-  }>;
+  getFollowing: {
+    __typename: 'FollowPagination';
+    limit: number;
+    page: number;
+    totalDocs: number;
+    totalPages: number;
+    pagingCounter: number;
+    prevPage?: number | null;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    docs?: Array<{
+      __typename: 'Pagination';
+      avatar: string;
+      email: string;
+      id: string;
+      isFollowing: boolean;
+      name: string;
+      username?: string | null;
+      contact?: string | null;
+      birthday?: any | null;
+      bio?: string | null;
+      gender?: string | null;
+    } | null> | null;
+  };
 };
 
 export type GetSuggestionPeopleQueryVariables = Exact<{
@@ -780,12 +804,16 @@ export type GetSuggestionPeopleQueryVariables = Exact<{
 export type GetSuggestionPeopleQuery = {
   __typename?: 'Query';
   getSuggestionPeople?: {
-    __typename?: 'FollowPagination';
+    __typename: 'FollowPagination';
     limit: number;
     page: number;
-    hasPrevPage: boolean;
     totalDocs: number;
     totalPages: number;
+    pagingCounter: number;
+    prevPage?: number | null;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
     docs?: Array<{
       __typename: 'Pagination';
       avatar: string;
@@ -1291,16 +1319,29 @@ useGetFeedQuery.fetcher = (
 export const GetFollowersDocument = /*#__PURE__*/ `
     query GetFollowers($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowers(username: $username, option: $options, query: $query) {
-    avatar
-    email
-    id
-    isFollowing
-    name
-    username
-    bio
-    birthday
-    contact
-    gender
+    docs {
+      avatar
+      email
+      id
+      isFollowing
+      name
+      username
+      contact
+      birthday
+      bio
+      gender
+      __typename
+    }
+    __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
   }
 }
     `;
@@ -1336,17 +1377,29 @@ useGetFollowersQuery.fetcher = (
 export const GetFollowingDocument = /*#__PURE__*/ `
     query GetFollowing($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowing(username: $username, option: $options, query: $query) {
-    avatar
-    email
-    id
-    isFollowing
-    name
-    username
-    contact
-    birthday
-    bio
-    gender
+    docs {
+      avatar
+      email
+      id
+      isFollowing
+      name
+      username
+      contact
+      birthday
+      bio
+      gender
+      __typename
+    }
     __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
   }
 }
     `;
@@ -1391,11 +1444,16 @@ export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
       username
       __typename
     }
+    __typename
     limit
     page
-    hasPrevPage
     totalDocs
     totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
   }
 }
     `;

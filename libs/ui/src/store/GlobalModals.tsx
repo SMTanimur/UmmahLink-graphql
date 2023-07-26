@@ -1,13 +1,10 @@
-/* eslint-disable react/jsx-no-useless-fragment */
+
+"use client"
+import { Modal, NewCreatePost } from "../components";
+import { useGlobalModalStateStore } from "./modal";
 
 
-
-import { useGlobalModalStateStore } from './modal';
-import { Modal } from '../components';
-import { NewCreatePost } from '../components/composer/NewCreatePost';
-
-export  const GlobalModals = () => {
- 
+export const GlobalModals = () => {
   // const showProfileSwitchModal = useGlobalModalStateStore(
   //   (state) => state.showProfileSwitchModal
   // );
@@ -20,12 +17,10 @@ export  const GlobalModals = () => {
   const setShowNewPostModal = useGlobalModalStateStore(
     (state) => state.setShowNewPostModal
   );
- 
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-     
-     
       <Modal
         title={`Create post`}
         size="md"
@@ -37,4 +32,3 @@ export  const GlobalModals = () => {
     </>
   );
 };
-

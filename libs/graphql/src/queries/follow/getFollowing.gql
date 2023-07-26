@@ -1,6 +1,7 @@
 query GetFollowing($username:String!,$options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowing(username: $username,option: $options, query: $query) {
-    avatar
+     docs{
+       avatar
     email
     id
     isFollowing
@@ -11,5 +12,16 @@ query GetFollowing($username:String!,$options: PaginateOptionArgs!, $query: Foll
     bio
     gender
     __typename
+     }
+    __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
   }
 }

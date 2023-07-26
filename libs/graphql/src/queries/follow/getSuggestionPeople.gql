@@ -9,11 +9,17 @@ query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs
      username
       __typename
   }
-  limit
-  page
-  hasPrevPage
-  totalDocs
-  totalPages
+  __typename
+    limit
+    page
+    totalDocs
+    totalPages
+    pagingCounter
+    prevPage
+    hasNextPage
+    hasPrevPage
+    nextPage
+
   
  }
 }

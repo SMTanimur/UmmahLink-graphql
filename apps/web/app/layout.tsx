@@ -28,9 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body  className={poppins.className} >
+    <html lang="en" >
+      <body  className={poppins.className} suppressHydrationWarning={true}>
         <Providers>
+       
           <Toaster
             position="top-right"
             // toastOptions={getToastOptions(resolvedTheme)}

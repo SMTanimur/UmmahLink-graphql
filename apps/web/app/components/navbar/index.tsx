@@ -14,11 +14,10 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { GradientBar, Heading, cn } from '~ui';
 
-import MoreNavItems from './MoreNavItems';
 import { IUser } from '@social-zone/graphql';
 import MenuItems from './MenuItems';
 import Search from './Search';
-import { usePathname, useRouter } from 'next/navigation';
+import {  useRouter } from 'next/navigation';
 
 const Navbar: FC = () => {
   const { data } = useProfileQuery();

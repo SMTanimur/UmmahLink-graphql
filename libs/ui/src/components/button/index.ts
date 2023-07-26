@@ -1,1 +1,1 @@
-export * from './CButton'
+export * from './SmartButton';
