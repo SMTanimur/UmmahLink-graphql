@@ -6,7 +6,7 @@ import Logout from './NavItems/Logout';
 
 import YourProfile from './NavItems/YourProfile';
 import { Image, MenuTransition, Slug, cn, useProfileQuery } from '~ui';
-import Status from './NavItems/Status';
+
 
 import ThemeSwitch from './ThemeSwitch';
 import { forwardRef } from 'react'
@@ -81,17 +81,7 @@ const SignedUser: FC = () => {
             >
               <SwitchProfile />
             </Menu.Item> */}
-            <Menu.Item
-              as="div"
-              className={({ active }: { active: boolean }) =>
-                cn(
-                  { 'dropdown-active': active },
-                  'm-2 rounded-lg border dark:border-gray-700'
-                )
-              }
-            >
-              <Status />
-            </Menu.Item>
+      
             <div className="divider" />
             <Menu.Item
               

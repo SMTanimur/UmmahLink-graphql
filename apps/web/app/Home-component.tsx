@@ -2,6 +2,7 @@
 
 import { NextPage } from 'next';
 import { useState } from 'react';
+import { useInView } from 'react-cool-inview';
 import {
   Button,
   Card,
@@ -11,6 +12,7 @@ import {
   GridLayout,
   NewPost,
   PostItem,
+  PostsShimmer,
   useAuth,
   useInfiniteFeeds,
   useProfileQuery,
@@ -50,17 +52,36 @@ const Home: NextPage = () => {
     }
   );
 
+ 
+ 
   const FeedData = feed?.pages.flatMap((page) => page.getFeeds?.docs) ?? [];
   // const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
   //   useFeedQuery();
 
-  const [sentryRef] = useInfiniteScroll({
-    loading: isLoading,
-    hasNextPage: hasNextPage ?? false,
-    onLoadMore: ()=>fetchNextPage(),
-    disabled: isError,
-    rootMargin: '0px 0px 400px 0px',
+  // const [sentryRef] = useInfiniteScroll({
+  //   loading: isLoading,
+  //   hasNextPage: hasNextPage ?? false,
+  //   onLoadMore: ()=>fetchNextPage(),
+  //   disabled: isError,
+  //   rootMargin: '0px 0px 400px 0px',
+  // });
+
+
+  
+  const { observe } = useInView({
+    onChange: async ({ inView }) => {
+      if (!inView || !hasNextPage) {
+        return;
+      }
+      fetchNextPage()
+
+    }
+    
   });
+
+  if (isLoading) {
+    return <PostsShimmer />;
+  }
 
   if (!isAuthenticated) return <WithoutUser />;
   return (
@@ -94,8 +115,8 @@ const Home: NextPage = () => {
 
                     {hasNextPage && (
                       <Button
-                        ref={sentryRef}
-                        className="h-11 text-sm font-semibold md:text-base"
+                      ref={observe}
+                        className="h-11 text-sm font-semibold md:text-base items-center "
                       >
                         Loading More
                       </Button>

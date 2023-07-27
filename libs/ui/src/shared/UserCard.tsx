@@ -5,9 +5,8 @@ import { GetLikeResponse, NewsFeedPaginate } from '@social-zone/graphql';
 
 import type { FC } from 'react';
 import { memo, useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import { EmptyState, ErrorMessage, Loader } from '../components';
-
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { useGetPostLikes } from '../hooks';
 import UserInfo from './UserInfo';
 import { UsersIcon } from '@heroicons/react/24/outline';
@@ -27,6 +26,8 @@ const UserCard: FC<UserProfileProps> = ({ postItem, isBig = false }) => {
   const fetchLikes = async () => {
     setOffset(offset + 1);
   };
+
+
   if (likes?.length === 0) {
     return (
       <EmptyState

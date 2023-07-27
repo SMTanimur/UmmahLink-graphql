@@ -25,8 +25,8 @@ const queryClient = useQueryClient();
       loading: 'LikeOrUnlike Processing ...',
       success: ( {likeOrUnlikePost:{message}}) => {
         queryClient.invalidateQueries(['UserProfile'])
-        queryClient.invalidateQueries(['GetFeed.infinite'])
-        queryClient.invalidateQueries(['GetPosts.infinite']);
+        queryClient.invalidateQueries(['Feeds'])
+        queryClient.invalidateQueries(['Posts']);
         return <b>{message}</b>;
       },
       error: (data) => {

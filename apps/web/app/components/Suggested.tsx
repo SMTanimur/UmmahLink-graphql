@@ -31,6 +31,7 @@ const Suggested: FC = () => {
     <div className="max-h-[80vh] overflow-y-auto">
       <ErrorMessage title={`Failed to load recommendations`} error={error as any} />
       <Virtuoso
+      
         className="virtual-profile-list"
         data={data?.getSuggestionPeople?.docs as Pagination[]}
         itemContent={(index, profile) => {

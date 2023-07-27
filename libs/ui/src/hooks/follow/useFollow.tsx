@@ -31,8 +31,10 @@ export const useFollowOrUnFollow = () => {
           success: ({ followUser: { message } }) => {
             queryClient.invalidateQueries(['GetPostLikes']);
             queryClient.invalidateQueries(['GetSuggestionPeople']);
-            queryClient.invalidateQueries(['GetPosts.infinite']);
+            queryClient.invalidateQueries(['Posts']);
+            queryClient.invalidateQueries(['followers.infinite']);
             queryClient.invalidateQueries(['UserProfile']);
+            queryClient.invalidateQueries(['following.infinite']);
             return <b>{message}</b>;
           },
           error: (data) => {
@@ -63,7 +65,9 @@ export const useFollowOrUnFollow = () => {
           success: ({ unFollowUser: { message } }) => {
             queryClient.invalidateQueries(useMeQuery.getKey());
             queryClient.invalidateQueries(['GetSuggestionPeople']);
-            queryClient.invalidateQueries(['GetPosts.infinite']);
+            queryClient.invalidateQueries(['Posts']);
+            queryClient.invalidateQueries(['followers.infinite']);
+            queryClient.invalidateQueries(['following.infinite']);
             queryClient.invalidateQueries(['UserProfile']);
             return <b>{message}</b>;
           },
