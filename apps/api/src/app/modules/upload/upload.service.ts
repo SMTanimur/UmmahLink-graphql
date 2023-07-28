@@ -1,67 +1,81 @@
-import { Injectable } from '@nestjs/common';
-import { Readable } from 'stream';
-import toStream = require('buffer-to-stream');
-import { v2 } from 'cloudinary';
-import { FileUpload } from 'graphql-upload';
+import { Injectable } from "@nestjs/common";
+import {
+    UploadApiOptions,
+    v2 as cloudinary,
+    UploadApiResponse,
+} from "cloudinary";
+import { UploadedImagesDto } from "./dto/upload-images.dto";
+import { SingleUploadedImageDto } from "./dto/upload-image.dto";
 
 @Injectable()
 export class UploadService {
-  /**
-   *
-   * @param args upload with GRAPHQL
-   * @returns
-   */
-  // upload single to cloudinary with graphql
-  async uploadSingleToCloudinaryGraphql(file: FileUpload): Promise<any> {
-    try {
-      const { createReadStream } = await file;
-      const buffer = await this.streamToBuffer(createReadStream());
-      // const data = this.cloudinary(buffer);
-      console.log(buffer);
-      return 'dfjkdj';
-      // return data
-    } catch (error) {
-      return error;
-    }
-  }
+  
+    async uploadImages(
+        imageFiles: Express.Multer.File[],
+    ): Promise<UploadedImagesDto> {
+        const uploadPromises: Promise<UploadApiResponse>[] = [];
 
-  // upload multiple to cloudinary with graphql
-  async uploadMultipleToCloudinaryGraphql(files: [FileUpload]): Promise<any> {
-    try {
-      const arrayResponse: any[] = [];
-      await Promise.all(
-        files.map(async (file: FileUpload) => {
-          const result = await this.uploadSingleToCloudinaryGraphql(file);
-          arrayResponse.push(result);
-        })
-      );
-      return arrayResponse;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async streamToBuffer(stream: Readable): Promise<Buffer> {
-    const buffer: Uint8Array[] = [];
-
-    return new Promise((resolve, reject) =>
-      stream
-        .on('error', (error) => reject(error))
-        .on('data', (data) => buffer.push(data))
-        .on('end', () => resolve(Buffer.concat(buffer)))
-    );
-  }
-
-  async cloudinary(buffer: any, folder = ''): Promise<any> {
-    return await new Promise((resolve, reject) => {
-      const upload = v2.uploader.upload_stream(
-        { folder: 'ummahlink/' + folder },
-        (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
+        for (let i = 0; i < imageFiles.length; i++) {
+            const uploadPromise = this.upload(imageFiles[i].buffer, {
+                transformation: [
+                    {
+                        width: 640,
+                        height: 640,
+                        crop: "pad",
+                        fetch_format: "jpg",
+                    },
+                ],
+                folder: "ummahlink",
+            });
+            uploadPromises.push(uploadPromise);
         }
-      );
-      toStream(buffer).pipe(upload);
-    });
-  }
+        const cldImages = await Promise.all(uploadPromises);
+        const resultImages = cldImages.map((img) => ({
+            img_id: img.public_id,
+            img_src: img.secure_url,
+        }));
+        return { images: resultImages };
+    }
+
+    async uploadSingleImage(
+        imageFile: Express.Multer.File,
+    ): Promise<SingleUploadedImageDto> {
+        const result = await this.upload(imageFile.buffer, {
+            transformation: [
+                {
+                    width: 640,
+                    height: 640,
+                    crop: "lfill",
+                    fetch_format: "jpg",
+                },
+                {
+                    fetch_format: "jpg",
+                },
+            ],
+            folder: "ummahlink",
+        });
+        const image = { img_id: result.public_id, img_src: result.secure_url };
+        return { image };
+    }
+    upload(
+        fileBuffer: Buffer,
+        options?: UploadApiOptions,
+    ): Promise<UploadApiResponse> {
+        return new Promise<UploadApiResponse>((resolve, reject) => {
+            cloudinary.uploader
+                .upload_stream(options, (err, value) => {
+                    if (err) reject(err.message);
+                    resolve(value);
+                })
+                .end(fileBuffer);
+        });
+    }
+
+    deleteOne(public_id: string): Promise<any> {
+        return cloudinary.uploader.destroy(public_id);
+    }
+
+    deleteMany(public_ids: string[]): Promise<any> {
+        return cloudinary.api.delete_resources(public_ids);
+    }
 }

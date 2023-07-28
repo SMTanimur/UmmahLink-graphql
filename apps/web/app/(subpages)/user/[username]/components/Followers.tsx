@@ -29,7 +29,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
    
   } = useGetFollowersQuery(
     {
-      options: {limit:5 },
+      options: {limit:1 },
       query: {},
       username: profile?.username as string,
     },
@@ -71,7 +71,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
   }
 
   return (
-    <div className="max-h-[80vh] overflow-y-auto" data-testid="followers-modal">
+    <div className="max-h-[60vh] overflow-y-auto" data-testid="followers-modal">
       <ErrorMessage
         className="m-5"
         title={`Failed to load followers`}

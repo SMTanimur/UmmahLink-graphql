@@ -1,19 +1,13 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+
 
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
-
 import { AppModule } from './app/app.module';
 import { ConfigurationService } from '@social-zone/common';
 import passport from 'passport';
 import MongoDBStore from 'connect-mongodb-session';
 import session from 'express-session';
-import { graphqlUploadExpress } from 'graphql-upload';
-import bodyParser from 'body-parser';
+
 
 const MongoStore = MongoDBStore(session);
 async function bootstrap() {
@@ -23,25 +17,18 @@ async function bootstrap() {
     const configurationService =
       app.get<ConfigurationService>(ConfigurationService);
 
-      app.use(bodyParser.json({limit: '50mb'}));
-      app.use(bodyParser.urlencoded({
-        limit: '50mb',
-        extended: true,
-        parameterLimit: 50000
-      }))
-
   // only using graphql
-  app.use((req: any, res: any, next: any) => {
-    if (req.url.includes('/graphql')) {
-      // only graphql request
-      graphqlUploadExpress({
-        maxFileSize: 100000000,
-        maxFiles: 10,
-      })(req, res, next);
-    } else {
-      next();
-    }
-  });
+  // app.use((req: any, res: any, next: any) => {
+  //   if (req.url.includes('/graphql')) {
+  //     // only graphql request
+  //     graphqlUploadExpress({
+  //       maxFileSize: 100000000,
+  //       maxFiles: 10,
+  //     })(req, res, next);
+  //   } else {
+  //     next();
+  //   }
+  // });
     // app.use(morgan('common'));
     // app.use(helmet());
     app.enableCors({

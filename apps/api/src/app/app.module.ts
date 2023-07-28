@@ -24,7 +24,6 @@ import { UploadModule } from './modules/upload/upload.module';
     PostsModule,
     FollowsModule,
     AuthModule,
-    UploadModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'apps/api/src/graphql/schema.gql'),
@@ -37,14 +36,15 @@ import { UploadModule } from './modules/upload/upload.module';
         },
       },
       context: ({ req, res }) => ({ req, res }),
-      cors: {
-        credentials: true,
-        origin: true,
-      },
-      sortSchema: true,
+      // cors: {
+      //   credentials: true,
+      //   origin: true,
+      // },
+      // sortSchema: true,
     }),
     UsersModule,
     CoreModule,
+    UploadModule,
     FriendRequestsModule,
   ],
   controllers: [AppController],

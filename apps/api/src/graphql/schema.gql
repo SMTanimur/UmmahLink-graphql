@@ -2,28 +2,360 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Author {
-  avatar: String!
-  email: String!
-  id: ID
-  name: String!
-  username: String!
+type MessageResponse {
+  message: String!
 }
 
-input CloseRequestInput {
-  status: String!
+type FriendRequest {
+  id: ID!
+  user: User
+  target: User
+}
+
+type User {
+  email: String!
+  name: String!
+  birthday: DateTime
+  gender: EGender
+  bio: String
+  contact: String
+  username: String!
+  avatar: String
+  coverPicture: String
+  friends: User
+  friendRequests: [FriendRequest!]
+  password: String!
+  role: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum EGender {
+  male
+  female
+  unspecified
+}
+
+type UserWithoutPassword {
+  email: String!
+  name: String!
+  birthday: DateTime
+  gender: EGender
+  bio: String
+  contact: String
+  username: String!
+  avatar: String
+  coverPicture: String
+  friends: User
+  friendRequests: [FriendRequest!]
+  role: String!
+}
+
+type Author {
+  id: ID
+  username: String!
+  email: String!
+  avatar: String!
+  name: String!
+}
+
+type NewsFeedPaginate {
+  photos: [String!]
+  content: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  author: Author!
+  isLiked: Boolean
+  isOwnPost: Boolean
+  commentsCount: Float
+  likesCount: Float
+  id: String
+}
+
+type NewsFeedPagination {
+  docs: [NewsFeedPaginate]
+  totalDocs: Float!
+  limit: Float!
+  page: Float!
+  totalPages: Float!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+}
+
+type Post {
+  _author_id: User
+  content: String
+  photos: [String!]
+  likes: [User!]
+  comments: [User!]
+
+  """Created At"""
+  createdAt: DateTime!
+
+  """Updated At"""
+  updatedAt: DateTime!
+}
+
+type Notification {
+  id: ID!
+  type: NotificationType!
   target: ID
+  initiator: ID
+  unread: Boolean
+  link: String
+}
+
+enum NotificationType {
+  like
+  follow
+  commentLike
+  comment
+  reply
+}
+
+type NotificationPagination {
+  docs: [Notification]
+  totalDocs: Float!
+  limit: Float!
+  page: Float!
+  totalPages: Float!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+}
+
+type ProfileInformation {
+  id: ID!
+  username: String!
+  name: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  avatar: String!
+  email: String!
+  coverPicture: String
+  followingCount: Float
+  followersCount: Float
+  isFollowing: Boolean!
+}
+
+type IUser {
+  _id: ID!
+  username: String!
+  name: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  avatar: String!
+  email: String
+  coverPicture: String
+  isFollowing: Boolean!
+}
+
+type UserResponse {
+  username: String!
+  avatar: String!
+}
+
+type FriendRequestResponse {
+  target: UserResponse!
+  user: UserResponse!
+}
+
+type Pagination {
+  username: String
+  name: String!
+  avatar: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  id: String!
+  email: String!
+  isFollowing: Boolean!
+}
+
+type FollowPagination {
+  docs: [Pagination]
+  totalDocs: Float!
+  limit: Float!
+  page: Float!
+  totalPages: Float!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+}
+
+type LoginResponse {
+  message: String!
+}
+
+type Query {
+  getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination
+  notifications(query: NotificationQueryArgs!, select: String, sort: String, skip: Float, lean: Boolean, leanWithId: Boolean, offset: Float, limit: Float = 10, page: Float = 1, pagination: Boolean, allowDiskUse: Boolean, forceCountFn: Boolean, useEstimatedCount: Boolean): NotificationPagination!
+  post(postId: ID!): Post!
+  getPosts(username: String!, query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
+  getPostLikes(query: LikesQueryArgs!, option: PaginateOptionArgs!): [GetLikeResponse!]!
+  user(username: String!): ProfileInformation
+  searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
+  getFollowers(username: String!, query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination!
+  getFollowing(username: String!, query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination!
+  getSuggestionPeople(query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination
+  me: IUser!
+}
+
+input NewsFeedQueryArgs {
+  user: UserInputType
+}
+
+input UserInputType {
+  email: String!
+  name: String!
+  birthday: DateTime
+  gender: EGender
+  bio: String
+  contact: String
+  username: String!
+  avatar: String
+  coverPicture: String
+  friends: UserInputType
+  friendRequests: [FriendRequestInputType!] = []
+  password: String!
+  role: String!
+}
+
+input FriendRequestInputType {
+  user: UserInputType
+  target: UserInputType
+}
+
+input GetFeedDto {
+  select: String
+  sort: String
+  skip: Float
+  lean: Boolean
+  leanWithId: Boolean
+  offset: Float
+  limit: Float = 10
+  page: Float = 1
+  pagination: Boolean
+  allowDiskUse: Boolean
+  forceCountFn: Boolean
+  useEstimatedCount: Boolean
+  orderBy: QueryPostOrderByColumn = CREATED_AT
+  sortedBy: SortOrder = DESC
+}
+
+enum QueryPostOrderByColumn {
+  CREATED_AT
+  RATING
+  ORDERS
+  UPDATED_AT
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input NotificationQueryArgs {
+  user: ID
+  targetId: ID
+  type: String
+  unread: Boolean
+}
+
+type GetLikeResponse {
+  username: String!
+  _id: ID!
+  avatar: String!
+  name: String!
+  isFollowing: Boolean!
+}
+
+input LikesQueryArgs {
+  user: ID
+  postId: ID
+  commentId: ID
+}
+
+input PaginateOptionArgs {
+  select: String
+  sort: String
+  skip: Float
+  lean: Boolean
+  leanWithId: Boolean
+  offset: Float
+  limit: Float = 10
+  page: Float = 1
+  pagination: Boolean
+  allowDiskUse: Boolean
+  forceCountFn: Boolean
+  useEstimatedCount: Boolean
+}
+
+input SearchDto {
+  keyword: String!
+  user: UserInputType
+}
+
+input FollowQueryArgs {
+  user: UserInputType
+  type: String
+}
+
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): MessageResponse!
+  createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
+  deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
+  updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
+  createPost(createPostInput: CreatePostInput!): MessageResponse!
+  updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
+  deletePost(updatePostInput: DeletePostInput!): MessageResponse!
+  likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
+  createUser(createUserInput: CreateUserInput!): String!
+  updateUser(input: UpdateUserInput!): MessageResponse!
+  followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
+  unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
+  login(loginInput: LoginInput!): LoginResponse!
+  logout: MessageResponse!
+  createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
+  closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
 }
 
 input CreateCommentInput {
-  authId: UserInputType
-  body: String!
   postId: ID
+  body: String!
+  authId: UserInputType
 }
 
-input CreateFriendRequestInput {
-  target: ID
-  user: ID
+input CreateReplyInput {
+  postId: ID!
+  userId: ID
+  commentId: ID!
+  body: String!
+}
+
+input DeleteCommentInput {
+  commentId: ID!
+  userID: ID!
+}
+
+input NotificationUpdateArgs {
+  notifiId: ID!
+  unread: Boolean! = false
 }
 
 input CreatePostInput {
@@ -32,129 +364,59 @@ input CreatePostInput {
   photos: [String!]
 }
 
-input CreatePostOrCommentLikeInput {
-  postId: ID
-  type: String
+input UpdatePostInput {
+  _author_id: UserInputType
+  content: String
+  photos: [String!]
+  likes: [UserInputType!]
+  comments: [UserInputType!]
+
+  """Created At"""
+  createdAt: DateTime
+
+  """Updated At"""
+  updatedAt: DateTime
   user: ID
+  postId: ID!
 }
 
-input CreateReplyInput {
-  body: String!
-  commentId: ID!
+input DeletePostInput {
+  user: ID
   postId: ID!
-  userId: ID
+}
+
+input CreatePostOrCommentLikeInput {
+  user: ID
+  postId: ID
+  type: String
 }
 
 input CreateUserInput {
   email: String!
   name: String!
-  password: String!
   username: String!
+  password: String!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-input DeleteCommentInput {
-  commentId: ID!
-  userID: ID!
-}
-
-input DeletePostInput {
-  postId: ID!
-  user: ID
-}
-
-enum EGender {
-  female
-  male
-  unspecified
+input UpdateUserInput {
+  email: String
+  name: String
+  birthday: DateTime
+  gender: EGender
+  bio: String
+  contact: String
+  username: String
+  avatar: String
+  coverPicture: String
+  friends: UserInputType
+  friendRequests: [FriendRequestInputType!] = []
+  password: String
+  role: String
 }
 
 input FollowOrUnFollowInput {
-  follow_ID: ID!
   userId: ID
-}
-
-type FollowPagination {
-  docs: [Pagination]
-  hasNextPage: Boolean!
-  hasPrevPage: Boolean!
-  limit: Float!
-  nextPage: Float
-  page: Float!
-  pagingCounter: Float!
-  prevPage: Float
-  totalDocs: Float!
-  totalPages: Float!
-}
-
-input FollowQueryArgs {
-  type: String
-  user: UserInputType
-}
-
-type FriendRequest {
-  id: ID!
-  target: User
-  user: User
-}
-
-input FriendRequestInputType {
-  target: UserInputType
-  user: UserInputType
-}
-
-type FriendRequestResponse {
-  target: UserResponse!
-  user: UserResponse!
-}
-
-input GetFeedDto {
-  allowDiskUse: Boolean
-  forceCountFn: Boolean
-  lean: Boolean
-  leanWithId: Boolean
-  limit: Float = 10
-  offset: Float
-  orderBy: QueryPostOrderByColumn = CREATED_AT
-  page: Float = 1
-  pagination: Boolean
-  select: String
-  skip: Float
-  sort: String
-  sortedBy: SortOrder = DESC
-  useEstimatedCount: Boolean
-}
-
-type GetLikeResponse {
-  _id: ID!
-  avatar: String!
-  isFollowing: Boolean!
-  name: String!
-  username: String!
-}
-
-type IUser {
-  _id: ID!
-  avatar: String!
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String
-  gender: String
-  isFollowing: Boolean!
-  name: String!
-  username: String!
-}
-
-input LikesQueryArgs {
-  commentId: ID
-  postId: ID
-  user: ID
+  follow_ID: ID!
 }
 
 input LoginInput {
@@ -162,283 +424,12 @@ input LoginInput {
   password: String!
 }
 
-type LoginResponse {
-  message: String!
-}
-
-type MessageResponse {
-  message: String!
-}
-
-type Mutation {
-  closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
-  createComment(createCommentInput: CreateCommentInput!): MessageResponse!
-  createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
-  createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
-  createPost(createPostInput: CreatePostInput!): MessageResponse!
-  createUser(createUserInput: CreateUserInput!): String!
-  deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
-  deletePost(updatePostInput: DeletePostInput!): MessageResponse!
-  followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
-  likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
-  login(loginInput: LoginInput!): LoginResponse!
-  logout: MessageResponse!
-  unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
-  updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
-  updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
-  updateUser(input: UpdateUserInput!): MessageResponse!
-  uploadMultipleFiles(files: [Upload!]!): [ResponseSingleUpload!]!
-  uploadSingleFiles(file: Upload!): ResponseSingleUpload!
-}
-
-type NewsFeedPaginate {
-  author: Author!
-  commentsCount: Float
-  content: String
-  createdAt: DateTime
-  id: String
-  isLiked: Boolean
-  isOwnPost: Boolean
-  likesCount: Float
-  photos: [String!]
-  updatedAt: DateTime
-}
-
-type NewsFeedPagination {
-  docs: [NewsFeedPaginate]
-  hasNextPage: Boolean!
-  hasPrevPage: Boolean!
-  limit: Float!
-  nextPage: Float
-  page: Float!
-  pagingCounter: Float!
-  prevPage: Float
-  totalDocs: Float!
-  totalPages: Float!
-}
-
-input NewsFeedQueryArgs {
-  user: UserInputType
-}
-
-type Notification {
-  id: ID!
-  initiator: ID
-  link: String
+input CreateFriendRequestInput {
+  user: ID
   target: ID
-  type: NotificationType!
-  unread: Boolean
 }
 
-type NotificationPagination {
-  docs: [Notification]
-  hasNextPage: Boolean!
-  hasPrevPage: Boolean!
-  limit: Float!
-  nextPage: Float
-  page: Float!
-  pagingCounter: Float!
-  prevPage: Float
-  totalDocs: Float!
-  totalPages: Float!
-}
-
-input NotificationQueryArgs {
-  targetId: ID
-  type: String
-  unread: Boolean
-  user: ID
-}
-
-enum NotificationType {
-  comment
-  commentLike
-  follow
-  like
-  reply
-}
-
-input NotificationUpdateArgs {
-  notifiId: ID!
-  unread: Boolean! = false
-}
-
-input PaginateOptionArgs {
-  allowDiskUse: Boolean
-  forceCountFn: Boolean
-  lean: Boolean
-  leanWithId: Boolean
-  limit: Float = 10
-  offset: Float
-  page: Float = 1
-  pagination: Boolean
-  select: String
-  skip: Float
-  sort: String
-  useEstimatedCount: Boolean
-}
-
-type Pagination {
-  avatar: String!
-  bio: String
-  birthday: DateTime
-  contact: String
-  email: String!
-  gender: String
-  id: String!
-  isFollowing: Boolean!
-  name: String!
-  username: String
-}
-
-type Post {
-  _author_id: User
-  comments: [User!]
-  content: String
-
-  """Created At"""
-  createdAt: DateTime!
-  likes: [User!]
-  photos: [String!]
-
-  """Updated At"""
-  updatedAt: DateTime!
-}
-
-type ProfileInformation {
-  avatar: String!
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String!
-  followersCount: Float
-  followingCount: Float
-  gender: String
-  id: ID!
-  isFollowing: Boolean!
-  name: String!
-  username: String!
-}
-
-type Query {
-  getFeeds(option: GetFeedDto!, query: NewsFeedQueryArgs!): NewsFeedPagination
-  getFollowers(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): FollowPagination!
-  getFollowing(option: PaginateOptionArgs!, query: FollowQueryArgs!, username: String!): FollowPagination!
-  getPostLikes(option: PaginateOptionArgs!, query: LikesQueryArgs!): [GetLikeResponse!]!
-  getPosts(option: GetFeedDto!, query: NewsFeedQueryArgs!, username: String!): NewsFeedPagination!
-  getSuggestionPeople(option: PaginateOptionArgs!, query: FollowQueryArgs!): FollowPagination
-  me: IUser!
-  notifications(allowDiskUse: Boolean, forceCountFn: Boolean, lean: Boolean, leanWithId: Boolean, limit: Float = 10, offset: Float, page: Float = 1, pagination: Boolean, query: NotificationQueryArgs!, select: String, skip: Float, sort: String, useEstimatedCount: Boolean): NotificationPagination!
-  post(postId: ID!): Post!
-  searchUser(option: PaginateOptionArgs!, query: SearchDto!): [IUser!]
-  user(username: String!): ProfileInformation
-}
-
-enum QueryPostOrderByColumn {
-  CREATED_AT
-  ORDERS
-  RATING
-  UPDATED_AT
-}
-
-type ResponseSingleUpload {
-  url: String!
-}
-
-input SearchDto {
-  keyword: String!
-  user: UserInputType
-}
-
-enum SortOrder {
-  ASC
-  DESC
-}
-
-input UpdatePostInput {
-  _author_id: UserInputType
-  comments: [UserInputType!]
-  content: String
-
-  """Created At"""
-  createdAt: DateTime
-  likes: [UserInputType!]
-  photos: [String!]
-  postId: ID!
-
-  """Updated At"""
-  updatedAt: DateTime
-  user: ID
-}
-
-input UpdateUserInput {
-  avatar: String
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String
-  friendRequests: [FriendRequestInputType!] = []
-  friends: UserInputType
-  gender: EGender
-  name: String
-  password: String
-  role: String
-  username: String
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-type User {
-  avatar: String
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String!
-  friendRequests: [FriendRequest!]
-  friends: User
-  gender: EGender
-  name: String!
-  password: String!
-  role: String!
-  username: String!
-}
-
-input UserInputType {
-  avatar: String
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String!
-  friendRequests: [FriendRequestInputType!] = []
-  friends: UserInputType
-  gender: EGender
-  name: String!
-  password: String!
-  role: String!
-  username: String!
-}
-
-type UserResponse {
-  avatar: String!
-  username: String!
-}
-
-type UserWithoutPassword {
-  avatar: String
-  bio: String
-  birthday: DateTime
-  contact: String
-  coverPicture: String
-  email: String!
-  friendRequests: [FriendRequest!]
-  friends: User
-  gender: EGender
-  name: String!
-  role: String!
-  username: String!
+input CloseRequestInput {
+  target: ID
+  status: String!
 }

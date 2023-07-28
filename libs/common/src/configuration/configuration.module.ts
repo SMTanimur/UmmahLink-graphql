@@ -15,6 +15,10 @@ import * as Joi from 'joi';
         SESSION_NAME: Joi.string().required(),
         API_URL: Joi.string().required(),
         WEB_URL: Joi.string().required(),
+        CLOUDINARY_API_SECRET: Joi.string().required(),
+        CLOUDINARY_API_KEY: Joi.string().required(),
+        CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+        
       }),
     }),
   ],

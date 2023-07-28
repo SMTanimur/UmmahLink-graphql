@@ -15,7 +15,7 @@ body {
 	@apply text-gray-500;
 }
 
-
+virtual-profile-list
 
 /* Image Loading Logic Starts */
 /* Courtesy : https://joebell.co.uk/blog/loading-images-with-the-blur-down-technique */
@@ -235,6 +235,12 @@ ul {
 /* react-virtuoso - Virtual profile list */
 .virtual-profile-list {
   @apply !h-[80vh];
+  @apply [&>div>div]:divide-y;
+  @apply [&>div>div]:dark:divide-gray-700;
+}
+
+.virtual-postCard {
+  @apply !h-[60vh];
   @apply [&>div>div]:divide-y;
   @apply [&>div>div]:dark:divide-gray-700;
 }
