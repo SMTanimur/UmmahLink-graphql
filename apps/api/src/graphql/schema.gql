@@ -357,7 +357,7 @@ type Mutation {
   deletePost(updatePostInput: DeletePostInput!): MessageResponse!
   likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
-  updateUser(input: UpdateUserInput!): MessageResponse!
+  updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
   followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!

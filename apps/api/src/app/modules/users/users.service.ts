@@ -3,7 +3,7 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 
 import { FilterQuery, Model, PaginateModel } from 'mongoose';
@@ -18,14 +18,17 @@ import { PostsService } from '../posts/posts.service';
 import { SearchDto } from './dto/search.query.dto';
 import { PaginateOptionArgs } from '@social-zone/common';
 import { isEmpty } from 'lodash';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: PaginateModel<UserDocument>,
     @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
+  
     @Inject(forwardRef(() => PostsService))
-    private readonly postsService: PostsService
+    private readonly postsService: PostsService,
+    private readonly uploadSerive: UploadService
   ) {}
 
   async createUser(createUser: CreateUserInput): Promise<string> {
@@ -54,13 +57,15 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(id: string, updateUserDto: UpdateUserInput) {
-    const exitedUser = await this.userModel.findOne({ _id: id });
+  async updateUser(user: string, updateUserDto: UpdateUserInput,username:string) {
+    const exitedUser = await this.userModel.findOne({ username });
     if (!exitedUser) {
       throw new ConflictException('User not found');
     }
-    const updateData = await this.userModel.findOneAndUpdate(
-      { _id: id },
+
+    if(username !== exitedUser.username) throw new ForbiddenException('Username is not match')
+     await this.userModel.findOneAndUpdate(
+      { username: username },
       updateUserDto,
       { new: true }
     );

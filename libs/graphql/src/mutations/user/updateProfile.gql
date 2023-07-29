@@ -1,5 +1,5 @@
-mutation profileUpdate ($updateUserInput: UpdateUserInput!){
-  updateUser(input: $updateUserInput){
+mutation profileUpdate ($updateUserInput: UpdateUserInput!,$username:String!){
+  updateUser(input: $updateUserInput,username: $username){
      message
   }
 }

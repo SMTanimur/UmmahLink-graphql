@@ -3,4 +3,5 @@ import { User } from "../entities/user.entity";
 
 
 @InputType()
-export class UpdateUserInput extends PartialType(User, InputType) {}
+export class UpdateUserInput extends PartialType(User, InputType) {
+}

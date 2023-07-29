@@ -51,7 +51,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
   const attemptToUpdateUser= form.handleSubmit(async (data) => {
     try {
       console.log(data)
-      toast.promise( UpdateUserMutate({updateUserInput:data}), {
+      toast.promise( UpdateUserMutate({updateUserInput:data,username:profile.username as string}), {
         loading: 'update...',
         success: ( {updateUser:{message}}) => {
           queryClient.invalidateQueries(useMeQuery.getKey());

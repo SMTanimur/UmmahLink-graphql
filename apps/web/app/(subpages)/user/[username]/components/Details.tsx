@@ -8,12 +8,9 @@ import {
 } from '@social-zone/graphql';
 import { uploadImage } from '@social-zone/client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Dispatch, FC, useState } from 'react';
 import {
-  Area,
   Button,
-  Card,
   CropProfileModal,
   ErrorMessage,
   Follow,
@@ -24,7 +21,6 @@ import {
   Slug,
   Unfollow,
   UserAvatarUrl,
-  readFile,
   useFileHandler,
 } from '~ui';
 import Followerings from './Followerings';
@@ -46,7 +42,6 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   const [isUploadingProfileImage, setIsUploadingProfileImage] = useState(false);
   const profilePicture = useFileHandler<IImage>('single', initImageState);
   const [cropModal, setCropModal] = useState(false);
-  const { data: me } = useProfileQuery();
   const queryClient = useQueryClient();
   const isOwnProfile = profile?.isOwnProfile;
 
@@ -97,7 +92,7 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
       toast.dismiss();
 
       await mutateAsync(
-        { updateUserInput: avatarData },
+        { updateUserInput: avatarData, username: profile.username as string },
         {
           onSuccess: ({ updateUser: { message } }) => {
             queryClient.invalidateQueries(useMeQuery.getKey());
@@ -118,7 +113,6 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
           },
         }
       );
-      
     } catch (error) {
       console.error('Error updating profile picture:', error);
       toast.error('Failed to update profile picture.');

@@ -319,6 +319,7 @@ export type MutationUpdatePostArgs = {
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
+  username: Scalars['String']['input'];
 };
 
 export type NewsFeedPaginate = {
@@ -696,6 +697,7 @@ export type CreatePostMutation = {
 
 export type ProfileUpdateMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
+  username: Scalars['String']['input'];
 }>;
 
 export type ProfileUpdateMutation = {
@@ -739,7 +741,7 @@ export type GetFeedQuery = {
         id?: string | null;
         name: string;
         avatar: {
-          __typename?: 'AvatarImage';
+          __typename: 'AvatarImage';
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
@@ -1287,8 +1289,8 @@ useCreatePostMutation.fetcher = (
     options
   );
 export const ProfileUpdateDocument = /*#__PURE__*/ `
-    mutation profileUpdate($updateUserInput: UpdateUserInput!) {
-  updateUser(input: $updateUserInput) {
+    mutation profileUpdate($updateUserInput: UpdateUserInput!, $username: String!) {
+  updateUser(input: $updateUserInput, username: $username) {
     message
   }
 }
@@ -1334,6 +1336,7 @@ export const GetFeedDocument = /*#__PURE__*/ `
         avatar {
           avatarUrl
           avatarPublicId
+          __typename
         }
         username
         email
