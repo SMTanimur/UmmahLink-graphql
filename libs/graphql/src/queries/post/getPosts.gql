@@ -2,7 +2,10 @@ query GetPosts ($username:String!,$query:NewsFeedQueryArgs!,$option:GetFeedDto!)
 getPosts(username: $username,query:$query,option: $option) {
     docs{
       author{
-        avatar
+        avatar{
+          avatarUrl
+          avatarPublicId
+        }
         username
         email
         id

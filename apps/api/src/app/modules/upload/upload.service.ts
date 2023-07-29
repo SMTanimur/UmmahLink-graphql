@@ -55,7 +55,9 @@ export class UploadService {
             folder: "ummahlink",
         });
         const image = { img_id: result.public_id, img_src: result.secure_url };
-        return { image };
+        return { 
+            image:image
+        }
     }
     upload(
         fileBuffer: Buffer,

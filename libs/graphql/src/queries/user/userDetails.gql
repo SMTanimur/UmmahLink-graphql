@@ -2,8 +2,14 @@ query UserProfile($username: String!) {
   user(username: $username) {
     username
     name
-    avatar
-    coverPicture
+    avatar {
+      avatarUrl
+      avatarPublicId
+    }
+    coverPicture {
+      coverUrl
+      coverPublicId
+    }
     bio
     birthday
     contact
@@ -14,6 +20,7 @@ query UserProfile($username: String!) {
     followingCount
     id
     isFollowing
+    isOwnProfile
     __typename
   }
 }

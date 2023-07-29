@@ -34,22 +34,54 @@ export type Scalars = {
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
   DateTime: { input: any; output: any };
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any };
 };
 
 export type Author = {
   __typename?: 'Author';
-  avatar: Scalars['String']['output'];
+  avatar: AvatarImage;
   email: Scalars['String']['output'];
   id?: Maybe<Scalars['ID']['output']>;
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
 
+export type AvatarImage = {
+  __typename?: 'AvatarImage';
+  avatarPublicId?: Maybe<Scalars['String']['output']>;
+  avatarUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type AvatarImageInfo = {
+  __typename?: 'AvatarImageInfo';
+  avatarPublicId?: Maybe<Scalars['String']['output']>;
+  avatarUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type AvatarImageInput = {
+  avatarPublicId?: InputMaybe<Scalars['String']['input']>;
+  avatarUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CloseRequestInput = {
   status: Scalars['String']['input'];
   target?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type CoverImage = {
+  __typename?: 'CoverImage';
+  coverPublicId?: Maybe<Scalars['String']['output']>;
+  coverUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type CoverImageInfo = {
+  __typename?: 'CoverImageInfo';
+  coverPublicId?: Maybe<Scalars['String']['output']>;
+  coverUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type CoverImageInput = {
+  coverPublicId?: InputMaybe<Scalars['String']['input']>;
+  coverUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateCommentInput = {
@@ -167,7 +199,7 @@ export type GetFeedDto = {
 export type GetLikeResponse = {
   __typename?: 'GetLikeResponse';
   _id: Scalars['ID']['output'];
-  avatar: Scalars['String']['output'];
+  avatar: AvatarImage;
   isFollowing: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -176,11 +208,11 @@ export type GetLikeResponse = {
 export type IUser = {
   __typename?: 'IUser';
   _id: Scalars['ID']['output'];
-  avatar: Scalars['String']['output'];
+  avatar: AvatarImage;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
-  coverPicture?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<CoverImage>;
   email?: Maybe<Scalars['String']['output']>;
   gender?: Maybe<Scalars['String']['output']>;
   isFollowing: Scalars['Boolean']['output'];
@@ -227,8 +259,6 @@ export type Mutation = {
   updateNotification: Scalars['Boolean']['output'];
   updatePost: MessageResponse;
   updateUser: MessageResponse;
-  uploadMultipleFiles: Array<ResponseSingleUpload>;
-  uploadSingleFiles: ResponseSingleUpload;
 };
 
 export type MutationCloseFriendRequestArgs = {
@@ -289,14 +319,6 @@ export type MutationUpdatePostArgs = {
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
-};
-
-export type MutationUploadMultipleFilesArgs = {
-  files: Array<Scalars['Upload']['input']>;
-};
-
-export type MutationUploadSingleFilesArgs = {
-  file: Scalars['Upload']['input'];
 };
 
 export type NewsFeedPaginate = {
@@ -392,7 +414,7 @@ export type PaginateOptionArgs = {
 
 export type Pagination = {
   __typename?: 'Pagination';
-  avatar: Scalars['String']['output'];
+  avatar: AvatarImage;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
@@ -419,17 +441,18 @@ export type Post = {
 
 export type ProfileInformation = {
   __typename?: 'ProfileInformation';
-  avatar: Scalars['String']['output'];
+  avatar?: Maybe<AvatarImage>;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
-  coverPicture?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<CoverImage>;
   email: Scalars['String']['output'];
   followersCount?: Maybe<Scalars['Float']['output']>;
   followingCount?: Maybe<Scalars['Float']['output']>;
   gender?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isFollowing: Scalars['Boolean']['output'];
+  isOwnProfile: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -518,11 +541,6 @@ export enum QueryPostOrderByColumn {
   UpdatedAt = 'UPDATED_AT',
 }
 
-export type ResponseSingleUpload = {
-  __typename?: 'ResponseSingleUpload';
-  url: Scalars['String']['output'];
-};
-
 export type SearchDto = {
   keyword: Scalars['String']['input'];
   user?: InputMaybe<UserInputType>;
@@ -548,11 +566,11 @@ export type UpdatePostInput = {
 };
 
 export type UpdateUserInput = {
-  avatar?: InputMaybe<Scalars['String']['input']>;
+  avatar?: InputMaybe<AvatarImageInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   birthday?: InputMaybe<Scalars['DateTime']['input']>;
   contact?: InputMaybe<Scalars['String']['input']>;
-  coverPicture?: InputMaybe<Scalars['String']['input']>;
+  coverPicture?: InputMaybe<CoverImageInput>;
   email?: InputMaybe<Scalars['String']['input']>;
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
@@ -565,11 +583,11 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
-  avatar?: Maybe<Scalars['String']['output']>;
+  avatar: AvatarImageInfo;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
-  coverPicture?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<CoverImageInfo>;
   email: Scalars['String']['output'];
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
@@ -581,11 +599,11 @@ export type User = {
 };
 
 export type UserInputType = {
-  avatar?: InputMaybe<Scalars['String']['input']>;
+  avatar: AvatarImageInput;
   bio?: InputMaybe<Scalars['String']['input']>;
   birthday?: InputMaybe<Scalars['DateTime']['input']>;
   contact?: InputMaybe<Scalars['String']['input']>;
-  coverPicture?: InputMaybe<Scalars['String']['input']>;
+  coverPicture?: InputMaybe<CoverImageInput>;
   email: Scalars['String']['input'];
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
@@ -604,11 +622,11 @@ export type UserResponse = {
 
 export type UserWithoutPassword = {
   __typename?: 'UserWithoutPassword';
-  avatar?: Maybe<Scalars['String']['output']>;
+  avatar: AvatarImageInfo;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
-  coverPicture?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<CoverImageInfo>;
   email: Scalars['String']['output'];
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
@@ -716,11 +734,15 @@ export type GetFeedQuery = {
       updatedAt?: any | null;
       author: {
         __typename?: 'Author';
-        avatar: string;
         username: string;
         email: string;
         id?: string | null;
         name: string;
+        avatar: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        };
       };
     } | null> | null;
   } | null;
@@ -747,7 +769,6 @@ export type GetFollowersQuery = {
     nextPage?: number | null;
     docs?: Array<{
       __typename: 'Pagination';
-      avatar: string;
       email: string;
       id: string;
       isFollowing: boolean;
@@ -757,6 +778,11 @@ export type GetFollowersQuery = {
       birthday?: any | null;
       bio?: string | null;
       gender?: string | null;
+      avatar: {
+        __typename?: 'AvatarImage';
+        avatarUrl?: string | null;
+        avatarPublicId?: string | null;
+      };
     } | null> | null;
   };
 };
@@ -782,7 +808,6 @@ export type GetFollowingQuery = {
     nextPage?: number | null;
     docs?: Array<{
       __typename: 'Pagination';
-      avatar: string;
       email: string;
       id: string;
       isFollowing: boolean;
@@ -792,6 +817,11 @@ export type GetFollowingQuery = {
       birthday?: any | null;
       bio?: string | null;
       gender?: string | null;
+      avatar: {
+        __typename?: 'AvatarImage';
+        avatarUrl?: string | null;
+        avatarPublicId?: string | null;
+      };
     } | null> | null;
   };
 };
@@ -816,12 +846,16 @@ export type GetSuggestionPeopleQuery = {
     nextPage?: number | null;
     docs?: Array<{
       __typename: 'Pagination';
-      avatar: string;
       email: string;
       id: string;
       isFollowing: boolean;
       name: string;
       username?: string | null;
+      avatar: {
+        __typename?: 'AvatarImage';
+        avatarUrl?: string | null;
+        avatarPublicId?: string | null;
+      };
     } | null> | null;
   } | null;
 };
@@ -835,11 +869,15 @@ export type GetPostLikesQuery = {
   __typename?: 'Query';
   getPostLikes: Array<{
     __typename: 'GetLikeResponse';
-    avatar: string;
     isFollowing: boolean;
     name: string;
     username: string;
     _id: string;
+    avatar: {
+      __typename?: 'AvatarImage';
+      avatarUrl?: string | null;
+      avatarPublicId?: string | null;
+    };
   }>;
 };
 
@@ -875,11 +913,15 @@ export type GetPostsQuery = {
       updatedAt?: any | null;
       author: {
         __typename?: 'Author';
-        avatar: string;
         username: string;
         email: string;
         id?: string | null;
         name: string;
+        avatar: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        };
       };
     } | null> | null;
   };
@@ -891,16 +933,24 @@ export type MeQuery = {
   __typename?: 'Query';
   me: {
     __typename?: 'IUser';
-    avatar: string;
     username: string;
     name: string;
     email?: string | null;
-    coverPicture?: string | null;
     _id: string;
     bio?: string | null;
     birthday?: any | null;
     contact?: string | null;
     gender?: string | null;
+    avatar: {
+      __typename?: 'AvatarImage';
+      avatarUrl?: string | null;
+      avatarPublicId?: string | null;
+    };
+    coverPicture?: {
+      __typename?: 'CoverImage';
+      coverUrl?: string | null;
+      coverPublicId?: string | null;
+    } | null;
   };
 };
 
@@ -915,15 +965,23 @@ export type SearchUserQuery = {
     __typename: 'IUser';
     _id: string;
     username: string;
-    avatar: string;
     bio?: string | null;
     birthday?: any | null;
     contact?: string | null;
-    coverPicture?: string | null;
     email?: string | null;
     gender?: string | null;
     isFollowing: boolean;
     name: string;
+    avatar: {
+      __typename: 'AvatarImage';
+      avatarUrl?: string | null;
+      avatarPublicId?: string | null;
+    };
+    coverPicture?: {
+      __typename: 'CoverImage';
+      coverUrl?: string | null;
+      coverPublicId?: string | null;
+    } | null;
   }> | null;
 };
 
@@ -937,8 +995,6 @@ export type UserProfileQuery = {
     __typename: 'ProfileInformation';
     username: string;
     name: string;
-    avatar: string;
-    coverPicture?: string | null;
     bio?: string | null;
     birthday?: any | null;
     contact?: string | null;
@@ -948,6 +1004,17 @@ export type UserProfileQuery = {
     followingCount?: number | null;
     id: string;
     isFollowing: boolean;
+    isOwnProfile: boolean;
+    avatar?: {
+      __typename?: 'AvatarImage';
+      avatarUrl?: string | null;
+      avatarPublicId?: string | null;
+    } | null;
+    coverPicture?: {
+      __typename?: 'CoverImage';
+      coverUrl?: string | null;
+      coverPublicId?: string | null;
+    } | null;
   } | null;
 };
 
@@ -1264,7 +1331,10 @@ export const GetFeedDocument = /*#__PURE__*/ `
   getFeeds(query: $query, option: $option) {
     docs {
       author {
-        avatar
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
         username
         email
         id
@@ -1320,7 +1390,10 @@ export const GetFollowersDocument = /*#__PURE__*/ `
     query GetFollowers($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowers(username: $username, option: $options, query: $query) {
     docs {
-      avatar
+      avatar {
+        avatarUrl
+        avatarPublicId
+      }
       email
       id
       isFollowing
@@ -1378,7 +1451,10 @@ export const GetFollowingDocument = /*#__PURE__*/ `
     query GetFollowing($username: String!, $options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowing(username: $username, option: $options, query: $query) {
     docs {
-      avatar
+      avatar {
+        avatarUrl
+        avatarPublicId
+      }
       email
       id
       isFollowing
@@ -1436,7 +1512,10 @@ export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
     query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getSuggestionPeople(option: $options, query: $query) {
     docs {
-      avatar
+      avatar {
+        avatarUrl
+        avatarPublicId
+      }
       email
       id
       isFollowing
@@ -1488,7 +1567,10 @@ useGetSuggestionPeopleQuery.fetcher = (
 export const GetPostLikesDocument = /*#__PURE__*/ `
     query GetPostLikes($query: LikesQueryArgs!, $option: PaginateOptionArgs!) {
   getPostLikes(query: $query, option: $option) {
-    avatar
+    avatar {
+      avatarUrl
+      avatarPublicId
+    }
     isFollowing
     name
     username
@@ -1531,7 +1613,10 @@ export const GetPostsDocument = /*#__PURE__*/ `
   getPosts(username: $username, query: $query, option: $option) {
     docs {
       author {
-        avatar
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
         username
         email
         id
@@ -1586,11 +1671,17 @@ useGetPostsQuery.fetcher = (
 export const MeDocument = /*#__PURE__*/ `
     query me {
   me {
-    avatar
+    avatar {
+      avatarUrl
+      avatarPublicId
+    }
     username
     name
     email
-    coverPicture
+    coverPicture {
+      coverUrl
+      coverPublicId
+    }
     _id
     bio
     birthday
@@ -1620,11 +1711,19 @@ export const SearchUserDocument = /*#__PURE__*/ `
   searchUser(query: $query, option: $option) {
     _id
     username
-    avatar
+    avatar {
+      avatarUrl
+      avatarPublicId
+      __typename
+    }
     bio
     birthday
     contact
-    coverPicture
+    coverPicture {
+      coverUrl
+      coverPublicId
+      __typename
+    }
     email
     gender
     isFollowing
@@ -1664,8 +1763,14 @@ export const UserProfileDocument = /*#__PURE__*/ `
   user(username: $username) {
     username
     name
-    avatar
-    coverPicture
+    avatar {
+      avatarUrl
+      avatarPublicId
+    }
+    coverPicture {
+      coverUrl
+      coverPublicId
+    }
     bio
     birthday
     contact
@@ -1676,6 +1781,7 @@ export const UserProfileDocument = /*#__PURE__*/ `
     followingCount
     id
     isFollowing
+    isOwnProfile
     __typename
   }
 }

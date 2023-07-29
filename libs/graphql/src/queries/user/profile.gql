@@ -1,10 +1,16 @@
 query me {
   me {
-    avatar
+    avatar{
+      avatarUrl
+      avatarPublicId
+    }
     username
     name
     email
-    coverPicture
+    coverPicture{
+      coverUrl
+      coverPublicId
+    }
     _id
     bio
     birthday

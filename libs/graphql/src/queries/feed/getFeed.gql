@@ -2,7 +2,12 @@ query GetFeed ($query:NewsFeedQueryArgs!,$option:GetFeedDto!) {
 getFeeds(query:$query,option: $option) {
     docs{
       author{
-        avatar
+        avatar{
+          avatarUrl
+          avatarPublicId
+          __typename
+
+        }
         username
         email
         id

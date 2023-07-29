@@ -20,7 +20,6 @@ import {
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
 import RecommendedProfiles from './components/RecommendedProfiles';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
 import EnableMessages from './components/EnableMessages';
 import WithoutUser from './home/WithoutUser';
 import Followers from './(subpages)/user/[username]/components/Followers';
@@ -52,8 +51,6 @@ const Home: NextPage = () => {
     }
   );
 
- 
- 
   const FeedData = feed?.pages.flatMap((page) => page.getFeeds?.docs) ?? [];
   // const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
   //   useFeedQuery();
@@ -66,17 +63,13 @@ const Home: NextPage = () => {
   //   rootMargin: '0px 0px 400px 0px',
   // });
 
-
-  
   const { observe } = useInView({
     onChange: async ({ inView }) => {
       if (!inView || !hasNextPage) {
         return;
       }
-      fetchNextPage()
-
-    }
-    
+      fetchNextPage();
+    },
   });
 
   if (isLoading) {
@@ -113,13 +106,21 @@ const Home: NextPage = () => {
                         )
                     )}
 
-                    {hasNextPage && (
-                      <Button
-                      ref={observe}
-                        className="h-11 text-sm font-semibold md:text-base items-center "
-                      >
-                        Loading More
-                      </Button>
+                    {hasNextPage ? (
+                      <div className="flex flex-col items-center justify-center ">
+                        <Button
+                          ref={observe}
+                          className="h-11 text-sm font-semibold md:text-base items-center "
+                        >
+                          Loading More
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-10">
+                        <p className="text-sm text-gray-400">
+                          There is no post to show
+                        </p>
+                      </div>
                     )}
                   </>
                 )}

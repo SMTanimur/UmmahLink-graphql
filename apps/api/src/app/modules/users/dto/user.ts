@@ -1,4 +1,5 @@
 import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql"
+import { AvatarImage, CoverImage } from "./ProfileData";
 // import { UserInfo } from "../entities/user.entity"
 
 
@@ -45,14 +46,14 @@ export class IUser {
   @Field(()=>String,{ nullable: true })
   contact?: string;
 
-  @Field(() => String)
-  avatar:string
+  @Field(() => AvatarImage)
+  avatar:AvatarImage | string
 
   @Field(() => String,{nullable:true})
   email:string
 
-  @Field(()=>String,{nullable:true})
-  coverPicture:string
+  @Field(()=>CoverImage,{nullable:true})
+  coverPicture:CoverImage |string
 
 
   @Field(() =>Boolean)

@@ -11,6 +11,7 @@ import React, { useRef, useState } from 'react';
 import ImageGrid from '../ImageGrid';
 import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
+import { UserAvatarUrl } from '../../data';
 
 dayjs.extend(relativeTime);
 
@@ -55,7 +56,11 @@ export const PostItem: React.FC<IProps> = (props) => {
       <div className="flex justify-between items-center w-full">
         <div className="flex gap-4 items-center">
           <Image
-            src={post?.author?.avatar}
+            src={
+              post?.author?.avatar.avatarUrl
+                ? post?.author?.avatar.avatarUrl
+                : UserAvatarUrl
+            }
             className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
             height={60}
             width={60}
@@ -117,7 +122,7 @@ export const PostItem: React.FC<IProps> = (props) => {
           <Modal
             title="Likes"
             show={isLikesModal}
-            size='md'
+            size="md"
             onClose={() => setIsLikesModal(false)}
           >
             <UserCard postItem={post as NewsFeedPaginate} />

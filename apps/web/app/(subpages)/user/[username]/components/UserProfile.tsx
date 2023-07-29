@@ -1,7 +1,8 @@
 'user client';
-import { IUser, Pagination, ProfileInformation } from '@social-zone/graphql';
+import {  Pagination } from '@social-zone/graphql';
 import Link from 'next/link';
 import type { FC } from 'react';
+import {UserAvatarUrl} from '~ui'
 import { memo, useState } from 'react';
 import {
   Follow,
@@ -45,7 +46,7 @@ const UserProfile: FC<UserProfileProps> = ({
 
   const UserAvatar = () => (
     <Image
-      src={profile?.avatar}
+      src={profile?.avatar.avatarUrl ? profile?.avatar.avatarUrl : UserAvatarUrl}
       loading="lazy"
       className={cn(
         isBig ? 'h-14 w-14' : 'h-10 w-10',
@@ -87,7 +88,7 @@ const UserProfile: FC<UserProfileProps> = ({
     return (
       <UserPreview
         isBig={isBig}
-        profile={profile as ProfileInformation}
+        profile={profile as any}
         followStatusLoading={followStatusLoading}
         showUserPreview={showUserPreview}
       >
@@ -117,7 +118,7 @@ const UserProfile: FC<UserProfileProps> = ({
   return (
     <div
       className="flex items-center justify-between"
-      data-testid={`user-profile-${profile.id}`}
+      data-testid={`user-profile-${profile?.id}`}
     >
       {linkToProfile ? (
         <Link href={`/user/${profile?.username}`}>
@@ -129,13 +130,13 @@ const UserProfile: FC<UserProfileProps> = ({
 
       {following ? (
         <Unfollow
-          profile={profile as ProfileInformation}
+          profile={profile as any}
           setFollowing={setFollowing}
         />
       ) : (
         showFollow && (
           <Follow
-            profile={profile as ProfileInformation}
+            profile={profile as any}
             setFollowing={setFollowing}
           />
         )

@@ -8,6 +8,7 @@ import { cn, sanitizeDisplayName } from '../lib';
 import { useProfileQuery } from '../hooks';
 import { Unfollow } from './Unfollow';
 import { Follow } from './Follow';
+import { UserAvatarUrl } from '../data';
 interface UserInfoProps {
   profile: GetLikeResponse;
   isBig?: boolean;
@@ -18,7 +19,7 @@ const UserInfo: FC<UserInfoProps> = ({ profile, isBig }) => {
 
   const UserAvatar = () => (
     <Image
-      src={profile?.avatar}
+      src={profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl}
       loading="lazy"
       className={cn(
         isBig ? 'h-14 w-14' : 'h-10 w-10',

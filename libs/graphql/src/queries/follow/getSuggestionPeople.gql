@@ -1,7 +1,10 @@
 query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
  getSuggestionPeople(option: $options, query: $query){
   docs{
-    avatar
+    avatar{
+      avatarUrl
+      avatarPublicId
+    }
     email
     id
     isFollowing

@@ -12,6 +12,16 @@ type FriendRequest {
   target: User
 }
 
+type AvatarImageInfo {
+  avatarUrl: String
+  avatarPublicId: String
+}
+
+type CoverImageInfo {
+  coverUrl: String
+  coverPublicId: String
+}
+
 type User {
   email: String!
   name: String!
@@ -20,8 +30,8 @@ type User {
   bio: String
   contact: String
   username: String!
-  avatar: String
-  coverPicture: String
+  avatar: AvatarImageInfo!
+  coverPicture: CoverImageInfo
   friends: User
   friendRequests: [FriendRequest!]
   password: String!
@@ -47,18 +57,45 @@ type UserWithoutPassword {
   bio: String
   contact: String
   username: String!
-  avatar: String
-  coverPicture: String
+  avatar: AvatarImageInfo!
+  coverPicture: CoverImageInfo
   friends: User
   friendRequests: [FriendRequest!]
   role: String!
+}
+
+type ProfileInformation {
+  id: ID!
+  username: String!
+  name: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  avatar: AvatarImage
+  email: String!
+  coverPicture: CoverImage
+  followingCount: Float
+  followersCount: Float
+  isFollowing: Boolean!
+  isOwnProfile: Boolean!
+}
+
+type AvatarImage {
+  avatarUrl: String
+  avatarPublicId: String
+}
+
+type CoverImage {
+  coverUrl: String
+  coverPublicId: String
 }
 
 type Author {
   id: ID
   username: String!
   email: String!
-  avatar: String!
+  avatar: AvatarImage!
   name: String!
 }
 
@@ -132,22 +169,6 @@ type NotificationPagination {
   pagingCounter: Float!
 }
 
-type ProfileInformation {
-  id: ID!
-  username: String!
-  name: String!
-  birthday: DateTime
-  gender: String
-  bio: String
-  contact: String
-  avatar: String!
-  email: String!
-  coverPicture: String
-  followingCount: Float
-  followersCount: Float
-  isFollowing: Boolean!
-}
-
 type IUser {
   _id: ID!
   username: String!
@@ -156,9 +177,9 @@ type IUser {
   gender: String
   bio: String
   contact: String
-  avatar: String!
+  avatar: AvatarImage!
   email: String
-  coverPicture: String
+  coverPicture: CoverImage
   isFollowing: Boolean!
 }
 
@@ -175,7 +196,7 @@ type FriendRequestResponse {
 type Pagination {
   username: String
   name: String!
-  avatar: String!
+  avatar: AvatarImage!
   birthday: DateTime
   gender: String
   bio: String
@@ -200,6 +221,16 @@ type FollowPagination {
 
 type LoginResponse {
   message: String!
+}
+
+input AvatarImageInput {
+  avatarUrl: String
+  avatarPublicId: String
+}
+
+input CoverImageInput {
+  coverUrl: String
+  coverPublicId: String
 }
 
 type Query {
@@ -228,8 +259,8 @@ input UserInputType {
   bio: String
   contact: String
   username: String!
-  avatar: String
-  coverPicture: String
+  avatar: AvatarImageInput!
+  coverPicture: CoverImageInput
   friends: UserInputType
   friendRequests: [FriendRequestInputType!] = []
   password: String!
@@ -280,7 +311,7 @@ input NotificationQueryArgs {
 type GetLikeResponse {
   username: String!
   _id: ID!
-  avatar: String!
+  avatar: AvatarImage!
   name: String!
   isFollowing: Boolean!
 }
@@ -406,8 +437,8 @@ input UpdateUserInput {
   bio: String
   contact: String
   username: String
-  avatar: String
-  coverPicture: String
+  avatar: AvatarImageInput
+  coverPicture: CoverImageInput
   friends: UserInputType
   friendRequests: [FriendRequestInputType!] = []
   password: String

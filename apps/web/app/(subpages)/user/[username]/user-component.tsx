@@ -40,7 +40,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
     fetchNextPage,
   } = usePostQuery(
     {
-      option: {limit:5 },
+      option: { limit: 5 },
       query: {},
       username: data?.user?.username as string,
     },
@@ -56,7 +56,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage: hasNextPage ?? false,
-    onLoadMore: ()=>fetchNextPage(),
+    onLoadMore: () => fetchNextPage(),
     disabled: isError,
     rootMargin: '0px 0px 400px 0px',
   });
@@ -72,8 +72,8 @@ export default function UserComponent({ username, type }: UserComponentProps) {
       {data?.user && (
         <Cover
           cover={
-            data?.user?.coverPicture
-              ? data?.user?.coverPicture
+            data?.user?.coverPicture?.coverUrl
+              ? data?.user?.coverPicture.coverUrl
               : `${STATIC_IMAGES_URL}/patterns/2.svg`
           }
         />
@@ -110,13 +110,21 @@ export default function UserComponent({ username, type }: UserComponentProps) {
                   )
               )}
 
-              {hasNextPage && (
-                <Button
-                  ref={sentryRef}
-                  className="h-11 text-sm font-semibold md:text-base"
-                >
-                  Loading More
-                </Button>
+              {hasNextPage ? (
+                <div className="flex flex-col items-center justify-center ">
+                  <Button
+                    ref={sentryRef}
+                    className="h-11 text-sm font-semibold md:text-base items-center "
+                  >
+                    Loading More
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-10">
+                  <p className="text-sm text-gray-400">
+                    There is no post to show
+                  </p>
+                </div>
               )}
             </>
           )}

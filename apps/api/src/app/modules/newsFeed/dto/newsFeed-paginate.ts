@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
+import { AvatarImage } from '../../users/dto/ProfileData';
 
 @ObjectType()
 export class Author {
@@ -12,8 +13,8 @@ export class Author {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
-  avatar: string;
+  @Field(() => AvatarImage)
+  avatar: AvatarImage | string
 
   @Field(() => String)
   name: string;

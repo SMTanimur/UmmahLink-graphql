@@ -52,7 +52,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
     try {
       console.log(data)
       toast.promise( UpdateUserMutate({updateUserInput:data}), {
-        loading: 'Logging in...',
+        loading: 'update...',
         success: ( {updateUser:{message}}) => {
           queryClient.invalidateQueries(useMeQuery.getKey());
           return <b>{message}</b>;

@@ -23,6 +23,29 @@ import {
 
 import { FriendRequest } from '../../friendRequest/entities/friendRequest';
 
+@ObjectType('AvatarImageInfo')
+@InputType('AvatarImageInput')
+class AvatarImageInput {
+  @Field(() => String,{nullable:true})
+  avatarUrl: string;
+
+  @Field(() => String,{nullable:true})
+  avatarPublicId: string;
+}
+
+
+
+@ObjectType('CoverImageInfo')
+@InputType('CoverImageInput')
+ class CoverImageInput {
+  @Field(() => String, { nullable: true })
+  coverUrl: string;
+
+  @Field(() => String,{nullable:true})
+  coverPublicId: string;
+}
+
+
 export enum EGender {
   male = 'male',
   female = 'female',
@@ -33,12 +56,7 @@ registerEnumType(EGender, {
   name: 'EGender',
 });
 
-// @ObjectType()
-// @InputType()
-// export class UserInformation {
-  
 
-// }
 
 // export const UserInfoSchema = SchemaFactory.createForClass(UserInfo);
 @ObjectType()
@@ -84,18 +102,17 @@ export class User {
   @Field(() => String)
   username: string;
 
-  @Field({ nullable: true })
-  @Prop({type:String,
-    default:
-      'https://res.cloudinary.com/smtanimur/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg',
+  @Field(()=>AvatarImageInput)
+  @Prop({type:AvatarImageInput,
+    default:{}
   })
   @IsOptional()
-  avatar?: string;
+  avatar?: AvatarImageInput
 
-  @Field({ nullable: true })
-  @Prop({type:String})
+  @Field(()=>CoverImageInput,{ nullable: true })
+  @Prop({type:CoverImageInput})
   @IsOptional()
-  coverPicture?: string;
+  coverPicture?: CoverImageInput
 
   @ValidateNested({ each: true })
   @IsMongoId({ each: true })

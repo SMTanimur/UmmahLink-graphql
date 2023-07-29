@@ -47,4 +47,18 @@ export interface Area {
   y: number;
 }
 
+export interface IImage {
+  id: string;
+  url: string;
+  file: File | null;
+}
+
+export interface IFileHandler<T> {
+  imageFile: T,
+  setImageFile: React.Dispatch<React.SetStateAction<T>>;
+  isFileLoading: boolean;
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>, callback?: (file?: IImage) => void) => void;
+  removeImage: (id: string) => void;
+  clearFiles: () => void;
+}
 

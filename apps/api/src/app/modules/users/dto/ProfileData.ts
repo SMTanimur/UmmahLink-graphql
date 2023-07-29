@@ -2,7 +2,23 @@ import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
 // import { UserInfo } from "../entities/user.entity";
 
 
+@ObjectType({isAbstract:true})
+export class AvatarImage {
+  @Field(() => String,{nullable:true})
+  avatarUrl: string;
 
+  @Field(() => String,{nullable:true})
+  avatarPublicId: string;
+}
+
+@ObjectType({isAbstract:true})
+export class CoverImage {
+  @Field(() => String,{nullable:true})
+  coverUrl: string;
+
+  @Field(() => String,{nullable:true})
+  coverPublicId: string;
+}
 
 @ObjectType()
 export class ProfileInformation {
@@ -30,14 +46,14 @@ export class ProfileInformation {
   @Field(()=>String,{ nullable: true })
   contact?: string;
 
-  @Field(() => String)
-  avatar:string
+  @Field(() => AvatarImage,{nullable:true} )
+  avatar:AvatarImage | string
 
   @Field(() => String)
   email:string
 
-  @Field(()=>String,{nullable:true})
-  coverPicture:string
+  @Field(()=>CoverImage,{nullable:true})
+  coverPicture:CoverImage | string
 
   @Field(()=>Number,{nullable:true})
   followingCount:number
@@ -47,5 +63,8 @@ export class ProfileInformation {
 
   @Field(() =>Boolean)
   isFollowing:boolean
+  
+  @Field(() =>Boolean)
+  isOwnProfile:boolean
 
 }

@@ -5,6 +5,7 @@ import { Image, Slug } from "../components";
 import { cn, nFormatter, sanitizeDisplayName, stopEventPropagation } from "../lib";
 import { Follow } from "./Follow";
 import Tippy from "@tippyjs/react";
+import { UserAvatarUrl } from "../data";
 
 
 interface UserPreviewProps {
@@ -29,7 +30,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
 
   const UserAvatar = () => (
     <Image
-      src={profile?.avatar}
+      src={profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl}
       loading="lazy"
       className={cn(
         isBig ? 'h-14 w-14' : 'h-10 w-10',

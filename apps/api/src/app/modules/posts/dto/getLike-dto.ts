@@ -1,4 +1,5 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
+import { AvatarImage } from "../../users/dto/ProfileData";
 
 
 
@@ -31,8 +32,8 @@ export class GetLikeResponse {
   @Field((_type) =>ID)
   _id:string
 
-  @Field((_type) =>String)
-  avatar:string
+  @Field((_type) =>AvatarImage)
+  avatar:AvatarImage
 
   @Field((_type) =>String)
   name:string

@@ -1,5 +1,6 @@
 import { Field,  GraphQLISODateTime,  ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
+import { AvatarImage } from '../../users/dto/ProfileData';
 
 
 
@@ -12,8 +13,8 @@ export class Pagination {
   @Field(() => String)
   name:string
 
-  @Field(() => String)
-  avatar:string
+  @Field(() => AvatarImage)
+  avatar:AvatarImage | string
 
   @Field(() => GraphQLISODateTime, { nullable: true })
   birthday: Date;

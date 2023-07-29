@@ -1,19 +1,25 @@
-"use client"
+'use client';
 
 import { Menu } from '@headlessui/react';
 import type { FC } from 'react';
 import Logout from './NavItems/Logout';
 
 import YourProfile from './NavItems/YourProfile';
-import { Image, MenuTransition, Slug, cn, useProfileQuery } from '~ui';
-
+import {
+  Image,
+  MenuTransition,
+  Slug,
+  UserAvatarUrl,
+  cn,
+  useProfileQuery,
+} from '~ui';
 
 import ThemeSwitch from './ThemeSwitch';
-import { forwardRef } from 'react'
+import { forwardRef } from 'react';
 import Link from 'next/link';
 
 const SignedUser: FC = () => {
-  const {data}=useProfileQuery()
+  const { data } = useProfileQuery();
   const currentProfile = data?.me;
   // const setShowMobileDrawer = useGlobalModalStateStore(
   //   (state) => state.setShowMobileDrawer
@@ -24,7 +30,11 @@ const SignedUser: FC = () => {
 
   const Avatar = () => (
     <Image
-      src={currentProfile?.avatar}
+      src={
+        currentProfile?.avatar.avatarUrl
+          ? currentProfile?.avatar.avatarUrl
+          : UserAvatarUrl
+      }
       className="h-8 w-8 cursor-pointer rounded-full border dark:border-gray-700"
       alt={currentProfile?.username}
     />
@@ -57,16 +67,16 @@ const SignedUser: FC = () => {
               className="m-2 flex items-center rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
             >
               <Link href={`/user/${currentProfile?.username}`}>
-              <span>
-                <span>Logged in as</span>
-                <div className="truncate">
-                  <Slug
-                    className="font-bold"
-                    slug={currentProfile?.username as any}
-                    prefix="@"
-                  />
-                </div>
-              </span>
+                <span>
+                  <span>Logged in as</span>
+                  <div className="truncate">
+                    <Slug
+                      className="font-bold"
+                      slug={currentProfile?.username as any}
+                      prefix="@"
+                    />
+                  </div>
+                </span>
               </Link>
             </Menu.Item>
             <div className="divider" />
@@ -81,20 +91,19 @@ const SignedUser: FC = () => {
             >
               <SwitchProfile />
             </Menu.Item> */}
-      
+
             <div className="divider" />
             <Menu.Item
-              
               as="div"
               className={({ active }: { active: boolean }) =>
                 cn({ 'dropdown-active': active }, 'menu-item ')
               }
             >
               <Link href={`/user/${currentProfile?.username}`}>
-              <YourProfile />
+                <YourProfile />
               </Link>
             </Menu.Item>
-          
+
             <div className="divider" />
             <Menu.Item
               as="div"
@@ -105,10 +114,7 @@ const SignedUser: FC = () => {
               <Logout />
             </Menu.Item>
             <div className="divider" />
-            <Menu.Item
-              as="div"
-              
-            >
+            <Menu.Item as="div">
               <ThemeSwitch />
             </Menu.Item>
           </Menu.Items>
@@ -118,4 +124,4 @@ const SignedUser: FC = () => {
   );
 };
 
-export default SignedUser
+export default SignedUser;

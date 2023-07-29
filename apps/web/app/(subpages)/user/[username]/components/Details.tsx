@@ -1,14 +1,36 @@
-"use client"
+'use client';
 
-import { CogIcon } from '@heroicons/react/24/outline';
-import { ProfileInformation } from '@social-zone/graphql';
-import { useTheme } from 'next-themes';
+import { CameraIcon, CogIcon } from '@heroicons/react/24/outline';
+import {
+  ProfileInformation,
+  useMeQuery,
+  useProfileUpdateMutation,
+} from '@social-zone/graphql';
+import { uploadImage } from '@social-zone/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Dispatch, FC, useState } from 'react';
-import { Button, Follow, Image, LightBox, Slug, Unfollow } from '~ui';
+import {
+  Area,
+  Button,
+  Card,
+  CropProfileModal,
+  ErrorMessage,
+  Follow,
+  IImage,
+  Image,
+  LightBox,
+  Modal,
+  Slug,
+  Unfollow,
+  UserAvatarUrl,
+  readFile,
+  useFileHandler,
+} from '~ui';
 import Followerings from './Followerings';
 import { useProfileQuery } from '~ui';
+import { toast } from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface DetailsProps {
   profile: ProfileInformation;
@@ -16,11 +38,17 @@ interface DetailsProps {
   setFollowing: Dispatch<boolean>;
 }
 
+const initImageState = { id: '', file: null, url: '' };
+
 const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   const { data } = useProfileQuery();
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
-  const { resolvedTheme } = useTheme();
-  const router = useRouter();
+  const [isUploadingProfileImage, setIsUploadingProfileImage] = useState(false);
+  const profilePicture = useFileHandler<IImage>('single', initImageState);
+  const [cropModal, setCropModal] = useState(false);
+  const { data: me } = useProfileQuery();
+  const queryClient = useQueryClient();
+  const isOwnProfile = profile?.isOwnProfile;
 
   // const { persistProfile } = useMessageDb();
   // const setSelectedTab = useMessageStore((state) => state.setSelectedTab);
@@ -42,25 +70,110 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   //   router.push(`/messages/${conversationKey}`);
   // };
 
+  const handleProfilePictureFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    profilePicture.onFileChange(e, () => {
+      setCropModal(true);
+    });
+  };
+
+  const { mutateAsync } = useProfileUpdateMutation();
+
+  const onCropSuccessCallback = async (file: File) => {
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      toast('Uploading...', { icon: '📤' });
+      const { data } = await uploadImage(formData);
+      const avatarData = {
+        avatar: {
+          avatarPublicId: data.image.img_id,
+          avatarUrl: data.image.img_src,
+        },
+      };
+
+      toast.dismiss();
+
+      await mutateAsync(
+        { updateUserInput: avatarData },
+        {
+          onSuccess: ({ updateUser: { message } }) => {
+            queryClient.invalidateQueries(useMeQuery.getKey());
+            queryClient.invalidateQueries(['UserProfile']);
+            toast.success(message);
+          },
+          onError: (error: any) => {
+            return (
+              <ErrorMessage
+                className="mb-3"
+                title=" Like failed!"
+                error={{
+                  name: ' Like failed!',
+                  message: error.message,
+                }}
+              />
+            );
+          },
+        }
+      );
+      
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+      toast.error('Failed to update profile picture.');
+    }
+  };
+
+  console.log(profilePicture.imageFile, 'profilePicture.imageFile');
   return (
     <div className="mb-4 space-y-5 px-5 sm:px-0">
       <div className="relative -mt-24 h-32 w-32 sm:-mt-32 sm:h-52 sm:w-52">
         <Image
-          onClick={() => setExpandedImage(profile?.avatar)}
-          src={profile?.avatar}
+          onClick={() =>
+            setExpandedImage(
+              profile?.avatar?.avatarUrl
+                ? profile?.avatar?.avatarUrl
+                : UserAvatarUrl
+            )
+          }
+          src={
+            profile?.avatar?.avatarUrl
+              ? profile?.avatar?.avatarUrl
+              : UserAvatarUrl
+          }
           className="h-32 w-32 cursor-pointer rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52"
           height={128}
           width={128}
           alt={profile?.name}
           data-testid="profile-avatar"
         />
+        {isOwnProfile && (
+          <div>
+            <input
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handleProfilePictureFileChange}
+              readOnly={isUploadingProfileImage}
+              id="picture"
+            />
+            <label htmlFor="picture">
+              <div className="flex items-center w-10 h-10 justify-center cursor-pointer p-2 bg-indigo-700 rounded-full absolute bottom-1 laptop:bottom-0 left-0 hover:bg-indigo-800">
+                <CameraIcon className=" h-7 w-7 flex items-center justify-center text-white" />
+              </div>
+            </label>
+          </div>
+        )}
+
         <LightBox
           show={Boolean(expandedImage)}
           url={expandedImage}
           onClose={() => setExpandedImage(null)}
         />
       </div>
-      <div className="space-y-1 py-2">
+
+      <div className="space-y-1 py-2 mt-5">
         <div className="flex items-center gap-1.5 text-2xl font-bold">
           <div className="truncate" data-testid="profile-name">
             {profile?.name}
@@ -152,6 +265,17 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
           </>
         )} */}
       </div>
+      <Modal
+        title={`Avatar`}
+        show={cropModal}
+        onClose={() => setCropModal(false)}
+      >
+        <CropProfileModal
+          file={profilePicture.imageFile}
+          onClose={() => setCropModal(false)}
+          onCropSuccessCallback={onCropSuccessCallback}
+        />
+      </Modal>
     </div>
   );
 };

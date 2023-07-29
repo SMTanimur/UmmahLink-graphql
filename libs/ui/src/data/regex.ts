@@ -14,3 +14,5 @@ export const Regex = {
   profileNameFilter: new RegExp('[' + RESTRICTED_SYMBOLS + ']', 'gu'),
   gm: /\bgm\b/i
 };
+export const UserAvatarUrl =
+  'https://res.cloudinary.com/smtanimur/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg';

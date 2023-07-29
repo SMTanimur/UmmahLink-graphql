@@ -1,7 +1,10 @@
 query GetFollowing($username:String!,$options: PaginateOptionArgs!, $query: FollowQueryArgs!) {
   getFollowing(username: $username,option: $options, query: $query) {
      docs{
-       avatar
+       avatar{
+        avatarUrl
+        avatarPublicId
+       }
     email
     id
     isFollowing
