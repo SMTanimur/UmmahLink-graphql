@@ -219,7 +219,7 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
           {data?.me?._id === profile?.id ? (
             <Link href="/settings">
               <Button
-                variant="secondary"
+                variant='super'
                 icon={<CogIcon className="h-5 w-5" />}
                 outline
               >

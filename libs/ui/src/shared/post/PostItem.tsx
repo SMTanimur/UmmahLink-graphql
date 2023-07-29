@@ -12,6 +12,7 @@ import ImageGrid from '../ImageGrid';
 import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
+import { stopEventPropagation } from '../../lib';
 
 dayjs.extend(relativeTime);
 
@@ -54,6 +55,7 @@ export const PostItem: React.FC<IProps> = (props) => {
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
+      <span onClick={ stopEventPropagation} aria-hidden="true">
         <div className="flex gap-4 items-center">
           <Image
             src={
@@ -81,6 +83,7 @@ export const PostItem: React.FC<IProps> = (props) => {
             </div>
           </div>
         </div>
+        </span>
         {/* {isAuth && (
           <PostOptions
             openDeleteModal={deleteModal.openModal}
@@ -110,7 +113,7 @@ export const PostItem: React.FC<IProps> = (props) => {
         </div>
         {/* --- COMMENTS COUNT ----- */}
         <div>
-          {post.commentsCount! > 0 && (
+          {post!.commentsCount! > 0 && (
             <span
               className="text-gray-500 hover:text-gray-800 cursor-pointer text-sm hover:underline dark:text-gray-500 dark:hover:text-white"
               onClick={handleToggleComment}

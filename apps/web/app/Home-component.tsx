@@ -12,11 +12,12 @@ import {
   GridLayout,
   NewPost,
   PostItem,
-  PostsShimmer,
+  PostPageShimmer,
   useAuth,
   useInfiniteFeeds,
   useProfileQuery,
   useUserProfile,
+  
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
 import RecommendedProfiles from './components/RecommendedProfiles';
@@ -72,10 +73,10 @@ const Home: NextPage = () => {
     },
   });
 
-  if (isLoading) {
-    return <PostsShimmer />;
+  if (isLoading || !FeedData) {
+    return <PostPageShimmer />;
   }
-
+  
   if (!isAuthenticated) return <WithoutUser />;
   return (
     <div className="relative">
