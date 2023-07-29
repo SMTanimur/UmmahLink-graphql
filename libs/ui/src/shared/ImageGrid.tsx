@@ -2,7 +2,7 @@
 "use client"
 import React, { useState } from "react";
 import { LightBox } from "../components";
-import { convertHttps } from "../lib/localStorage";
+import { convertHttps } from "../data";
 
 
 interface IProps {

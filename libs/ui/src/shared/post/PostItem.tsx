@@ -134,7 +134,7 @@ export const PostItem: React.FC<IProps> = (props) => {
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-indigo-950">
           <LikeButton postID={post.id!} isLiked={post.isLiked!} />
           <span
-            className="py-2 rounded-md flex items-center justify-center text-gray-700 hover:text-gray-800 700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-indigo-1100 cursor-pointer hover:bg-gray-100 text-l w-2/4"
+            className="py-2 rounded-md flex items-center justify-center text-gray-700 hover:text-gray-800 700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-brand-900 cursor-pointer hover:bg-brand-500 text-l w-2/4"
             onClick={handleToggleComment}
           >
             <CommandLineIcon className="h-4 w-4" />

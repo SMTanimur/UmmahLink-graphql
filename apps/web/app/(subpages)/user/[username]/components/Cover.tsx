@@ -5,7 +5,7 @@ import { STATIC_IMAGES_URL } from '~ui';
 
 
 interface CoverProps {
-  cover: string;
+  cover: string | null;
 }
 
 const Cover: FC<CoverProps> = ({ cover }) => {

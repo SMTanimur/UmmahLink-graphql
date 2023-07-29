@@ -64,14 +64,15 @@ export const CropProfileModal: React.FC<IProps> = (props) => {
   return (
     <div>
      
-        <div className="w-full min-w-[320px] laptop:w-30rem rounded-md">
+        <div className="w-full min-w-[320px] md:w-[30rem] rounded-md">
           <div className="p-4 flex items-start justify-between">
-            <h2 className="text-xl laptop:text-2xl dark:text-white">Crop Photo</h2>
+            <h2 className="text-xl md:text-2xl dark:text-white">Crop Photo</h2>
             <div className="flex items-center">
               <Button
               size='md'
                 disabled={isCropping}
                 onClick={clearState}
+                variant='secondary'
               >
                 Cancel
               </Button>
@@ -86,7 +87,7 @@ export const CropProfileModal: React.FC<IProps> = (props) => {
               </Button>
             </div>
           </div>
-          <div className="w-[400px] h-20rem px-10 py-10 relative">
+          <div className="w-[490px] h-[20rem] px-10  py-10 relative">
             {isCropping && (
               <div className="w-full h-full bg-black bg-opacity-50 flex flex-col items-center justify-center z-50 absolute">
                 <h3 className="text-white mb-2">Cropping</h3>

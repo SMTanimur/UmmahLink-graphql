@@ -28,7 +28,7 @@ export class UsersService {
   
     @Inject(forwardRef(() => PostsService))
     private readonly postsService: PostsService,
-    private readonly uploadSerive: UploadService
+    private readonly uploadService: UploadService
   ) {}
 
   async createUser(createUser: CreateUserInput): Promise<string> {
@@ -69,6 +69,14 @@ export class UsersService {
       updateUserDto,
       { new: true }
     );
+    if(updateUserDto.avatar){
+      this.uploadService.deleteOne(exitedUser.avatar.avatarPublicId)
+    }
+
+    if(updateUserDto.coverPicture){
+      this.uploadService.deleteOne(exitedUser.coverPicture.coverPublicId)
+    }
+    
   
    return{
     message: 'User updated successfully',

@@ -30,7 +30,7 @@ const {LikeLoading,attemtToPostLikeOrUnlike}=usePostLikeOrUnlike()
 
   return (
     <span
-      className={` px-1 py-2 rounded-md flex items-center justify-center hover:bg-gray-100 cursor-pointer text-l w-2/4  ${isLiked ? 'text-indigo-700 font-bold dark:text-indigo-400 dark:hover:bg-indigo-1100' : 'text-gray-700 dark:hover:bg-indigo-1100 dark:hover:text-white  dark:bg-indigo-1000 hover:text-gray-800 dark:text-gray-400'} ${LikeLoading && 'opacity-50'}`}
+      className={` px-1 py-2 rounded-md flex items-center justify-center hover:bg-gray-100 cursor-pointer text-l w-2/4  ${isLiked ? 'text-brand-700 font-bold dark:text-brand-400 dark:hover:bg-brand-1000' : 'text-gray-700 dark:hover:bg-brand-700 dark:hover:text-white  dark:bg-brand-1000 hover:text-gray-800 dark:text-gray-400'} ${LikeLoading && 'opacity-50'}`}
       onClick={dispatchLike}
     >
       {LikeLoading ? <Spinner size='sm' variant='primary'/> : (

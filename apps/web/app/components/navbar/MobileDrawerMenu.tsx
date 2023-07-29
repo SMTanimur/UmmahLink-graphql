@@ -1,12 +1,11 @@
 "use client"
 
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useProfileQuery } from '~ui';
+import { UserAvatarUrl, useProfileQuery } from '~ui';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { Image, Slug } from '~ui';
 import SwitchTheme from './SwitchTheme';
-import Status from './NavItems/Status';
 import YourProfile from './NavItems/YourProfile';
 import AppVersion from './NavItems/AppVersion';
 
@@ -30,7 +29,7 @@ const MobileDrawerMenu: FC = () => {
         >
           <div className="flex w-full space-x-1.5">
             <Image
-              src={data?.me?.avatar}
+              src={data?.me?.avatar.avatarUrl || UserAvatarUrl}
               className="h-12 w-12 cursor-pointer rounded-full border dark:border-gray-700"
               alt={data?.me?.username}
             />
@@ -48,13 +47,8 @@ const MobileDrawerMenu: FC = () => {
         </Link>
         <div className="bg-white dark:bg-gray-900">
           <div className="divider" />
-          <Status className="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800" />
-          <div className="divider" />
-        </div>
-        <div className="bg-white dark:bg-gray-900">
-          <div className="divider" />
           <div>
-            <Link href={`/u/${data?.me?.username}`} onClick={closeDrawer}>
+            <Link href={`/user/${data?.me?.username}`} onClick={closeDrawer}>
               <YourProfile className="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800" />
             </Link>
             <Link href={'/settings'} onClick={closeDrawer}>

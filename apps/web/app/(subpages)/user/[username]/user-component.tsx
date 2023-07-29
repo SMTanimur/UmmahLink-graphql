@@ -1,20 +1,29 @@
 'use client';
 
-import { ProfileInformation } from '@social-zone/graphql';
-import { useState } from 'react';
+import {
+  ProfileInformation,
+  useMeQuery,
+  useProfileUpdateMutation,
+} from '@social-zone/graphql';
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
+  ErrorMessage,
   GridItemEight,
   GridItemFour,
   GridLayout,
+  IImage,
   NewPost,
   PostItem,
   ProfilePostType,
   STATIC_IMAGES_URL,
   useAuth,
+  useFileHandler,
   usePostQuery,
   useProfileQuery,
   useUserProfile,
+  convertHttps,
+  useWindowDimensions,
 } from '~ui';
 import Cover from './components/Cover';
 import Details from './components/Details';
@@ -23,15 +32,27 @@ import Followers from './components/Followers';
 import Following from './components/Following';
 import Info from './components/Info';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
+import { toast } from 'react-hot-toast';
+import { uploadImage } from '@social-zone/client';
+import { useQueryClient } from '@tanstack/react-query';
+import CoverPhotoOverlay from './components/CoverPhotoOverlay';
 
 type UserComponentProps = {
   username: string;
   type: string;
 };
 
+const initImageState = { id: '', file: null, url: '' };
 export default function UserComponent({ username, type }: UserComponentProps) {
   const { isAuthenticated } = useAuth();
   const { data } = useUserProfile(username);
+  const [isUploadingCoverPhoto, setIsUploadingCoverPhoto] = useState(false);
+  const coverPhotoOverlayRef = useRef<HTMLDivElement | null>(null);
+  const coverPhotoRef = useRef<HTMLDivElement | null>(null);
+  const coverPhoto = useFileHandler<IImage>('single', initImageState);
+
+  const { width } = useWindowDimensions();
+  const screan = width >= 800;
   const {
     data: post,
     isError,
@@ -52,7 +73,9 @@ export default function UserComponent({ username, type }: UserComponentProps) {
     }
   );
   const PostsData = post?.pages.flatMap((page) => page.getPosts?.docs) ?? [];
+  const queryClient = useQueryClient();
   const { data: me } = useProfileQuery();
+  const profile = data?.user;
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage: hasNextPage ?? false,
@@ -62,6 +85,95 @@ export default function UserComponent({ username, type }: UserComponentProps) {
   });
   const [following, setFollowing] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const cp = coverPhotoRef.current;
+    const cpo = coverPhotoOverlayRef.current;
+
+    if (cp && cpo && data?.user?.isOwnProfile && window.screen.width > 800) {
+      cp.addEventListener('mouseover', overlayOnMouseOver);
+      cp.addEventListener('mouseout', overlayOnMouseOut);
+    }
+
+    return () => {
+      if (cp && cpo) {
+        cp.removeEventListener('mouseover', overlayOnMouseOver);
+        cp.removeEventListener('mouseout', overlayOnMouseOut);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    coverPhoto.imageFile.file,
+    isUploadingCoverPhoto,
+    data?.user?.isOwnProfile,
+  ]);
+
+  const overlayOnMouseOver = () => {
+    if (!isUploadingCoverPhoto && coverPhotoOverlayRef.current) {
+      coverPhotoOverlayRef.current.style.visibility = 'visible';
+    }
+  };
+
+  const overlayOnMouseOut = () => {
+    if (
+      !isUploadingCoverPhoto &&
+      !coverPhoto.imageFile.file &&
+      coverPhotoOverlayRef.current
+    ) {
+      coverPhotoOverlayRef.current.style.visibility = 'hidden';
+    }
+  };
+  const { mutateAsync } = useProfileUpdateMutation();
+
+  const handleSaveCoverPhoto = async () => {
+    if (coverPhoto.imageFile.file) {
+      const formData = new FormData();
+      formData.append('files', coverPhoto.imageFile.file);
+
+      try {
+        setIsUploadingCoverPhoto(true);
+        toast('Uploading Cover Photo...');
+
+        const { data } = await uploadImage(formData);
+        const coverData = {
+          coverPicture: {
+            coverPublicId: data.image.img_id,
+            coverUrl: data.image.img_src,
+          },
+        };
+        await mutateAsync(
+          { updateUserInput: coverData, username: profile?.username as string },
+          {
+            onSuccess: ({ updateUser: { message } }) => {
+              queryClient.invalidateQueries(useMeQuery.getKey());
+              queryClient.invalidateQueries(['UserProfile']);
+              toast.success(message);
+            },
+            onError: (error: any) => {
+              return (
+                <ErrorMessage
+                  className="mb-3"
+                  title=" update failed!"
+                  error={{
+                    name: ' update failed!',
+                    message: error.message,
+                  }}
+                />
+              );
+            },
+          }
+        );
+        toast.dismiss();
+
+        setIsUploadingCoverPhoto(false);
+
+        coverPhoto.clearFiles();
+      } catch (e: any) {
+        console.log(e);
+        setIsUploadingCoverPhoto(false);
+        toast.error(e.error.message);
+      }
+    }
+  };
   const [feedType, setFeedType] = useState(
     type && ['feed', 'info', 'following', 'followers'].includes(type as string)
       ? type.toString().toUpperCase()
@@ -70,13 +182,25 @@ export default function UserComponent({ username, type }: UserComponentProps) {
   return (
     <>
       {data?.user && (
-        <Cover
-          cover={
-            data?.user?.coverPicture?.coverUrl
-              ? data?.user?.coverPicture.coverUrl
-              : `${STATIC_IMAGES_URL}/patterns/2.svg`
-          }
-        />
+        <div
+          className="w-full h-60 mb-8 md:mb-0 md:h-80 bg-gray-200 dark:bg-gray-800 relative overflow-hidden"
+          ref={coverPhotoRef}
+        >
+          <CoverPhotoOverlay
+            coverPhotoOverlayRef={coverPhotoOverlayRef}
+            coverPhoto={coverPhoto}
+            isUploadingCoverPhoto={isUploadingCoverPhoto}
+            isOwnProfile={profile?.isOwnProfile as boolean}
+            handleSaveCoverPhoto={handleSaveCoverPhoto}
+          />
+          <Cover
+            cover={
+              coverPhoto.imageFile.url ||
+              (profile?.coverPicture?.coverUrl as string) ||
+              `${STATIC_IMAGES_URL}/patterns/2.svg`
+            }
+          />
+        </div>
       )}
 
       <GridLayout className="pt-6">

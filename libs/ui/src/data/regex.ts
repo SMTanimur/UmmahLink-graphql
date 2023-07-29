@@ -16,3 +16,13 @@ export const Regex = {
 };
 export const UserAvatarUrl =
   'https://res.cloudinary.com/smtanimur/image/upload/v1658841812/mushfiqTanim/user_qcrqny_kcgfes.svg';
+
+  export const convertHttps = (url?: string) => {
+    if (!url) return '';
+  
+    if (url.startsWith('http://')) {
+      return 'https' + url.substring(4);
+    }
+  
+    return url;
+  }
