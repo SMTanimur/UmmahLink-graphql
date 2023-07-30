@@ -1,4 +1,6 @@
 "use client"
+
+
 import type { FC } from 'react';
 import { Card, GridItemEight, GridItemFour, GridLayout } from '../../components';
 import { PostShimmer } from './PostShimmer';
@@ -8,6 +10,8 @@ import { Footer } from '../Footer';
 
 export const PostPageShimmer: FC = () => {
   return (
+
+
     <GridLayout>
       <GridItemEight className="space-y-5">
         <Card>

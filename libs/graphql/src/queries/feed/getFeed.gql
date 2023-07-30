@@ -20,7 +20,11 @@ getFeeds(query:$query,option: $option) {
       isLiked
       isOwnPost
       likesCount
-      photos
+      photos{
+        photosUrl
+        photosPublicId
+        __typename
+      }
       updatedAt
     }
     __typename

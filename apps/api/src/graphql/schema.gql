@@ -91,6 +91,25 @@ type CoverImage {
   coverPublicId: String
 }
 
+type PhotosImageInfo {
+  photosUrl: String
+  photosPublicId: String
+}
+
+type Post {
+  _author_id: User
+  content: String
+  photos: [PhotosImageInfo!]
+  likes: [User!]
+  comments: [User!]
+
+  """Created At"""
+  createdAt: DateTime!
+
+  """Updated At"""
+  updatedAt: DateTime!
+}
+
 type Author {
   id: ID
   username: String!
@@ -100,7 +119,7 @@ type Author {
 }
 
 type NewsFeedPaginate {
-  photos: [String!]
+  photos: [PhotosImageInfo!]
   content: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -123,20 +142,6 @@ type NewsFeedPagination {
   nextPage: Float
   prevPage: Float
   pagingCounter: Float!
-}
-
-type Post {
-  _author_id: User
-  content: String
-  photos: [String!]
-  likes: [User!]
-  comments: [User!]
-
-  """Created At"""
-  createdAt: DateTime!
-
-  """Updated At"""
-  updatedAt: DateTime!
 }
 
 type Notification {
@@ -231,6 +236,11 @@ input AvatarImageInput {
 input CoverImageInput {
   coverUrl: String
   coverPublicId: String
+}
+
+input PhotosImageInput {
+  photosUrl: String
+  photosPublicId: String
 }
 
 type Query {
@@ -392,13 +402,13 @@ input NotificationUpdateArgs {
 input CreatePostInput {
   _author_id: UserInputType
   content: String
-  photos: [String!]
+  photos: [PhotosImageInput!]
 }
 
 input UpdatePostInput {
   _author_id: UserInputType
   content: String
-  photos: [String!]
+  photos: [PhotosImageInput!]
   likes: [UserInputType!]
   comments: [UserInputType!]
 

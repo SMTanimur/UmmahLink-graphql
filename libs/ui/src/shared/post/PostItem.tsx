@@ -13,6 +13,7 @@ import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
 import { stopEventPropagation } from '../../lib';
+import Attachments from './Attachments';
 
 dayjs.extend(relativeTime);
 
@@ -50,6 +51,8 @@ export const PostItem: React.FC<IProps> = (props) => {
       return `${likesCount} ${people} ${like} this.`;
     }
   };
+
+  const showAttachments = post?.photos!.length > 0
 
   return (
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
@@ -98,10 +101,13 @@ export const PostItem: React.FC<IProps> = (props) => {
           {post.content}
         </p>
       </div>
+
+
       {/* --- IMAGE GRID ----- */}
-      {post.photos?.length !== 0 && (
-        <ImageGrid images={post.photos!.map((img) => img)} />
-      )}
+
+      {showAttachments ? (
+        <Attachments attachments={post?.photos} />
+      ) : null}
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>

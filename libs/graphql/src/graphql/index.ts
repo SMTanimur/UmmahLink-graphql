@@ -98,7 +98,7 @@ export type CreateFriendRequestInput = {
 export type CreatePostInput = {
   _author_id?: InputMaybe<UserInputType>;
   content?: InputMaybe<Scalars['String']['input']>;
-  photos?: InputMaybe<Array<Scalars['String']['input']>>;
+  photos?: InputMaybe<Array<PhotosImageInput>>;
 };
 
 export type CreatePostOrCommentLikeInput = {
@@ -332,7 +332,7 @@ export type NewsFeedPaginate = {
   isLiked?: Maybe<Scalars['Boolean']['output']>;
   isOwnPost?: Maybe<Scalars['Boolean']['output']>;
   likesCount?: Maybe<Scalars['Float']['output']>;
-  photos?: Maybe<Array<Scalars['String']['output']>>;
+  photos?: Maybe<Array<PhotosImageInfo>>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -427,6 +427,17 @@ export type Pagination = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type PhotosImageInfo = {
+  __typename?: 'PhotosImageInfo';
+  photosPublicId?: Maybe<Scalars['String']['output']>;
+  photosUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type PhotosImageInput = {
+  photosPublicId?: InputMaybe<Scalars['String']['input']>;
+  photosUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Post = {
   __typename?: 'Post';
   _author_id?: Maybe<User>;
@@ -435,7 +446,7 @@ export type Post = {
   /** Created At */
   createdAt: Scalars['DateTime']['output'];
   likes?: Maybe<Array<User>>;
-  photos?: Maybe<Array<Scalars['String']['output']>>;
+  photos?: Maybe<Array<PhotosImageInfo>>;
   /** Updated At */
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -559,7 +570,7 @@ export type UpdatePostInput = {
   /** Created At */
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   likes?: InputMaybe<Array<UserInputType>>;
-  photos?: InputMaybe<Array<Scalars['String']['input']>>;
+  photos?: InputMaybe<Array<PhotosImageInput>>;
   postId: Scalars['ID']['input'];
   /** Updated At */
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -732,7 +743,6 @@ export type GetFeedQuery = {
       isLiked?: boolean | null;
       isOwnPost?: boolean | null;
       likesCount?: number | null;
-      photos?: Array<string> | null;
       updatedAt?: any | null;
       author: {
         __typename?: 'Author';
@@ -746,6 +756,11 @@ export type GetFeedQuery = {
           avatarPublicId?: string | null;
         };
       };
+      photos?: Array<{
+        __typename: 'PhotosImageInfo';
+        photosUrl?: string | null;
+        photosPublicId?: string | null;
+      }> | null;
     } | null> | null;
   } | null;
 };
@@ -911,7 +926,6 @@ export type GetPostsQuery = {
       isLiked?: boolean | null;
       isOwnPost?: boolean | null;
       likesCount?: number | null;
-      photos?: Array<string> | null;
       updatedAt?: any | null;
       author: {
         __typename?: 'Author';
@@ -925,6 +939,11 @@ export type GetPostsQuery = {
           avatarPublicId?: string | null;
         };
       };
+      photos?: Array<{
+        __typename: 'PhotosImageInfo';
+        photosUrl?: string | null;
+        photosPublicId?: string | null;
+      }> | null;
     } | null> | null;
   };
 };
@@ -1350,7 +1369,11 @@ export const GetFeedDocument = /*#__PURE__*/ `
       isLiked
       isOwnPost
       likesCount
-      photos
+      photos {
+        photosUrl
+        photosPublicId
+        __typename
+      }
       updatedAt
     }
     __typename
@@ -1632,7 +1655,11 @@ export const GetPostsDocument = /*#__PURE__*/ `
       isLiked
       isOwnPost
       likesCount
-      photos
+      photos {
+        photosUrl
+        photosPublicId
+        __typename
+      }
       updatedAt
     }
     __typename

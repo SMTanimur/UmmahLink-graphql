@@ -1,13 +1,24 @@
-import { Field, ID, InputType, ObjectType} from '@nestjs/graphql';
+import { Field, InputType, ObjectType} from '@nestjs/graphql';
 
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { User } from '../../users/entities/user.entity';
-import { CoreEntity } from '@social-zone/common';
 import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 
+
+
+
+@ObjectType('PhotosImageInfo')
+@InputType('PhotosImageInput')
+ export class PhotosImageInput {
+  @Field(() => String, { nullable: true })
+  photosUrl: string;
+
+  @Field(() => String,{nullable:true})
+  photosPublicId: string;
+}
 
 
 @ObjectType()
@@ -28,8 +39,8 @@ export class Post  {
   @IsOptional()
   @IsArray()
   @Prop({default:[]})
-  @Field(() =>[ String], { nullable: true })
-  photos?: [string]
+  @Field(() =>[ PhotosImageInput], { nullable: true })
+  photos?: PhotosImageInput[]
   
 
   @Prop({type:[{ type: mongoose.Schema.Types.ObjectId, ref: 'User' ,default:[] }]})

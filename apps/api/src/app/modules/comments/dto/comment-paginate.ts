@@ -1,5 +1,6 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
+import { PhotosImageInput } from '../../posts/entities/post';
 
 @ObjectType()
 export class Author {
@@ -21,8 +22,8 @@ export class Author {
 
 @ObjectType()
 export class CommentPaginate {
-  @Field(() => [String], { nullable: true })
-  photos: string[];
+  @Field(() => [PhotosImageInput], { nullable: true })
+  photos: PhotosImageInput[];
 
   @Field(() => String, { nullable: true })
   content: string;
