@@ -1,4 +1,4 @@
-
+"use client"
 import type { FC } from 'react';
 import { PostShimmer } from './PostShimmer';
 import { Card } from '../../components';

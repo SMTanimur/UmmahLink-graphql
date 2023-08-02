@@ -1,4 +1,3 @@
-
 "use client"
 import { Modal, NewCreatePost } from "../components";
 import { useGlobalModalStateStore } from "./modal";

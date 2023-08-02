@@ -10,5 +10,6 @@ export * from './nFormatter'
 export * from './humanize'
 export * from './sanitizeDisplayName'
 export * from './profilePictureUtils'
+export * from './getError'
 
 

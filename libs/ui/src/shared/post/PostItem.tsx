@@ -1,19 +1,18 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 
 'use client';
 import { CommandLineIcon } from '@heroicons/react/24/outline';
 import { NewsFeedPaginate } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Image, Modal } from 'libs/ui/src/components';
+
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import ImageGrid from '../ImageGrid';
 import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
 import { stopEventPropagation } from '../../lib';
 import Attachments from './Attachments';
+import { Image, Modal } from '../../components';
 
 dayjs.extend(relativeTime);
 
@@ -143,7 +142,7 @@ export const PostItem: React.FC<IProps> = (props) => {
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-indigo-950">
           <LikeButton postID={post.id!} isLiked={post.isLiked!} />
           <span
-            className="py-2 rounded-md flex items-center justify-center text-gray-700 hover:text-gray-800 700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-brand-900 cursor-pointer hover:bg-brand-500 text-l w-2/4"
+            className="py-2 rounded-md flex items-center justify-center text-gray-700 hover:text-gray-800 700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-indigo-900 cursor-pointer hover:bg-indigo-500 text-l w-2/4"
             onClick={handleToggleComment}
           >
             <CommandLineIcon className="h-4 w-4" />

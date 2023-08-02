@@ -1,5 +1,5 @@
 "use client"
-import { CoverImageInfo } from '@social-zone/graphql';
+import {  PhotosImageInfo } from '@social-zone/graphql';
 import clsx from 'clsx';
 import type { FC } from 'react';
 import {  useState } from 'react';
@@ -49,7 +49,9 @@ const Attachments: FC<AttachmentsProps> = ({
         className={clsx(getClass(attachmentsLength)?.row, 'mt-3 grid gap-2')}
       >
         {attachments?.map(
-          (attachment: CoverImageInfo, index: number) => {
+          (attachment: PhotosImageInfo, index: number) => {
+
+            console.log(attachment,"attachment")
             
 
             return (
@@ -63,7 +65,7 @@ const Attachments: FC<AttachmentsProps> = ({
                    
                   'relative'
                 )}
-                key={index + attachment.coverUrl!}
+                key={index + attachment.photosUrl!}
                 onClick={stopEventPropagation}
                 aria-hidden="true"
               >
@@ -74,15 +76,15 @@ const Attachments: FC<AttachmentsProps> = ({
                     height={1000}
                     width={1000}
                     onError={({ currentTarget }) => {
-                      currentTarget.src = attachment.coverUrl!
+                      currentTarget.src = attachment.photosUrl!
                     }}
                     onClick={() => {
-                      setExpandedImage(attachment.coverUrl!);
+                      setExpandedImage(attachment.photosUrl!);
                 
                     }}
-                    src={attachment.coverUrl!}
-                    alt={attachment.coverUrl!}
-                    data-testid={`attachment-image-${attachment.coverUrl!}`}
+                    src={attachment.photosUrl!}
+                    alt={attachment.photosUrl!}
+                    data-testid={`attachment-image-${attachment.photosUrl!}`}
                   />
               
               </div>

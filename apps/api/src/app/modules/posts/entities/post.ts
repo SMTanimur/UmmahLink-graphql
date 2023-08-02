@@ -15,7 +15,6 @@ import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-vali
  export class PhotosImageInput {
   @Field(() => String, { nullable: true })
   photosUrl: string;
-
   @Field(() => String,{nullable:true})
   photosPublicId: string;
 }

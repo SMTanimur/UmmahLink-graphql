@@ -18,3 +18,11 @@ export const uploadImage = async (formData: FormData) =>{
 
   }
 
+export const uploadImages = async (formData: FormData) =>{
+      return await api.post<{images:IUploadedImage[]}>("/upload/images", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+  }
+

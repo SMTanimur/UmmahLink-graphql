@@ -1,4 +1,4 @@
-'use client';
+
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import { useGlobalModalStateStore } from '../../store';

@@ -14,7 +14,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <GlobalModals/>
+         <GlobalModals/>
         {children}
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={true} />

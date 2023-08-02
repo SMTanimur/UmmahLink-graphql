@@ -8,12 +8,12 @@ import { TextArea } from '../input/TextArea';
 import { Button } from '../button/Button';
 import { usePost } from '../../hooks';
 import { Spinner } from '../loading';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import 'emoji-mart/css/emoji-mart.css';
 import { EmojiPicker } from '../../emoji';
 
 export const NewCreatePost = () => {
-  const { attemptToCreatePost, createPostLoading, postForm } = usePost();
+  const { attemptToCreatePost, createPostLoading, postForm ,imageFile,onFileChange,removeImage} = usePost();
 
   function handleEmojiPick(emote: any) {
     //The types provided by these types are incorrect. I promise there's a native obj here
@@ -51,6 +51,30 @@ export const NewCreatePost = () => {
 							<EmojiPicker onEmojiPick={handleEmojiPick} />
 							
 						</div>
+
+             {/* --- UPLOAD OPTIONS */}
+             <div className="flex items-center flex-grow">
+              <input
+                multiple
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={onFileChange}
+                readOnly={createPostLoading}
+                id="photos"
+              />
+              <label
+                className="inline-flex items-center cursor-pointer justify-start border-gray-200 text-gray-400 py-2 text-xs"
+                htmlFor="photos"
+              >
+                <div
+                  className="group flex items-center justify-center w-10 h-10 border-2 border-dashed border-gray-400 hover:border-indigo-700"
+                  title="Upload photo"
+                >
+                  <PhotoIcon className="w-[24px] h-[20px] text-gray-400 hover:text-indigo-700" />
+                </div>
+              </label>
+            </div>
           </div>
 
           <Button
@@ -68,6 +92,24 @@ export const NewCreatePost = () => {
             <span>Save</span>
           </Button>
         </Form>
+
+         {/*  ---- IMAGES PREVIEWS LIST ----- */}
+         <div className="flex items-center space-x-2">
+            {imageFile && imageFile.map((image) => (
+              <div
+                className="w-14 h-14 !bg-cover !bg-no-repeat relative"
+                key={image.id}
+                style={{
+                  background: `#f7f7f7 url(${image.url})`
+                }}
+              >
+                <XMarkIcon
+                  className="p-2 w-[30px] h-[36px] absolute top-0 left-0 right-0 bottom-0 margin-auto  text-white hover:bg-red-600 cursor-pointer outline-none opacity-75 hover:opacity-100"
+                  onClick={() => removeImage(image.id)}
+                />
+              </div>
+            ))}
+          </div>
       </CardBody>
     </Card>
   );

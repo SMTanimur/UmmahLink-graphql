@@ -3,15 +3,20 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../../lib";
 import { ErrorMessage, useZodForm } from "../../components";
-import { CreatePostInput, useCreatePostMutation } from "@social-zone/graphql";
+import { CreatePostInput, PhotosImageInput, useCreatePostMutation } from "@social-zone/graphql";
 import { object, string } from "zod";
 import { useGlobalModalStateStore } from "../../store";
+import { useFileHandler } from "../../shared";
+import { IImage } from "../../types";
+import {uploadImages} from '@social-zone/client'
 
 const newPostSchema = object({
   content: string()
     
 });
 export const usePost = ()=> {
+
+  const { imageFile, onFileChange, clearFiles, removeImage } = useFileHandler<IImage[]>('multiple', []);
 
   const setShowNewPostModal = useGlobalModalStateStore(
     (state) => state.setShowNewPostModal
@@ -31,12 +36,33 @@ const postForm = useZodForm({
 
   const attemptToCreatePost = postForm.handleSubmit( async (data:CreatePostInput) => {
    try {
-    toast.promise(CreatePostAttempt({createPost:data }), {
-      loading: 'Logging in...',
+    const newPost = {
+      ...data,
+       content:data.content,
+       photos: [] as PhotosImageInput[],
+  };
+  toast('Creating post...');
+
+  if (imageFile.length !== 0) {
+    const formData = new FormData();
+    imageFile.forEach((image) => {
+      if (image.file) formData.append('files', image.file);
+    });
+    const { data } = await uploadImages(formData);
+    newPost.photos = data.images.map((i) => ({
+      photosPublicId: i.img_id,
+      photosUrl: i.img_src,
+    }));
+  }
+    toast.promise(CreatePostAttempt({createPost:newPost} ), {
+      loading: 'creating in...',
       success: ( {createPost:{message} }) => {
+        toast.dismiss()
         queryClient.invalidateQueries();
         queryClient.invalidateQueries(['UserProfile'])
+        clearFiles()
         setShowNewPostModal(false)
+        
         return <b>{message}</b>;
       },
       error: (data) => {
@@ -61,7 +87,10 @@ const postForm = useZodForm({
   return {
     attemptToCreatePost,
     createPostLoading,
-    postForm
+    postForm,
+    imageFile,
+    onFileChange,
+    removeImage
 
   }
 }

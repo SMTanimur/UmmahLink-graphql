@@ -35,7 +35,6 @@ const Home: NextPage = () => {
 
   const {
     data: feed,
-    isError,
     isLoading,
     hasNextPage,
     fetchNextPage,
@@ -73,9 +72,9 @@ const Home: NextPage = () => {
     },
   });
 
-  if (isLoading || !FeedData) {
-    return <PostPageShimmer />;
-  }
+  // if (isLoading || !FeedData) {
+  //   return <PostPageShimmer />;
+  // }
   
   if (!isAuthenticated) return <WithoutUser />;
   return (
