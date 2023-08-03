@@ -1,0 +1,5 @@
+mutation DeletePost($ deletePostInput:DeletePostInput!) {
+  deletePost(deletePostInput : $deletePostInput ){
+    message
+  }
+}

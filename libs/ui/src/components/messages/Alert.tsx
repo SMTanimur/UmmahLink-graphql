@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import { Dialog, Transition } from '@headlessui/react';
 import type { FC, ReactNode } from 'react';

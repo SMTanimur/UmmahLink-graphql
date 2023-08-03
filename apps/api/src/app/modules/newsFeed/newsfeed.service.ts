@@ -11,8 +11,7 @@ import { NewsFeed, NewsFeedDocument } from './entities/newsFeed';
 import { AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
 import { AggregateOptions } from 'mongoose';
 import { NewsFeedQueryArgs } from './dto/newsFeed-query-arg';
-import { NewsFeedPaginate, NewsFeedPagination } from './dto/newsFeed-paginate';
-import { PostsService } from '../posts/posts.service';
+
 
 @Injectable()
 export class NewsFeedService {
@@ -156,7 +155,7 @@ export class NewsFeedService {
       return res;
     } catch (error) {
       throw new BadRequestException(error.message);
-      console.log(error);
+     
     }
   }
 }

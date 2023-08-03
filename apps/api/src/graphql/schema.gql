@@ -123,7 +123,7 @@ type NewsFeedPaginate {
   content: String
   createdAt: DateTime
   updatedAt: DateTime
-  author: Author!
+  author: Author
   isLiked: Boolean
   isOwnPost: Boolean
   commentsCount: Float
@@ -364,7 +364,7 @@ type Mutation {
   updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
-  deletePost(updatePostInput: DeletePostInput!): MessageResponse!
+  deletePost(deletePostInput: DeletePostInput!): MessageResponse!
   likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
   createUser(createUserInput: CreateUserInput!): String!
   updateUser(input: UpdateUserInput!, username: String!): MessageResponse!

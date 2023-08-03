@@ -45,11 +45,11 @@ export class PostResolver {
   @UseGuards(AuthenticatedGuard)
   async deletePost(
     @CurrentUser() user: any,
-    @Args('updatePostInput')
+    @Args('deletePostInput')
     deletePostInput: DeletePostInput
   ) {
     deletePostInput.user = user._id;
-    return await this.postService.updatePost(deletePostInput);
+    return await this.postService.deletePost(deletePostInput);
   }
 
   @Query(() => Post, { name: 'post' })

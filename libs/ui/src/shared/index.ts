@@ -8,6 +8,7 @@ export * from './ChooseFile'
 export * from './Shimmer'
 export * from './post'
 export * from './Options'
+export * from './Alert'
 export * from './Footer/Footer'
 export * from './imageCrop'
 

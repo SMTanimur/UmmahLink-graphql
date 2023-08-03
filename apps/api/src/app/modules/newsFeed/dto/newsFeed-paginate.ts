@@ -35,7 +35,7 @@ export class NewsFeedPaginate {
   @Field(() => Date, { nullable: true })
   updatedAt: Date;
 
-  @Field(() => Author)
+  @Field(() => Author,{nullable:true})
   author: Author;
 
   @Field(() => Boolean, { nullable: true })

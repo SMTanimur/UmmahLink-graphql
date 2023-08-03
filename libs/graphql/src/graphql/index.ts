@@ -290,7 +290,7 @@ export type MutationDeleteCommentArgs = {
 };
 
 export type MutationDeletePostArgs = {
-  updatePostInput: DeletePostInput;
+  deletePostInput: DeletePostInput;
 };
 
 export type MutationFollowUserArgs = {
@@ -324,7 +324,7 @@ export type MutationUpdateUserArgs = {
 
 export type NewsFeedPaginate = {
   __typename?: 'NewsFeedPaginate';
-  author: Author;
+  author?: Maybe<Author>;
   commentsCount?: Maybe<Scalars['Float']['output']>;
   content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -697,6 +697,15 @@ export type LikeOrUnlikePostMutation = {
   likeOrUnlikePost: { __typename?: 'MessageResponse'; message: string };
 };
 
+export type DeletePostMutationVariables = Exact<{
+  deletePostInput: DeletePostInput;
+}>;
+
+export type DeletePostMutation = {
+  __typename?: 'Mutation';
+  deletePost: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type CreatePostMutationVariables = Exact<{
   createPost: CreatePostInput;
 }>;
@@ -744,7 +753,7 @@ export type GetFeedQuery = {
       isOwnPost?: boolean | null;
       likesCount?: number | null;
       updatedAt?: any | null;
-      author: {
+      author?: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -755,7 +764,7 @@ export type GetFeedQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      };
+      } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;
@@ -927,7 +936,7 @@ export type GetPostsQuery = {
       isOwnPost?: boolean | null;
       likesCount?: number | null;
       updatedAt?: any | null;
-      author: {
+      author?: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -938,7 +947,7 @@ export type GetPostsQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      };
+      } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;
@@ -1264,6 +1273,46 @@ useLikeOrUnlikePostMutation.fetcher = (
 ) =>
   fetcher<LikeOrUnlikePostMutation, LikeOrUnlikePostMutationVariables>(
     LikeOrUnlikePostDocument,
+    variables,
+    options
+  );
+export const DeletePostDocument = /*#__PURE__*/ `
+    mutation DeletePost($deletePostInput: DeletePostInput!) {
+  deletePost(deletePostInput: $deletePostInput) {
+    message
+  }
+}
+    `;
+export const useDeletePostMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeletePostMutation,
+    TError,
+    DeletePostMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeletePostMutation,
+    TError,
+    DeletePostMutationVariables,
+    TContext
+  >(
+    ['DeletePost'],
+    (variables?: DeletePostMutationVariables) =>
+      fetcher<DeletePostMutation, DeletePostMutationVariables>(
+        DeletePostDocument,
+        variables
+      )(),
+    options
+  );
+useDeletePostMutation.getKey = () => ['DeletePost'];
+
+useDeletePostMutation.fetcher = (
+  variables: DeletePostMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<DeletePostMutation, DeletePostMutationVariables>(
+    DeletePostDocument,
     variables,
     options
   );

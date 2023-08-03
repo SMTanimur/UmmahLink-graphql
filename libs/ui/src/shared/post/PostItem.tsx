@@ -13,6 +13,7 @@ import { stopEventPropagation } from '../../lib';
 import Attachments from './Attachments';
 import { Image, Modal } from '../../components';
 import { CommentButton } from '../comments';
+import { PostMenu } from '..';
 
 dayjs.extend(relativeTime);
 
@@ -73,9 +74,9 @@ export const PostItem: React.FC<IProps> = (props) => {
           <div className="flex flex-col ">
             <Link
               className="dark:text-indigo-400"
-              href={`/user/${post.author.username}`}
+              href={`/user/${post?.author?.username}`}
             >
-              <h5 className="font-bold">{post.author.username}</h5>
+              <h5 className="font-bold">{post?.author?.username}</h5>
             </Link>
             <div className="flex items-center space-x-1">
               <span className="text-sm text-gray-500">
@@ -85,6 +86,7 @@ export const PostItem: React.FC<IProps> = (props) => {
           </div>
         </div>
         </span>
+        <PostMenu Post={post}/>
         {/* {isAuth && (
           <PostOptions
             openDeleteModal={deleteModal.openModal}

@@ -7,7 +7,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './entities/post';
-import  { AggregateOptions, AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
+import {
+  AggregateOptions,
+  AggregatePaginateModel,
+  FilterQuery,
+  Model,
+} from 'mongoose';
 import { CreatePostInput } from './dto/craete-post-input';
 import { UsersService } from '../users/users.service';
 import { UpdatePostInput } from './dto/update-post-input';
@@ -29,7 +34,8 @@ import { UploadService } from '../upload/upload.service';
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectModel(Post.name) private postModel: AggregatePaginateModel<PostDocument>,
+    @InjectModel(Post.name)
+    private postModel: AggregatePaginateModel<PostDocument>,
     @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
     @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
     @InjectModel(NewsFeed.name) private newsModel: Model<NewsFeedDocument>,
@@ -45,43 +51,44 @@ export class PostsService {
     );
     if (!user) throw new UnauthorizedException('User not found');
 
-  const post=  await this.postModel.create(createPostInput);
-  await post.save()
-  await post
-  .populate({
+    const post = await this.postModel.create(createPostInput);
+    await post.save();
+    await post.populate({
       path: 'author',
-      select: 'avatar username name'
-  })
+      select: 'avatar username name',
+    });
 
-    const myFollowersDoc = await this.followModel.find({ target: createPostInput._author_id }); // target is yourself
-    const myFollowers = myFollowersDoc.map(user => user.user); // so user property must be used 
+    const myFollowersDoc = await this.followModel.find({
+      target: createPostInput._author_id,
+    }); // target is yourself
+    const myFollowers = myFollowersDoc.map((user) => user.user); // so user property must be used
 
     const newsFeeds = myFollowers
-    .map(follower => ({ // add post to follower's newsfeed
+      .map((follower) => ({
+        // add post to follower's newsfeed
         follower: follower,
         post: post._id,
         post_owner: createPostInput._author_id,
-        createdAt: post.createdAt
-    }))
-    .concat({ // append own post on newsfeed
+        createdAt: post.createdAt,
+      }))
+      .concat({
+        // append own post on newsfeed
         follower: createPostInput._author_id,
         post_owner: createPostInput._author_id,
         post: post._id,
-        createdAt: post.createdAt
-    });
+        createdAt: post.createdAt,
+      });
 
-if (newsFeeds.length !== 0) {
-    await this.newsModel.insertMany(newsFeeds);
-}
+    if (newsFeeds.length !== 0) {
+      await this.newsModel.insertMany(newsFeeds);
+    }
     return { message: 'Post created successfully' };
   }
 
-
   async getPostById(postId: string): Promise<Post> {
-
     const post = await this.postModel.findById(postId);
-    if(!post) throw new NotFoundException('Post not found')
-    return post.populate('author')
+    if (!post) throw new NotFoundException('Post not found');
+    return post.populate('author');
   }
 
   async updatePost(updatePostInput: UpdatePostInput) {
@@ -122,17 +129,16 @@ if (newsFeeds.length !== 0) {
           target: post._id,
           type: NotificationType.like,
         });
-        
+
         await this.postModel.findByIdAndDelete(post._id);
-        const images = post.photos.map((img)=>img.photosPublicId)
-        if(images.length){
-        await this.uploadService.deleteMany(images)
+        const images = post.photos.map((img) => img.photosPublicId);
+        if (images.length) {
+          await this.uploadService.deleteMany(images);
         }
-      
       }
       return { message: 'Post deleted' };
     } catch (error) {
-      throw new BadRequestException();
+      console.log(error);
     }
   }
 
@@ -189,92 +195,92 @@ if (newsFeeds.length !== 0) {
     }
   }
 
-
-
   async getPosts(
-    username:string,
+    username: string,
     query?: FilterQuery<NewsFeedQueryArgs>,
     options?: AggregateOptions
   ) {
-
     try {
       const { limit, page, orderBy, sortedBy } = options;
 
-      const userExit = await this.userService.getUserInfo(username)
-      if(!userExit) throw new NotFoundException('User not found')
-      const { user} = query;
+      const userExit = await this.userService.getUserInfo(username);
+      if (!userExit) throw new NotFoundException('User not found');
+      const { user } = query;
 
-     
-      if(user.username === userExit.username){
-        const agg = this.postModel.aggregate([ {
-          $match: {
-            _author_id: userExit._id,
+      if (user.username === userExit.username) {
+        const agg = this.postModel.aggregate([
+          {
+            $match: {
+              _author_id: userExit._id,
+            },
           },
-        },
-        {
-          $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
-        },
-        { // lookup from Comments collection to get total
-          $lookup: {
+          {
+            $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
+          },
+          {
+            // lookup from Comments collection to get total
+            $lookup: {
               from: 'comments',
               localField: '_id',
               foreignField: 'postId',
-              as: 'comments'
-          }
-      },
-      { // lookup from Likes collection to get total
-          $lookup: {
+              as: 'comments',
+            },
+          },
+          {
+            // lookup from Likes collection to get total
+            $lookup: {
               from: 'likes',
               localField: '_id',
               foreignField: 'target',
-              as: 'likes'
-          }
-      },
-      {
-          $lookup: {
+              as: 'likes',
+            },
+          },
+          {
+            $lookup: {
               from: 'users',
               let: { authorID: '$_author_id' },
               pipeline: [
-                  {
-                      $match: {
-                          $expr: {
-                              $eq: ['$_id', '$$authorID']
-                          }
-                      }
+                {
+                  $match: {
+                    $expr: {
+                      $eq: ['$_id', '$$authorID'],
+                    },
                   },
-                  {
-                      $project: {
-                          _id: 0,
-                          id: '$_id',
-                          email: 1,
-                          name:1,
-                          avatar: 1,
-                          username: 1,
-                      }
-                  }
+                },
+                {
+                  $project: {
+                    _id: 0,
+                    id: '$_id',
+                    email: 1,
+                    name: 1,
+                    avatar: 1,
+                    username: 1,
+                  },
+                },
               ],
-              as: 'author'
-          }
-      },
-      {
-          $addFields: {
+              as: 'author',
+            },
+          },
+          {
+            $addFields: {
               likeIDs: {
-                  $map: {
-                      input: "$likes",
-                      as: "postLike",
-                      in: '$$postLike.user'
-                  }
+                $map: {
+                  input: '$likes',
+                  as: 'postLike',
+                  in: '$$postLike.user',
+                },
               },
-          }
-      },
-      { // add isLiked field by checking if user id exists in $likes array from lookup
-          $addFields: {
+            },
+          },
+          {
+            // add isLiked field by checking if user id exists in $likes array from lookup
+            $addFields: {
               isLiked: { $in: [user._id, '$likeIDs'] },
-              isOwnPost: { $eq: ['$$CURRENT._author_id', user._id ]}
-          }
-      },
-      {
-          $project: {
+              isOwnPost: { $eq: ['$$CURRENT._author_id', user._id] },
+            },
+          },
+          {
+            $project: {
               _id: 0,
               id: '$_id',
               photos: 1,
@@ -285,71 +291,71 @@ if (newsFeeds.length !== 0) {
               isLiked: 1,
               isOwnPost: 1,
               commentsCount: {
-                  $size: '$comments'
+                $size: '$comments',
               },
               likesCount: {
-                  $size: '$likes'
-              }
-          }
-      }])
+                $size: '$likes',
+              },
+            },
+          },
+        ]);
 
-      
-      const res = await this.postModel.aggregatePaginate(agg,{
-        ...(limit ? { limit } : {}),
-        ...(page ? { page } : {}),
-      });
-      return res
-      }else{
-        throw new ConflictException('please login to view this page')
+        const res = await this.postModel.aggregatePaginate(agg, {
+          ...(limit ? { limit } : {}),
+          ...(page ? { page } : {}),
+        });
+        return res;
+      } else {
+        throw new ConflictException('please login to view this page');
       }
-      
-     
     } catch (error) {
       throw new BadRequestException('server error');
     }
   }
 
-  async getPostLikes (query:LikesQueryArgs,options:PaginateOptionArgs):Promise<GetLikeResponse[]>{
+  async getPostLikes(
+    query: LikesQueryArgs,
+    options: PaginateOptionArgs
+  ): Promise<GetLikeResponse[]> {
     try {
-      const {postId,user} = query
-      const {limit,offset}=options
-      const offse = offset|| 0;
+      const { postId, user } = query;
+      const { limit, offset } = options;
+      const offse = offset || 0;
       const skip = offse * limit;
-      const post = await this.postModel.findById(postId)
-      if(!post) throw new NotFoundException('Post not found')
-        
-      const likers = await this.likeModel.find({target:postId,type:'Post'})
-                              .sort({createdAt:-1})
-                              .skip(skip)
-                              .limit(limit)
-                              .populate({
-                                path: 'user',
-                                select: 'avatar username name _id'
-                            })
+      const post = await this.postModel.findById(postId);
+      if (!post) throw new NotFoundException('Post not found');
 
-                            if (likers.length === 0 && offse < 1) {
-                               new  NotFoundException(404, 'No likes found.')
-                          }
-              
-                          if (likers.length === 0 && offse > 0) {
-                             new NotFoundException(404, 'No more likes found.')
-                          }
+      const likers = await this.likeModel
+        .find({ target: postId, type: 'Post' })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate({
+          path: 'user',
+          select: 'avatar username name _id',
+        });
 
-                          const myFollowingDoc = await this.followModel.find({ user: user })
-                   const myFollowing = myFollowingDoc.map(user => user.target.toString());
-                   
-                    const result = likers.map((like: any) => {
-                      return {
-                        ...like.user.toObject(),
-                        isFollowing: myFollowing.includes(String(like.user._id)),
-                      };
-                    });
+      if (likers.length === 0 && offse < 1) {
+        new NotFoundException(404, 'No likes found.');
+      }
 
-                return result
+      if (likers.length === 0 && offse > 0) {
+        new NotFoundException(404, 'No more likes found.');
+      }
 
-       
+      const myFollowingDoc = await this.followModel.find({ user: user });
+      const myFollowing = myFollowingDoc.map((user) => user.target.toString());
+
+      const result = likers.map((like: any) => {
+        return {
+          ...like.user.toObject(),
+          isFollowing: myFollowing.includes(String(like.user._id)),
+        };
+      });
+
+      return result;
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
   }
-}
 }
