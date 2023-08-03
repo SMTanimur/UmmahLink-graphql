@@ -24,6 +24,7 @@ import { Follow, FollowDocument } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedDocument } from '../newsFeed/entities/newsFeed';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class PostsService {
@@ -34,7 +35,8 @@ export class PostsService {
     @InjectModel(NewsFeed.name) private newsModel: Model<NewsFeedDocument>,
     @InjectModel(Notification.name)
     private notificationModel: Model<NotificationDocument>,
-    private readonly userService: UsersService
+    private readonly userService: UsersService,
+    private readonly uploadService: UploadService
   ) {}
 
   async createPost(createPostInput: CreatePostInput) {
@@ -120,7 +122,13 @@ if (newsFeeds.length !== 0) {
           target: post._id,
           type: NotificationType.like,
         });
+        
         await this.postModel.findByIdAndDelete(post._id);
+        const images = post.photos.map((img)=>img.photosPublicId)
+        if(images.length){
+        await this.uploadService.deleteMany(images)
+        }
+      
       }
       return { message: 'Post deleted' };
     } catch (error) {

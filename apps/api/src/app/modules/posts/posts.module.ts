@@ -16,6 +16,7 @@ import {
 import { Follow, FollowSchema } from '../follows/entities/follow';
 import { NewsFeed, NewsFeedSchema } from '../newsFeed/entities/newsFeed';
 import { User, UserSchema } from '../users/entities/user.entity';
+import { UploadModule } from '../upload/upload.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { User, UserSchema } from '../users/entities/user.entity';
       { name: Notification.name, schema: NotificationSchema },
     ]),
     UsersModule,
+    UploadModule
   ],
   controllers: [],
   providers: [PostsService, PostResolver],

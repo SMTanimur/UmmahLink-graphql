@@ -1,6 +1,5 @@
 
 'use client';
-import { CommandLineIcon } from '@heroicons/react/24/outline';
 import { NewsFeedPaginate } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -13,6 +12,7 @@ import { UserAvatarUrl } from '../../data';
 import { stopEventPropagation } from '../../lib';
 import Attachments from './Attachments';
 import { Image, Modal } from '../../components';
+import { CommentButton } from '../comments';
 
 dayjs.extend(relativeTime);
 
@@ -25,7 +25,6 @@ export const PostItem: React.FC<IProps> = (props) => {
   const { post, isAuth } = props;
   const [isCommentVisible, setCommentVisible] = useState(false);
   const [isLikesModal, setIsLikesModal] = useState(false);
-
   const commentInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleToggleComment = () => {
@@ -141,13 +140,7 @@ export const PostItem: React.FC<IProps> = (props) => {
       {isAuth ? (
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-indigo-950">
           <LikeButton postID={post.id!} isLiked={post.isLiked!} />
-          <span
-            className="py-2 rounded-md flex items-center justify-center text-gray-700 hover:text-gray-800 700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-indigo-900 cursor-pointer hover:bg-indigo-500 text-l w-2/4"
-            onClick={handleToggleComment}
-          >
-            <CommandLineIcon className="h-4 w-4" />
-            &nbsp;Comment
-          </span>
+          <CommentButton commentCount={post.commentsCount!} onCommentToggle={handleToggleComment}/>
         </div>
       ) : (
         <div className="text-center py-2">
