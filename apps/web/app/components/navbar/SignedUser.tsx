@@ -11,21 +11,23 @@ import {
   Slug,
   UserAvatarUrl,
   cn,
+  useGlobalModalStateStore,
   useProfileQuery,
 } from '~ui';
 
 import ThemeSwitch from './ThemeSwitch';
 import Link from 'next/link';
+import MobileDrawerMenu from './MobileDrawerMenu';
 
 const SignedUser: FC = () => {
   const { data } = useProfileQuery();
   const currentProfile = data?.me;
-  // const setShowMobileDrawer = useGlobalModalStateStore(
-  //   (state) => state.setShowMobileDrawer
-  // );
-  // const showMobileDrawer = useGlobalModalStateStore(
-  //   (state) => state.showMobileDrawer
-  // );
+  const setShowMobileDrawer = useGlobalModalStateStore(
+    (state) => state.setShowMobileDrawer
+  );
+  const showMobileDrawer = useGlobalModalStateStore(
+    (state) => state.showMobileDrawer
+  );
 
   const Avatar = () => (
     <Image
@@ -40,12 +42,12 @@ const SignedUser: FC = () => {
   );
 
   const openMobileMenuDrawer = () => {
-    // setShowMobileDrawer(true);
+    setShowMobileDrawer(true);
   };
 
   return (
     <>
-      {/* {showMobileDrawer && <MobileDrawerMenu />} */}
+      {showMobileDrawer && <MobileDrawerMenu />}
       <button
         className="focus:outline-none md:hidden"
         onClick={() => openMobileMenuDrawer()}

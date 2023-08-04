@@ -33,7 +33,6 @@ export const EditPost: FC = () => {
   const postInfo = useGlobalModalStateStore(
     (state) => state.updatePost
   );
-  console.log(postInfo,"postInfo")
   const { mutateAsync: UpdatePostAttempt, isLoading: updatePostLoading } =
     useUpdatePostMutation();
   const queryClient = useQueryClient();
@@ -57,6 +56,7 @@ export const EditPost: FC = () => {
           toast.dismiss();
           setShowEditPostModal(false, null);
           queryClient.invalidateQueries(['Feeds']);
+          queryClient.invalidateQueries(['Posts']);
           queryClient.invalidateQueries(['UserProfile']);
 
           return <b>{message}</b>;

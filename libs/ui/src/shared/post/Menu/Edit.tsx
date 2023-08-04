@@ -36,7 +36,7 @@ const Edit: FC<EditProps> = ({ post }) => {
     >
       <div className="flex items-center space-x-2">
         <PencilIcon className="h-4 w-4" />
-        <div>Update</div>
+        <span>Edit</span>
       </div>
   
     </Menu.Item>

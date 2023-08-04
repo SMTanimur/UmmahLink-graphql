@@ -1,19 +1,24 @@
 "use client"
 
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { UserAvatarUrl, useProfileQuery } from '~ui';
+import { UserAvatarUrl, useGlobalModalStateStore, useProfileQuery } from '~ui';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { Image, Slug } from '~ui';
 import SwitchTheme from './SwitchTheme';
 import YourProfile from './NavItems/YourProfile';
 import AppVersion from './NavItems/AppVersion';
+import Logout from './NavItems/Logout';
 
 const MobileDrawerMenu: FC = () => {
   const { data } = useProfileQuery();
 
+  const setShowMobileDrawer = useGlobalModalStateStore(
+    (state) => state.setShowMobileDrawer
+  );
+
   const closeDrawer = () => {
-    // setShowMobileDrawer(false);
+    setShowMobileDrawer(false);
   };
 
   return (
@@ -24,7 +29,7 @@ const MobileDrawerMenu: FC = () => {
       <div className="w-full space-y-2">
         <Link
           onClick={closeDrawer}
-          href={`/u/${data?.me?.username}`}
+          href={`/user/${data?.me?.username}`}
           className="mt-2 flex items-center space-x-2 px-5 py-3 hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <div className="flex w-full space-x-1.5">
@@ -45,7 +50,7 @@ const MobileDrawerMenu: FC = () => {
             </div>
           </div>
         </Link>
-        <div className="bg-white dark:bg-gray-900">
+        <div className="bg-white dark:bg-gray-900 ">
           <div className="divider" />
           <div>
             <Link href={`/user/${data?.me?.username}`} onClick={closeDrawer}>
@@ -66,10 +71,9 @@ const MobileDrawerMenu: FC = () => {
         <div className="bg-white dark:bg-gray-900">
           <div className="divider" />
           <div className="hover:bg-gray-100 dark:hover:bg-gray-800">
-            {/* <Logout onClick={closeDrawer} className="py-3" /> */}
+            <Logout onClick={closeDrawer} className="py-3" />
           </div>
         </div>
-        {data?.me && <AppVersion />}
       </div>
     </div>
   );

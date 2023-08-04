@@ -10,10 +10,8 @@ interface GlobalModalState {
   setShowProfileSwitchModal: (showProfileSwitchModal: boolean) => void;
   showMobileDrawer: boolean;
   setShowMobileDrawer: (showMobileDrawer: boolean) => void;
-
   showNewPostModal: boolean;
   setShowNewPostModal: (showNewPostModal: boolean) => void;
-
   showPostEdit: boolean;
   updatePost: NewsFeedPaginate | null;
   setShowPostEdit: (
