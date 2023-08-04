@@ -11,7 +11,6 @@ import { Pagination, useGetSuggestionPeopleQuery } from '@social-zone/graphql';
 const Suggested: FC = () => {
 
   const {data,isLoading,error}=useGetSuggestionPeopleQuery({options:{limit:2},query:{}})
-  console.log(data)
  
   if (isLoading) {
     return <Loader message={`Loading suggested`} />;

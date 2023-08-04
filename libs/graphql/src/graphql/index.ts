@@ -715,6 +715,15 @@ export type CreatePostMutation = {
   createPost: { __typename?: 'MessageResponse'; message: string };
 };
 
+export type UpdatePostMutationVariables = Exact<{
+  updatePost: UpdatePostInput;
+}>;
+
+export type UpdatePostMutation = {
+  __typename?: 'Mutation';
+  updatePost: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type ProfileUpdateMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
   username: Scalars['String']['input'];
@@ -1353,6 +1362,46 @@ useCreatePostMutation.fetcher = (
 ) =>
   fetcher<CreatePostMutation, CreatePostMutationVariables>(
     CreatePostDocument,
+    variables,
+    options
+  );
+export const UpdatePostDocument = /*#__PURE__*/ `
+    mutation UpdatePost($updatePost: UpdatePostInput!) {
+  updatePost(updatePostInput: $updatePost) {
+    message
+  }
+}
+    `;
+export const useUpdatePostMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdatePostMutation,
+    TError,
+    UpdatePostMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdatePostMutation,
+    TError,
+    UpdatePostMutationVariables,
+    TContext
+  >(
+    ['UpdatePost'],
+    (variables?: UpdatePostMutationVariables) =>
+      fetcher<UpdatePostMutation, UpdatePostMutationVariables>(
+        UpdatePostDocument,
+        variables
+      )(),
+    options
+  );
+useUpdatePostMutation.getKey = () => ['UpdatePost'];
+
+useUpdatePostMutation.fetcher = (
+  variables: UpdatePostMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UpdatePostMutation, UpdatePostMutationVariables>(
+    UpdatePostDocument,
     variables,
     options
   );

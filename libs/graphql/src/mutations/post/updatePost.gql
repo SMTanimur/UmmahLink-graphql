@@ -1,0 +1,5 @@
+mutation UpdatePost ($updatePost:UpdatePostInput!){
+  updatePost(updatePostInput: $updatePost){
+    message
+  }
+}

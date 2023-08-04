@@ -97,12 +97,19 @@ export class PostsService {
       const postExited = await this.postModel.findOne({ _id: postId });
       if (!postExited) throw new NotFoundException('Post not Found');
       if (String(postExited._author_id) == String(user)) {
-        await this.postModel.findOneAndUpdate(
+      const res=  await this.postModel.findOneAndUpdate(
           { _id: postId },
           updatePostInput,
           { new: true }
         );
+        const image = postExited.photos.map((img) => img.photosPublicId);
+      const currentImages =res.photos.map((img) => img.photosPublicId);
+            const imageDeleted = image.filter((img) => !currentImages.includes(img));
+            if (imageDeleted.length) {
+              await this.uploadService.deleteMany(imageDeleted);
+            }
       }
+
       return {
         message: 'post updated successfully',
       };
@@ -132,6 +139,7 @@ export class PostsService {
 
         await this.postModel.findByIdAndDelete(post._id);
         const images = post.photos.map((img) => img.photosPublicId);
+        console.log(images)
         if (images.length) {
           await this.uploadService.deleteMany(images);
         }

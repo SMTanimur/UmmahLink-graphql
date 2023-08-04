@@ -13,11 +13,11 @@ import {
   NewPost,
   PostItem,
   PostPageShimmer,
+  Spinner,
   useAuth,
   useInfiniteFeeds,
   useProfileQuery,
   useUserProfile,
-  
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
 import RecommendedProfiles from './components/RecommendedProfiles';
@@ -26,6 +26,7 @@ import WithoutUser from './home/WithoutUser';
 import Followers from './(subpages)/user/[username]/components/Followers';
 import { ProfileInformation } from '@social-zone/graphql';
 import Following from './(subpages)/user/[username]/components/Following';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 const Home: NextPage = () => {
   const { isAuthenticated } = useAuth();
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
   const {
     data: feed,
     isLoading,
+    isError,
     hasNextPage,
     fetchNextPage,
   } = useInfiniteFeeds(
@@ -55,27 +57,15 @@ const Home: NextPage = () => {
   // const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
   //   useFeedQuery();
 
-  // const [sentryRef] = useInfiniteScroll({
-  //   loading: isLoading,
-  //   hasNextPage: hasNextPage ?? false,
-  //   onLoadMore: ()=>fetchNextPage(),
-  //   disabled: isError,
-  //   rootMargin: '0px 0px 400px 0px',
-  // });
-
-  const { observe } = useInView({
-    onChange: async ({ inView }) => {
-      if (!inView || !hasNextPage) {
-        return;
-      }
-      fetchNextPage();
-    },
+  const [sentryRef] = useInfiniteScroll({
+    loading: isLoading,
+    hasNextPage: hasNextPage ?? false,
+    onLoadMore: () => fetchNextPage(),
+    disabled: isError,
+    rootMargin: '0px 0px 400px 0px',
   });
 
-  // if (isLoading || !FeedData) {
-  //   return <PostPageShimmer />;
-  // }
-  
+
   if (!isAuthenticated) return <WithoutUser />;
   return (
     <div className="relative">
@@ -108,12 +98,9 @@ const Home: NextPage = () => {
 
                     {hasNextPage ? (
                       <div className="flex flex-col items-center justify-center ">
-                        <Button
-                          ref={observe}
-                          className="h-11 text-sm font-semibold md:text-base items-center "
-                        >
-                          Loading More
-                        </Button>
+                        <div ref={sentryRef}>
+                          <Spinner size="md" variant="primary" />
+                        </div>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center py-10">

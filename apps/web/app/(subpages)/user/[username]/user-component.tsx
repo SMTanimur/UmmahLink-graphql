@@ -155,7 +155,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
                   title=" update failed!"
                   error={{
                     name: ' update failed!',
-                    message: error.message,
+                    message: error?.message,
                   }}
                 />
               );
@@ -170,7 +170,7 @@ export default function UserComponent({ username, type }: UserComponentProps) {
       } catch (e: any) {
         console.log(e);
         setIsUploadingCoverPhoto(false);
-        toast.error(e.error.message);
+        toast.error(e.error?.message);
       }
     }
   };

@@ -12,6 +12,7 @@ import { stopEventPropagation } from '../../../lib';
 import { MenuTransition } from '../../../components';
 import { NewsFeedPaginate } from '@social-zone/graphql';
 import { useProfileQuery } from '../../../hooks';
+import Edit from './Edit';
 
 interface PostMenuProps {
   Post: NewsFeedPaginate;
@@ -42,7 +43,7 @@ export const PostMenu: FC<PostMenuProps> = ({ Post }) => {
           data-testid={`Post-${Post.id}-menu-items`}
         >
           {me?.me._id === Post?.author?.id && <Delete post={Post} />}
-
+          {me?.me._id === Post?.author?.id && <Edit post={Post} />}
           <CopyPostText post={Post} />
         </Menu.Items>
       </MenuTransition>

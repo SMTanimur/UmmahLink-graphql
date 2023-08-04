@@ -15,7 +15,6 @@ import {
 } from '~ui';
 
 import ThemeSwitch from './ThemeSwitch';
-import { forwardRef } from 'react';
 import Link from 'next/link';
 
 const SignedUser: FC = () => {

@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../../lib";
 import { ErrorMessage, useZodForm } from "../../components";
-import { CreatePostInput, PhotosImageInput, useCreatePostMutation } from "@social-zone/graphql";
+import { CreatePostInput, PhotosImageInput, UpdatePostInput, useCreatePostMutation, useUpdatePostMutation } from "@social-zone/graphql";
 import { object, string } from "zod";
 import { useGlobalModalStateStore } from "../../store";
 import { useFileHandler } from "../../shared";
@@ -33,6 +33,7 @@ const postForm = useZodForm({
   schema:newPostSchema,
 
 })
+
 
   const attemptToCreatePost = postForm.handleSubmit( async (data:CreatePostInput) => {
    try {
@@ -83,7 +84,6 @@ const postForm = useZodForm({
    }
      
   })
-
   return {
     attemptToCreatePost,
     createPostLoading,

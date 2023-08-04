@@ -1,4 +1,5 @@
 "use client"
+import { NewsFeedPaginate } from '@social-zone/graphql';
 import { create } from 'zustand';
 
 interface GlobalModalState {
@@ -12,8 +13,14 @@ interface GlobalModalState {
 
   showNewPostModal: boolean;
   setShowNewPostModal: (showNewPostModal: boolean) => void;
-}
 
+  showPostEdit: boolean;
+  updatePost: NewsFeedPaginate | null;
+  setShowPostEdit: (
+    showPostEdit: boolean,
+    updatePost: NewsFeedPaginate | null
+  ) => void;
+}
 export const useGlobalModalStateStore = create<GlobalModalState>((set) => ({
   loginModal: false,
   setLoginModal: (loginModal) => set(() => ({ loginModal })),
@@ -22,6 +29,17 @@ export const useGlobalModalStateStore = create<GlobalModalState>((set) => ({
     set(() => ({ showProfileSwitchModal })),
   showMobileDrawer: false,
   setShowMobileDrawer: (showMobileDrawer) => set(() => ({ showMobileDrawer })),
+
   showNewPostModal: false,
   setShowNewPostModal: (showNewPostModal) => set(() => ({ showNewPostModal })),
+
+  showPostEdit: false,
+  updatePost: null,
+  forceEditPost: false,
+  setShowPostEdit: (showPostEdit, updatePost) => 
+    set(() => ({ showPostEdit, updatePost })),
+
+  
+
+
 }));
