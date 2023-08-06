@@ -12,6 +12,7 @@ import { CommentPagination } from './dto/comment-paginate';
 import { CommentsQueryArgs } from './dto/comment-query-arg';
 import { UpdateCommentInput } from './input/update-comment-input';
 import { ReplyQueryArgs } from './dto/reply-query-arg';
+import { CreatePostOrCommentLikeInput } from '../posts/dto/create-post-or-comment-like';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -82,5 +83,18 @@ export class CommentResolver {
     query.user = user
   
     return await this.commentService.getReplies(query, options);
+  }
+
+
+  @Mutation(() => MessageResponse)
+  @UseGuards(AuthenticatedGuard)
+  async likeOrUnlikeComment(
+    @CurrentUser() user: any,
+    @Args('likeOrUnlikeCommentInput')
+    likeOrUnlikePostInput:CreatePostOrCommentLikeInput
+  ) {
+    likeOrUnlikePostInput.user = user._id;
+    likeOrUnlikePostInput.type = 'Comment'
+    return await this.commentService.likeOnComment(likeOrUnlikePostInput);
   }
 }

@@ -5,16 +5,15 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment, CommentDocument } from './entities/comment';
-import mongoose, {
+import  {
   AggregateOptions,
-  Model,
-  PaginateModel,
-  Types,
+  Model
 } from 'mongoose';
 import { Post, PostDocument } from '../posts/entities/post';
 import {
   Notification,
   NotificationDocument,
+  NotificationType,
 } from '../notification/entities/notification';
 import { CreateCommentInput } from './input/create-comment-input';
 import { CreateReplyInput } from './input/create-comment-replay-input';
@@ -25,6 +24,9 @@ import { AggregatePaginateModel } from 'mongoose';
 import { CommentPagination } from './dto/comment-paginate';
 import { UpdateCommentInput } from './input/update-comment-input';
 import { ReplyQueryArgs } from './dto/reply-query-arg';
+import { Like, LikeDocument } from '../posts/entities/like';
+import { CreatePostOrCommentLikeInput } from '../posts/dto/create-post-or-comment-like';
+import { MessageResponse } from '@social-zone/common';
 
 @Injectable()
 export class CommentsService {
@@ -32,6 +34,7 @@ export class CommentsService {
     @InjectModel(Comment.name)
     private commentModel: AggregatePaginateModel<CommentDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
+    @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
     @InjectModel(Notification.name)
     private notificationModel: Model<NotificationDocument>
   ) {}
@@ -307,7 +310,7 @@ export class CommentsService {
       const res = await this.commentModel.aggregatePaginate(agg, {
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
-      });
+      }) as CommentPagination
 
       if (res.docs.length === 0)
         throw new NotFoundException('No comments found');
@@ -441,14 +444,62 @@ export class CommentsService {
       const res = await this.commentModel.aggregatePaginate(agg, {
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
-      });
+      })as CommentPagination
 
-      // if (res.docs.length === 0)
-      //   throw new NotFoundException('No comments found');
+      if (res.docs.length === 0)
+        throw new NotFoundException('No comments found');
 
       return res;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+
+  async likeOnComment(
+    createLikeInput: CreatePostOrCommentLikeInput
+  ): Promise<MessageResponse> {
+    try {
+      const { comment_id, user: userId, type } = createLikeInput;
+
+      const comment = await this.commentModel.findById(comment_id)
+      if (!comment) throw new NotFoundException('Comment not found');
+
+      const query = {
+        target: comment_id,
+        user: userId,
+        type,
+      };
+      const like = await this.likeModel.findOne(query);
+      if (!like) {
+        const like = await this.likeModel.create(query);
+        like.save()
+        if (String(comment.authId) !== String(userId)) {
+          const newNotif = {
+            type: NotificationType.like,
+            initiator: userId,
+            target: comment.authId,
+            link: `/post/${comment._id}`,
+          };
+          const exitedNotif = await this.notificationModel.findOne(newNotif);
+          if (!exitedNotif) {
+            await this.notificationModel.create(newNotif);
+          } else {
+            await this.notificationModel.findOneAndUpdate(newNotif, {
+              $set: {
+                created_at: Date.now(),
+              },
+            });
+          }
+        }
+        return { message: 'Comment liked successfully' };
+      } else {
+        await this.likeModel.findOneAndDelete(query);
+       
+        return { message: 'Comment unLiked successfully' };
+      }
+    } catch (error) {
+      throw new BadRequestException('server error');
     }
   }
 }

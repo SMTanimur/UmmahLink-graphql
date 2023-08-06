@@ -412,6 +412,7 @@ type Mutation {
   updateComment(updateCommentInput: UpdateCommentInput!): MessageResponse!
   createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
   deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
+  likeOrUnlikeComment(likeOrUnlikeCommentInput: CreatePostOrCommentLikeInput!): MessageResponse!
   updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
@@ -472,6 +473,13 @@ input DeleteCommentInput {
   userID: ID!
 }
 
+input CreatePostOrCommentLikeInput {
+  user: ID
+  postId: ID
+  comment_id: ID
+  type: String
+}
+
 input NotificationUpdateArgs {
   notifiId: ID!
   unread: Boolean! = false
@@ -502,12 +510,6 @@ input UpdatePostInput {
 input DeletePostInput {
   user: ID
   postId: ID!
-}
-
-input CreatePostOrCommentLikeInput {
-  user: ID
-  postId: ID
-  type: String
 }
 
 input CreateUserInput {

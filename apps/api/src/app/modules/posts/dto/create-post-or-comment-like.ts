@@ -10,6 +10,9 @@ export class CreatePostOrCommentLikeInput {
 
   @Field((_type)=>ID,{nullable:true})
   postId?:string
+  
+  @Field((_type)=>ID,{nullable:true})
+  comment_id?:string
 
   @Field((_type)=>String,{nullable:true})
   type?:string
