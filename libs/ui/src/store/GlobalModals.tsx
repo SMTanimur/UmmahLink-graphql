@@ -1,15 +1,8 @@
 "use client"
 import { EditPost, Modal, NewCreatePost } from "../components";
 import { useGlobalModalStateStore } from "./modal";
-
-
 export const GlobalModals = () => {
-  // const showProfileSwitchModal = useGlobalModalStateStore(
-  //   (state) => state.showProfileSwitchModal
-  // );
-  // const setShowProfileSwitchModal = useGlobalModalStateStore(
-  //   (state) => state.setShowProfileSwitchModal
-  // );
+ 
   const showNewPostModal = useGlobalModalStateStore(
     (state) => state.showNewPostModal
   );
@@ -22,11 +15,8 @@ export const GlobalModals = () => {
   const showEditPostModal = useGlobalModalStateStore(
     (state) => state.showPostEdit
   );
-  const PostModal = useGlobalModalStateStore(
-    (state) => state.updatePost
-  );
 
-  console.log(PostModal,'PostModal')
+
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment

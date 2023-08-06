@@ -1,9 +1,10 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
 import { PhotosImageInput } from '../../posts/entities/post';
+import { AvatarImage } from '../../users/dto/ProfileData';
 
 @ObjectType()
-export class Author {
+export class CommentAuthor {
   @Field(() => ID, { nullable: true })
   id: string;
 
@@ -13,8 +14,8 @@ export class Author {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
-  avatar: string;
+  @Field(() => AvatarImage,{nullable:true})
+  avatar:AvatarImage
 
   @Field(() => String)
   name: string;
@@ -26,7 +27,7 @@ export class CommentPaginate {
   photos: PhotosImageInput[];
 
   @Field(() => String, { nullable: true })
-  content: string;
+  body: string;
 
   @Field(() => Date, { nullable: true })
   createdAt: Date;
@@ -34,36 +35,34 @@ export class CommentPaginate {
   @Field(() => Date, { nullable: true })
   updatedAt: Date;
 
-  @Field(() => Author)
-  author: Author;
+  @Field(() => CommentAuthor)
+  author: CommentAuthor
 
   @Field(() => Boolean, { nullable: true })
   isLiked: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  isOwnPost: boolean;
+  @Field(() => Boolean)
+  isPostOwner: boolean;
 
-  @Field(() => Number, { nullable: true })
-  commentsCount: number;
+  @Field(() => Boolean)
+  isOwnComment: boolean;
 
-  @Field(() => Int, { nullable: true })
+
+  @Field(() => Int)
   likesCount: number;
+
+  @Field(() => Int)
+  replyCount: number;
 
   @Field(() => String, { nullable: true })
   id: string;
+
+  @Field(() => ID, { nullable: true })
+  post_id: string;
 }
 
 @ObjectType()
 export class CommentPagination extends Paginated(CommentPaginate) {}
-@ObjectType()
-export class CommentResponse{
-  @Field(() => [CommentPaginate])
-  docs:CommentPaginate[]
-
-  
-  @Field(() => Number,{nullable:true})
-  next:number
-}
 
 
 

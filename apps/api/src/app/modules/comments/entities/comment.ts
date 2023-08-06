@@ -6,14 +6,15 @@ import mongoose, { Document } from 'mongoose';
 import { CoreEntity } from '@social-zone/common';
 import { User } from '../../users/entities/user.entity';
 import { IsArray, IsNotEmpty, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { Post } from '../../posts/entities/post';
 
 @ObjectType()
 @Schema({ versionKey: false, timestamps: true })
 @InputType('CommentInputType', { isAbstract: true })
 export class Comment extends CoreEntity {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true })
-  @Field((_type) => ID, { nullable: true })
-  postId: string
+  @Field((_type) => Post, { nullable: true })
+  _post_id: Post
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

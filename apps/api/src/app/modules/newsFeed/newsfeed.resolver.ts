@@ -3,7 +3,7 @@ import { NewsFeed } from "./entities/newsFeed";
 import { NewsFeedService } from "./newsfeed.service";
 import { UseGuards } from "@nestjs/common";
 import { AuthenticatedGuard } from "../auth/guards/authenticated.guard";
-import {  NewsFeedPagination, NewsFeedResponse } from "./dto/newsFeed-paginate";
+import {  NewsFeedPagination} from "./dto/newsFeed-paginate";
 import { NewsFeedQueryArgs } from "./dto/newsFeed-query-arg";
 import { CurrentUser, PaginateOptionArgs } from "@social-zone/common";
 import { GetFeedDto } from "./dto/optionArgs";

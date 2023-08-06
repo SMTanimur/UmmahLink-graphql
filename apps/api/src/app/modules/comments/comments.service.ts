@@ -1,7 +1,3 @@
-import { create } from 'zustand';
-/*
-https://docs.nestjs.com/providers#services
-*/
 
 import {
   BadRequestException,
@@ -10,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment, CommentDocument } from './entities/comment';
-import { PaginateModel } from 'mongoose';
+import mongoose, { AggregateOptions, Model, PaginateModel, Types } from 'mongoose';
 import { Post, PostDocument } from '../posts/entities/post';
 import {
   Notification,
@@ -19,24 +15,28 @@ import {
 import { CreateCommentInput } from './input/create-comment-input';
 import { CreateReplyInput } from './input/create-comment-replay-input';
 import { DeleteCommentInput } from './input/delete-comment-input';
+import { FilterQuery } from 'mongoose';
+import { CommentsQueryArgs } from './dto/comment-query-arg';
+import { AggregatePaginateModel } from 'mongoose';
+import { CommentPagination } from './dto/comment-paginate';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectModel(Comment.name)
-    private commentModel: PaginateModel<CommentDocument>,
-    @InjectModel(Post.name) private postModel: PaginateModel<PostDocument>,
+    private commentModel: AggregatePaginateModel<CommentDocument>,
+    @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Notification.name)
-    private notificationModel: PaginateModel<NotificationDocument>
+    private notificationModel: Model<NotificationDocument>
   ) {}
 
   async createComment(createCommentInput: CreateCommentInput) {
     try {
-      const { postId, body, authId } = createCommentInput;
-      const post = await this.postModel.findOne({ _id: postId });
+      const { _post_id, body, authId } = createCommentInput;
+      const post = await this.postModel.findOne({ _id: _post_id });
       if (!post) throw new NotFoundException('Post not found');
       const comment = await this.commentModel.create({
-        postId: post._id,
+        _post_id: post._id,
         body,
         authId,
       });
@@ -47,7 +47,7 @@ export class CommentsService {
       });
 
       await this.postModel.findOneAndUpdate(
-        { _id: postId },
+        { _id: _post_id },
         {
           $push: { comments: comment._id },
         },
@@ -59,7 +59,7 @@ export class CommentsService {
           type: 'comment',
           target: post._author_id,
           initiator: authId,
-          link: `/post/${postId}`,
+          link: `/post/${_post_id}`,
         });
       }
 
@@ -74,17 +74,17 @@ export class CommentsService {
 
   async createReply(createReplayInput: CreateReplyInput) {
     try {
-      const { body, commentId, postId, userId } = createReplayInput;
+      const { body, commentId, _post_id, userId } = createReplayInput;
 
       const comment = await this.commentModel.findOne({ _id: commentId });
       if (!comment)
         throw new NotFoundException('Unable to reply. Comment not found.');
 
-      const post = await this.postModel.findOne({ _id: postId });
+      const post = await this.postModel.findOne({ _id: _post_id });
       if (!post) throw new NotFoundException('Unable to reply. Post not found');
 
       const reply = await this.commentModel.create({
-        postId: comment.postId,
+        _post_id: comment._post_id,
         body,
         authId: userId,
         parent: comment._id,
@@ -97,7 +97,7 @@ export class CommentsService {
           type: 'comment',
           target: post._author_id,
           initiator: userId,
-          link: `/post/${postId}`,
+          link: `/post/${_post_id}`,
         });
 
         await notify.save().then(async (notify) => {
@@ -125,7 +125,7 @@ export class CommentsService {
       if (!comment) throw new NotFoundException('Comment not found');
 
       // FIND THE POST TO GET AUTHOR ID
-      const post = await this.postModel.findOne({ _id: comment.postId });
+      const post = await this.postModel.findOne({ _id: comment._post_id });
 
       const postAuthorID = post._author_id.toString();
       const commentAuthorID = comment.authId.toString();
@@ -137,9 +137,140 @@ export class CommentsService {
       }
       return {
         message: `Comment successfully deleted`,
-      }
+      };
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async getComments(
+    query?: FilterQuery<CommentsQueryArgs>,
+    options?: AggregateOptions
+  ) {
+    try {
+      const { postId,user } = query;
+
+      const { limit, page} = options;
+
+      const post = await this.postModel.findOne({_id:postId})
+      if(!post) throw new NotFoundException('Post not found')
+
+      const agg =  this.commentModel.aggregate([
+        {
+          $match: {
+            _post_id: post._id,
+            depth:1
+          },
+        },
+
+        { $sort: { createdAt: -1 } },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'authId',
+                foreignField: '_id',
+                as: 'author'
+            }
+        },
+        {
+            $unwind: '$author'
+        },
+        {
+            $project: {
+                author: {
+                    username: '$author.username',
+                    email: '$author.email',
+                    avatar: '$author.avatar',
+                    id: '$author._id'
+                },
+                depth: '$depth',
+                parent: '$parent',
+                body: '$body',
+                isEdited: '$isEdit',
+                post_id: '$_post_id',
+                createdAt: '$createdAt',
+                updatedAt: '$updatedAt',
+            }
+        },
+        {
+            $lookup: {
+                from: 'comments',
+                let: { id: '$_id' },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $and: [
+                                    { $eq: ['$parent', '$$id'] },
+                                    { $eq: ['$depth', 2] }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                as: 'replyCount'
+            }
+        },
+        {
+            $lookup: {
+                from: 'likes',
+                localField: '_id',
+                foreignField: 'target',
+                as: 'likes'
+            }
+        },
+        {
+            $addFields: {
+                likesUserIDs: {
+                    $map: {
+                        input: "$likes",
+                        as: "commentLike",
+                        in: '$$commentLike.user'
+                    }
+                }
+            }
+        },
+        {
+            $addFields: {
+                isOwnComment: {
+                    $eq: ['$author.id',user._id]
+                },
+                isLiked: {
+                    $in: [user?._id, '$likesUserIDs']
+                },
+                isPostOwner:post._author_id == user._id
+            } //user.id === comment.author.id || authorID === user.id)
+        },
+        {
+            $project: {
+                _id: 0,
+                id: '$_id',
+                depth: 1,
+                parent: 1,
+                author: 1,
+                isEdited: 1,
+                post_id: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                body: 1,
+                isOwnComment: 1,
+                isPostOwner: 1,
+                isLiked: 1,
+                replyCount: { $size: '$replyCount' },
+                likesCount: { $size: '$likes' }
+            }
+        },
+      ])
+    const res = await this.commentModel.aggregatePaginate(agg,{
+      ...(limit ? { limit } : {}),
+        ...(page ? { page } : {})
+    }) 
+
+    if(res.docs.length === 0) throw new NotFoundException('No comments found')
+     
+      return res
+    } catch (error) {
+      console.log(error)
     }
   }
 }

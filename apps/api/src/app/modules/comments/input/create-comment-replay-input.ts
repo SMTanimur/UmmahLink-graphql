@@ -7,7 +7,7 @@ import { Field, ID, InputType } from "@nestjs/graphql";
 export class CreateReplyInput {
 
   @Field((_type) => ID)
-  postId: string
+  _post_id: string
 
  
   @Field((_type) => ID, { nullable: true })

@@ -7,7 +7,6 @@ import type { FC } from 'react';
 import { Image, Slug } from '~ui';
 import SwitchTheme from './SwitchTheme';
 import YourProfile from './NavItems/YourProfile';
-import AppVersion from './NavItems/AppVersion';
 import Logout from './NavItems/Logout';
 
 const MobileDrawerMenu: FC = () => {

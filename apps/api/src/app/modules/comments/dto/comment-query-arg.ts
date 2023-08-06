@@ -10,4 +10,7 @@ export class CommentsQueryArgs {
 
   @Field((_type) => User,{nullable:true} )
   user: User
+
+  @Field((_type) => ID )
+  postId: string
 }

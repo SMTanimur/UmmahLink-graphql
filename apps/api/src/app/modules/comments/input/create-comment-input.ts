@@ -9,6 +9,6 @@ import { Comment } from "../entities/comment";
 @InputType()
 export class CreateCommentInput extends PickType(
   Comment,
-  ['authId', 'body','postId'],
+  ['authId', 'body','_post_id'],
   InputType
 ) {}

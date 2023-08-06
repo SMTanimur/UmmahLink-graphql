@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Comment } from './entities/comment';
 import { CommentsService } from './comments.service';
-import { CurrentUser, MessageResponse } from '@social-zone/common';
+import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { UseGuards } from '@nestjs/common';
 import { CreateCommentInput } from './input/create-comment-input';
 import { CreateReplyInput } from './input/create-comment-replay-input';
 import { DeleteCommentInput } from './input/delete-comment-input';
+import { CommentPagination } from './dto/comment-paginate';
+import { CommentsQueryArgs } from './dto/comment-query-arg';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -44,5 +46,17 @@ export class CommentResolver {
   ) {
     deleteCommentInput.userID = user._id;
     return await this.commentService.deleteComment(deleteCommentInput);
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Query(() =>CommentPagination ,{name:'getComments',nullable:true})
+  async  getSuggestionPeople(
+    @Args('query') query: CommentsQueryArgs,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any,
+  ) {
+  
+    query.user = user
+    return await this.commentService.getComments(query, options);
   }
 }

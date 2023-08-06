@@ -47,13 +47,13 @@ export class ProfileInformation {
   contact?: string;
 
   @Field(() => AvatarImage,{nullable:true} )
-  avatar:AvatarImage | string
+  avatar:AvatarImage 
 
   @Field(() => String)
   email:string
 
   @Field(()=>CoverImage,{nullable:true})
-  coverPicture:CoverImage | string
+  coverPicture:CoverImage
 
   @Field(()=>Number,{nullable:true})
   followingCount:number

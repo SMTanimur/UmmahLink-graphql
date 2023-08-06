@@ -5,7 +5,7 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { BadRequestException, Inject, Injectable, forwardRef } from '@nestjs/common';
+import { BadRequestException,  Injectable, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { NewsFeed, NewsFeedDocument } from './entities/newsFeed';
 import { AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
@@ -28,7 +28,6 @@ export class NewsFeedService {
     try {
       const { user } = query;
       const { limit, page, orderBy, sortedBy } = options;
-      const skip = (page - 1) * limit;
 
       const agg = this.newsFeedModel.aggregate([
         {

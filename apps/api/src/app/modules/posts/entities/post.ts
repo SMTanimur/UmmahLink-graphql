@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType} from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
@@ -26,7 +26,7 @@ import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-vali
 export class Post  {
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref:'User'})
-  @Field((_type) =>User, { nullable: true })
+  @Field((_type) =>ID, { nullable: true })
   _author_id: User;
 
   @Prop()

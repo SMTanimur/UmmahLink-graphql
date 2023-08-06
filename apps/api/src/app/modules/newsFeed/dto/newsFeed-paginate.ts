@@ -56,15 +56,7 @@ export class NewsFeedPaginate {
 
 @ObjectType()
 export class NewsFeedPagination extends Paginated(NewsFeedPaginate) {}
-@ObjectType()
-export class NewsFeedResponse{
-  @Field(() => [NewsFeedPaginate])
-  docs:NewsFeedPaginate[]
 
-  
-  @Field(() => Number,{nullable:true})
-  next:number
-}
 
 
 
