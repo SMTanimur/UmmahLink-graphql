@@ -1,0 +1,6 @@
+mutation CreateComment ($input: CreateCommentInput!) {
+  createComment(createCommentInput: $input){
+    message
+    __typename
+  }
+}

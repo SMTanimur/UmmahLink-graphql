@@ -1,0 +1,6 @@
+mutation ReplyComment($input:CreateReplyInput!){
+  createCommentReply(createReplyInput: $input){
+    message
+    __typename
+  }
+}

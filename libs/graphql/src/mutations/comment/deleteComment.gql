@@ -1,0 +1,6 @@
+mutation DeleteComment ($input: DeleteCommentInput!){
+  deleteComment(deleteCommentInput: $input){
+    message
+    __typename
+  }
+}

@@ -1,0 +1,39 @@
+query GetComments ($query:CommentsQueryArgs!,$option:PaginateOptionArgs!){
+  getComments(query: $query,option: $option){
+    docs{
+      photos{
+        photosUrl
+        photosPublicId
+        __typename
+      }
+      replyCount
+      id
+      post_id
+      __typename
+       body
+       createdAt
+       updatedAt
+       author{
+        id
+        username
+        email
+        avatar{
+          avatarUrl
+          avatarPublicId
+          __typename
+        }
+        name
+       }
+    }
+    __typename
+    totalDocs
+    limit
+    page
+    totalPages
+    hasNextPage
+    hasPrevPage
+    nextPage
+    prevPage
+    pagingCounter
+  }
+}

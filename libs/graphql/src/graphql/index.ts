@@ -67,6 +67,51 @@ export type CloseRequestInput = {
   target?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type CommentAuthor = {
+  __typename?: 'CommentAuthor';
+  avatar?: Maybe<AvatarImage>;
+  email: Scalars['String']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
+export type CommentPaginate = {
+  __typename?: 'CommentPaginate';
+  author: CommentAuthor;
+  body?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  isEdited: Scalars['Boolean']['output'];
+  isLiked?: Maybe<Scalars['Boolean']['output']>;
+  isOwnComment: Scalars['Boolean']['output'];
+  isPostOwner: Scalars['Boolean']['output'];
+  likesCount: Scalars['Int']['output'];
+  photos?: Maybe<Array<PhotosImageInfo>>;
+  post_id?: Maybe<Scalars['ID']['output']>;
+  replyCount: Scalars['Int']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type CommentPagination = {
+  __typename?: 'CommentPagination';
+  docs?: Maybe<Array<Maybe<CommentPaginate>>>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Float']['output'];
+  nextPage?: Maybe<Scalars['Float']['output']>;
+  page: Scalars['Float']['output'];
+  pagingCounter: Scalars['Float']['output'];
+  prevPage?: Maybe<Scalars['Float']['output']>;
+  totalDocs: Scalars['Float']['output'];
+  totalPages: Scalars['Float']['output'];
+};
+
+export type CommentsQueryArgs = {
+  postId: Scalars['ID']['input'];
+  user?: InputMaybe<UserInputType>;
+};
+
 export type CoverImage = {
   __typename?: 'CoverImage';
   coverPublicId?: Maybe<Scalars['String']['output']>;
@@ -85,9 +130,9 @@ export type CoverImageInput = {
 };
 
 export type CreateCommentInput = {
+  _post_id?: InputMaybe<PostInputType>;
   authId?: InputMaybe<UserInputType>;
   body: Scalars['String']['input'];
-  postId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CreateFriendRequestInput = {
@@ -96,21 +141,22 @@ export type CreateFriendRequestInput = {
 };
 
 export type CreatePostInput = {
-  _author_id?: InputMaybe<UserInputType>;
+  _author_id?: InputMaybe<Scalars['ID']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
   photos?: InputMaybe<Array<PhotosImageInput>>;
 };
 
 export type CreatePostOrCommentLikeInput = {
+  comment_id?: InputMaybe<Scalars['ID']['input']>;
   postId?: InputMaybe<Scalars['ID']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CreateReplyInput = {
+  _post_id: Scalars['ID']['input'];
   body: Scalars['String']['input'];
   commentId: Scalars['ID']['input'];
-  postId: Scalars['ID']['input'];
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -252,10 +298,12 @@ export type Mutation = {
   deleteComment: MessageResponse;
   deletePost: MessageResponse;
   followUser: MessageResponse;
+  likeOrUnlikeComment: MessageResponse;
   likeOrUnlikePost: MessageResponse;
   login: LoginResponse;
   logout: MessageResponse;
   unFollowUser: MessageResponse;
+  updateComment: MessageResponse;
   updateNotification: Scalars['Boolean']['output'];
   updatePost: MessageResponse;
   updateUser: MessageResponse;
@@ -297,6 +345,10 @@ export type MutationFollowUserArgs = {
   followOrUnFollowInput: FollowOrUnFollowInput;
 };
 
+export type MutationLikeOrUnlikeCommentArgs = {
+  likeOrUnlikeCommentInput: CreatePostOrCommentLikeInput;
+};
+
 export type MutationLikeOrUnlikePostArgs = {
   likeOrUnlikePostInput: CreatePostOrCommentLikeInput;
 };
@@ -307,6 +359,10 @@ export type MutationLoginArgs = {
 
 export type MutationUnFollowUserArgs = {
   followOrUnFollowInput: FollowOrUnFollowInput;
+};
+
+export type MutationUpdateCommentArgs = {
+  updateCommentInput: UpdateCommentInput;
 };
 
 export type MutationUpdateNotificationArgs = {
@@ -440,7 +496,7 @@ export type PhotosImageInput = {
 
 export type Post = {
   __typename?: 'Post';
-  _author_id?: Maybe<User>;
+  _author_id?: Maybe<Scalars['ID']['output']>;
   comments?: Maybe<Array<User>>;
   content?: Maybe<Scalars['String']['output']>;
   /** Created At */
@@ -449,6 +505,18 @@ export type Post = {
   photos?: Maybe<Array<PhotosImageInfo>>;
   /** Updated At */
   updatedAt: Scalars['DateTime']['output'];
+};
+
+export type PostInputType = {
+  _author_id?: InputMaybe<Scalars['ID']['input']>;
+  comments?: InputMaybe<Array<UserInputType>>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  /** Created At */
+  createdAt: Scalars['DateTime']['input'];
+  likes?: InputMaybe<Array<UserInputType>>;
+  photos?: InputMaybe<Array<PhotosImageInput>>;
+  /** Updated At */
+  updatedAt: Scalars['DateTime']['input'];
 };
 
 export type ProfileInformation = {
@@ -471,17 +539,24 @@ export type ProfileInformation = {
 
 export type Query = {
   __typename?: 'Query';
+  getComments?: Maybe<CommentPagination>;
   getFeeds?: Maybe<NewsFeedPagination>;
   getFollowers: FollowPagination;
   getFollowing: FollowPagination;
   getPostLikes: Array<GetLikeResponse>;
   getPosts: NewsFeedPagination;
+  getReplies?: Maybe<CommentPagination>;
   getSuggestionPeople?: Maybe<FollowPagination>;
   me: IUser;
   notifications: NotificationPagination;
   post: Post;
   searchUser?: Maybe<Array<IUser>>;
   user?: Maybe<ProfileInformation>;
+};
+
+export type QueryGetCommentsArgs = {
+  option: PaginateOptionArgs;
+  query: CommentsQueryArgs;
 };
 
 export type QueryGetFeedsArgs = {
@@ -510,6 +585,11 @@ export type QueryGetPostsArgs = {
   option: GetFeedDto;
   query: NewsFeedQueryArgs;
   username: Scalars['String']['input'];
+};
+
+export type QueryGetRepliesArgs = {
+  option: PaginateOptionArgs;
+  query: ReplyQueryArgs;
 };
 
 export type QueryGetSuggestionPeopleArgs = {
@@ -553,6 +633,12 @@ export enum QueryPostOrderByColumn {
   UpdatedAt = 'UPDATED_AT',
 }
 
+export type ReplyQueryArgs = {
+  comment_id: Scalars['ID']['input'];
+  post_id: Scalars['ID']['input'];
+  user?: InputMaybe<UserInputType>;
+};
+
 export type SearchDto = {
   keyword: Scalars['String']['input'];
   user?: InputMaybe<UserInputType>;
@@ -563,8 +649,21 @@ export enum SortOrder {
   Desc = 'DESC',
 }
 
+export type UpdateCommentInput = {
+  _post_id?: InputMaybe<PostInputType>;
+  authId?: InputMaybe<UserInputType>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  commentId: Scalars['ID']['input'];
+  depth?: InputMaybe<Scalars['Float']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  isEdited?: InputMaybe<Scalars['Boolean']['input']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  parents?: InputMaybe<Array<Scalars['ID']['input']>>;
+  user?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type UpdatePostInput = {
-  _author_id?: InputMaybe<UserInputType>;
+  _author_id?: InputMaybe<Scalars['ID']['input']>;
   comments?: InputMaybe<Array<UserInputType>>;
   content?: InputMaybe<Scalars['String']['input']>;
   /** Created At */
@@ -670,6 +769,51 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation'; createUser: string };
 
+export type CreateCommentMutationVariables = Exact<{
+  input: CreateCommentInput;
+}>;
+
+export type CreateCommentMutation = {
+  __typename?: 'Mutation';
+  createComment: { __typename: 'MessageResponse'; message: string };
+};
+
+export type ReplyCommentMutationVariables = Exact<{
+  input: CreateReplyInput;
+}>;
+
+export type ReplyCommentMutation = {
+  __typename?: 'Mutation';
+  createCommentReply: { __typename: 'MessageResponse'; message: string };
+};
+
+export type DeleteCommentMutationVariables = Exact<{
+  input: DeleteCommentInput;
+}>;
+
+export type DeleteCommentMutation = {
+  __typename?: 'Mutation';
+  deleteComment: { __typename: 'MessageResponse'; message: string };
+};
+
+export type LikeOrUnlikeCommentMutationVariables = Exact<{
+  input: CreatePostOrCommentLikeInput;
+}>;
+
+export type LikeOrUnlikeCommentMutation = {
+  __typename?: 'Mutation';
+  likeOrUnlikeComment: { __typename: 'MessageResponse'; message: string };
+};
+
+export type UpdateCommentMutationVariables = Exact<{
+  input: UpdateCommentInput;
+}>;
+
+export type UpdateCommentMutation = {
+  __typename?: 'Mutation';
+  updateComment: { __typename: 'MessageResponse'; message: string };
+};
+
 export type FollowUserMutationVariables = Exact<{
   followOrUnFollowInput: FollowOrUnFollowInput;
 }>;
@@ -732,6 +876,100 @@ export type ProfileUpdateMutationVariables = Exact<{
 export type ProfileUpdateMutation = {
   __typename?: 'Mutation';
   updateUser: { __typename?: 'MessageResponse'; message: string };
+};
+
+export type GetCommentsQueryVariables = Exact<{
+  query: CommentsQueryArgs;
+  option: PaginateOptionArgs;
+}>;
+
+export type GetCommentsQuery = {
+  __typename?: 'Query';
+  getComments?: {
+    __typename: 'CommentPagination';
+    totalDocs: number;
+    limit: number;
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    prevPage?: number | null;
+    pagingCounter: number;
+    docs?: Array<{
+      __typename: 'CommentPaginate';
+      replyCount: number;
+      id?: string | null;
+      post_id?: string | null;
+      body?: string | null;
+      createdAt?: any | null;
+      updatedAt?: any | null;
+      photos?: Array<{
+        __typename: 'PhotosImageInfo';
+        photosUrl?: string | null;
+        photosPublicId?: string | null;
+      }> | null;
+      author: {
+        __typename?: 'CommentAuthor';
+        id?: string | null;
+        username: string;
+        email: string;
+        name: string;
+        avatar?: {
+          __typename: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+    } | null> | null;
+  } | null;
+};
+
+export type GetRepliesCommentQueryVariables = Exact<{
+  query: ReplyQueryArgs;
+  option: PaginateOptionArgs;
+}>;
+
+export type GetRepliesCommentQuery = {
+  __typename?: 'Query';
+  getReplies?: {
+    __typename: 'CommentPagination';
+    totalDocs: number;
+    limit: number;
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    prevPage?: number | null;
+    pagingCounter: number;
+    docs?: Array<{
+      __typename: 'CommentPaginate';
+      replyCount: number;
+      id?: string | null;
+      post_id?: string | null;
+      body?: string | null;
+      createdAt?: any | null;
+      updatedAt?: any | null;
+      photos?: Array<{
+        __typename: 'PhotosImageInfo';
+        photosUrl?: string | null;
+        photosPublicId?: string | null;
+      }> | null;
+      author: {
+        __typename?: 'CommentAuthor';
+        id?: string | null;
+        username: string;
+        email: string;
+        name: string;
+        avatar?: {
+          __typename: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+    } | null> | null;
+  } | null;
 };
 
 export type GetFeedQueryVariables = Exact<{
@@ -1160,6 +1398,214 @@ useRegisterMutation.fetcher = (
     variables,
     options
   );
+export const CreateCommentDocument = /*#__PURE__*/ `
+    mutation CreateComment($input: CreateCommentInput!) {
+  createComment(createCommentInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useCreateCommentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateCommentMutation,
+    TError,
+    CreateCommentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateCommentMutation,
+    TError,
+    CreateCommentMutationVariables,
+    TContext
+  >(
+    ['CreateComment'],
+    (variables?: CreateCommentMutationVariables) =>
+      fetcher<CreateCommentMutation, CreateCommentMutationVariables>(
+        CreateCommentDocument,
+        variables
+      )(),
+    options
+  );
+useCreateCommentMutation.getKey = () => ['CreateComment'];
+
+useCreateCommentMutation.fetcher = (
+  variables: CreateCommentMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<CreateCommentMutation, CreateCommentMutationVariables>(
+    CreateCommentDocument,
+    variables,
+    options
+  );
+export const ReplyCommentDocument = /*#__PURE__*/ `
+    mutation ReplyComment($input: CreateReplyInput!) {
+  createCommentReply(createReplyInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useReplyCommentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ReplyCommentMutation,
+    TError,
+    ReplyCommentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ReplyCommentMutation,
+    TError,
+    ReplyCommentMutationVariables,
+    TContext
+  >(
+    ['ReplyComment'],
+    (variables?: ReplyCommentMutationVariables) =>
+      fetcher<ReplyCommentMutation, ReplyCommentMutationVariables>(
+        ReplyCommentDocument,
+        variables
+      )(),
+    options
+  );
+useReplyCommentMutation.getKey = () => ['ReplyComment'];
+
+useReplyCommentMutation.fetcher = (
+  variables: ReplyCommentMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<ReplyCommentMutation, ReplyCommentMutationVariables>(
+    ReplyCommentDocument,
+    variables,
+    options
+  );
+export const DeleteCommentDocument = /*#__PURE__*/ `
+    mutation DeleteComment($input: DeleteCommentInput!) {
+  deleteComment(deleteCommentInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useDeleteCommentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCommentMutation,
+    TError,
+    DeleteCommentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteCommentMutation,
+    TError,
+    DeleteCommentMutationVariables,
+    TContext
+  >(
+    ['DeleteComment'],
+    (variables?: DeleteCommentMutationVariables) =>
+      fetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(
+        DeleteCommentDocument,
+        variables
+      )(),
+    options
+  );
+useDeleteCommentMutation.getKey = () => ['DeleteComment'];
+
+useDeleteCommentMutation.fetcher = (
+  variables: DeleteCommentMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(
+    DeleteCommentDocument,
+    variables,
+    options
+  );
+export const LikeOrUnlikeCommentDocument = /*#__PURE__*/ `
+    mutation LikeOrUnlikeComment($input: CreatePostOrCommentLikeInput!) {
+  likeOrUnlikeComment(likeOrUnlikeCommentInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useLikeOrUnlikeCommentMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    LikeOrUnlikeCommentMutation,
+    TError,
+    LikeOrUnlikeCommentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    LikeOrUnlikeCommentMutation,
+    TError,
+    LikeOrUnlikeCommentMutationVariables,
+    TContext
+  >(
+    ['LikeOrUnlikeComment'],
+    (variables?: LikeOrUnlikeCommentMutationVariables) =>
+      fetcher<
+        LikeOrUnlikeCommentMutation,
+        LikeOrUnlikeCommentMutationVariables
+      >(LikeOrUnlikeCommentDocument, variables)(),
+    options
+  );
+useLikeOrUnlikeCommentMutation.getKey = () => ['LikeOrUnlikeComment'];
+
+useLikeOrUnlikeCommentMutation.fetcher = (
+  variables: LikeOrUnlikeCommentMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<LikeOrUnlikeCommentMutation, LikeOrUnlikeCommentMutationVariables>(
+    LikeOrUnlikeCommentDocument,
+    variables,
+    options
+  );
+export const UpdateCommentDocument = /*#__PURE__*/ `
+    mutation UpdateComment($input: UpdateCommentInput!) {
+  updateComment(updateCommentInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useUpdateCommentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCommentMutation,
+    TError,
+    UpdateCommentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateCommentMutation,
+    TError,
+    UpdateCommentMutationVariables,
+    TContext
+  >(
+    ['UpdateComment'],
+    (variables?: UpdateCommentMutationVariables) =>
+      fetcher<UpdateCommentMutation, UpdateCommentMutationVariables>(
+        UpdateCommentDocument,
+        variables
+      )(),
+    options
+  );
+useUpdateCommentMutation.getKey = () => ['UpdateComment'];
+
+useUpdateCommentMutation.fetcher = (
+  variables: UpdateCommentMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UpdateCommentMutation, UpdateCommentMutationVariables>(
+    UpdateCommentDocument,
+    variables,
+    options
+  );
 export const FollowUserDocument = /*#__PURE__*/ `
     mutation FollowUser($followOrUnFollowInput: FollowOrUnFollowInput!) {
   followUser(followOrUnFollowInput: $followOrUnFollowInput) {
@@ -1442,6 +1888,142 @@ useProfileUpdateMutation.fetcher = (
 ) =>
   fetcher<ProfileUpdateMutation, ProfileUpdateMutationVariables>(
     ProfileUpdateDocument,
+    variables,
+    options
+  );
+export const GetCommentsDocument = /*#__PURE__*/ `
+    query GetComments($query: CommentsQueryArgs!, $option: PaginateOptionArgs!) {
+  getComments(query: $query, option: $option) {
+    docs {
+      photos {
+        photosUrl
+        photosPublicId
+        __typename
+      }
+      replyCount
+      id
+      post_id
+      __typename
+      body
+      createdAt
+      updatedAt
+      author {
+        id
+        username
+        email
+        avatar {
+          avatarUrl
+          avatarPublicId
+          __typename
+        }
+        name
+      }
+    }
+    __typename
+    totalDocs
+    limit
+    page
+    totalPages
+    hasNextPage
+    hasPrevPage
+    nextPage
+    prevPage
+    pagingCounter
+  }
+}
+    `;
+export const useGetCommentsQuery = <TData = GetCommentsQuery, TError = unknown>(
+  variables: GetCommentsQueryVariables,
+  options?: UseQueryOptions<GetCommentsQuery, TError, TData>
+) =>
+  useQuery<GetCommentsQuery, TError, TData>(
+    ['GetComments', variables],
+    fetcher<GetCommentsQuery, GetCommentsQueryVariables>(
+      GetCommentsDocument,
+      variables
+    ),
+    options
+  );
+
+useGetCommentsQuery.getKey = (variables: GetCommentsQueryVariables) => [
+  'GetComments',
+  variables,
+];
+useGetCommentsQuery.fetcher = (
+  variables: GetCommentsQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetCommentsQuery, GetCommentsQueryVariables>(
+    GetCommentsDocument,
+    variables,
+    options
+  );
+export const GetRepliesCommentDocument = /*#__PURE__*/ `
+    query GetRepliesComment($query: ReplyQueryArgs!, $option: PaginateOptionArgs!) {
+  getReplies(query: $query, option: $option) {
+    docs {
+      photos {
+        photosUrl
+        photosPublicId
+        __typename
+      }
+      replyCount
+      id
+      post_id
+      __typename
+      body
+      createdAt
+      updatedAt
+      author {
+        id
+        username
+        email
+        avatar {
+          avatarUrl
+          avatarPublicId
+          __typename
+        }
+        name
+      }
+    }
+    __typename
+    totalDocs
+    limit
+    page
+    totalPages
+    hasNextPage
+    hasPrevPage
+    nextPage
+    prevPage
+    pagingCounter
+  }
+}
+    `;
+export const useGetRepliesCommentQuery = <
+  TData = GetRepliesCommentQuery,
+  TError = unknown
+>(
+  variables: GetRepliesCommentQueryVariables,
+  options?: UseQueryOptions<GetRepliesCommentQuery, TError, TData>
+) =>
+  useQuery<GetRepliesCommentQuery, TError, TData>(
+    ['GetRepliesComment', variables],
+    fetcher<GetRepliesCommentQuery, GetRepliesCommentQueryVariables>(
+      GetRepliesCommentDocument,
+      variables
+    ),
+    options
+  );
+
+useGetRepliesCommentQuery.getKey = (
+  variables: GetRepliesCommentQueryVariables
+) => ['GetRepliesComment', variables];
+useGetRepliesCommentQuery.fetcher = (
+  variables: GetRepliesCommentQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetRepliesCommentQuery, GetRepliesCommentQueryVariables>(
+    GetRepliesCommentDocument,
     variables,
     options
   );

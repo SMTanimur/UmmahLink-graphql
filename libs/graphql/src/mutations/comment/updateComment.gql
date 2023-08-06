@@ -1,0 +1,6 @@
+mutation UpdateComment ($input:UpdateCommentInput!){
+  updateComment(updateCommentInput: $input){
+   message
+   __typename
+  }
+}
