@@ -10,6 +10,8 @@ import { CreateReplyInput } from './input/create-comment-replay-input';
 import { DeleteCommentInput } from './input/delete-comment-input';
 import { CommentPagination } from './dto/comment-paginate';
 import { CommentsQueryArgs } from './dto/comment-query-arg';
+import { UpdateCommentInput } from './input/update-comment-input';
+import { ReplyQueryArgs } from './dto/reply-query-arg';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -24,6 +26,16 @@ export class CommentResolver {
   ) {
     createCommentInput.authId = user._id;
     return await this.commentService.createComment(createCommentInput);
+  }
+  @Mutation(() => MessageResponse)
+  @UseGuards(AuthenticatedGuard)
+  async updateComment(
+    @CurrentUser() user: any,
+    @Args('updateCommentInput')
+    updateCommentInput: UpdateCommentInput
+  ) {
+    updateCommentInput.user = user._id;
+    return await this.commentService.updateComment(updateCommentInput);
   }
 
   @Mutation(() => MessageResponse)
@@ -50,7 +62,7 @@ export class CommentResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Query(() =>CommentPagination ,{name:'getComments',nullable:true})
-  async  getSuggestionPeople(
+  async  getComments(
     @Args('query') query: CommentsQueryArgs,
     @Args('option') options: PaginateOptionArgs,
     @CurrentUser() user: any,
@@ -58,5 +70,17 @@ export class CommentResolver {
   
     query.user = user
     return await this.commentService.getComments(query, options);
+  }
+  @UseGuards(AuthenticatedGuard)
+  @Query(() =>CommentPagination ,{name:'getReplies',nullable:true})
+  async  getReplies(
+    @Args('query') query: ReplyQueryArgs,
+    @Args('option') options: PaginateOptionArgs,
+    @CurrentUser() user: any,
+  ) {
+  
+    query.user = user
+  
+    return await this.commentService.getReplies(query, options);
   }
 }

@@ -1,4 +1,3 @@
-
 import {
   BadRequestException,
   Injectable,
@@ -6,7 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment, CommentDocument } from './entities/comment';
-import mongoose, { AggregateOptions, Model, PaginateModel, Types } from 'mongoose';
+import mongoose, {
+  AggregateOptions,
+  Model,
+  PaginateModel,
+  Types,
+} from 'mongoose';
 import { Post, PostDocument } from '../posts/entities/post';
 import {
   Notification,
@@ -19,6 +23,8 @@ import { FilterQuery } from 'mongoose';
 import { CommentsQueryArgs } from './dto/comment-query-arg';
 import { AggregatePaginateModel } from 'mongoose';
 import { CommentPagination } from './dto/comment-paginate';
+import { UpdateCommentInput } from './input/update-comment-input';
+import { ReplyQueryArgs } from './dto/reply-query-arg';
 
 @Injectable()
 export class CommentsService {
@@ -69,6 +75,43 @@ export class CommentsService {
     } catch (error) {
       console.log(error);
       throw new BadRequestException('Error creating comment');
+    }
+  }
+
+  async updateComment(updateCommentInput: UpdateCommentInput) {
+    try {
+      const { commentId, user, body } = updateCommentInput;
+      const comment = await this.commentModel.findOne({ _id: commentId });
+      if (!comment) throw new NotFoundException('Comment not found');
+      const post = await this.postModel.findOne({ _id: comment._post_id });
+      if (!post) throw new NotFoundException('Post not found');
+
+      if (String(comment.authId) === String(user)) {
+        const updateComment = await this.commentModel.findOneAndUpdate(
+          { _id: commentId },
+          {
+            $set: {
+              body,
+              isEdit: true,
+              updated_at: Date.now(),
+            },
+          },
+          {
+            new: true,
+          }
+        );
+
+        await updateComment.save();
+        return {
+          message: `Comment successfully updated`,
+        };
+      } else {
+        throw new BadRequestException(
+          'You are not authorized to edit this comment'
+        );
+      }
+    } catch (error) {
+      throw new BadRequestException('Error updating comment');
     }
   }
 
@@ -148,129 +191,264 @@ export class CommentsService {
     options?: AggregateOptions
   ) {
     try {
-      const { postId,user } = query;
+      const { postId, user } = query;
 
-      const { limit, page} = options;
+      const { limit, page } = options;
 
-      const post = await this.postModel.findOne({_id:postId})
-      if(!post) throw new NotFoundException('Post not found')
+      const post = await this.postModel.findOne({ _id: postId });
+      if (!post) throw new NotFoundException('Post not found');
 
-      const agg =  this.commentModel.aggregate([
+      const agg = this.commentModel.aggregate([
         {
           $match: {
             _post_id: post._id,
-            depth:1
+            depth: 1,
           },
         },
 
         { $sort: { createdAt: -1 } },
         {
-            $lookup: {
-                from: 'users',
-                localField: 'authId',
-                foreignField: '_id',
-                as: 'author'
-            }
+          $lookup: {
+            from: 'users',
+            localField: 'authId',
+            foreignField: '_id',
+            as: 'author',
+          },
         },
         {
-            $unwind: '$author'
+          $unwind: '$author',
         },
         {
-            $project: {
-                author: {
-                    username: '$author.username',
-                    email: '$author.email',
-                    avatar: '$author.avatar',
-                    id: '$author._id'
+          $project: {
+            author: {
+              username: '$author.username',
+              email: '$author.email',
+              avatar: '$author.avatar',
+              id: '$author._id',
+            },
+            depth: '$depth',
+            parent: '$parent',
+            body: '$body',
+            isEdited: '$isEdit',
+            post_id: '$_post_id',
+            createdAt: '$createdAt',
+            updatedAt: '$updatedAt',
+          },
+        },
+        {
+          $lookup: {
+            from: 'comments',
+            let: { id: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ['$parent', '$$id'] },
+                      { $eq: ['$depth', 2] },
+                    ],
+                  },
                 },
-                depth: '$depth',
-                parent: '$parent',
-                body: '$body',
-                isEdited: '$isEdit',
-                post_id: '$_post_id',
-                createdAt: '$createdAt',
-                updatedAt: '$updatedAt',
-            }
+              },
+            ],
+            as: 'replyCount',
+          },
         },
         {
-            $lookup: {
-                from: 'comments',
-                let: { id: '$_id' },
-                pipeline: [
-                    {
-                        $match: {
-                            $expr: {
-                                $and: [
-                                    { $eq: ['$parent', '$$id'] },
-                                    { $eq: ['$depth', 2] }
-                                ]
-                            }
-                        }
-                    }
-                ],
-                as: 'replyCount'
-            }
+          $lookup: {
+            from: 'likes',
+            localField: '_id',
+            foreignField: 'target',
+            as: 'likes',
+          },
         },
         {
-            $lookup: {
-                from: 'likes',
-                localField: '_id',
-                foreignField: 'target',
-                as: 'likes'
-            }
+          $addFields: {
+            likesUserIDs: {
+              $map: {
+                input: '$likes',
+                as: 'commentLike',
+                in: '$$commentLike.user',
+              },
+            },
+          },
         },
         {
-            $addFields: {
-                likesUserIDs: {
-                    $map: {
-                        input: "$likes",
-                        as: "commentLike",
-                        in: '$$commentLike.user'
-                    }
-                }
-            }
+          $addFields: {
+            isOwnComment: {
+              $eq: ['$author.id', user._id],
+            },
+            isLiked: {
+              $in: [user?._id, '$likesUserIDs'],
+            },
+            isPostOwner: post._author_id.toString() == user._id.toString(),
+          }, //user.id === comment.author.id || authorID === user.id)
         },
         {
-            $addFields: {
-                isOwnComment: {
-                    $eq: ['$author.id',user._id]
-                },
-                isLiked: {
-                    $in: [user?._id, '$likesUserIDs']
-                },
-                isPostOwner:post._author_id == user._id
-            } //user.id === comment.author.id || authorID === user.id)
+          $project: {
+            _id: 0,
+            id: '$_id',
+            depth: 1,
+            parent: 1,
+            author: 1,
+            isEdited: 1,
+            post_id: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            body: 1,
+            isOwnComment: 1,
+            isPostOwner: 1,
+            isLiked: 1,
+            replyCount: { $size: '$replyCount' },
+            likesCount: { $size: '$likes' },
+          },
         },
-        {
-            $project: {
-                _id: 0,
-                id: '$_id',
-                depth: 1,
-                parent: 1,
-                author: 1,
-                isEdited: 1,
-                post_id: 1,
-                createdAt: 1,
-                updatedAt: 1,
-                body: 1,
-                isOwnComment: 1,
-                isPostOwner: 1,
-                isLiked: 1,
-                replyCount: { $size: '$replyCount' },
-                likesCount: { $size: '$likes' }
-            }
-        },
-      ])
-    const res = await this.commentModel.aggregatePaginate(agg,{
-      ...(limit ? { limit } : {}),
-        ...(page ? { page } : {})
-    }) 
+      ]);
+      const res = await this.commentModel.aggregatePaginate(agg, {
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      });
 
-    if(res.docs.length === 0) throw new NotFoundException('No comments found')
-     
-      return res
+      if (res.docs.length === 0)
+        throw new NotFoundException('No comments found');
+
+      return res;
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  }
+
+  async getReplies(
+    query?: FilterQuery<ReplyQueryArgs>,
+    options?: AggregateOptions
+  ) {
+    try {
+      const { comment_id, user ,post_id} = query;
+
+      const { limit, page } = options;
+
+      const reply = await this.commentModel.findOne({ _id: comment_id});
+      if (!reply) throw new NotFoundException('Reply not found');
+      const post = await this.postModel.findOne({ _id: post_id });
+      if (!post) throw new NotFoundException('Post not found');
+
+      const agg = this.commentModel.aggregate([
+        {
+          $match: {
+            parent: reply._id,
+            depth: reply.depth +1,
+          },
+        },
+
+        { $sort: { createdAt: -1 } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'authId',
+            foreignField: '_id',
+            as: 'author',
+          },
+        },
+        {
+          $unwind: '$author',
+        },
+        {
+          $project: {
+            author: {
+              username: '$author.username',
+              email: '$author.email',
+              avatar: '$author.avatar',
+              id: '$author._id',
+            },
+            depth: '$depth',
+            parent: '$parent',
+            body: '$body',
+            isEdited: '$isEdit',
+            post_id: '$_post_id',
+            createdAt: '$createdAt',
+            updatedAt: '$updatedAt',
+          },
+        },
+        {
+          $lookup: {
+            from: 'comments',
+            let: { id: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                      $and: [
+                          { $eq: ['$parent', '$$id'] },
+                          { $eq: ['$depth', reply.depth + 2] }
+                      ]
+                  }
+              }
+              },
+            ],
+            as: 'replyCount',
+          },
+        },
+        {
+          $lookup: {
+            from: 'likes',
+            localField: '_id',
+            foreignField: 'target',
+            as: 'likes',
+          },
+        },
+        {
+          $addFields: {
+            likesUserIDs: {
+              $map: {
+                input: '$likes',
+                as: 'commentLike',
+                in: '$$commentLike.user',
+              },
+            },
+          },
+        },
+        {
+          $addFields: {
+            isOwnComment: {
+              $eq: ['$author.id', user._id],
+            },
+            isLiked: {
+              $in: [user?._id, '$likesUserIDs'],
+            },
+            isPostOwner: post._author_id.toString() == user._id.toString(),
+          }, //user.id === comment.author.id || authorID === user.id)
+        },
+        {
+          $project: {
+            _id: 0,
+            id: '$_id',
+            depth: 1,
+            parent: 1,
+            author: 1,
+            isEdited: 1,
+            post_id: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            body: 1,
+            isOwnComment: 1,
+            isPostOwner: 1,
+            isLiked: 1,
+            replyCount: { $size: '$replyCount' },
+            likesCount: { $size: '$likes' },
+          },
+        },
+      ]);
+      const res = await this.commentModel.aggregatePaginate(agg, {
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      });
+
+      // if (res.docs.length === 0)
+      //   throw new NotFoundException('No comments found');
+
+      return res;
+    } catch (error) {
+      console.log(error);
     }
   }
 }

@@ -46,7 +46,9 @@ export class CommentPaginate {
 
   @Field(() => Boolean)
   isOwnComment: boolean;
-
+  
+  @Field(() => Boolean)
+  isEdited: boolean;
 
   @Field(() => Int)
   likesCount: number;
