@@ -10,6 +10,7 @@ export * from './button/Button';
 export * from './input/Input';
 export * from './input/TextArea';
 export * from './helpToolTip';
+export * from './TextContent'
 export * from './Card';
 export * from './composer';
 export * from './image';

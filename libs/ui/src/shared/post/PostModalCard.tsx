@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 'use client';
-import { NewsFeedPaginate } from '@social-zone/graphql';
+import { NewsFeedPaginate, useGetCommentsQuery } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import Link from 'next/link';
-import React, {  Suspense, useState } from 'react';
+import React, { Suspense, useRef, useState } from 'react';
 import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
@@ -15,23 +16,26 @@ import { Image, Modal, Spinner } from '../../components';
 import { CommentButton } from '../comments';
 import { PostMenu } from '..';
 import { useGlobalModalStateStore } from '../../store';
+import { useAuth } from '../../hooks';
 import Comments from '../comments/Comment';
 
 dayjs.extend(relativeTime);
 
-interface IProps {
-  post: NewsFeedPaginate;
-  isAuth: boolean;
-}
 
-export const PostItem: React.FC<IProps> = (props) => {
-  const { post, isAuth } = props;
-  const [isLikesModal, setIsLikesModal] = useState(false);
-  const setShowPostModal = useGlobalModalStateStore(
-    (state) => state.setShowPostCard
+
+export const PostCardModal: React.FC = () => {
+
+  const postData = useGlobalModalStateStore(
+    (state) => state.postData
   );
-  const handleToPostCardModal = () => {
-    setShowPostModal(true,post)
+  const {isAuthenticated}=useAuth()
+  const [isCommentVisible, setCommentVisible] = useState(false);
+  const [isLikesModal, setIsLikesModal] = useState(false);
+  const commentInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleToggleComment = () => {
+    if (!isCommentVisible) setCommentVisible(true);
+    if (commentInputRef.current) commentInputRef.current.focus();
   };
 
   const displayLikeMetric = (likesCount: number, isLiked: boolean) => {
@@ -51,47 +55,54 @@ export const PostItem: React.FC<IProps> = (props) => {
     }
   };
 
-  const showAttachments = post?.photos!.length > 0
+  const {data}=useGetCommentsQuery({
+    query:{postId:postData?.id},
+    option:{limit:10}
+  })
+
+  console.log(data)
+
+  const showAttachments = postData?.photos.length > 0
 
   return (
-    <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
+    <div className="flex flex-col md:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-brand-900 max-h-[80vh] overflow-y-auto ">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
       <span onClick={ stopEventPropagation} aria-hidden="true">
         <div className="flex gap-4 items-center">
           <Image
             src={
-              post?.author?.avatar.avatarUrl
-                ? post?.author?.avatar.avatarUrl
+              postData?.author?.avatar.avatarUrl
+                ? postData?.author?.avatar.avatarUrl
                 : UserAvatarUrl
             }
             className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
             height={60}
             width={60}
-            alt={post?.author?.username}
+            alt={postData?.author?.username}
             data-testid="profile-avatar"
           />
           <div className="flex flex-col ">
             <Link
               className="dark:text-indigo-400"
-              href={`/user/${post?.author?.username}`}
+              href={`/user/${postData?.author?.username}`}
             >
-              <h5 className="font-bold">{post?.author?.username}</h5>
+              <h5 className="font-bold">{postData?.author?.username}</h5>
             </Link>
             <div className="flex items-center space-x-1">
               <span className="text-sm text-gray-500">
-                {dayjs(post.createdAt).fromNow()}
+                {dayjs(postData?.createdAt).fromNow()}
               </span>
             </div>
           </div>
         </div>
         </span>
-        <PostMenu Post={post}/>
+        <PostMenu Post={postData!}/>
       </div>
       {/* --- DESCRIPTION */}
       <div className="mb-3 mt-2">
         <p className="text-gray-700 dark:text-gray-300 break-words">
-          {post.content}
+          {postData?.content}
         </p>
       </div>
 
@@ -99,26 +110,26 @@ export const PostItem: React.FC<IProps> = (props) => {
       {/* --- IMAGE GRID ----- */}
 
       {showAttachments ? (
-        <Attachments attachments={post?.photos} />
+        <Attachments attachments={postData?.photos} />
       ) : null}
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>
-          {post.likesCount! > 0 && (
+          {postData?.likesCount > 0 && (
             <span className="text-gray-500 text-sm cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-white">
-              {displayLikeMetric(post.likesCount!, post.isLiked!)}
+              {displayLikeMetric(postData?.likesCount, postData?.isLiked)}
             </span>
           )}
         </div>
         {/* --- COMMENTS COUNT ----- */}
         <div>
-          {post!.commentsCount! > 0 && (
+          {postData?.commentsCount > 0 && (
             <span
               className="text-gray-500 hover:text-gray-800 cursor-pointer text-sm hover:underline dark:text-gray-500 dark:hover:text-white"
-              onClick={handleToPostCardModal}
+              onClick={handleToggleComment}
             >
-              {post.commentsCount}{' '}
-              {post.commentsCount === 1 ? 'comment' : 'comments'}
+              {postData?.commentsCount}{' '}
+              {postData?.commentsCount === 1 ? 'comment' : 'comments'}
             </span>
           )}
           <Modal
@@ -127,15 +138,15 @@ export const PostItem: React.FC<IProps> = (props) => {
             size="md"
             onClose={() => setIsLikesModal(false)}
           >
-            <UserCard postItem={post as NewsFeedPaginate} />
+            <UserCard postItem={postData as NewsFeedPaginate} />
           </Modal>
         </div>
       </div>
       {/* --- LIKE/COMMENT BUTTON */}
-      {isAuth ? (
-        <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-indigo-950">
-          <LikeButton postID={post.id!} isLiked={post.isLiked!} />
-          <CommentButton commentCount={post.commentsCount!} onCommentToggle={handleToPostCardModal}/>
+      {isAuthenticated ? (
+        <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-brand-900">
+          <LikeButton postID={postData?.id} isLiked={postData?.isLiked} />
+          <CommentButton commentCount={postData?.commentsCount} onCommentToggle={handleToggleComment}/>
         </div>
       ) : (
         <div className="text-center py-2">
@@ -150,7 +161,15 @@ export const PostItem: React.FC<IProps> = (props) => {
           </span>
         </div>
       )}
-  
+     {isAuthenticated && (
+        <Suspense fallback={<Spinner size='sm' className="text-gray-800 dark:text-white" />}>
+          <Comments
+            postID={postData?.id}
+            authorID={postData?.author.id}
+            commentInputRef={commentInputRef}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };

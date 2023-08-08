@@ -170,7 +170,6 @@ type CommentAuthor {
 }
 
 type CommentPaginate {
-  photos: [PhotosImageInfo!]
   body: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -178,8 +177,9 @@ type CommentPaginate {
   isLiked: Boolean
   isPostOwner: Boolean!
   isOwnComment: Boolean!
-  isEdited: Boolean!
+  isEdited: Boolean
   likesCount: Int!
+  depth: Int!
   replyCount: Int!
   id: String
   post_id: ID
@@ -429,28 +429,14 @@ type Mutation {
 }
 
 input CreateCommentInput {
-  _post_id: PostInputType
+  _post_id: ID
   body: String!
   authId: UserInputType
 }
 
-input PostInputType {
-  _author_id: ID
-  content: String
-  photos: [PhotosImageInput!]
-  likes: [UserInputType!]
-  comments: [UserInputType!]
-
-  """Created At"""
-  createdAt: DateTime!
-
-  """Updated At"""
-  updatedAt: DateTime!
-}
-
 input UpdateCommentInput {
   id: ID
-  _post_id: PostInputType
+  _post_id: ID
   parent: ID
   parents: [ID!]
   body: String

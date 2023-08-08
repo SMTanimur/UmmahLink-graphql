@@ -38,7 +38,6 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       },
     }
   );
- const {data:currentProfile}=useProfileQuery()
  const FollowingData = followers?.pages.flatMap((page) => page.getFollowing?.docs) ?? [];
 
   const onEndReached = async () => {

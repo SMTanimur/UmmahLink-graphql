@@ -6,10 +6,6 @@ import { ErrorMessage, useZodForm } from "../../components";
 import { CreateCommentInput, DeleteCommentInput, UpdateCommentInput, useCreateCommentMutation, useDeleteCommentMutation, useUpdateCommentMutation } from "@social-zone/graphql";
 import { object, string } from "zod";
 
-const newCommentSchema = object({
-  body: string()
-    
-});
 export const useComment = ()=> {
 
 
@@ -20,26 +16,19 @@ export const useComment = ()=> {
   };
 
 const {mutateAsync:CreateCommentAttempt,isLoading:createCommentLoading}=useCreateCommentMutation()
-const {mutateAsync:UpdateCommentAttempt,isLoading:updateCommentLoading}=useUpdateCommentMutation()
 const {mutateAsync:DeleteCommentAttempt,isLoading:deleteCommentLoading}=useDeleteCommentMutation()
 const queryClient = useQueryClient();
 
-const commentForm = useZodForm({
-  schema:newCommentSchema,
 
-})
-
-  const attemptToCreateComment = commentForm.handleSubmit( async (data:CreateCommentInput) => {
+  const attemptToCreateComment = async (data:CreateCommentInput) => {
    try {
    
-  
-
     toast.promise(CreateCommentAttempt({input:data} ), {
       loading: 'creating in...',
       success: ( {createComment:{message} }) => {
         toast.dismiss()
-        queryClient.invalidateQueries();
-        queryClient.invalidateQueries(['UserProfile'])
+        queryClient.invalidateQueries(['comments.infinite']);
+        queryClient.invalidateQueries(['commentReplies.infinite']);
         
         return <b>{message}</b>;
       },
@@ -47,9 +36,9 @@ const commentForm = useZodForm({
         return (
           <ErrorMessage
             className="mb-3"
-            title=" Follow failed!"
+            title=" Comment failed!"
             error={{
-              name: ' Follow failed!',
+              name: ' Comment failed!',
               message: data.message,
             }}
           />
@@ -60,7 +49,7 @@ const commentForm = useZodForm({
     onError(error);
    }
      
-  })
+  }
   
   const attemptToDeleteComment =  async (data:DeleteCommentInput) => {
    try {
@@ -96,7 +85,6 @@ const commentForm = useZodForm({
   
     createCommentLoading,
    attemptToCreateComment,
-   commentForm,
    attemptToDeleteComment,
    deleteCommentLoading
 

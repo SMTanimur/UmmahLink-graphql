@@ -11,6 +11,7 @@ import { cn } from '../../lib';
 interface ModalProps {
   icon?: ReactNode;
   title?: ReactNode;
+  footer?: ReactNode;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   show: boolean;
   children: ReactNode[] | ReactNode;
@@ -23,6 +24,7 @@ export const Modal: FC<ModalProps> = ({
   title,
   size = 'sm',
   show,
+  footer,
   children,
   dataTestId = '',
   onClose,
@@ -31,7 +33,7 @@ export const Modal: FC<ModalProps> = ({
     <Transition.Root show={show} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="fixed inset-0 z-10 "
         onClose={() => onClose?.()}
         data-testid={dataTestId}
       >
@@ -66,7 +68,7 @@ export const Modal: FC<ModalProps> = ({
                 { 'sm:max-w-3xl': size === 'md' },
                 { 'sm:max-w-lg': size === 'sm' },
                 { 'sm:max-w-sm': size === 'xs' },
-                'inline-block w-full scale-100 rounded-xl bg-white text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:my-8 sm:align-middle'
+                'inline-block w-full scale-100 rounded-xl  bg-white text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:my-8 sm:align-middle '
               )}
             >
               {title && (
@@ -87,6 +89,14 @@ export const Modal: FC<ModalProps> = ({
                 </div>
               )}
               {children}
+
+              {footer && (
+                <div className="divider flex items-center justify-between px-5 py-3.5">
+                  <div className="flex items-center space-x-2 font-bold">
+                    <div>{footer}</div>
+                  </div>
+                </div>
+              )}
             </div>
           </Transition.Child>
         </div>

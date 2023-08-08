@@ -4,7 +4,6 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import {
-  Button,
   Card,
   Footer,
   GridItemEight,

@@ -29,7 +29,7 @@ export const PostMenu: FC<PostMenuProps> = ({ Post }) => {
           className="rounded-full p-1.5 hover:bg-gray-300/20"
           onClick={stopEventPropagation}
           aria-label="More"
-          data-testid={`Post-${Post.id}-menu`}
+          data-testid={`Post-${Post?.id}-menu`}
         >
           <EllipsisVerticalIcon
             className={clsx('lt-text-gray-500', iconClassName)}
@@ -40,7 +40,7 @@ export const PostMenu: FC<PostMenuProps> = ({ Post }) => {
         <Menu.Items
           static
           className="absolute right-0 z-[5] mt-1 w-max rounded-xl border bg-white shadow-sm focus:outline-none dark:border-gray-700 dark:bg-gray-900"
-          data-testid={`Post-${Post.id}-menu-items`}
+          data-testid={`Post-${Post?.id}-menu-items`}
         >
           {me?.me._id === Post?.author?.id && <Delete post={Post} />}
           {me?.me._id === Post?.author?.id && <Edit post={Post} />}

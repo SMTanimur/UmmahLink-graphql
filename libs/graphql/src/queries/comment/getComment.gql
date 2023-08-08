@@ -1,11 +1,6 @@
 query GetComments ($query:CommentsQueryArgs!,$option:PaginateOptionArgs!){
-  getComments(query: $query,option: $option){
+  getComments(query:$query, option:$option){
     docs{
-      photos{
-        photosUrl
-        photosPublicId
-        __typename
-      }
       replyCount
       id
       post_id
@@ -13,16 +8,20 @@ query GetComments ($query:CommentsQueryArgs!,$option:PaginateOptionArgs!){
        body
        createdAt
        updatedAt
+       isPostOwner
+       isOwnComment
+       isEdited
+       isLiked
+       depth
+       likesCount
        author{
         id
         username
-        email
         avatar{
           avatarUrl
           avatarPublicId
           __typename
         }
-        name
        }
     }
     __typename

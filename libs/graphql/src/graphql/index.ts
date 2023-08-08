@@ -81,13 +81,13 @@ export type CommentPaginate = {
   author: CommentAuthor;
   body?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  depth: Scalars['Int']['output'];
   id?: Maybe<Scalars['String']['output']>;
-  isEdited: Scalars['Boolean']['output'];
+  isEdited?: Maybe<Scalars['Boolean']['output']>;
   isLiked?: Maybe<Scalars['Boolean']['output']>;
   isOwnComment: Scalars['Boolean']['output'];
   isPostOwner: Scalars['Boolean']['output'];
   likesCount: Scalars['Int']['output'];
-  photos?: Maybe<Array<PhotosImageInfo>>;
   post_id?: Maybe<Scalars['ID']['output']>;
   replyCount: Scalars['Int']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -130,7 +130,7 @@ export type CoverImageInput = {
 };
 
 export type CreateCommentInput = {
-  _post_id?: InputMaybe<PostInputType>;
+  _post_id?: InputMaybe<Scalars['ID']['input']>;
   authId?: InputMaybe<UserInputType>;
   body: Scalars['String']['input'];
 };
@@ -507,18 +507,6 @@ export type Post = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type PostInputType = {
-  _author_id?: InputMaybe<Scalars['ID']['input']>;
-  comments?: InputMaybe<Array<UserInputType>>;
-  content?: InputMaybe<Scalars['String']['input']>;
-  /** Created At */
-  createdAt: Scalars['DateTime']['input'];
-  likes?: InputMaybe<Array<UserInputType>>;
-  photos?: InputMaybe<Array<PhotosImageInput>>;
-  /** Updated At */
-  updatedAt: Scalars['DateTime']['input'];
-};
-
 export type ProfileInformation = {
   __typename?: 'ProfileInformation';
   avatar?: Maybe<AvatarImage>;
@@ -650,7 +638,7 @@ export enum SortOrder {
 }
 
 export type UpdateCommentInput = {
-  _post_id?: InputMaybe<PostInputType>;
+  _post_id?: InputMaybe<Scalars['ID']['input']>;
   authId?: InputMaybe<UserInputType>;
   body?: InputMaybe<Scalars['String']['input']>;
   commentId: Scalars['ID']['input'];
@@ -904,17 +892,16 @@ export type GetCommentsQuery = {
       body?: string | null;
       createdAt?: any | null;
       updatedAt?: any | null;
-      photos?: Array<{
-        __typename: 'PhotosImageInfo';
-        photosUrl?: string | null;
-        photosPublicId?: string | null;
-      }> | null;
+      isPostOwner: boolean;
+      isOwnComment: boolean;
+      isEdited?: boolean | null;
+      isLiked?: boolean | null;
+      depth: number;
+      likesCount: number;
       author: {
         __typename?: 'CommentAuthor';
         id?: string | null;
         username: string;
-        email: string;
-        name: string;
         avatar?: {
           __typename: 'AvatarImage';
           avatarUrl?: string | null;
@@ -951,17 +938,16 @@ export type GetRepliesCommentQuery = {
       body?: string | null;
       createdAt?: any | null;
       updatedAt?: any | null;
-      photos?: Array<{
-        __typename: 'PhotosImageInfo';
-        photosUrl?: string | null;
-        photosPublicId?: string | null;
-      }> | null;
+      isPostOwner: boolean;
+      isOwnComment: boolean;
+      isEdited?: boolean | null;
+      depth: number;
+      isLiked?: boolean | null;
+      likesCount: number;
       author: {
         __typename?: 'CommentAuthor';
         id?: string | null;
         username: string;
-        email: string;
-        name: string;
         avatar?: {
           __typename: 'AvatarImage';
           avatarUrl?: string | null;
@@ -1895,11 +1881,6 @@ export const GetCommentsDocument = /*#__PURE__*/ `
     query GetComments($query: CommentsQueryArgs!, $option: PaginateOptionArgs!) {
   getComments(query: $query, option: $option) {
     docs {
-      photos {
-        photosUrl
-        photosPublicId
-        __typename
-      }
       replyCount
       id
       post_id
@@ -1907,16 +1888,20 @@ export const GetCommentsDocument = /*#__PURE__*/ `
       body
       createdAt
       updatedAt
+      isPostOwner
+      isOwnComment
+      isEdited
+      isLiked
+      depth
+      likesCount
       author {
         id
         username
-        email
         avatar {
           avatarUrl
           avatarPublicId
           __typename
         }
-        name
       }
     }
     __typename
@@ -1962,11 +1947,6 @@ export const GetRepliesCommentDocument = /*#__PURE__*/ `
     query GetRepliesComment($query: ReplyQueryArgs!, $option: PaginateOptionArgs!) {
   getReplies(query: $query, option: $option) {
     docs {
-      photos {
-        photosUrl
-        photosPublicId
-        __typename
-      }
       replyCount
       id
       post_id
@@ -1974,16 +1954,20 @@ export const GetRepliesCommentDocument = /*#__PURE__*/ `
       body
       createdAt
       updatedAt
+      isPostOwner
+      isOwnComment
+      isEdited
+      depth
+      isLiked
+      likesCount
       author {
         id
         username
-        email
         avatar {
           avatarUrl
           avatarPublicId
           __typename
         }
-        name
       }
     }
     __typename

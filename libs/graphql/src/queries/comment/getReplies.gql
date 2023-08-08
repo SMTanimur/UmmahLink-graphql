@@ -1,29 +1,28 @@
-query GetRepliesComment ($query:ReplyQueryArgs!,$option:PaginateOptionArgs!){
-  getReplies(query: $query,option: $option){
-   docs{
-      photos{
-        photosUrl
-        photosPublicId
-        __typename
-      }
+query GetRepliesComment($query: ReplyQueryArgs!, $option: PaginateOptionArgs!) {
+  getReplies(query:$query , option:$option) {
+    docs {
       replyCount
       id
       post_id
       __typename
-       body
-       createdAt
-       updatedAt
-       author{
+      body
+      createdAt
+      updatedAt
+      isPostOwner
+      isOwnComment
+      isEdited
+      depth
+      isLiked
+      likesCount
+      author {
         id
         username
-        email
-        avatar{
+        avatar {
           avatarUrl
           avatarPublicId
           __typename
         }
-        name
-       }
+      }
     }
     __typename
     totalDocs
