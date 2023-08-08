@@ -444,12 +444,12 @@ export class CommentsService {
         ...(page ? { page } : {}),
       })as CommentPagination
 
-      // if (res.docs.length === 0)
-      //   throw new NotFoundException('No comments found');
+      if (res.docs.length === 0)
+        throw new NotFoundException('No comments found');
 
       return res;
     } catch (error) {
-      console.log(error);
+      throw new BadRequestException()
     }
   }
 

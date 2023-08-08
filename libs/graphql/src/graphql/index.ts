@@ -169,7 +169,7 @@ export type CreateUserInput = {
 
 export type DeleteCommentInput = {
   commentId: Scalars['ID']['input'];
-  userID: Scalars['ID']['input'];
+  userID?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type DeletePostInput = {

@@ -26,7 +26,6 @@ const queryClient = useQueryClient();
     toast.promise(CreateCommentAttempt({input:data} ), {
       loading: 'creating in...',
       success: ( {createComment:{message} }) => {
-        toast.dismiss()
         queryClient.invalidateQueries(['comments.infinite']);
         queryClient.invalidateQueries(['commentReplies.infinite']);
         

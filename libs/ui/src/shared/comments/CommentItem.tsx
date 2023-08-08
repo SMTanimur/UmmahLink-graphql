@@ -11,7 +11,7 @@ import {
   useReplyCommentMutation,
   useUpdateCommentMutation,
 } from '@social-zone/graphql';
-import {  useGetReplyCommentsQuery } from '../../hooks/comment';
+import { useGetReplyCommentsQuery } from '../../hooks/comment';
 import Link from 'next/link';
 import { ErrorMessage, Image } from '../../components';
 import { UserAvatarUrl } from '../../data';
@@ -21,6 +21,7 @@ import { errorToast } from '../../lib';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
 import LoadingIcon from '../../components/Spinner/LoadingIcon';
 import CommentList from './CommentList';
+import { CommentMenu } from './Menu';
 
 dayjs.extend(relativeTime);
 
@@ -33,10 +34,10 @@ const CommentItem: React.FC<IProps> = (props) => {
   const [isOpenInput, setOpenInput] = useState(false);
   const [isVisibleReplies, setVisibleReplies] = useState(true);
   const [editCommentBody, setEditCommentBody] = useState(
-    props.comment.body || ''
+  comment.body || ''
   );
   const [newCommentBody, setNewCommentBody] = useState('');
-  const [isGettingReplies, setGettingReplies] = useState(false);
+
   const [isSubmitting, setSubmitting] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
   const [isUpdateMode, setUpdateMode] = useState(false);
@@ -48,7 +49,6 @@ const CommentItem: React.FC<IProps> = (props) => {
   const editCommentInputRef = useRef<HTMLInputElement | null>(null);
 
   const onClickViewReplies = () => {
-    if (isGettingReplies) return;
     setVisibleReplies(!isVisibleReplies);
   };
 
@@ -132,7 +132,7 @@ const CommentItem: React.FC<IProps> = (props) => {
     setNewCommentBody(e.target.value);
   };
 
-  const { data } = useGetReplyCommentsQuery({
+  const { data,isLoading } = useGetReplyCommentsQuery({
     option: { limit: 10 },
     query: { comment_id: comment.id, post_id: comment.post_id },
   });
@@ -140,7 +140,7 @@ const CommentItem: React.FC<IProps> = (props) => {
     data?.pages.flatMap((page) => page.getReplies?.docs) ?? [];
   const onClickEdit = () => {
     setUpdateMode(true);
-    setEditCommentBody(comment.body);
+    setEditCommentBody(comment?.body);
     setOpenInput(false);
   };
 
@@ -155,6 +155,7 @@ const CommentItem: React.FC<IProps> = (props) => {
         {
           loading: 'Liking...',
           success: ({ likeOrUnlikeComment: { message } }) => {
+            setIsLiking(true)
             queryClient.invalidateQueries(['comments.infinite']);
             queryClient.invalidateQueries(['commentReplies.infinite']);
 
@@ -223,13 +224,9 @@ const CommentItem: React.FC<IProps> = (props) => {
                   {comment.body}
                 </p>
               </div>
-              {/* {(comment.isOwnComment || comment.isPostOwner) && (
-                <CommentOptions
-                  comment={comment}
-                  onClickEdit={onClickEdit}
-                  openDeleteModal={props.openDeleteModal}
-                />
-              )} */}
+              {(comment.isOwnComment || comment.isPostOwner) && (
+                <CommentMenu Comment={comment} onClickEdit={onClickEdit} />
+              )}
             </div>
             <div className="mx-2">
               {/* ---- DATE AND LIKE BUTTON ----- */}
@@ -279,7 +276,7 @@ const CommentItem: React.FC<IProps> = (props) => {
                       ? 'Hide Replies'
                       : 'View Replies'}
                     &nbsp;
-                    {isGettingReplies ? (
+                    {isLoading ? (
                       <LoadingIcon className="w-4 h-4" />
                     ) : isVisibleReplies && RepliesData.length !== 0 ? (
                       <ArrowUpIcon className="w-3 h-3" />

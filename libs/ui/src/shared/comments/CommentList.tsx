@@ -23,21 +23,12 @@ const CommentList: React.FC<IProps> = ({ comments,  }) => {
                 <CSSTransition
                     timeout={500}
                     classNames="fade"
-                    key={comment.id}
+                    key={comment?.id}
                 >
-                    <CommentItem key={comment.id} comment={comment} />
+                    <CommentItem  comment={comment} />
                 </CSSTransition>
             ))}
-            {/* ---- DELETE MODAL ---- */}
-            {/* <Suspense fallback={<LoadingOutlined className="text-gray-800 dark:text-white" />}>
-                {isOpen && (
-                    <DeleteCommentModal
-                        isOpen={isOpen}
-                        closeModal={closeModal}
-                        deleteSuccessCallback={deleteSuccessCallback}
-                    />
-                )}
-            </Suspense> */}
+       
         </TransitionGroup>
     );
 };

@@ -456,7 +456,7 @@ input CreateReplyInput {
 
 input DeleteCommentInput {
   commentId: ID!
-  userID: ID!
+  userID: ID
 }
 
 input CreatePostOrCommentLikeInput {

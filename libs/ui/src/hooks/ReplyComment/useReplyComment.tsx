@@ -28,23 +28,22 @@ export const useReplyComment = () => {
   });
 
   const attemptToReplyComment = replyCommentForm.handleSubmit(
-    async (data: any) => {
+    async (data: CreateReplyInput) => {
       try {
         toast.promise(ReplyCommentAttempt({ input: data }), {
           loading: 'creating in...',
           success: ({ createCommentReply: { message } }) => {
-            toast.dismiss();
-            queryClient.invalidateQueries();
-            queryClient.invalidateQueries(['UserProfile']);
+            queryClient.invalidateQueries(['comments.infinite']);
+            queryClient.invalidateQueries(['commentReplies.infinite']);
             return <b>{message}</b>;
           },
-          error: (data: any) => {
+          error: (data) => {
             return (
               <ErrorMessage
                 className="mb-3"
-                title=" Follow failed!"
+                title=" Reply failed!"
                 error={{
-                  name: ' Follow failed!',
+                  name: ' Reply failed!',
                   message: data.message,
                 }}
               />

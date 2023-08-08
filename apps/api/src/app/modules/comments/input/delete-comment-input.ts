@@ -9,6 +9,6 @@ export class DeleteCommentInput {
  @Field((_type) => ID)
   commentId: string
 
-  @Field((_type) => ID)
+  @Field((_type) => ID,{nullable:true})
   userID: string
 }
