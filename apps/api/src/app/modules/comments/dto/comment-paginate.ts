@@ -23,8 +23,6 @@ export class CommentAuthor {
 
 @ObjectType()
 export class CommentPaginate {
-  @Field(() => [PhotosImageInput], { nullable: true })
-  photos: PhotosImageInput[];
 
   @Field(() => String, { nullable: true })
   body: string;
@@ -47,11 +45,14 @@ export class CommentPaginate {
   @Field(() => Boolean)
   isOwnComment: boolean;
   
-  @Field(() => Boolean)
+  @Field(() => Boolean,{nullable:true})
   isEdited: boolean;
 
   @Field(() => Int)
   likesCount: number;
+  
+  @Field(() => Int)
+  depth: number;
 
   @Field(() => Int)
   replyCount: number;
@@ -65,7 +66,3 @@ export class CommentPaginate {
 
 @ObjectType()
 export class CommentPagination extends Paginated(CommentPaginate) {}
-
-
-
-

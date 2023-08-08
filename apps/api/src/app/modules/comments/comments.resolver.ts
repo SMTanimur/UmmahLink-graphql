@@ -26,6 +26,7 @@ export class CommentResolver {
     createCommentInput: CreateCommentInput
   ) {
     createCommentInput.authId = user._id;
+    console.log(createCommentInput)
     return await this.commentService.createComment(createCommentInput);
   }
   @Mutation(() => MessageResponse)
@@ -65,12 +66,14 @@ export class CommentResolver {
   @Query(() =>CommentPagination ,{name:'getComments',nullable:true})
   async  getComments(
     @Args('query') query: CommentsQueryArgs,
-    @Args('option') options: PaginateOptionArgs,
+    @Args('option') option: PaginateOptionArgs,
     @CurrentUser() user: any,
   ) {
   
     query.user = user
-    return await this.commentService.getComments(query, options);
+  return await this.commentService.getComments(query, option);
+
+  
   }
   @UseGuards(AuthenticatedGuard)
   @Query(() =>CommentPagination ,{name:'getReplies',nullable:true})

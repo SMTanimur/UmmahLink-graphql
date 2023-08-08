@@ -7,7 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Comment, CommentDocument } from './entities/comment';
 import  {
   AggregateOptions,
-  Model
+  Model,
+  Types
 } from 'mongoose';
 import { Post, PostDocument } from '../posts/entities/post';
 import {
@@ -40,6 +41,7 @@ export class CommentsService {
   ) {}
 
   async createComment(createCommentInput: CreateCommentInput) {
+    console.log(createCommentInput)
     try {
       const { _post_id, body, authId } = createCommentInput;
       const post = await this.postModel.findOne({ _id: _post_id });
@@ -50,18 +52,19 @@ export class CommentsService {
         authId,
       });
       await comment.save();
+      console.log(comment)
       await comment.populate({
         path: 'authId',
         select: 'username avatar name',
       });
 
-      await this.postModel.findOneAndUpdate(
-        { _id: _post_id },
-        {
-          $push: { comments: comment._id },
-        },
-        { new: true }
-      );
+      // await this.postModel.findOneAndUpdate(
+      //   { _id: _post_id },
+      //   {
+      //     $push: { comments: comment._id },
+      //   },
+      //   { new: true }
+      // );
 
       if (String(post._author_id) !== String(authId)) {
         await this.notificationModel.create({
@@ -191,20 +194,18 @@ export class CommentsService {
 
   async getComments(
     query?: FilterQuery<CommentsQueryArgs>,
-    options?: AggregateOptions
+    option?: AggregateOptions
   ) {
     try {
       const { postId, user } = query;
-
-      const { limit, page } = options;
+      const { limit, page } = option
 
       const post = await this.postModel.findOne({ _id: postId });
       if (!post) throw new NotFoundException('Post not found');
-
       const agg = this.commentModel.aggregate([
         {
           $match: {
-            _post_id: post._id,
+            _post_id: new Types.ObjectId(postId),
             depth: 1,
           },
         },
@@ -314,7 +315,6 @@ export class CommentsService {
 
       if (res.docs.length === 0)
         throw new NotFoundException('No comments found');
-
       return res;
     } catch (error) {
       console.log(error);
@@ -338,7 +338,7 @@ export class CommentsService {
       const agg = this.commentModel.aggregate([
         {
           $match: {
-            parent: reply._id,
+            parent: new Types.ObjectId(comment_id),
             depth: reply.depth +1,
           },
         },
@@ -446,8 +446,8 @@ export class CommentsService {
         ...(page ? { page } : {}),
       })as CommentPagination
 
-      if (res.docs.length === 0)
-        throw new NotFoundException('No comments found');
+      // if (res.docs.length === 0)
+      //   throw new NotFoundException('No comments found');
 
       return res;
     } catch (error) {

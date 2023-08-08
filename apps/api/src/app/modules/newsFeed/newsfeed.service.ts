@@ -69,7 +69,7 @@ export class NewsFeedService {
           $lookup: {
             from: 'comments',
             localField: 'id',
-            foreignField: 'postId',
+            foreignField: '_post_id',
             as: 'comments',
           },
         },

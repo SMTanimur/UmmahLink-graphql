@@ -13,8 +13,8 @@ import { Post } from '../../posts/entities/post';
 @InputType('CommentInputType', { isAbstract: true })
 export class Comment extends CoreEntity {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true })
-  @Field((_type) => Post, { nullable: true })
-  _post_id: Post
+  @Field((_type) => ID, { nullable: true })
+  _post_id: mongoose.Schema.Types.ObjectId;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
