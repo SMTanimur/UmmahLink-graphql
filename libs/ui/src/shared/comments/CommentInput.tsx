@@ -38,7 +38,7 @@ const CommentInput = forwardRef<HTMLInputElement, IProps>((props, ref) => {
             <div className="flex-grow">
                 <input
                     {...rest}
-                    className={`${isSubmitting && isLoading && 'opacity-50'} dark:bg-brand-900 dark:!border-gray-800 dark:text-white w-full rounded-full`}
+                    className={`${isSubmitting && isLoading && 'opacity-50'} dark:bg-indigo-950 dark:!border-gray-800 dark:text-white w-full rounded-full`}
                     type="text"
                     readOnly={isLoading || isSubmitting}
                     ref={ref}

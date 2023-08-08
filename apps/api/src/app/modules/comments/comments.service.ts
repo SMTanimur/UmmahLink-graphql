@@ -41,7 +41,6 @@ export class CommentsService {
   ) {}
 
   async createComment(createCommentInput: CreateCommentInput) {
-    console.log(createCommentInput)
     try {
       const { _post_id, body, authId } = createCommentInput;
       const post = await this.postModel.findOne({ _id: _post_id });
@@ -52,7 +51,6 @@ export class CommentsService {
         authId,
       });
       await comment.save();
-      console.log(comment)
       await comment.populate({
         path: 'authId',
         select: 'username avatar name',

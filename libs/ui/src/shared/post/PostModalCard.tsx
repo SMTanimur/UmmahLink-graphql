@@ -65,7 +65,7 @@ export const PostCardModal: React.FC = () => {
   const showAttachments = postData?.photos.length > 0
 
   return (
-    <div className="flex flex-col md:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-brand-900 max-h-[80vh] overflow-y-auto ">
+    <div className="flex flex-col md:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-950 max-h-[80vh] overflow-y-auto ">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
       <span onClick={ stopEventPropagation} aria-hidden="true">

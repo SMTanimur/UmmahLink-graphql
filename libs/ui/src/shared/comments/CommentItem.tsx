@@ -11,7 +11,7 @@ import {
   useReplyCommentMutation,
   useUpdateCommentMutation,
 } from '@social-zone/graphql';
-import { useComment, useGetReplyCommentsQuery } from '../../hooks/comment';
+import {  useGetReplyCommentsQuery } from '../../hooks/comment';
 import Link from 'next/link';
 import { ErrorMessage, Image } from '../../components';
 import { UserAvatarUrl } from '../../data';
@@ -20,6 +20,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { errorToast } from '../../lib';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
 import LoadingIcon from '../../components/Spinner/LoadingIcon';
+import CommentList from './CommentList';
 
 dayjs.extend(relativeTime);
 
@@ -163,9 +164,9 @@ const CommentItem: React.FC<IProps> = (props) => {
             return (
               <ErrorMessage
                 className="mb-3"
-                title=" Delete Comment failed!"
+                title="  Comment Like failed!"
                 error={{
-                  name: ' Delete Comment failed!',
+                  name: '  Comment Like failed!',
                   message: data.message,
                 }}
               />
@@ -312,9 +313,9 @@ const CommentItem: React.FC<IProps> = (props) => {
           </div>
         )}
         {/* ---- REPLY LIST ------- */}
-        {/* {RepliesData.length > 0 && isVisibleReplies && (
-          <CommentList comments={replies} />
-        )} */}
+        {RepliesData.length > 0 && isVisibleReplies && (
+          <CommentList comments={RepliesData as CommentPaginate[]} />
+        )}
       </div>
     </div>
   );
