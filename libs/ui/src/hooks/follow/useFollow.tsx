@@ -61,14 +61,14 @@ export const useFollowOrUnFollow = () => {
       toast.promise(
         UnFollowUserMutate({ followOrUnFollowInput: { follow_ID: FollowId } }),
         {
-          loading: 'Logging in...',
+          loading: 'UnFollow in...',
           success: ({ unFollowUser: { message } }) => {
-            queryClient.invalidateQueries(useMeQuery.getKey());
+            queryClient.invalidateQueries(['GetPostLikes']);
             queryClient.invalidateQueries(['GetSuggestionPeople']);
             queryClient.invalidateQueries(['Posts']);
             queryClient.invalidateQueries(['followers.infinite']);
-            queryClient.invalidateQueries(['following.infinite']);
             queryClient.invalidateQueries(['UserProfile']);
+            queryClient.invalidateQueries(['following.infinite']);
             return <b>{message}</b>;
           },
           error: (data) => {

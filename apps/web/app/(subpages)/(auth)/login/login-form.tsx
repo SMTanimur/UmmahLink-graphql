@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useAuth } from '~ui';
+import { ErrorMessage, useAuth } from '~ui';
 import Link from 'next/link';
 
 import { Button, Card, Form, Input, PasswordInput, Spinner } from '~ui';
@@ -18,21 +18,10 @@ export const LoginForm = () => {
         form={LoginForm}
         className="space-y-8"
         onSubmit={
-         async ()=> await login()
+         async ()=>  login()
 
         }
       >
-        {/* {data?.createProfile.__typename === 'RelayError' &&
-        data?.createProfile.reason && (
-          <ErrorMessage
-            className="mb-3"
-            title="Create profile failed!"
-            error={{
-              name: 'Create profile failed!',
-              message: relayErrorToString(data?.createProfile?.reason)
-            }}
-          />
-        )} */}
      
         <Input
           label="Email"

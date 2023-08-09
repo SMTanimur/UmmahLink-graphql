@@ -7,7 +7,7 @@ import {
   ProfileInformation
 } from '@social-zone/graphql';
 import type { FC } from 'react';
-import { EmptyState, useGetFollowingQuery, useProfileQuery } from '~ui';
+import { EmptyState, useGetFollowingQuery } from '~ui';
 import UserProfile from './UserProfile';
 
 interface FollowingProps {
@@ -74,17 +74,14 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
         itemContent={(index: any, following: Pagination) => {
           return (
             <div
-              className={`p-5 ${
-                onProfileSelected &&
-                'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900'
-              }`}
-              onClick={
-                onProfileSelected && following
-                  ? () => {
-                      onProfileSelected(following as Pagination);
-                    }
-                  : undefined
-              }
+              className={`p-5`}
+              // onClick={
+              //   onProfileSelected && following
+              //     ? () => {
+              //         onProfileSelected(following as Pagination);
+              //       }
+              //     : undefined
+              // }
               aria-hidden="true"
             >
               <UserProfile

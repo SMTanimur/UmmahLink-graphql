@@ -22,7 +22,6 @@ import {
   usePostQuery,
   useProfileQuery,
   useUserProfile,
-  convertHttps,
   useWindowDimensions,
 } from '~ui';
 import Cover from './components/Cover';

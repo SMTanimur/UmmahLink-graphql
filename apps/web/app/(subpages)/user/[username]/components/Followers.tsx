@@ -71,7 +71,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
   }
 
   return (
-    <div className="max-h-[60vh] overflow-y-auto" data-testid="followers-modal">
+    <div className="max-h-[80vh] overflow-y-auto" data-testid="followers-modal">
       <ErrorMessage
         className="m-5"
         title={`Failed to load followers`}
