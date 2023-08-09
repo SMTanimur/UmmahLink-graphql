@@ -1,3 +1,3 @@
 export * from './FeedType'
-export * from './Notification'
+export * from './Notifications'
 export * from'./NotificationIcon'

@@ -12,7 +12,7 @@ type NotificationsProps = {
 
   type: string;
 };
-export const Notification: FC<NotificationsProps> = ({type}) => {
+export const Notifications: FC<NotificationsProps> = ({type}) => {
 
   const {data:user}=useProfileQuery()
   const currentProfile=user?.me

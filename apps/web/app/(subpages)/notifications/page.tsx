@@ -13,7 +13,8 @@ type Params = {
 
 // META DATA
 import type { Metadata } from "next";
-import { Notification } from '~ui';
+import { Notifications } from '~ui';
+
 
 /** @type {import("next").Metadata} */
 
@@ -23,7 +24,7 @@ export async function  generateMetadata({
   
   
   return {
-    title: "Notification | " + params.type,
+    title: "Notification | ",
     description: "My account page",
   };
 }
@@ -34,7 +35,7 @@ function ProfilePage({ params: {  type } }: Params) {
 
   return (
     <>
-    <Notification type={type}  />;
+    <Notifications type={type}  />;
     </>
     )
 
