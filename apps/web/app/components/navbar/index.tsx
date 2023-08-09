@@ -27,37 +27,7 @@ const Navbar: FC = () => {
 
   const onProfileSelected = (profile: IUser) => {
     router.push(`/user/${profile?.username}`);
-  };
-
-  interface NavItemProps {
-    url: string;
-    name: string;
-    current: boolean;
   }
-
-  const NavItem = ({ url, name, current }: NavItemProps) => {
-    return (
-      <Link
-        href={url}
-        aria-current={current ? 'page' : undefined}
-        data-testid={`nav-item-${name.toLowerCase()}`}
-      >
-        <Disclosure.Button
-          className={cn(
-            'w-full cursor-pointer rounded-md px-2 py-1 text-left text-sm font-bold tracking-wide md:px-3',
-            {
-              'bg-gray-200 text-black dark:bg-gray-800 dark:text-white':
-                current,
-              'text-gray-700 hover:bg-gray-200 hover:text-black dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white':
-                !current,
-            }
-          )}
-        >
-          {name}
-        </Disclosure.Button>
-      </Link>
-    );
-  };
 
   return (
     <Disclosure
