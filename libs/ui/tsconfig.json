@@ -5,7 +5,6 @@
     "esModuleInterop": false,
     "forceConsistentCasingInFileNames": false,
     "allowSyntheticDefaultImports": true,
-    "strictNullChecks":false,
     "strict": true
   },
   "files": [],

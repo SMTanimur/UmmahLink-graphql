@@ -21,7 +21,7 @@ export const DeleteComment: FC = () => {
   const handleComment = async () => {
     toast.promise(
       mutateAsync(
-        { input: { commentId: deletingComment.id } },
+        { input: { commentId: deletingComment?.id as string } },
         {
           onSuccess: () => {
             queryClient.invalidateQueries(['comments.infinite']);

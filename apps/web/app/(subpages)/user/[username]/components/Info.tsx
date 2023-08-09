@@ -3,7 +3,7 @@ import { ProfileInformation } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import React, { FC } from 'react';
-import { useProfileQuery } from '~ui';
+import { Card, useProfileQuery } from '~ui';
 
 interface InfoProps {
   profile: ProfileInformation
@@ -18,7 +18,7 @@ const Info:FC<InfoProps> = ({profile}) => {
 
   const isOwnProfile = data?.me?.username === profile?.username
   return (
-    <div className="p-4 bg-white dark:bg-indigo-1000 rounded-md min-h-10rem shadow-lg">
+    <Card className='pl-6 py-3'>
       <div className="flex justify-between">
         <h3 className="text-gray-500 dark:text-white">Info</h3>
         {isOwnProfile && (
@@ -78,7 +78,7 @@ const Info:FC<InfoProps> = ({profile}) => {
           <span className="text-gray-600 dark:text-gray-400 col-span-2">{dayjs(profile?.dateJoined).format('MMM.DD, YYYY')}</span>
         </div> */}
       </div>
-    </div>
+    </Card>
   );
 };
 

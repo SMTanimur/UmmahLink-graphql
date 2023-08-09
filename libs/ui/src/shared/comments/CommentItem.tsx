@@ -67,7 +67,7 @@ const CommentItem: React.FC<IProps> = (props) => {
         if (isUpdateMode && editCommentBody) {
           mutateAsync(
             {
-              input: { commentId: comment.id, body: editCommentBody },
+              input: { commentId: comment?.id as string, body: editCommentBody },
             },
             {
               onSuccess: () => {
@@ -82,8 +82,8 @@ const CommentItem: React.FC<IProps> = (props) => {
           ReplyCommentCreate(
             {
               input: {
-                _post_id: comment.post_id,
-                commentId: comment.id,
+                _post_id: comment?.post_id as string,
+                commentId: comment?.id as string,
                 body: newCommentBody,
               },
             },
@@ -134,13 +134,13 @@ const CommentItem: React.FC<IProps> = (props) => {
 
   const { data,isLoading } = useGetReplyCommentsQuery({
     option: { limit: 10 },
-    query: { comment_id: comment.id, post_id: comment.post_id },
+    query: { comment_id: comment?.id as string, post_id: comment?.post_id as string },
   });
   const RepliesData =
     data?.pages.flatMap((page) => page.getReplies?.docs) ?? [];
   const onClickEdit = () => {
     setUpdateMode(true);
-    setEditCommentBody(comment?.body);
+    setEditCommentBody(comment?.body as string);
     setOpenInput(false);
   };
 
@@ -150,7 +150,7 @@ const CommentItem: React.FC<IProps> = (props) => {
     try {
       toast.promise(
         LikeMutate({
-          input: { comment_id: comment.id, postId: comment.post_id },
+          input: { comment_id: comment?.id as string, postId: comment?.post_id as string},
         }),
         {
           loading: 'Liking...',
@@ -185,8 +185,8 @@ const CommentItem: React.FC<IProps> = (props) => {
       <Link href={`/user/${comment.author.username}`} className="mr-2">
         <Image
           src={
-            comment?.author?.avatar.avatarUrl
-              ? comment?.author?.avatar.avatarUrl
+            comment?.author?.avatar?.avatarUrl
+              ? comment?.author?.avatar?.avatarUrl
               : UserAvatarUrl
           }
           className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
@@ -214,17 +214,17 @@ const CommentItem: React.FC<IProps> = (props) => {
               <div className="bg-gray-100 dark:bg-indigo-950 px-2 py-1 rounded-md flex-grow laptop:flex-grow-0">
                 <Link
                   className="inline-block"
-                  href={`/user/${comment.author.username}`}
+                  href={`/user/${comment?.author?.username}`}
                 >
                   <h5 className="dark:text-indigo-400">
-                    {comment.author.username}
+                    {comment?.author?.username}
                   </h5>
                 </Link>
                 <p className="text-gray-800 text-sm min-w-full break-all dark:text-gray-200 inline-block">
-                  {comment.body}
+                  {comment?.body}
                 </p>
               </div>
-              {(comment.isOwnComment || comment.isPostOwner) && (
+              {(comment?.isOwnComment || comment?.isPostOwner) && (
                 <CommentMenu Comment={comment} onClickEdit={onClickEdit} />
               )}
             </div>
@@ -232,19 +232,19 @@ const CommentItem: React.FC<IProps> = (props) => {
               {/* ---- DATE AND LIKE BUTTON ----- */}
               <div className="mt-1 flex items-center space-x-2">
                 {/* ---- LIKE BUTTON ---- */}
-                {comment.likesCount > 0 && (
+                {comment?.likesCount > 0 && (
                   <span className="text-sm text-gray-500">
-                    {comment.likesCount}
+                    {comment?.likesCount}
                   </span>
                 )}
                 <span
                   className={`text-gray-400 hover:cursor-pointer hover:text-gray-800 dark:hover:text-gray-200 text-xs ${
-                    comment.isLiked &&
+                    comment?.isLiked &&
                     'font-bold text-indigo-500 dark:text-indigo-300'
                   } ${isLiking && 'opacity-50 hover:cursor-default'}`}
                   onClick={onClickLike}
                 >
-                  {comment.isLiked ? 'Unlike' : 'Like'}
+                  {comment?.isLiked ? 'Unlike' : 'Like'}
                 </span>
                 {/* ---- REPLY BUTTON */}
                 {comment?.depth < 3 && (
@@ -259,7 +259,7 @@ const CommentItem: React.FC<IProps> = (props) => {
                 <span className="text-xs text-gray-400 dark:text-gray-500">
                   {dayjs(comment.createdAt).fromNow()}
                 </span>
-                {comment.isEdited && (
+                {comment?.isEdited && (
                   <span className="text-xs text-gray-400 dark:text-gray-500 ml-2">
                     Edited
                   </span>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 'use client';
-import { NewsFeedPaginate, useGetCommentsQuery } from '@social-zone/graphql';
+import { NewsFeedPaginate } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -55,14 +55,9 @@ export const PostCardModal: React.FC = () => {
     }
   };
 
-  const {data}=useGetCommentsQuery({
-    query:{postId:postData?.id},
-    option:{limit:10}
-  })
+ 
 
-  console.log(data)
-
-  const showAttachments = postData?.photos.length > 0
+  const showAttachments = postData!.photos!.length > 0
 
   return (
     <div className="flex flex-col md:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-950 max-h-[80vh] overflow-y-auto ">
@@ -72,8 +67,8 @@ export const PostCardModal: React.FC = () => {
         <div className="flex gap-4 items-center">
           <Image
             src={
-              postData?.author?.avatar.avatarUrl
-                ? postData?.author?.avatar.avatarUrl
+              postData?.author?.avatar?.avatarUrl
+                ? postData?.author?.avatar?.avatarUrl
                 : UserAvatarUrl
             }
             className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
@@ -115,15 +110,15 @@ export const PostCardModal: React.FC = () => {
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>
-          {postData?.likesCount > 0 && (
+          {postData!.likesCount! > 0 && (
             <span className="text-gray-500 text-sm cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-white">
-              {displayLikeMetric(postData?.likesCount, postData?.isLiked)}
+              {displayLikeMetric(postData!.likesCount!, postData!.isLiked!)}
             </span>
           )}
         </div>
         {/* --- COMMENTS COUNT ----- */}
         <div>
-          {postData?.commentsCount > 0 && (
+          {postData!.commentsCount! > 0 && (
             <span
               className="text-gray-500 hover:text-gray-800 cursor-pointer text-sm hover:underline dark:text-gray-500 dark:hover:text-white"
               onClick={handleToggleComment}
@@ -145,8 +140,8 @@ export const PostCardModal: React.FC = () => {
       {/* --- LIKE/COMMENT BUTTON */}
       {isAuthenticated ? (
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-brand-900">
-          <LikeButton postID={postData?.id} isLiked={postData?.isLiked} />
-          <CommentButton commentCount={postData?.commentsCount} onCommentToggle={handleToggleComment}/>
+          <LikeButton postID={postData!.id!} isLiked={postData!.isLiked!} />
+          <CommentButton commentCount={postData!.commentsCount!} onCommentToggle={handleToggleComment}/>
         </div>
       ) : (
         <div className="text-center py-2">
@@ -164,8 +159,8 @@ export const PostCardModal: React.FC = () => {
      {isAuthenticated && (
         <Suspense fallback={<Spinner size='sm' className="text-gray-800 dark:text-white" />}>
           <Comments
-            postID={postData?.id}
-            authorID={postData?.author.id}
+            postID={postData!.id!}
+            authorID={postData!.author!.id!}
             commentInputRef={commentInputRef}
           />
         </Suspense>
