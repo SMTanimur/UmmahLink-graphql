@@ -45,7 +45,6 @@ const Home: NextPage = () => {
       query: {},
     },
     {
-      // Infinite query
       getNextPageParam: (lastPage) => {
         return lastPage?.getFeeds?.nextPage;
       },
@@ -53,8 +52,7 @@ const Home: NextPage = () => {
   );
 
   const FeedData = feed?.pages.flatMap((page) => page.getFeeds?.docs) ?? [];
-  // const { Feed, hasMore, isLoadingMore, loadMore, isFetching, isError } =
-  //   useFeedQuery();
+
 
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
@@ -68,7 +66,6 @@ const Home: NextPage = () => {
   if (!isAuthenticated) return <WithoutUser />;
   return (
     <div className="relative">
-      {/* {!isAuthenticated && <Hero />} */}
       <GridLayout>
         <GridItemEight className="space-y-5  ">
           {isAuthenticated && (
