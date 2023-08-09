@@ -20,7 +20,7 @@ async function bootstrap() {
  
     app.enableCors({
       credentials: true,
-      origin: [configurationService.WEB_URL],
+      origin: [configurationService.WEB_URL,"http://localhost:4200"],
     });
 
     // Express session configuration
@@ -32,7 +32,7 @@ async function bootstrap() {
         saveUninitialized: false,
         cookie: {
           httpOnly: true,
-                domain: process.env.NODE_ENV === "production" ? ".social-zone.vercel.app" : undefined,
+                domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: 1000 * 60 * 60 * 24 * 30, //30 days
                 sameSite:
