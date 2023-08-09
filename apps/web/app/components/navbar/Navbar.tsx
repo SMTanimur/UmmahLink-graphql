@@ -15,9 +15,9 @@ import type { FC } from 'react';
 import { GradientBar, Heading, cn } from '~ui';
 
 import { IUser } from '@social-zone/graphql';
-import MenuItems from './MenuItems';
 import Search from './Search';
 import {  useRouter } from 'next/navigation';
+import NavMenuItems from './MenuItems';
 
 export const Navbar: FC = () => {
   const { data } = useProfileQuery();
@@ -71,7 +71,7 @@ export const Navbar: FC = () => {
                     <BellIcon className="h-5 w-5" />
                   </>
                 ) : null}
-                <MenuItems />
+                <NavMenuItems />
               </div>
             </div>
           </div>

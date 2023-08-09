@@ -17,20 +17,7 @@ async function bootstrap() {
     const configurationService =
       app.get<ConfigurationService>(ConfigurationService);
 
-  // only using graphql
-  // app.use((req: any, res: any, next: any) => {
-  //   if (req.url.includes('/graphql')) {
-  //     // only graphql request
-  //     graphqlUploadExpress({
-  //       maxFileSize: 100000000,
-  //       maxFiles: 10,
-  //     })(req, res, next);
-  //   } else {
-  //     next();
-  //   }
-  // });
-    // app.use(morgan('common'));
-    // app.use(helmet());
+ 
     app.enableCors({
       credentials: true,
       origin: [configurationService.WEB_URL],
@@ -44,13 +31,12 @@ async function bootstrap() {
         resave: false,
         saveUninitialized: false,
         cookie: {
-          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
           httpOnly: true,
-          // TODO: Need to check when it's live on the production server
-          // sameSite: ServerConfig.NODE_ENV !== 'production' ? 'none' : 'lax',
-          sameSite: 'lax',
-          // TODO: Enable secure cookie in production
-          secure: false, //|| ServerConfig.NODE_ENV === 'production',
+                domain: process.env.NODE_ENV === "production" ? ".social-zone.vercel.app" : undefined,
+                secure: process.env.NODE_ENV === "production",
+                maxAge: 1000 * 60 * 60 * 24 * 30, //30 days
+                sameSite:
+                    process.env.NODE_ENV === "production" ? "strict" : "lax",
         },
         store: new MongoStore({
           uri: configurationService.MONGODB_URI,

@@ -1,4 +1,4 @@
-
+"use client"
 import Link from 'next/link';
 import type { FC } from 'react';
 
@@ -12,7 +12,7 @@ export const NextLink = ({ href, children, ...rest }: Record<string, any>) => (
   </Link>
 );
 
-const MenuItems: FC = () => {
+const NavMenuItems: FC = () => {
   const { isAuthenticated } = useAuth();
   if (!isAuthenticated) {
     return <LoginButton />;
@@ -21,4 +21,4 @@ const MenuItems: FC = () => {
   return <SignedUser />;
 };
 
-export default MenuItems;
+export default NavMenuItems;
