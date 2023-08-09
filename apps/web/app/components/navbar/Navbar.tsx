@@ -19,7 +19,7 @@ import MenuItems from './MenuItems';
 import Search from './Search';
 import {  useRouter } from 'next/navigation';
 
-const Navbar: FC = () => {
+export const Navbar: FC = () => {
   const { data } = useProfileQuery();
   const currentProfile = data?.me;
 
@@ -87,4 +87,3 @@ const Navbar: FC = () => {
   );
 };
 
-export default Navbar;

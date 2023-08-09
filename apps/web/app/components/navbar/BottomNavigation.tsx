@@ -13,9 +13,10 @@ import {
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FC } from 'react';
 
 
-const BottomNavigation = () => {
+ export const BottomNavigation:FC = () => {
   const pathname = usePathname();
   const isActivePath = (path: string) =>pathname === path;
 
@@ -55,4 +56,3 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation;

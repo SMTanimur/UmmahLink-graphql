@@ -6,8 +6,9 @@ import {  defaultMetadata } from '~ui';
 
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
-import Navbar from './components/Navbar';
-import BottomNavigation from './components/Navbar/BottomNavigation';
+import { Navbar } from './components/Navbar/Navbar';
+import { BottomNavigation } from './components/Navbar/BottomNavigation';
+
 
 const Providers = dynamic(() => import('./Provider'), {
   ssr: false,
