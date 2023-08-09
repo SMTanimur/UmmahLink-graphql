@@ -1,0 +1,6 @@
+mutation MarkNotification ($input: NotificationCountQueryArgs!){
+  markNotification(markNotificationArgs:$input ){
+   state
+   __typename
+  }
+}

@@ -11,5 +11,6 @@ export * from './humanize'
 export * from './sanitizeDisplayName'
 export * from './profilePictureUtils'
 export * from './getError'
+export * from './dateFormatter'
 
 

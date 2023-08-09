@@ -36,6 +36,12 @@ export class NotificationPaginate {
 
   @Field(() => String)
   link: string;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 }
 
 @ObjectType()

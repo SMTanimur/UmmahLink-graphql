@@ -1,0 +1,6 @@
+mutation UpdateNotification ($input:NotificationUpdateArgs!){
+  updateNotification(updateNotificationArgs: $input){
+    state
+    __typename
+  }
+}

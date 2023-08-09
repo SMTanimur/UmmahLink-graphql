@@ -302,9 +302,10 @@ export type Mutation = {
   likeOrUnlikePost: MessageResponse;
   login: LoginResponse;
   logout: MessageResponse;
+  markNotification: NotificationResponse;
   unFollowUser: MessageResponse;
   updateComment: MessageResponse;
-  updateNotification: Scalars['Boolean']['output'];
+  updateNotification: NotificationResponse;
   updatePost: MessageResponse;
   updateUser: MessageResponse;
 };
@@ -355,6 +356,10 @@ export type MutationLikeOrUnlikePostArgs = {
 
 export type MutationLoginArgs = {
   loginInput: LoginInput;
+};
+
+export type MutationMarkNotificationArgs = {
+  markNotificationArgs: NotificationCountQueryArgs;
 };
 
 export type MutationUnFollowUserArgs = {
@@ -410,19 +415,30 @@ export type NewsFeedQueryArgs = {
   user?: InputMaybe<UserInputType>;
 };
 
-export type Notification = {
-  __typename?: 'Notification';
-  id: Scalars['ID']['output'];
-  initiator?: Maybe<Scalars['ID']['output']>;
-  link?: Maybe<Scalars['String']['output']>;
-  target?: Maybe<Scalars['ID']['output']>;
+export type NotificationCount = {
+  __typename?: 'NotificationCount';
+  count: Scalars['Int']['output'];
+};
+
+export type NotificationCountQueryArgs = {
+  user?: InputMaybe<UserInputType>;
+};
+
+export type NotificationPaginate = {
+  __typename?: 'NotificationPaginate';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  initiator: NotificationUser;
+  link: Scalars['String']['output'];
+  target: NotificationUser;
   type: NotificationType;
-  unread?: Maybe<Scalars['Boolean']['output']>;
+  unread: Scalars['Boolean']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type NotificationPagination = {
   __typename?: 'NotificationPagination';
-  docs?: Maybe<Array<Maybe<Notification>>>;
+  docs?: Maybe<Array<Maybe<NotificationPaginate>>>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPrevPage: Scalars['Boolean']['output'];
   limit: Scalars['Float']['output'];
@@ -435,10 +451,14 @@ export type NotificationPagination = {
 };
 
 export type NotificationQueryArgs = {
-  targetId?: InputMaybe<Scalars['ID']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   unread?: InputMaybe<Scalars['Boolean']['input']>;
-  user?: InputMaybe<Scalars['ID']['input']>;
+  user?: InputMaybe<UserInputType>;
+};
+
+export type NotificationResponse = {
+  __typename?: 'NotificationResponse';
+  state: Scalars['Boolean']['output'];
 };
 
 export enum NotificationType {
@@ -451,7 +471,13 @@ export enum NotificationType {
 
 export type NotificationUpdateArgs = {
   notifiId: Scalars['ID']['input'];
-  unread?: Scalars['Boolean']['input'];
+};
+
+export type NotificationUser = {
+  __typename?: 'NotificationUser';
+  avatar: AvatarImage;
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type PaginateOptionArgs = {
@@ -531,12 +557,13 @@ export type Query = {
   getFeeds?: Maybe<NewsFeedPagination>;
   getFollowers: FollowPagination;
   getFollowing: FollowPagination;
+  getNotificationCount: NotificationCount;
+  getNotifications: NotificationPagination;
   getPostLikes: Array<GetLikeResponse>;
   getPosts: NewsFeedPagination;
   getReplies?: Maybe<CommentPagination>;
   getSuggestionPeople?: Maybe<FollowPagination>;
   me: IUser;
-  notifications: NotificationPagination;
   post: Post;
   searchUser?: Maybe<Array<IUser>>;
   user?: Maybe<ProfileInformation>;
@@ -564,6 +591,15 @@ export type QueryGetFollowingArgs = {
   username: Scalars['String']['input'];
 };
 
+export type QueryGetNotificationCountArgs = {
+  query: NotificationCountQueryArgs;
+};
+
+export type QueryGetNotificationsArgs = {
+  options: PaginateOptionArgs;
+  query: NotificationQueryArgs;
+};
+
 export type QueryGetPostLikesArgs = {
   option: PaginateOptionArgs;
   query: LikesQueryArgs;
@@ -583,22 +619,6 @@ export type QueryGetRepliesArgs = {
 export type QueryGetSuggestionPeopleArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
-};
-
-export type QueryNotificationsArgs = {
-  allowDiskUse?: InputMaybe<Scalars['Boolean']['input']>;
-  forceCountFn?: InputMaybe<Scalars['Boolean']['input']>;
-  lean?: InputMaybe<Scalars['Boolean']['input']>;
-  leanWithId?: InputMaybe<Scalars['Boolean']['input']>;
-  limit?: InputMaybe<Scalars['Float']['input']>;
-  offset?: InputMaybe<Scalars['Float']['input']>;
-  page?: InputMaybe<Scalars['Float']['input']>;
-  pagination?: InputMaybe<Scalars['Boolean']['input']>;
-  query: NotificationQueryArgs;
-  select?: InputMaybe<Scalars['String']['input']>;
-  skip?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  useEstimatedCount?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type QueryPostArgs = {
@@ -827,6 +847,24 @@ export type LikeOrUnlikePostMutationVariables = Exact<{
 export type LikeOrUnlikePostMutation = {
   __typename?: 'Mutation';
   likeOrUnlikePost: { __typename?: 'MessageResponse'; message: string };
+};
+
+export type MarkNotificationMutationVariables = Exact<{
+  input: NotificationCountQueryArgs;
+}>;
+
+export type MarkNotificationMutation = {
+  __typename?: 'Mutation';
+  markNotification: { __typename: 'NotificationResponse'; state: boolean };
+};
+
+export type UpdateNotificationMutationVariables = Exact<{
+  input: NotificationUpdateArgs;
+}>;
+
+export type UpdateNotificationMutation = {
+  __typename?: 'Mutation';
+  updateNotification: { __typename: 'NotificationResponse'; state: boolean };
 };
 
 export type DeletePostMutationVariables = Exact<{
@@ -1117,6 +1155,56 @@ export type GetSuggestionPeopleQuery = {
       };
     } | null> | null;
   } | null;
+};
+
+export type GetNotificationsQueryVariables = Exact<{
+  query: NotificationQueryArgs;
+  options: PaginateOptionArgs;
+}>;
+
+export type GetNotificationsQuery = {
+  __typename?: 'Query';
+  getNotifications: {
+    __typename?: 'NotificationPagination';
+    docs?: Array<{
+      __typename: 'NotificationPaginate';
+      type: NotificationType;
+      id: string;
+      unread: boolean;
+      link: string;
+      createdAt: any;
+      updatedAt: any;
+      target: {
+        __typename: 'NotificationUser';
+        username: string;
+        name: string;
+        avatar: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        };
+      };
+      initiator: {
+        __typename: 'NotificationUser';
+        username: string;
+        name: string;
+        avatar: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        };
+      };
+    } | null> | null;
+  };
+};
+
+export type GetNotificationCountQueryVariables = Exact<{
+  query: NotificationCountQueryArgs;
+}>;
+
+export type GetNotificationCountQuery = {
+  __typename?: 'Query';
+  getNotificationCount: { __typename: 'NotificationCount'; count: number };
 };
 
 export type GetPostLikesQueryVariables = Exact<{
@@ -1717,6 +1805,94 @@ useLikeOrUnlikePostMutation.fetcher = (
     variables,
     options
   );
+export const MarkNotificationDocument = /*#__PURE__*/ `
+    mutation MarkNotification($input: NotificationCountQueryArgs!) {
+  markNotification(markNotificationArgs: $input) {
+    state
+    __typename
+  }
+}
+    `;
+export const useMarkNotificationMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    MarkNotificationMutation,
+    TError,
+    MarkNotificationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MarkNotificationMutation,
+    TError,
+    MarkNotificationMutationVariables,
+    TContext
+  >(
+    ['MarkNotification'],
+    (variables?: MarkNotificationMutationVariables) =>
+      fetcher<MarkNotificationMutation, MarkNotificationMutationVariables>(
+        MarkNotificationDocument,
+        variables
+      )(),
+    options
+  );
+useMarkNotificationMutation.getKey = () => ['MarkNotification'];
+
+useMarkNotificationMutation.fetcher = (
+  variables: MarkNotificationMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<MarkNotificationMutation, MarkNotificationMutationVariables>(
+    MarkNotificationDocument,
+    variables,
+    options
+  );
+export const UpdateNotificationDocument = /*#__PURE__*/ `
+    mutation UpdateNotification($input: NotificationUpdateArgs!) {
+  updateNotification(updateNotificationArgs: $input) {
+    state
+    __typename
+  }
+}
+    `;
+export const useUpdateNotificationMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateNotificationMutation,
+    TError,
+    UpdateNotificationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateNotificationMutation,
+    TError,
+    UpdateNotificationMutationVariables,
+    TContext
+  >(
+    ['UpdateNotification'],
+    (variables?: UpdateNotificationMutationVariables) =>
+      fetcher<UpdateNotificationMutation, UpdateNotificationMutationVariables>(
+        UpdateNotificationDocument,
+        variables
+      )(),
+    options
+  );
+useUpdateNotificationMutation.getKey = () => ['UpdateNotification'];
+
+useUpdateNotificationMutation.fetcher = (
+  variables: UpdateNotificationMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UpdateNotificationMutation, UpdateNotificationMutationVariables>(
+    UpdateNotificationDocument,
+    variables,
+    options
+  );
 export const DeletePostDocument = /*#__PURE__*/ `
     mutation DeletePost($deletePostInput: DeletePostInput!) {
   deletePost(deletePostInput: $deletePostInput) {
@@ -2251,6 +2427,103 @@ useGetSuggestionPeopleQuery.fetcher = (
 ) =>
   fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
     GetSuggestionPeopleDocument,
+    variables,
+    options
+  );
+export const GetNotificationsDocument = /*#__PURE__*/ `
+    query GetNotifications($query: NotificationQueryArgs!, $options: PaginateOptionArgs!) {
+  getNotifications(query: $query, options: $options) {
+    docs {
+      type
+      id
+      target {
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      initiator {
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      unread
+      link
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+}
+    `;
+export const useGetNotificationsQuery = <
+  TData = GetNotificationsQuery,
+  TError = unknown
+>(
+  variables: GetNotificationsQueryVariables,
+  options?: UseQueryOptions<GetNotificationsQuery, TError, TData>
+) =>
+  useQuery<GetNotificationsQuery, TError, TData>(
+    ['GetNotifications', variables],
+    fetcher<GetNotificationsQuery, GetNotificationsQueryVariables>(
+      GetNotificationsDocument,
+      variables
+    ),
+    options
+  );
+
+useGetNotificationsQuery.getKey = (
+  variables: GetNotificationsQueryVariables
+) => ['GetNotifications', variables];
+useGetNotificationsQuery.fetcher = (
+  variables: GetNotificationsQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetNotificationsQuery, GetNotificationsQueryVariables>(
+    GetNotificationsDocument,
+    variables,
+    options
+  );
+export const GetNotificationCountDocument = /*#__PURE__*/ `
+    query GetNotificationCount($query: NotificationCountQueryArgs!) {
+  getNotificationCount(query: $query) {
+    count
+    __typename
+  }
+}
+    `;
+export const useGetNotificationCountQuery = <
+  TData = GetNotificationCountQuery,
+  TError = unknown
+>(
+  variables: GetNotificationCountQueryVariables,
+  options?: UseQueryOptions<GetNotificationCountQuery, TError, TData>
+) =>
+  useQuery<GetNotificationCountQuery, TError, TData>(
+    ['GetNotificationCount', variables],
+    fetcher<GetNotificationCountQuery, GetNotificationCountQueryVariables>(
+      GetNotificationCountDocument,
+      variables
+    ),
+    options
+  );
+
+useGetNotificationCountQuery.getKey = (
+  variables: GetNotificationCountQueryVariables
+) => ['GetNotificationCount', variables];
+useGetNotificationCountQuery.fetcher = (
+  variables: GetNotificationCountQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetNotificationCountQuery, GetNotificationCountQueryVariables>(
+    GetNotificationCountDocument,
     variables,
     options
   );

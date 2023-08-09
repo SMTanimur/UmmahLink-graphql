@@ -8,6 +8,4 @@ export class NotificationUpdateArgs {
   @Field((_type) => ID )
   notifiId: string;
 
-  @Field((_type)=>Boolean,{defaultValue:false})
-  unread?:boolean
 }

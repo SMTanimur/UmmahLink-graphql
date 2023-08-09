@@ -11,6 +11,8 @@ export * from './Options'
 export * from './Alert'
 export * from './Footer/Footer'
 export * from './imageCrop'
+export * from './ToggleWithHelper'
+export * from './Notification'
 
 
 export { UserCard }

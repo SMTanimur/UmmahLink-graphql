@@ -17,6 +17,15 @@ export enum ProfilePostType {
 }
 
 
+
+export enum NotificationsType {
+  ALL = 'ALL',
+  LIKE = 'LIKE',
+  FOLLOW = 'FOLLOW',
+  COMMENT = 'COMMENT'
+}
+
+
 export interface MarkupLinkProps {
   href?: string;
   title?: string;

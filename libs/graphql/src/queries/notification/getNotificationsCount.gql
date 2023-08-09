@@ -1,0 +1,6 @@
+query GetNotificationCount ($query: NotificationCountQueryArgs!){
+  getNotificationCount(query: $query){
+    count
+     __typename
+  }
+}

@@ -16,3 +16,8 @@ export class NotificationQueryArgs {
   @Field((_type)=>Boolean,{nullable:true})
   unread?:boolean
 }
+@InputType()
+export class NotificationCountQueryArgs {
+  @Field((_type) => User,{nullable:true} )
+  user: User
+}

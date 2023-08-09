@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { Disclosure } from '@headlessui/react';
-import { useProfileQuery } from '~ui';
+import { NotificationIcon, useProfileQuery } from '~ui';
 import {
   BellIcon,
   XMarkIcon,
@@ -68,7 +68,7 @@ export const Navbar: FC = () => {
                 {currentProfile ? (
                   <>
                     <InboxIcon className="h-5 w-5" />
-                    <BellIcon className="h-5 w-5" />
+                    <NotificationIcon />
                   </>
                 ) : null}
                 <NavMenuItems />

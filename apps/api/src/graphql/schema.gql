@@ -194,6 +194,8 @@ type NotificationPaginate {
   initiator: NotificationUser!
   unread: Boolean!
   link: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum NotificationType {
@@ -215,6 +217,14 @@ type NotificationPagination {
   nextPage: Float
   prevPage: Float
   pagingCounter: Float!
+}
+
+type NotificationResponse {
+  state: Boolean!
+}
+
+type NotificationCount {
+  count: Int!
 }
 
 type IUser {
@@ -290,7 +300,8 @@ type Query {
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination
   getComments(query: CommentsQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getReplies(query: ReplyQueryArgs!, option: PaginateOptionArgs!): CommentPagination
-  getNotifications(query: NotificationQueryArgs!, select: String, sort: String, skip: Float, lean: Boolean, leanWithId: Boolean, offset: Float, limit: Float = 10, page: Float = 1, pagination: Boolean, allowDiskUse: Boolean, forceCountFn: Boolean, useEstimatedCount: Boolean): NotificationPagination!
+  getNotifications(query: NotificationQueryArgs!, options: PaginateOptionArgs!): NotificationPagination!
+  getNotificationCount(query: NotificationCountQueryArgs!): NotificationCount!
   post(postId: ID!): Post!
   getPosts(username: String!, query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getPostLikes(query: LikesQueryArgs!, option: PaginateOptionArgs!): [GetLikeResponse!]!
@@ -388,6 +399,10 @@ input NotificationQueryArgs {
   unread: Boolean
 }
 
+input NotificationCountQueryArgs {
+  user: UserInputType
+}
+
 type GetLikeResponse {
   username: String!
   _id: ID!
@@ -418,7 +433,8 @@ type Mutation {
   createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
   deleteComment(deleteCommentInput: DeleteCommentInput!): MessageResponse!
   likeOrUnlikeComment(likeOrUnlikeCommentInput: CreatePostOrCommentLikeInput!): MessageResponse!
-  updateNotification(updateNotificationArgs: NotificationUpdateArgs!): Boolean!
+  updateNotification(updateNotificationArgs: NotificationUpdateArgs!): NotificationResponse!
+  markNotification(markNotificationArgs: NotificationCountQueryArgs!): NotificationResponse!
   createPost(createPostInput: CreatePostInput!): MessageResponse!
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   deletePost(deletePostInput: DeletePostInput!): MessageResponse!
@@ -473,7 +489,6 @@ input CreatePostOrCommentLikeInput {
 
 input NotificationUpdateArgs {
   notifiId: ID!
-  unread: Boolean! = false
 }
 
 input CreatePostInput {

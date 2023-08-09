@@ -1,12 +1,16 @@
-"use client"
-import {  ProfileInformation,  useUserProfileQuery } from "@social-zone/graphql";
-import { FC, ReactNode, useState } from "react";
-import { Image, Slug } from "../components";
-import { cn, nFormatter, sanitizeDisplayName, stopEventPropagation } from "../lib";
-import { Follow } from "./Follow";
-import Tippy from "@tippyjs/react";
-import { UserAvatarUrl } from "../data";
-
+'use client';
+import { ProfileInformation, useUserProfileQuery } from '@social-zone/graphql';
+import { FC, ReactNode, useState } from 'react';
+import { Image, Slug } from '../components';
+import {
+  cn,
+  nFormatter,
+  sanitizeDisplayName,
+  stopEventPropagation,
+} from '../lib';
+import { Follow } from './Follow';
+import Tippy from '@tippyjs/react';
+import { UserAvatarUrl } from '../data';
 
 interface UserPreviewProps {
   profile: ProfileInformation;
@@ -21,16 +25,18 @@ export const UserPreview: FC<UserPreviewProps> = ({
   isBig,
   followStatusLoading,
   children,
-  showUserPreview = true
+  showUserPreview = true,
 }) => {
   const [lazyProfile, setLazyProfile] = useState(profile);
   const [following, setFollowing] = useState(profile?.isFollowing);
 
-  const {data}=useUserProfileQuery({username:lazyProfile?.username})
+  const { data } = useUserProfileQuery({ username: lazyProfile?.username });
 
   const UserAvatar = () => (
     <Image
-      src={profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl}
+      src={
+        profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl
+      }
       loading="lazy"
       className={cn(
         isBig ? 'h-14 w-14' : 'h-10 w-10',
@@ -46,18 +52,13 @@ export const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex max-w-sm items-center gap-1 truncate">
         <div className={cn(isBig ? 'font-bold' : 'text-md')}>
-          {sanitizeDisplayName(lazyProfile?.name) ??
-           profile?.name}
+          {sanitizeDisplayName(lazyProfile?.name) ?? profile?.name}
         </div>
         {/* {isVerified(lazyProfile?.id) && (
           <BadgeCheckIcon className="text-brand h-4 w-4" />
         )} */}
       </div>
-      {/* <Slug
-        className="text-sm"
-        slug={profile?.username as any}
-        prefix="@"
-      /> */}
+      <Slug className="text-sm" slug={profile?.username as any} prefix="@" />
     </>
   );
 
@@ -65,22 +66,22 @@ export const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex items-center justify-between">
         <UserAvatar />
-        {/* <div onClick={stopEventPropagation} aria-hidden="true">
-          {!profile.isFollowing &&
+        <div onClick={stopEventPropagation} aria-hidden="true">
+          {!lazyProfile.isFollowing &&
             (followStatusLoading ? (
               <div className="shimmer h-8 w-10 rounded-lg" />
-            ) :  (
+            ) : following ? null : (
               <Follow
-                profile={profile as ProfileInformation}
+                profile={lazyProfile as ProfileInformation}
                 setFollowing={setFollowing}
               />
             ))}
-        </div> */}
+        </div>
       </div>
       <div className="space-y-3 p-1">
         <UserName />
-        {/* <div>
-          {profile. && (
+        <div>
+          {profile.bio && (
             <div
               className={cn(
                 isBig ? 'text-base' : 'text-sm',
@@ -88,17 +89,17 @@ export const UserPreview: FC<UserPreviewProps> = ({
                 'linkify break-words leading-6'
               )}
             >
-              <Markup>{lazyProfile?.bio}</Markup>
+              <span>{lazyProfile?.bio}</span>
             </div>
           )}
-        </div> */}
+        </div>
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-1">
             <div className="text-base">
               {nFormatter(profile?.followingCount as number)}
             </div>
             <div className="lt-text-gray-500 text-sm">
-               <h6>Following</h6>
+              <h6>Following</h6>
             </div>
           </div>
           <div className="text-md flex items-center space-x-1">
@@ -116,9 +117,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
 
   const onPreviewStart = async () => {
     if (!lazyProfile.id) {
-     
-    
-      const getProfile = data?.user
+      const getProfile = data?.user;
       if (getProfile) {
         setLazyProfile(getProfile as ProfileInformation);
       }
@@ -149,5 +148,3 @@ export const UserPreview: FC<UserPreviewProps> = ({
     <span>{children}</span>
   );
 };
-
-

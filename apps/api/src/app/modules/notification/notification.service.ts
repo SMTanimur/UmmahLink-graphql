@@ -7,7 +7,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Notification, NotificationDocument } from './entities/notification';
 import { FilterQuery, PaginateModel, PaginateOptions } from 'mongoose';
 import { NotificationPagination } from './dto/notification-paginate';
-import { NotificationQueryArgs } from './dto/notification-query-arg';
+import {
+  NotificationCountQueryArgs,
+  NotificationQueryArgs,
+} from './dto/notification-query-arg';
 import { NotificationUpdateArgs } from './dto/notification-update';
 
 @Injectable()
@@ -33,6 +36,7 @@ export class NotificationService {
         {
           page,
           limit,
+          sort:{ 'createdAt': -1 },
           populate: [
             { path: 'initiator', select: 'name username avatar' },
             { path: 'target', select: 'username avatar name' },
@@ -43,11 +47,33 @@ export class NotificationService {
   }
 
   async updateNotification(updateNotificationInput: NotificationUpdateArgs) {
-    const { notifiId, unread } = updateNotificationInput;
+    const { notifiId } = updateNotificationInput;
     await this.notificationModel.findByIdAndUpdate(notifiId, {
-      $set: { unread },
+      $set: { unread: false },
     });
 
-    return false;
+    return {
+      state: false,
+    };
+  }
+  async notificationMark(query: FilterQuery<NotificationCountQueryArgs>) {
+    const { user } = query;
+    await this.notificationModel.updateMany(
+      { target: user._id },
+      {
+        $set: { unread: false },
+      }
+    );
+    return {
+      state: false,
+    };
+  }
+
+  async getNotificationCount(query: FilterQuery<NotificationCountQueryArgs>) {
+    const { user } = query;
+    const count = await this.notificationModel.find({ target: user?._id });
+    return {
+      count: count.length,
+    };
   }
 }
