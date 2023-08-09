@@ -2,11 +2,11 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
-import dayjsTwitter from 'dayjs-twitter';
+
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
-dayjs.extend(dayjsTwitter);
+
 
 /**
  * Formats a date as a string in the format used by the application.
@@ -91,6 +91,3 @@ export const getTimetoNow = (date: Date) => {
  * @param date The date to format.
  * @returns A string in the Twitter date format.
  */
-export const getTwitterFormat = (date: Date | string) => {
-  return dayjs(new Date(date)).twitter();
-};
