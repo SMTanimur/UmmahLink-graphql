@@ -17,7 +17,7 @@ import { GradientBar, Heading, cn } from '~ui';
 import { IUser } from '@social-zone/graphql';
 import Search from './Search';
 import {  useRouter } from 'next/navigation';
-import NavMenuItems from './MenuItems';
+import NavMenuItems from './NavbarMenuItems';
 
 export const Navbar: FC = () => {
   const { data } = useProfileQuery();
