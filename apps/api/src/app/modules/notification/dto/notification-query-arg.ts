@@ -1,15 +1,14 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
+import { User } from "../../users/entities/user.entity";
 
 
 
 
 @InputType({isAbstract:true})
 export class NotificationQueryArgs {
-  @Field((_type) => ID,{nullable:true} )
-  user: string;
+  @Field((_type) => User,{nullable:true} )
+  user: User
 
-  @Field((_type)=>ID,{nullable:true})
-  targetId?:string
 
   @Field((_type)=>String,{nullable:true})
   type?:string

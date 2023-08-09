@@ -14,13 +14,13 @@ export class NotificationResolver {
   constructor(private readonly notificationService: NotificationService) {}
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() => NotificationPagination,{name:'notifications'})
+  @Query(() => NotificationPagination,{name:'getNotifications'})
   async  getNotifications(
     @Args('query') query: NotificationQueryArgs,
     @Args() options: PaginateOptionArgs,
     @CurrentUser() user: any,
   ) {
-    query.user = user._id;
+    query.user = user
     return await this.notificationService.paginate(query, options);
   }
 

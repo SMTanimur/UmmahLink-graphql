@@ -144,23 +144,6 @@ type NewsFeedPagination {
   pagingCounter: Float!
 }
 
-type Notification {
-  id: ID!
-  type: NotificationType!
-  target: ID
-  initiator: ID
-  unread: Boolean
-  link: String
-}
-
-enum NotificationType {
-  like
-  follow
-  commentLike
-  comment
-  reply
-}
-
 type CommentAuthor {
   id: ID
   username: String!
@@ -198,8 +181,31 @@ type CommentPagination {
   pagingCounter: Float!
 }
 
+type NotificationUser {
+  username: String!
+  avatar: AvatarImage!
+  name: String!
+}
+
+type NotificationPaginate {
+  type: NotificationType!
+  id: String!
+  target: NotificationUser!
+  initiator: NotificationUser!
+  unread: Boolean!
+  link: String!
+}
+
+enum NotificationType {
+  like
+  follow
+  commentLike
+  comment
+  reply
+}
+
 type NotificationPagination {
-  docs: [Notification]
+  docs: [NotificationPaginate]
   totalDocs: Float!
   limit: Float!
   page: Float!
@@ -284,7 +290,7 @@ type Query {
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination
   getComments(query: CommentsQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getReplies(query: ReplyQueryArgs!, option: PaginateOptionArgs!): CommentPagination
-  notifications(query: NotificationQueryArgs!, select: String, sort: String, skip: Float, lean: Boolean, leanWithId: Boolean, offset: Float, limit: Float = 10, page: Float = 1, pagination: Boolean, allowDiskUse: Boolean, forceCountFn: Boolean, useEstimatedCount: Boolean): NotificationPagination!
+  getNotifications(query: NotificationQueryArgs!, select: String, sort: String, skip: Float, lean: Boolean, leanWithId: Boolean, offset: Float, limit: Float = 10, page: Float = 1, pagination: Boolean, allowDiskUse: Boolean, forceCountFn: Boolean, useEstimatedCount: Boolean): NotificationPagination!
   post(postId: ID!): Post!
   getPosts(username: String!, query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getPostLikes(query: LikesQueryArgs!, option: PaginateOptionArgs!): [GetLikeResponse!]!
@@ -377,8 +383,7 @@ input ReplyQueryArgs {
 }
 
 input NotificationQueryArgs {
-  user: ID
-  targetId: ID
+  user: UserInputType
   type: String
   unread: Boolean
 }
