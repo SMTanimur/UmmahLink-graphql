@@ -4,10 +4,11 @@ import {
   ExclamationTriangleIcon,
   UserIcon
 } from '@heroicons/react/24/outline';
-import UserProfile from '../../user/[username]/components/UserProfile';
+
 import { FC } from 'react';
 
 import { Sidebar,useProfileQuery } from '~ui';
+import UserProfile from '../../components/UserProfile';
 
 export const SettingsSidebar: FC = () => {
    const {data}= useProfileQuery()
@@ -25,12 +26,12 @@ export const SettingsSidebar: FC = () => {
           {
             title: `Profile`,
             icon: <UserIcon className="h-4 w-4" />,
-            url: '/settings'
+            url: `/user/${data?.me?.username}/setting`
           },
           {
             title: `Account`,
             icon: <CpuChipIcon className="h-4 w-4" />,
-            url: '/settings/account'
+            url: `/user/${data?.me?.username}/account`
           },
           {
             title: (
@@ -39,7 +40,7 @@ export const SettingsSidebar: FC = () => {
               </div>
             ),
             icon: <ExclamationTriangleIcon className="h-4 w-4 text-red-500" />,
-            url: '/settings/delete'
+            url: `/user/${data?.me?.username}/delete-account`
           }
         ]}
       />

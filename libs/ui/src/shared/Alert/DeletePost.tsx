@@ -16,7 +16,6 @@ export const DeletePost: FC = () => {
   const deletingPost = useGlobalAlertStateStore(
     (state) => state.deletingPost
   );
-  console.log(deletingPost,'delete')
   const { mutateAsync, isLoading } = useDeletePostMutation();
 
   const handlePost = async () => {

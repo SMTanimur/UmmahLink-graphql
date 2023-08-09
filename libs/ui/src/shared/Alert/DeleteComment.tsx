@@ -16,7 +16,6 @@ export const DeleteComment: FC = () => {
   const deletingComment = useGlobalAlertStateStore(
     (state) => state.deletingComment
   );
-  console.log(deletingComment, 'delete');
   const { mutateAsync, isLoading } = useDeleteCommentMutation();
 
   const handleComment = async () => {

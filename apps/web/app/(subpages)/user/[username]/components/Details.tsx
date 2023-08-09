@@ -114,12 +114,10 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
         }
       );
     } catch (error) {
-      console.error('Error updating profile picture:', error);
       toast.error('Failed to update profile picture.');
     }
   };
 
-  console.log(profilePicture.imageFile, 'profilePicture.imageFile');
   return (
     <div className="mb-4 space-y-5 px-5 sm:px-0">
       <div className="relative -mt-24 h-32 w-32 sm:-mt-32 sm:h-52 sm:w-52">

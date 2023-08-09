@@ -51,9 +51,6 @@ const Attachments: FC<AttachmentsProps> = ({
         {attachments?.map(
           (attachment: PhotosImageInfo, index: number) => {
 
-            console.log(attachment,"attachment")
-            
-
             return (
               <div
                 className={clsx(

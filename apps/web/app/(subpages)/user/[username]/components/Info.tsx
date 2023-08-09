@@ -24,7 +24,7 @@ const Info:FC<InfoProps> = ({profile}) => {
         {isOwnProfile && (
           <span
             className="underline cursor-pointer text-indigo-700 dark:text-indigo-400 pr-4"
-            onClick={() => push(`/settings`)}
+            onClick={() => push(`/user/${profile?.username}/setting`)}
           >
             Edit
           </span>
