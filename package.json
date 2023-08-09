@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
+    "build:web": "nx build web",
+    "build:api": "nx build api",
+    "start:web": "nx serve web",
+    "start:api": "nx serve api",
     "dev": "nx run-many --target=serve --projects=web,api --parallel",
     "gen:graphql-client": "graphql-codegen --watch"
   },
