@@ -554,7 +554,7 @@ export type ProfileInformation = {
 export type Query = {
   __typename?: 'Query';
   getComments?: Maybe<CommentPagination>;
-  getFeeds?: Maybe<NewsFeedPagination>;
+  getFeeds: NewsFeedPagination;
   getFollowers: FollowPagination;
   getFollowing: FollowPagination;
   getNotificationCount: NotificationCount;
@@ -1003,7 +1003,7 @@ export type GetFeedQueryVariables = Exact<{
 
 export type GetFeedQuery = {
   __typename?: 'Query';
-  getFeeds?: {
+  getFeeds: {
     __typename: 'NewsFeedPagination';
     limit: number;
     page: number;
@@ -1042,7 +1042,7 @@ export type GetFeedQuery = {
         photosPublicId?: string | null;
       }> | null;
     } | null> | null;
-  } | null;
+  };
 };
 
 export type GetFollowersQueryVariables = Exact<{

@@ -31,7 +31,8 @@ export class FollowsService {
     private followModel: AggregatePaginateModel<FollowDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(NewsFeed.name) private newsFeedModel: Model<NewsFeedDocument>,
-    @InjectModel(User.name) private userModel: AggregatePaginateModel<UserDocument>,
+    @InjectModel(User.name)
+    private userModel: AggregatePaginateModel<UserDocument>,
     @InjectModel(Notification.name)
     private notificationModel: Model<NotificationDocument>
   ) {}
@@ -71,7 +72,11 @@ export class FollowsService {
       }
 
       //TODO: __ filter
-
+      await this.notificationModel.deleteMany({
+        type: 'follow',
+        initiator: userId,
+        target: follow_ID,
+      });
       const notification = await this.notificationModel.create({
         type: 'follow',
         initiator: userId,
@@ -84,7 +89,7 @@ export class FollowsService {
 
       // TODO: SUBSCRIBE TO USER'S FEED
       const subscribeToUserFeed = await this.postModel
-        .find({ _author_id:  follow_ID })
+        .find({ _author_id: follow_ID })
         .sort({ createdAt: -1 })
         .limit(10);
 
@@ -134,41 +139,40 @@ export class FollowsService {
   }
 
   async getFollowers(
-    username:string,
+    username: string,
     query?: FilterQuery<FollowQueryArgs>,
     options?: AggregateOptions
   ) {
     try {
       const { user, type } = query;
-      const {limit,page}=options
-      const userInfo = await this.userModel.findOne({username})
-      if(!userInfo) throw new NotFoundException('User not found')
-
+      const { limit, page } = options;
+      const userInfo = await this.userModel.findOne({ username });
+      if (!userInfo) throw new NotFoundException('User not found');
 
       const myFollowingDoc = await this.followModel.find({ user: user._id });
-      const myFollowing =  myFollowingDoc.map((user) => user.target); // map to array of user IDs
-      const matchCondition = type === 'followers' ? { target: user._id } : { user: user._id }
-      const aggregate =   this.followModel.aggregate([
+      const myFollowing = myFollowingDoc.map((user) => user.target); // map to array of user IDs
+      const matchCondition =
+        type === 'followers' ? { target: user._id } : { user: user._id };
+      const aggregate = this.followModel.aggregate([
         {
-          $match: matchCondition
-          
+          $match: matchCondition,
         },
         {
           $lookup: {
-              from: 'users',
-              localField: type === 'following' ? 'target' : 'user',
-              foreignField: '_id',
-              as: 'user'
-          }
-      },
-      {
-          $unwind: '$user'
-      },
-      {
+            from: 'users',
+            localField: type === 'following' ? 'target' : 'user',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        {
+          $unwind: '$user',
+        },
+        {
           $addFields: {
-              isFollowing: { $in: ['$user._id', myFollowing] }
-          }
-      },
+            isFollowing: { $in: ['$user._id', myFollowing] },
+          },
+        },
         {
           $project: {
             _id: 0,
@@ -177,20 +181,19 @@ export class FollowsService {
             name: '$user.name',
             email: '$user.email',
             avatar: '$user.avatar',
-            birthday:'$user.birthday',
-            contact:'$user.contact',
-            bio:'$user.bio',
-            gender:'$user.gender',
+            birthday: '$user.birthday',
+            contact: '$user.contact',
+            bio: '$user.bio',
+            gender: '$user.gender',
             isFollowing: 1,
           },
         },
       ]);
-      
 
-      return await  this.followModel.aggregatePaginate(aggregate,{
+      return (await this.followModel.aggregatePaginate(aggregate, {
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
-      })as FollowPagination
+      })) as FollowPagination;
     } catch (error) {
       console.log(error);
     }
@@ -200,27 +203,25 @@ export class FollowsService {
     query?: FilterQuery<FollowQueryArgs>,
     options?: AggregateOptions
   ) {
-
     try {
       const { user } = query;
-      const {limit,page}= options
+      const { limit, page } = options;
       const myFollowingDoc = await this.followModel.find({ user: user._id });
-      const myFollowing =  myFollowingDoc.map((user) => user.target); // map to array of user IDs
+      const myFollowing = myFollowingDoc.map((user) => user.target); // map to array of user IDs
 
       const agg = this.userModel.aggregate([
         {
-            $match: {
-                _id: {
-                    $nin: [...myFollowing, user._id]
-                }
-            }
+          $match: {
+            _id: {
+              $nin: [...myFollowing, user._id],
+            },
+          },
         },
 
-      
         {
-            $addFields: {
-                isFollowing: false,
-            }
+          $addFields: {
+            isFollowing: false,
+          },
         },
         {
           $project: {
@@ -232,17 +233,15 @@ export class FollowsService {
             avatar: '$avatar',
             isFollowing: 1,
           },
-        }
-    ])
-      
-   
-     return await  this.userModel.aggregatePaginate(agg,{
-      ...(limit < 10 ? ([{ $sample: { size: limit } }]) : []),
-      ...(page ? { page } : {}),
-    })as FollowPagination
-   
+        },
+      ]);
+
+      return (await this.userModel.aggregatePaginate(agg, {
+        ...(limit < 10 ? [{ $sample: { size: limit } }] : []),
+        ...(page ? { page } : {}),
+      })) as FollowPagination;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }

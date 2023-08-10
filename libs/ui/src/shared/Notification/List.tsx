@@ -1,6 +1,5 @@
 "use client"
 import { BellIcon } from '@heroicons/react/24/outline';
-
 import { motion } from 'framer-motion';
 import type { FC } from 'react';
 import { Virtuoso } from 'react-virtuoso';
@@ -8,7 +7,6 @@ import NotificationShimmer from './Shimmer';
 import CommentNotification from './Type/CommentNotification';
 import FollowerNotification from './Type/FollowerNotification';
 import LikeNotification from './Type/LikeNotification';
-import { usePreferencesStore } from '../../store';
 import { NotificationsType } from '../../types';
 import { NotificationPaginate, NotificationType } from '@social-zone/graphql';
 import { useGetNotificationsQuery, useProfileQuery } from '../../hooks';
@@ -19,9 +17,6 @@ interface ListProps {
 }
 
 const List: FC<ListProps> = ({ feedType }) => {
-  const highSignalNotificationFilter = usePreferencesStore(
-    (state) => state.highSignalNotificationFilter
-  );
   const {data:user}=useProfileQuery()
   const currentProfile=user?.me
 

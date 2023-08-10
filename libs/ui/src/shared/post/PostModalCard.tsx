@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 'use client';
@@ -21,14 +22,9 @@ import Comments from '../comments/Comment';
 
 dayjs.extend(relativeTime);
 
-
-
 export const PostCardModal: React.FC = () => {
-
-  const postData = useGlobalModalStateStore(
-    (state) => state.postData
-  );
-  const {isAuthenticated}=useAuth()
+  const postData = useGlobalModalStateStore((state) => state.postData);
+  const { isAuthenticated } = useAuth();
   const [isCommentVisible, setCommentVisible] = useState(false);
   const [isLikesModal, setIsLikesModal] = useState(false);
   const commentInputRef = useRef<HTMLInputElement | null>(null);
@@ -55,44 +51,43 @@ export const PostCardModal: React.FC = () => {
     }
   };
 
- 
-
-  const showAttachments = postData!.photos!.length > 0
+  // @ts-ignore: Object is possibly 'null'.
+  const showAttachments = postData?.photos?.length > 0;
 
   return (
     <div className="flex flex-col md:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-950 max-h-[80vh] overflow-y-auto ">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
-      <span onClick={ stopEventPropagation} aria-hidden="true">
-        <div className="flex gap-4 items-center">
-          <Image
-            src={
-              postData?.author?.avatar?.avatarUrl
-                ? postData?.author?.avatar?.avatarUrl
-                : UserAvatarUrl
-            }
-            className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
-            height={60}
-            width={60}
-            alt={postData?.author?.username}
-            data-testid="profile-avatar"
-          />
-          <div className="flex flex-col ">
-            <Link
-              className="dark:text-indigo-400"
-              href={`/user/${postData?.author?.username}`}
-            >
-              <h5 className="font-bold">{postData?.author?.username}</h5>
-            </Link>
-            <div className="flex items-center space-x-1">
-              <span className="text-sm text-gray-500">
-                {dayjs(postData?.createdAt).fromNow()}
-              </span>
+        <span onClick={stopEventPropagation} aria-hidden="true">
+          <div className="flex gap-4 items-center">
+            <Image
+              src={
+                postData?.author?.avatar?.avatarUrl
+                  ? postData?.author?.avatar?.avatarUrl
+                  : UserAvatarUrl
+              }
+              className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
+              height={60}
+              width={60}
+              alt={postData?.author?.username}
+              data-testid="profile-avatar"
+            />
+            <div className="flex flex-col ">
+              <Link
+                className="dark:text-indigo-400"
+                href={`/user/${postData?.author?.username}`}
+              >
+                <h5 className="font-bold">{postData?.author?.username}</h5>
+              </Link>
+              <div className="flex items-center space-x-1">
+                <span className="text-sm text-gray-500">
+                  {dayjs(postData?.createdAt).fromNow()}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
         </span>
-        <PostMenu Post={postData!}/>
+        <PostMenu Post={postData!} />
       </div>
       {/* --- DESCRIPTION */}
       <div className="mb-3 mt-2">
@@ -101,12 +96,9 @@ export const PostCardModal: React.FC = () => {
         </p>
       </div>
 
-
       {/* --- IMAGE GRID ----- */}
 
-      {showAttachments ? (
-        <Attachments attachments={postData?.photos} />
-      ) : null}
+      {showAttachments ? <Attachments attachments={postData?.photos} /> : null}
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>
@@ -141,7 +133,10 @@ export const PostCardModal: React.FC = () => {
       {isAuthenticated ? (
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-brand-900">
           <LikeButton postID={postData!.id!} isLiked={postData!.isLiked!} />
-          <CommentButton commentCount={postData!.commentsCount!} onCommentToggle={handleToggleComment}/>
+          <CommentButton
+            commentCount={postData!.commentsCount!}
+            onCommentToggle={handleToggleComment}
+          />
         </div>
       ) : (
         <div className="text-center py-2">
@@ -156,8 +151,12 @@ export const PostCardModal: React.FC = () => {
           </span>
         </div>
       )}
-     {isAuthenticated && (
-        <Suspense fallback={<Spinner size='sm' className="text-gray-800 dark:text-white" />}>
+      {isAuthenticated && (
+        <Suspense
+          fallback={
+            <Spinner size="sm" className="text-gray-800 dark:text-white" />
+          }
+        >
           <Comments
             postID={postData!.id!}
             authorID={postData!.author!.id!}

@@ -1,23 +1,28 @@
 
-import { BellIcon, CogIcon, SwatchIcon } from '@heroicons/react/24/outline';
+import { BellIcon, CogIcon } from '@heroicons/react/24/outline';
 
 import type { FC } from 'react';
 import { useState } from 'react';
-import { usePreferencesStore } from '../../store';
 import { Modal, Tooltip } from '../../components';
-import { ToggleWithHelper } from '../ToggleWithHelper';
+import { useMarkNotificationMutation } from '@social-zone/graphql';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 export const Settings: FC = () => {
-  const highSignalNotificationFilter = usePreferencesStore(
-    (state) => state.highSignalNotificationFilter
-  );
-  const setHighSignalNotificationFilter = usePreferencesStore(
-    (state) => state.setHighSignalNotificationFilter
-  );
+
+  const queryClient = useQueryClient();
   const [showNotificationSettings, setShowNotificationSettings] =
     useState(false);
+  const {mutateAsync}=useMarkNotificationMutation()
 
+  const handleMarkAllAsRead = async () => {
+    await mutateAsync({input:{}},{
+      onSuccess:()=>{
+        queryClient.invalidateQueries(['notifications.infinite'])
+        setShowNotificationSettings(false)
+      }
+    })
+  }
   return (
     <>
       <button
@@ -35,15 +40,15 @@ export const Settings: FC = () => {
         onClose={() => setShowNotificationSettings(false)}
       >
         <div className="p-5">
-          <ToggleWithHelper
-            on={highSignalNotificationFilter}
-            setOn={() => {
-              setHighSignalNotificationFilter(!highSignalNotificationFilter);
-            }}
-            heading={`Signal filter`}
-            description={`Turn on high-signal notification filter`}
-            icon={<SwatchIcon className="h-4 w-4" />}
-          />
+        <div className="py-2 px-4 border-b-gray-200 flex justify-between items-center bg-indigo-700 md:rounded-t-md">
+            <h6 className="text-white">Notifications</h6>
+            <span
+              className="text-sm  cursor-pointer p-2 text-white opacity-80 rounded-md hover:bg-indigo-500"
+              onClick={()=>handleMarkAllAsRead()}
+            >
+              Mark all as read
+            </span>
+          </div>
         </div>
       </Modal>
     </>

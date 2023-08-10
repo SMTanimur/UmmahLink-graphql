@@ -59,7 +59,7 @@ export class NotificationService {
   async notificationMark(query: FilterQuery<NotificationCountQueryArgs>) {
     const { user } = query;
     await this.notificationModel.updateMany(
-      { target: user._id },
+      { target: user?._id },
       {
         $set: { unread: false },
       }

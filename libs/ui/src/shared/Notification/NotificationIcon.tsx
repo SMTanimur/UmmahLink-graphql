@@ -4,8 +4,9 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { useProfileQuery } from '../../hooks';
-import { useNotificationPersistStore } from '../../store';
+
 import { useGetNotificationCountQuery } from '@social-zone/graphql';
+import { useNotificationPersistStore } from '../../store';
 
 
  export const NotificationIcon: FC = () => {

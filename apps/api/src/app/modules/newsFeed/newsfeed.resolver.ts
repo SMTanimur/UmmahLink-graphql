@@ -16,7 +16,7 @@ export class NewsFeedResolver {
   constructor(private readonly newsFeedService: NewsFeedService) {}
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>NewsFeedPagination ,{name:'getFeeds',nullable:true})
+  @Query(() =>NewsFeedPagination ,{name:'getFeeds'})
   async  getSuggestionPeople(
     @Args('query') query: NewsFeedQueryArgs,
     @Args('option') options: GetFeedDto,

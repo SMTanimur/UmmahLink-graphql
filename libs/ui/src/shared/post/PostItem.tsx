@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 'use client';
 import { NewsFeedPaginate } from '@social-zone/graphql';
@@ -10,7 +11,7 @@ import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
 import Attachments from './Attachments';
-import {  Modal, Spinner } from '../../components';
+import {  Modal } from '../../components';
 import { CommentButton } from '../comments';
 import { PostMenu, UserPreview } from '..';
 import { useGlobalModalStateStore } from '../../store';
@@ -51,7 +52,8 @@ export const PostItem: React.FC<IProps> = (props) => {
     }
   };
 
-  const showAttachments = post?.photos!.length > 0
+  // @ts-ignore: Object is possibly 'null'.
+  const showAttachments = post?.photos?.length > 0;
 
   return (
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
@@ -121,14 +123,20 @@ export const PostItem: React.FC<IProps> = (props) => {
               {post.commentsCount === 1 ? 'comment' : 'comments'}
             </span>
           )}
-          <Modal
-            title="Likes"
-            show={isLikesModal}
-            size="md"
-            onClose={() => setIsLikesModal(false)}
-          >
-            <UserCard postItem={post as NewsFeedPaginate} />
-          </Modal>
+
+          {
+            isAuth &&(
+              <Modal
+              title="Likes"
+              show={isLikesModal}
+              size="md"
+              onClose={() => setIsLikesModal(false)}
+            >
+              <UserCard postItem={post as NewsFeedPaginate} />
+            </Modal>
+            )
+          }
+         
         </div>
       </div>
       {/* --- LIKE/COMMENT BUTTON */}

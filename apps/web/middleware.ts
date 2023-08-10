@@ -24,10 +24,14 @@ export function middleware(req: NextRequest) {
   if (!sessionToken && req.nextUrl.pathname.includes("/user")) {
     return NextResponse.redirect(new URL(`${host}/login`));
   }
+  // Add a closing bracket here
+  if (!sessionToken && req.nextUrl.pathname.includes("/notifications")) {
+    return NextResponse.redirect(new URL(`${host}/login`));
+  }
  
 }
 
 export const config = {
-  matcher: ["/user/:path*", "/login/:path*","/login/:path*"], // Add "/profile" path here
+  matcher: ["/user/:path*", "/login/:path*","/notifications/:path*"], // Add "/profile" path here
 
 }

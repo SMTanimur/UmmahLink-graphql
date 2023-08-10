@@ -297,7 +297,7 @@ input PhotosImageInput {
 }
 
 type Query {
-  getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination
+  getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getComments(query: CommentsQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getReplies(query: ReplyQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getNotifications(query: NotificationQueryArgs!, options: PaginateOptionArgs!): NotificationPagination!

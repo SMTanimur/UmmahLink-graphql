@@ -18,7 +18,7 @@ interface UserProfileProps {
 
 const UserCard: FC<UserProfileProps> = ({ postItem, isBig = false }) => {
   const [offset, setOffset] = useState(0);
-  const { likes, isLoading, isFetching, error } = useGetPostLikes(
+  const { likes, isLoading,  error } = useGetPostLikes(
     postItem.id as string,
     offset
   );
