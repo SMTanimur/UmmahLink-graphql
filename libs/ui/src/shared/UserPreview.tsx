@@ -66,17 +66,17 @@ export const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex items-center justify-between">
         <UserAvatar />
-        <div onClick={stopEventPropagation} aria-hidden="true">
-          {!lazyProfile.isFollowing &&
+        {/* <div onClick={stopEventPropagation} aria-hidden="true">
+          {!lazyProfile.isFollowing  &&
             (followStatusLoading ? (
               <div className="shimmer h-8 w-10 rounded-lg" />
-            ) : following ? null : (
+            ) : following || lazyProfile.isOwnProfile ? null : (
               <Follow
                 profile={lazyProfile as ProfileInformation}
                 setFollowing={setFollowing}
               />
             ))}
-        </div>
+        </div> */}
       </div>
       <div className="space-y-3 p-1">
         <UserName />
@@ -96,7 +96,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-1">
             <div className="text-base">
-              {nFormatter(profile?.followingCount as number)}
+              {nFormatter(lazyProfile?.followingCount as number)}
             </div>
             <div className="lt-text-gray-500 text-sm">
               <h6>Following</h6>
@@ -104,7 +104,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
           </div>
           <div className="text-md flex items-center space-x-1">
             <div className="text-base">
-              {nFormatter(profile?.followersCount as number)}
+              {nFormatter(lazyProfile?.followersCount as number)}
             </div>
             <div className="lt-text-gray-500 text-sm">
               <h6>Followers</h6>
@@ -123,6 +123,8 @@ export const UserPreview: FC<UserPreviewProps> = ({
       }
     }
   };
+
+  console.log(lazyProfile)
 
   return showUserPreview ? (
     <span onMouseOver={onPreviewStart} onFocus={onPreviewStart}>

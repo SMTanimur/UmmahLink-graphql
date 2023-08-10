@@ -84,7 +84,7 @@ export class FollowsService {
 
       // TODO: SUBSCRIBE TO USER'S FEED
       const subscribeToUserFeed = await this.postModel
-        .find({ author: follow_ID })
+        .find({ _author_id:  follow_ID })
         .sort({ createdAt: -1 })
         .limit(10);
 
@@ -97,7 +97,6 @@ export class FollowsService {
             createdAt: post.createdAt,
           };
         });
-
         await this.newsFeedModel.insertMany(feeds);
       }
 

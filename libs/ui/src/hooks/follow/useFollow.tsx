@@ -32,8 +32,8 @@ export const useFollowOrUnFollow = () => {
             queryClient.invalidateQueries(['GetPostLikes']);
             queryClient.invalidateQueries(['GetSuggestionPeople']);
             queryClient.invalidateQueries(['Posts']);
+            queryClient.invalidateQueries(['Feeds']);
             queryClient.invalidateQueries(['followers.infinite']);
-            queryClient.invalidateQueries(['UserProfile']);
             queryClient.invalidateQueries(['following.infinite']);
             return <b>{message}</b>;
           },
@@ -66,8 +66,8 @@ export const useFollowOrUnFollow = () => {
             queryClient.invalidateQueries(['GetPostLikes']);
             queryClient.invalidateQueries(['GetSuggestionPeople']);
             queryClient.invalidateQueries(['Posts']);
+            queryClient.invalidateQueries(['Feeds']);
             queryClient.invalidateQueries(['followers.infinite']);
-            queryClient.invalidateQueries(['UserProfile']);
             queryClient.invalidateQueries(['following.infinite']);
             return <b>{message}</b>;
           },

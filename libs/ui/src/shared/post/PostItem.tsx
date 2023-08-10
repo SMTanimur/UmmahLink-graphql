@@ -5,17 +5,17 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import Link from 'next/link';
-import React, {  Suspense, useState } from 'react';
+import React, {  useState } from 'react';
 import LikeButton from '../LikeButton';
 import UserCard from '../UserCard';
 import { UserAvatarUrl } from '../../data';
-import { stopEventPropagation } from '../../lib';
 import Attachments from './Attachments';
-import { Image, Modal, Spinner } from '../../components';
+import {  Modal, Spinner } from '../../components';
 import { CommentButton } from '../comments';
-import { PostMenu } from '..';
+import { PostMenu, UserPreview } from '..';
 import { useGlobalModalStateStore } from '../../store';
-import Comments from '../comments/Comment';
+import Image from 'next/image';
+
 
 dayjs.extend(relativeTime);
 
@@ -57,18 +57,18 @@ export const PostItem: React.FC<IProps> = (props) => {
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
-      <span onClick={ stopEventPropagation} aria-hidden="true">
+      <UserPreview profile={post?.author as any}>
         <div className="flex gap-4 items-center">
           <Image
             src={
-              post?.author?.avatar.avatarUrl
-                ? post?.author?.avatar.avatarUrl
+              post.author?.avatar.avatarUrl
+                ? post?.author?.avatar?.avatarUrl
                 : UserAvatarUrl
             }
             className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"
             height={60}
             width={60}
-            alt={post?.author?.username}
+            alt={post?.author?.username as string}
             data-testid="profile-avatar"
           />
           <div className="flex flex-col ">
@@ -85,7 +85,7 @@ export const PostItem: React.FC<IProps> = (props) => {
             </div>
           </div>
         </div>
-        </span>
+        </UserPreview>
         <PostMenu Post={post}/>
       </div>
       {/* --- DESCRIPTION */}

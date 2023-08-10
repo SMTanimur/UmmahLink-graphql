@@ -52,7 +52,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       <EmptyState
         message={
           <div>
-            <span className="mr-1 font-bold">@{profile.username}</span>
+            <span className="mr-1 font-bold">@{profile?.username}</span>
             <span>doesn’t follow anyone.</span>
           </div>
         }

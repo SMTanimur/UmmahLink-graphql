@@ -2,9 +2,14 @@
 import type { FC } from 'react';
 import { toast } from 'react-hot-toast';
 import { useGlobalAlertStateStore } from '../../store/alerts';
-import { Alert, ErrorMessage } from '../../components';
+import {  ErrorMessage } from '../../components';
 import { useDeleteCommentMutation } from '@social-zone/graphql';
 import { useQueryClient } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
+
+const Alert = dynamic(() => import('../../components/messages/Alert'), {
+  ssr: false,
+});
 export const DeleteComment: FC = () => {
   const showCommentDeleteAlert = useGlobalAlertStateStore(
     (state) => state.showCommentDeleteAlert

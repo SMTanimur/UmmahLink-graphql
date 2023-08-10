@@ -17,7 +17,7 @@ interface AlertProps {
   onClose: () => void;
 }
 
-export const Alert: FC<AlertProps> = ({
+ const Alert: FC<AlertProps> = ({
   title,
   description,
   show,
@@ -95,3 +95,5 @@ export const Alert: FC<AlertProps> = ({
     </Transition.Root>
   );
 };
+
+export default Alert;

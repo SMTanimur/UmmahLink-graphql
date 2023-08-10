@@ -20,7 +20,7 @@ export * from './menu';
 export * from './modal';
 export * from './tooltip/Tooltip';
 export * from './messages/ErrorMessage';
-export * from './messages/Alert';
+// export * from './messages/Alert';
 export * from './messages/WarningMessage';
 export * from './GradientBar';
 export * from './Heading';

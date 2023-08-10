@@ -200,6 +200,11 @@ div[data-lexical-editor='true'] {
   @apply z-20;
 }
 
+ /* thread card  */
+ .post-card_bar {
+  @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
+}
+
 /* react-virtuoso - Virtual notifications list */
 .virtual-notification-list {
   @apply [&>div>div]:divide-y;

@@ -57,7 +57,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
         message={
           <div>
             <span className="mr-1 font-bold">
-              @{profile.username}
+              @{profile?.username}
             </span>
             <span>
               <span>doesn’t have any followers yet.</span>

@@ -32,7 +32,7 @@ const FollowerNotification: FC<FollowerNotificationProps> = ({
   return (
     <div
       className={cn(
-        'flex items-start justify-between border border-transparent dark:hover:border-indigo-700 p-4 hover:bg-gray-100 dark:hover:bg-indigo-1100 hover:opacity-95 divide-y divide-gray-100',
+        'flex items-start justify-between cursor-pointer border border-transparent dark:hover:border-indigo-700 p-4 hover:bg-gray-100 dark:hover:bg-indigo-1100 hover:opacity-95 divide-y divide-gray-100',
         notification.unread
           ? 'bg-indigo-100 dark:bg-indigo-950 hover:bg-indigo-200 '
           : 'bg-white dark:bg-indigo-900 dark:hover:bg-indigo-950'
