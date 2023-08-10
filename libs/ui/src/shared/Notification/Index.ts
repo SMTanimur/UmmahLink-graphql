@@ -1,3 +1,7 @@
 export * from './FeedType'
 export * from './Notifications'
 export * from'./NotificationIcon'
+export * from './List'
+export * from './Profile'
+export * from './Settings'
+export * from './Shimmer'
