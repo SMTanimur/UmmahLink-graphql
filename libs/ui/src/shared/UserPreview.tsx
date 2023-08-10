@@ -65,6 +65,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
   const Preview = () => (
     <>
       <div className="flex items-center justify-between">
+        
         <UserAvatar />
         {/* <div onClick={stopEventPropagation} aria-hidden="true">
           {!lazyProfile.isFollowing  &&

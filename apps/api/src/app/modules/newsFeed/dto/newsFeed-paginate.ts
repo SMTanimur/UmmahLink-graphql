@@ -29,28 +29,28 @@ export class NewsFeedPaginate {
   @Field(() => String, { nullable: true })
   content: string;
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date)
   createdAt: Date;
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date)
   updatedAt: Date;
 
-  @Field(() => Author,{nullable:true})
+  @Field(() => Author)
   author: Author;
 
-  @Field(() => Boolean, { nullable: true })
+  @Field(() => Boolean)
   isLiked: boolean;
 
-  @Field(() => Boolean, { nullable: true })
+  @Field(() => Boolean)
   isOwnPost: boolean;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Number)
   commentsCount: number;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Number)
   likesCount: number;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   id: string;
 }
 

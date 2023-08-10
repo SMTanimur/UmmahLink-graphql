@@ -385,16 +385,16 @@ export type MutationUpdateUserArgs = {
 
 export type NewsFeedPaginate = {
   __typename?: 'NewsFeedPaginate';
-  author?: Maybe<Author>;
-  commentsCount?: Maybe<Scalars['Float']['output']>;
+  author: Author;
+  commentsCount: Scalars['Float']['output'];
   content?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  isLiked?: Maybe<Scalars['Boolean']['output']>;
-  isOwnPost?: Maybe<Scalars['Boolean']['output']>;
-  likesCount?: Maybe<Scalars['Float']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  isLiked: Scalars['Boolean']['output'];
+  isOwnPost: Scalars['Boolean']['output'];
+  likesCount: Scalars['Float']['output'];
   photos?: Maybe<Array<PhotosImageInfo>>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type NewsFeedPagination = {
@@ -1016,15 +1016,15 @@ export type GetFeedQuery = {
     nextPage?: number | null;
     docs?: Array<{
       __typename?: 'NewsFeedPaginate';
-      commentsCount?: number | null;
+      commentsCount: number;
       content?: string | null;
-      createdAt?: any | null;
-      id?: string | null;
-      isLiked?: boolean | null;
-      isOwnPost?: boolean | null;
-      likesCount?: number | null;
-      updatedAt?: any | null;
-      author?: {
+      createdAt: any;
+      id: string;
+      isLiked: boolean;
+      isOwnPost: boolean;
+      likesCount: number;
+      updatedAt: any;
+      author: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -1035,7 +1035,7 @@ export type GetFeedQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      } | null;
+      };
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;
@@ -1249,15 +1249,15 @@ export type GetPostsQuery = {
     totalPages: number;
     docs?: Array<{
       __typename?: 'NewsFeedPaginate';
-      commentsCount?: number | null;
+      commentsCount: number;
       content?: string | null;
-      createdAt?: any | null;
-      id?: string | null;
-      isLiked?: boolean | null;
-      isOwnPost?: boolean | null;
-      likesCount?: number | null;
-      updatedAt?: any | null;
-      author?: {
+      createdAt: any;
+      id: string;
+      isLiked: boolean;
+      isOwnPost: boolean;
+      likesCount: number;
+      updatedAt: any;
+      author: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -1268,7 +1268,7 @@ export type GetPostsQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      } | null;
+      };
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;

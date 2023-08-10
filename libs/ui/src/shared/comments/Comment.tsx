@@ -86,13 +86,11 @@ const Comments: React.FC<IProps> = (props) => {
       {/* ---- LOAD MORE COMMENTS BUTTON ----- */}
       {!error && (
         <span className="text-indigo-700 dark:text-indigo-400 text-sm font-bold cursor-pointer inline-block p-2">
-          {createCommentLoading ? (
+          {createCommentLoading && (
             <div className="ml-8 py-2">
               <Spinner size="md" variant="primary" />{' '}
             </div>
-          ) : (
-            'Load more comments'
-          )}
+          ) }
         </span>
       )}
       {/* ----- COMMENT LIST ---------- */}

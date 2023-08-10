@@ -179,6 +179,7 @@ const CommentItem: React.FC<IProps> = (props) => {
       onError(err);
     }
   };
+ 
 
   return (
     <div className="flex py-2 items-start w-full" key={comment.id}>

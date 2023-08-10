@@ -24,7 +24,7 @@ export async function  generateMetadata({
   
   
   return {
-    title: "Notification | ",
+    title: "Notification ",
     description: "My account page",
   };
 }

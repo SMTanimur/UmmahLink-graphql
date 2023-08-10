@@ -315,7 +315,7 @@ export class CommentsService {
         throw new NotFoundException('No comments found');
       return res;
     } catch (error) {
-      console.log(error);
+       throw new BadRequestException()
     }
   }
 

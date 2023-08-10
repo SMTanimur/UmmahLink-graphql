@@ -50,6 +50,7 @@ export const PostCardModal: React.FC = () => {
       return `${likesCount} ${people} ${like} this.`;
     }
   };
+ 
 
   // @ts-ignore: Object is possibly 'null'.
   const showAttachments = postData?.photos?.length > 0;
@@ -102,15 +103,15 @@ export const PostCardModal: React.FC = () => {
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>
-          {postData!.likesCount! > 0 && (
+          {postData?.likesCount > 0 && (
             <span className="text-gray-500 text-sm cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-white">
-              {displayLikeMetric(postData!.likesCount!, postData!.isLiked!)}
+              {displayLikeMetric(postData?.likesCount, postData?.isLiked)}
             </span>
           )}
         </div>
         {/* --- COMMENTS COUNT ----- */}
         <div>
-          {postData!.commentsCount! > 0 && (
+          {postData?.commentsCount > 0 && (
             <span
               className="text-gray-500 hover:text-gray-800 cursor-pointer text-sm hover:underline dark:text-gray-500 dark:hover:text-white"
               onClick={handleToggleComment}
@@ -132,9 +133,9 @@ export const PostCardModal: React.FC = () => {
       {/* --- LIKE/COMMENT BUTTON */}
       {isAuthenticated ? (
         <div className="flex items-center justify-around py-2 border-t border-gray-200 dark:border-brand-900">
-          <LikeButton postID={postData!.id!} isLiked={postData!.isLiked!} />
+          <LikeButton postID={postData?.id} isLiked={postData?.isLiked} />
           <CommentButton
-            commentCount={postData!.commentsCount!}
+            commentCount={postData?.commentsCount as number}
             onCommentToggle={handleToggleComment}
           />
         </div>
@@ -158,8 +159,8 @@ export const PostCardModal: React.FC = () => {
           }
         >
           <Comments
-            postID={postData!.id!}
-            authorID={postData!.author!.id!}
+            postID={postData?.id as string}
+            authorID={postData?.author?.id as string}
             commentInputRef={commentInputRef}
           />
         </Suspense>

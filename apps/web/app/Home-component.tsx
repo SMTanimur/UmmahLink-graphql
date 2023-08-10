@@ -64,7 +64,7 @@ const Home: NextPage = () => {
 
 
   if (!isAuthenticated) return <WithoutUser />;
-  return (
+  return  isAuthenticated && (
     <div className="relative">
       <GridLayout>
         <GridItemEight className="space-y-5  ">
