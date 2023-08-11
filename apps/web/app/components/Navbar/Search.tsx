@@ -24,12 +24,13 @@ const Search: FC<SearchProps> = ({
   placeholder = `Search…`,
   modalWidthClassName = 'max-w-md',
 }) => {
-  const { push } = useRouter();
+  const router = useRouter();
   const [searchText, setSearchText] = useState('');
   const dropdownRef = useRef(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   useOnClickOutside(dropdownRef, () => setSearchText(''));
+  const defaultSearchQuery = searchParams.get("search") ?? " " 
 
   const { data, isLoading: searchUsersLoading } = useSearchUserProfile(
     searchText as string
@@ -54,7 +55,7 @@ const Search: FC<SearchProps> = ({
 
   const handleKeyDown = (evt: ChangeEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    push(`/search?q=${encodeURIComponent(searchText)}&type=profiles`);
+    router.replace(`/search?q=${encodeURIComponent(searchText)}&type=profiles`);
     setSearchText('');
   };
 
@@ -76,6 +77,7 @@ const Search: FC<SearchProps> = ({
           placeholder={placeholder}
           value={searchText}
           iconLeft={<MagnifyingGlassIcon />}
+          defaultValue={defaultSearchQuery}
           iconRight={
             <XMarkIcon
               className={cn(

@@ -5,7 +5,6 @@
 import { Disclosure } from '@headlessui/react';
 import { NotificationIcon, useProfileQuery } from '~ui';
 import {
-  BellIcon,
   XMarkIcon,
   MagnifyingGlassIcon,
   InboxIcon,

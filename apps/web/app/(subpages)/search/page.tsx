@@ -2,10 +2,9 @@
 import React from 'react';
 
 
-
-
 type Params = {
-  params: {
+  searchParams: {
+    q: string;
     type: string;
   };
 };
@@ -13,35 +12,30 @@ type Params = {
 
 // META DATA
 import type { Metadata } from "next";
-import { Notifications } from '~ui';
-
+import SearchComponent from './components/SearchComponent';
 
 /** @type {import("next").Metadata} */
 
 export async function  generateMetadata({
-  params,
+  searchParams,
 }: Params): Promise<Metadata>  {
   
   
   return {
-    title: "Notification ",
+    title: "Search ",
     description: "My account page",
   };
 }
 
 
 
-function NotificationPage({ params: {  type } }: Params) {
-
+function ProfilePage({ searchParams: { q,type } }: Params) {
   return (
     <>
-    <Notifications type={type}  />;
+    <SearchComponent type={type} query={q} />;
     </>
     )
 
 }
 
-export default NotificationPage
-
-
-
+export default ProfilePage;
