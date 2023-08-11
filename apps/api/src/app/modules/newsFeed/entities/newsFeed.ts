@@ -1,14 +1,11 @@
 import { Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 
-import {
-  IsArray
- 
-} from 'class-validator';
+
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { CoreEntity } from '@social-zone/common';
-import { User } from '../../users/entities/user.entity';
+
 
 
 

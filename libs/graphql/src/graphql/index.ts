@@ -385,16 +385,16 @@ export type MutationUpdateUserArgs = {
 
 export type NewsFeedPaginate = {
   __typename?: 'NewsFeedPaginate';
-  author: Author;
+  author?: Maybe<Author>;
   commentsCount: Scalars['Float']['output'];
   content?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
   isLiked: Scalars['Boolean']['output'];
   isOwnPost: Scalars['Boolean']['output'];
   likesCount: Scalars['Float']['output'];
   photos?: Maybe<Array<PhotosImageInfo>>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type NewsFeedPagination = {
@@ -1018,13 +1018,13 @@ export type GetFeedQuery = {
       __typename?: 'NewsFeedPaginate';
       commentsCount: number;
       content?: string | null;
-      createdAt: any;
-      id: string;
+      createdAt?: any | null;
+      id?: string | null;
       isLiked: boolean;
       isOwnPost: boolean;
       likesCount: number;
-      updatedAt: any;
-      author: {
+      updatedAt?: any | null;
+      author?: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -1035,7 +1035,7 @@ export type GetFeedQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      };
+      } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;
@@ -1251,13 +1251,13 @@ export type GetPostsQuery = {
       __typename?: 'NewsFeedPaginate';
       commentsCount: number;
       content?: string | null;
-      createdAt: any;
-      id: string;
+      createdAt?: any | null;
+      id?: string | null;
       isLiked: boolean;
       isOwnPost: boolean;
       likesCount: number;
-      updatedAt: any;
-      author: {
+      updatedAt?: any | null;
+      author?: {
         __typename?: 'Author';
         username: string;
         email: string;
@@ -1268,7 +1268,7 @@ export type GetPostsQuery = {
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
         };
-      };
+      } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';
         photosUrl?: string | null;

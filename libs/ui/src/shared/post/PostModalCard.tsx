@@ -88,7 +88,7 @@ export const PostCardModal: React.FC = () => {
             </div>
           </div>
         </span>
-        <PostMenu Post={postData!} />
+        <PostMenu Post={postData} />
       </div>
       {/* --- DESCRIPTION */}
       <div className="mb-3 mt-2">

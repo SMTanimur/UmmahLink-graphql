@@ -16,6 +16,7 @@ import { CommentButton } from '../comments';
 import { PostMenu, UserPreview } from '..';
 import { useGlobalModalStateStore } from '../../store';
 import Image from 'next/image';
+import { useAuth } from '../../hooks';
 
 
 dayjs.extend(relativeTime);
@@ -26,6 +27,8 @@ interface IProps {
 }
 
 export const PostItem: React.FC<IProps> = (props) => {
+
+const {isAuthenticated}=useAuth()
   const { post, isAuth } = props;
   const [isLikesModal, setIsLikesModal] = useState(false);
   const setShowPostModal = useGlobalModalStateStore(
@@ -55,7 +58,7 @@ export const PostItem: React.FC<IProps> = (props) => {
   // @ts-ignore: Object is possibly 'null'.
   const showAttachments = post?.photos?.length > 0;
 
-  return (
+  return isAuth && (
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
@@ -106,7 +109,7 @@ export const PostItem: React.FC<IProps> = (props) => {
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
       <div className="flex justify-between px-2 my-2">
         <div onClick={() => setIsLikesModal(!isLikesModal)}>
-          {post.likesCount! > 0 && (
+          {post?.likesCount > 0 && (
             <span className="text-gray-500 text-sm cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-white">
               {displayLikeMetric(post.likesCount!, post.isLiked!)}
             </span>
@@ -114,7 +117,7 @@ export const PostItem: React.FC<IProps> = (props) => {
         </div>
         {/* --- COMMENTS COUNT ----- */}
         <div>
-          {post!.commentsCount! > 0 && (
+          {post?.commentsCount > 0 && (
             <span
               className="text-gray-500 hover:text-gray-800 cursor-pointer text-sm hover:underline dark:text-gray-500 dark:hover:text-white"
               onClick={handleToPostCardModal}
@@ -125,7 +128,7 @@ export const PostItem: React.FC<IProps> = (props) => {
           )}
 
           {
-            isAuth &&(
+            isAuthenticated && (
               <Modal
               title="Likes"
               show={isLikesModal}

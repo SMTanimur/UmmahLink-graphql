@@ -121,14 +121,14 @@ type Author {
 type NewsFeedPaginate {
   photos: [PhotosImageInfo!]
   content: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  author: Author!
+  createdAt: DateTime
+  updatedAt: DateTime
+  author: Author
   isLiked: Boolean!
   isOwnPost: Boolean!
   commentsCount: Float!
   likesCount: Float!
-  id: String!
+  id: String
 }
 
 type NewsFeedPagination {

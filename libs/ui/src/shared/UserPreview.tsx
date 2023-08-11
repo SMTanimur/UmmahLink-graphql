@@ -27,8 +27,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
   children,
   showUserPreview = true,
 }) => {
-  const [lazyProfile, setLazyProfile] = useState(profile);
-  const [following, setFollowing] = useState(profile?.isFollowing);
+  const [lazyProfile, setLazyProfile] = useState<ProfileInformation>(profile);
 
   const { data } = useUserProfileQuery({ username: lazyProfile?.username });
 
@@ -58,14 +57,17 @@ export const UserPreview: FC<UserPreviewProps> = ({
           <BadgeCheckIcon className="text-brand h-4 w-4" />
         )} */}
       </div>
-      <Slug className="text-sm" slug={profile?.username as any} prefix="@" />
+      <Slug
+        className="text-sm"
+        slug={lazyProfile?.username as any}
+        prefix="@"
+      />
     </>
   );
 
   const Preview = () => (
     <>
       <div className="flex items-center justify-between">
-        
         <UserAvatar />
         {/* <div onClick={stopEventPropagation} aria-hidden="true">
           {!lazyProfile.isFollowing  &&
@@ -124,8 +126,6 @@ export const UserPreview: FC<UserPreviewProps> = ({
       }
     }
   };
-
-  console.log(lazyProfile)
 
   return showUserPreview ? (
     <span onMouseOver={onPreviewStart} onFocus={onPreviewStart}>

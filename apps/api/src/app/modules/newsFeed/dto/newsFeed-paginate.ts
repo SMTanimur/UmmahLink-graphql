@@ -29,13 +29,13 @@ export class NewsFeedPaginate {
   @Field(() => String, { nullable: true })
   content: string;
 
-  @Field(() => Date)
+  @Field(() => Date,{nullable:true})
   createdAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date,{nullable:true})
   updatedAt: Date;
 
-  @Field(() => Author)
+  @Field(() => Author,{nullable:true})
   author: Author;
 
   @Field(() => Boolean)
@@ -50,7 +50,7 @@ export class NewsFeedPaginate {
   @Field(() => Number)
   likesCount: number;
 
-  @Field(() => String)
+  @Field(() => String,{nullable:true})
   id: string;
 }
 

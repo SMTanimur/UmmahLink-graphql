@@ -2,7 +2,6 @@
 
 import { NextPage } from 'next';
 import { useState } from 'react';
-import { useInView } from 'react-cool-inview';
 import {
   Card,
   Footer,
@@ -86,7 +85,7 @@ const Home: NextPage = () => {
                         post?.author && ( // avoid render posts with null author
                           <PostItem
                             key={index}
-                            post={post!}
+                            post={post}
                             isAuth={isAuthenticated}
                           />
                         )

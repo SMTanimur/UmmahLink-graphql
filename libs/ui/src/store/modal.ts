@@ -18,7 +18,7 @@ interface GlobalModalState {
     updatePost: NewsFeedPaginate | null
   ) => void;
   showPostCard: boolean;
-  postData: NewsFeedPaginate | null;
+  postData: NewsFeedPaginate | any
   setShowPostCard: (
     showPostCard: boolean,
     postData: NewsFeedPaginate | null
