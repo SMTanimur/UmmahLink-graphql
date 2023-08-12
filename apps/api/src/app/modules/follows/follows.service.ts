@@ -152,7 +152,7 @@ export class FollowsService {
       const myFollowingDoc = await this.followModel.find({ user: user._id });
       const myFollowing = myFollowingDoc.map((user) => user.target); // map to array of user IDs
       const matchCondition =
-        type === 'followers' ? { target: user._id } : { user: user._id };
+        type === 'followers' ? { target: userInfo._id } : { user: userInfo._id };
       const aggregate = this.followModel.aggregate([
         {
           $match: matchCondition,

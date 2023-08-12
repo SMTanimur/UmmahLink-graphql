@@ -22,7 +22,7 @@ export async function  generateMetadata({
   
   
   return {
-    title: "Search ",
+    title: "Search | " + searchParams.q + " | " + searchParams.type ,
     description: "My account page",
   };
 }

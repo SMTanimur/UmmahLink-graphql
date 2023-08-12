@@ -32,9 +32,11 @@ export const UserPreview: FC<UserPreviewProps> = ({
   const { data } = useUserProfileQuery({ username: lazyProfile?.username });
 
   const UserAvatar = () => (
+
+    
     <Image
       src={
-        profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl
+        lazyProfile?.avatar?.avatarUrl ? lazyProfile?.avatar?.avatarUrl : UserAvatarUrl
       }
       loading="lazy"
       className={cn(
@@ -43,7 +45,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
       )}
       height={isBig ? 56 : 40}
       width={isBig ? 56 : 40}
-      alt={profile.username as any}
+      alt={lazyProfile.username as any}
     />
   );
 
@@ -68,6 +70,9 @@ export const UserPreview: FC<UserPreviewProps> = ({
   const Preview = () => (
     <>
       <div className="flex items-center justify-between">
+        {
+          
+        }
         <UserAvatar />
         {/* <div onClick={stopEventPropagation} aria-hidden="true">
           {!lazyProfile.isFollowing  &&

@@ -27,7 +27,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
    
   } = useGetFollowingQuery(
     {
-      options: {limit:5 },
+      options: {limit:10 },
       query: {},
       username: profile?.username as string,
     },

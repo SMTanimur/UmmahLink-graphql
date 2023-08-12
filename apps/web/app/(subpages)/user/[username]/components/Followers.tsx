@@ -15,7 +15,7 @@ interface FollowersProps {
 
 const Followers: FC<FollowersProps> = ({ profile }) => {
 
-  
+  console.log(profile)
   
   // Variables
  
@@ -29,7 +29,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
    
   } = useGetFollowersQuery(
     {
-      options: {limit:1 },
+      options: {limit:10 },
       query: {},
       username: profile?.username as string,
     },
@@ -40,7 +40,6 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
       },
     }
   );
- const {data:currentProfile}=useProfileQuery()
  const FollowersData = followers?.pages.flatMap((page) => page.getFollowers?.docs) ?? [];
   const hasMore = hasNextPage
 
@@ -91,7 +90,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
                   followUnfollowPosition={index + 1}
                   showBio
                   showFollow={
-                    currentProfile?.me?._id !== follower?.id
+                    !profile?.isOwnProfile
                   }
                   showUserPreview={false}
                 />
