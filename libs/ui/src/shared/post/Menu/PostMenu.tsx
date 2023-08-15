@@ -18,7 +18,7 @@ interface PostMenuProps {
   Post: NewsFeedPaginate;
 }
 
-export const PostMenu: FC<PostMenuProps> = ({ Post }) => {
+ const PostMenu: FC<PostMenuProps> = ({ Post }) => {
   const { data: me } = useProfileQuery();
   const iconClassName = 'w-[15px] sm:w-[18px]';
 
@@ -50,3 +50,5 @@ export const PostMenu: FC<PostMenuProps> = ({ Post }) => {
     </Menu>
   );
 };
+
+export default PostMenu;

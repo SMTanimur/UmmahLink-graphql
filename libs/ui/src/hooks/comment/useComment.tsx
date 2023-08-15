@@ -2,9 +2,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../../lib";
-import { ErrorMessage, useZodForm } from "../../components";
-import { CreateCommentInput, DeleteCommentInput, UpdateCommentInput, useCreateCommentMutation, useDeleteCommentMutation, useUpdateCommentMutation } from "@social-zone/graphql";
-import { object, string } from "zod";
+import { ErrorMessage } from "../../components";
+import { CreateCommentInput, DeleteCommentInput, useCreateCommentMutation, useDeleteCommentMutation } from "@social-zone/graphql";
+
 
 export const useComment = ()=> {
 

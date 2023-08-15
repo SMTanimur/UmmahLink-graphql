@@ -1,3 +1,5 @@
+
+"use client"
 import { useGetPostLikesQuery } from "@social-zone/graphql"
 
 

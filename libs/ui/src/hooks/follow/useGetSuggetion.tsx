@@ -1,3 +1,4 @@
+"use client"
 import {  useGetSuggestionPeopleQuery } from "@social-zone/graphql";
 
 

@@ -15,11 +15,14 @@ import { stopEventPropagation } from '../../lib';
 import Attachments from './Attachments';
 import { Image, Modal, Spinner } from '../../components';
 import { CommentButton } from '../comments';
-import { PostMenu } from '..';
+
 import { useGlobalModalStateStore } from '../../store';
 import { useAuth } from '../../hooks';
 import Comments from '../comments/Comment';
-
+import dynamic from 'next/dynamic';
+const PostMenu = dynamic(() => import('./Menu/PostMenu'), {
+  ssr: false,
+});
 dayjs.extend(relativeTime);
 
 export const PostCardModal: React.FC = () => {

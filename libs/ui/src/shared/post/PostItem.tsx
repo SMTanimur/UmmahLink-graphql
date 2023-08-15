@@ -1,24 +1,27 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 'use client';
-import { NewsFeedPaginate } from '@social-zone/graphql';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { NewsFeedPaginate, useMeQuery } from '@social-zone/graphql';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import Link from 'next/link';
 import React, {  useState } from 'react';
 import LikeButton from '../LikeButton';
-import UserCard from '../UserCard';
+
 import { UserAvatarUrl } from '../../data';
 import Attachments from './Attachments';
-import {  Modal } from '../../components';
+
 import { CommentButton } from '../comments';
-import { PostMenu, UserPreview } from '..';
+import {UserCard, UserPreview } from '..';
 import { useGlobalModalStateStore } from '../../store';
 import Image from 'next/image';
-import { useAuth } from '../../hooks';
+import dynamic from 'next/dynamic';
+import { Modal } from '../../components';
 
-
+const PostMenu = dynamic(() => import('./Menu/PostMenu'), {
+  ssr: false,
+});
 dayjs.extend(relativeTime);
 
 interface IProps {
@@ -28,8 +31,8 @@ interface IProps {
 
 export const PostItem: React.FC<IProps> = (props) => {
 
-const {isAuthenticated}=useAuth()
   const { post, isAuth } = props;
+  const {data}=useMeQuery()
   const [isLikesModal, setIsLikesModal] = useState(false);
   const setShowPostModal = useGlobalModalStateStore(
     (state) => state.setShowPostCard
@@ -58,7 +61,7 @@ const {isAuthenticated}=useAuth()
   // @ts-ignore: Object is possibly 'null'.
   const showAttachments = post?.photos?.length > 0;
 
-  return isAuth && (
+  return data?.me && (
     <div className="flex flex-col tablet:rounded-lg my-4 p-4 first:mt-0 shadow-lg dark:bg-indigo-1000">
       {/* --- AVATAR AND OPTIONS */}
       <div className="flex justify-between items-center w-full">
@@ -103,7 +106,7 @@ const {isAuthenticated}=useAuth()
 
       {/* --- IMAGE GRID ----- */}
 
-      {showAttachments ? (
+      {showAttachments && post?.photos!.length > 0 ? (
         <Attachments attachments={post?.photos} />
       ) : null}
       {/* ---- LIKES/COMMENTS DETAILS ---- */}
@@ -126,20 +129,17 @@ const {isAuthenticated}=useAuth()
               {post.commentsCount === 1 ? 'comment' : 'comments'}
             </span>
           )}
-
-          {
-            isAuthenticated && (
-              <Modal
-              title="Likes"
-              show={isLikesModal}
-              size="md"
-              onClose={() => setIsLikesModal(false)}
-            >
-              <UserCard postItem={post as NewsFeedPaginate} />
-            </Modal>
-            )
-          }
          
+            <Modal
+            title="Likes"
+            show={isLikesModal}
+            size="md"
+            onClose={() => setIsLikesModal(false)}
+          >
+            <UserCard postItem={post as NewsFeedPaginate} />
+          </Modal>
+        
+             
         </div>
       </div>
       {/* --- LIKE/COMMENT BUTTON */}

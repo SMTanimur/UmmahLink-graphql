@@ -23,7 +23,6 @@ GithubUrl : https://github.com/SMTanimur/UmmahLink-graphql
 - React-perfect-scrollbar
 - React-perfect-scrollbar
 - react-virtuoso
-- 
 ## Backend Main technology used
 - Nestjs, Typescript
 - Graphql

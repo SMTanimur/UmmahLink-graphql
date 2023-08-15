@@ -1,4 +1,4 @@
-'use client';
+"use client"
 import { NewsFeedPaginate } from '@social-zone/graphql';
 import { create } from 'zustand';
 
