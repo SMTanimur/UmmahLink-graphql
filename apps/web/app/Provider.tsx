@@ -4,10 +4,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, useState } from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { GlobalModals ,GlobalAlerts} from '~ui';
+import { GlobalAlerts} from '~ui';
+import dynamic from 'next/dynamic';
 
 
-
+const GlobalModals = dynamic(() => import('./global/GlobalModals'), {
+  ssr: false,
+});
 
 const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());

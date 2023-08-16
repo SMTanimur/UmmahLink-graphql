@@ -1,4 +1,4 @@
-"use client"
+
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';

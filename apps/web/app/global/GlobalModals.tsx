@@ -1,11 +1,9 @@
 "use client"
-import { useMeQuery } from '@social-zone/graphql';
-import { EditPost, Modal, NewCreatePost } from '../components';
 
-import { PostCardModal } from '../shared/post/PostModalCard';
-import { useGlobalModalStateStore } from './modal';
-export const GlobalModals = () => {
-  const { data } = useMeQuery();
+
+import { EditPost, Modal, NewCreatePost, PostCardModal, useGlobalModalStateStore } from "~ui";
+
+ const GlobalModals = () => {
 
   const showNewPostModal = useGlobalModalStateStore(
     (state) => state.showNewPostModal
@@ -25,7 +23,7 @@ export const GlobalModals = () => {
   const showPostModal = useGlobalModalStateStore((state) => state.showPostCard);
   const postData = useGlobalModalStateStore((state) => state.postData);
 
-  return  data?.me && (
+  return  (
 
       // eslint-disable-next-line react/jsx-no-useless-fragment
       <>
@@ -57,3 +55,5 @@ export const GlobalModals = () => {
  
   );
 };
+
+export default GlobalModals

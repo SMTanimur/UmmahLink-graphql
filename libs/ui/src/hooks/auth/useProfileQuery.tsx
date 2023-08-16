@@ -1,4 +1,4 @@
-'use client';
+
 import { useMeQuery } from '@social-zone/graphql';
 import { useAuth } from './useAuth';
 
