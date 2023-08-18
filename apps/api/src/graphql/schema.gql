@@ -133,6 +133,37 @@ type Post {
   updatedAt: DateTime!
 }
 
+type MessageUser {
+  id: ID
+  username: String!
+  avatar: AvatarImage
+  name: String!
+}
+
+type MessagePaginate {
+  text: String!
+  createdAt: DateTime
+  from: MessageUser!
+  to: MessageUser!
+  seen: Boolean!
+  unseenCount: Boolean!
+  isOwnMessage: Boolean!
+  id: String!
+}
+
+type MessagePagination {
+  docs: [MessagePaginate]
+  totalDocs: Float!
+  limit: Float!
+  page: Float!
+  totalPages: Float!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+}
+
 type Author {
   id: ID
   username: String!
@@ -306,6 +337,7 @@ input PhotosImageInput {
 }
 
 type Query {
+  getMessages(query: MessageQueryArgs!, option: PaginateOptionArgs!): MessagePagination
   user(username: String!): ProfileInformation
   searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
@@ -322,8 +354,7 @@ type Query {
   me: IUser!
 }
 
-input SearchDto {
-  keyword: String!
+input MessageQueryArgs {
   user: UserInputType
 }
 
@@ -361,6 +392,11 @@ input PaginateOptionArgs {
   allowDiskUse: Boolean
   forceCountFn: Boolean
   useEstimatedCount: Boolean
+}
+
+input SearchDto {
+  keyword: String!
+  user: UserInputType
 }
 
 input NewsFeedQueryArgs {

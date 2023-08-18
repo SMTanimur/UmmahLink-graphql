@@ -2,7 +2,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Comment } from './entities/comment';
 import { CommentsService } from './comments.service';
-import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
+import {
+  CurrentUser,
+  MessageResponse,
+  PaginateOptionArgs,
+} from '@social-zone/common';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { UseGuards } from '@nestjs/common';
 import { CreateCommentInput } from './input/create-comment-input';
@@ -26,7 +30,7 @@ export class CommentResolver {
     createCommentInput: CreateCommentInput
   ) {
     createCommentInput.authId = user._id;
-    console.log(createCommentInput)
+    console.log(createCommentInput);
     return await this.commentService.createComment(createCommentInput);
   }
   @Mutation(() => MessageResponse)
@@ -63,41 +67,36 @@ export class CommentResolver {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>CommentPagination ,{name:'getComments',nullable:true})
-  async  getComments(
+  @Query(() => CommentPagination, { name: 'getComments', nullable: true })
+  async getComments(
     @Args('query') query: CommentsQueryArgs,
     @Args('option') option: PaginateOptionArgs,
-    @CurrentUser() user: any,
+    @CurrentUser() user: any
   ) {
-  
-    query.user = user
-  return await this.commentService.getComments(query, option);
-
-  
+    query.user = user;
+    return await this.commentService.getComments(query, option);
   }
   @UseGuards(AuthenticatedGuard)
-  @Query(() =>CommentPagination ,{name:'getReplies',nullable:true})
-  async  getReplies(
+  @Query(() => CommentPagination, { name: 'getReplies', nullable: true })
+  async getReplies(
     @Args('query') query: ReplyQueryArgs,
     @Args('option') options: PaginateOptionArgs,
-    @CurrentUser() user: any,
+    @CurrentUser() user: any
   ) {
-  
-    query.user = user
-  
+    query.user = user;
+
     return await this.commentService.getReplies(query, options);
   }
-
 
   @Mutation(() => MessageResponse)
   @UseGuards(AuthenticatedGuard)
   async likeOrUnlikeComment(
     @CurrentUser() user: any,
     @Args('likeOrUnlikeCommentInput')
-    likeOrUnlikePostInput:CreatePostOrCommentLikeInput
+    likeOrUnlikePostInput: CreatePostOrCommentLikeInput
   ) {
     likeOrUnlikePostInput.user = user._id;
-    likeOrUnlikePostInput.type = 'Comment'
+    likeOrUnlikePostInput.type = 'Comment';
     return await this.commentService.likeOnComment(likeOrUnlikePostInput);
   }
 }

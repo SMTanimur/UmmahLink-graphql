@@ -3,22 +3,26 @@ https://docs.nestjs.com/providers#services
 */
 
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Message, MessageDocument } from './entities/message';
-import { Model, Types } from 'mongoose';
+import { AggregateOptions, FilterQuery, Model, Types } from 'mongoose';
 import { Chat, ChatDocument } from './entities/chat';
 import { UsersService } from '../users/users.service';
 import { CreateMessageInput } from './dto/createMessage.dto';
+import { MessageQueryArgs } from './dto/message-query-arg';
+import { AggregatePaginateModel } from 'mongoose';
+import { MessagePagination } from './dto/message-paginate';
 
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
-    @InjectModel(Chat.name) private chatModel: Model<ChatDocument>,
+    @InjectModel(Message.name) private messageModel: AggregatePaginateModel<MessageDocument>,
+    @InjectModel(Chat.name) private chatModel: AggregatePaginateModel<ChatDocument>,
     private readonly userService: UsersService
   ) {}
 
@@ -68,7 +72,111 @@ export class MessagesService {
         message:'Message sending successfully'
       }
     } catch (error) {
-      console.log(error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+
+  async getMessages(
+    query?: FilterQuery<MessageQueryArgs>,
+    option?: AggregateOptions
+  ) {
+    try {
+      const {  user } = query;
+      const { limit, page } = option
+
+   
+      const agg = this.chatModel.aggregate([
+        {
+          $match: {
+              participants: { $in: [user?._id] }
+          }
+      },
+   
+      {
+          $lookup: {
+              from: 'messages',
+              localField: 'lastmessage',
+              foreignField: '_id',
+              as: 'message'
+          }
+      },
+      {
+          $unwind: '$message'
+      },
+      {
+          $project: {
+              _id: 0,
+              message: 1
+          }
+      },
+      {
+          $lookup: {
+              from: 'users',
+              localField: 'message.from',
+              foreignField: '_id',
+              as: 'message.from'
+          }
+      },
+      { $unwind: '$message.from' },
+      {
+          $project: {
+              to: '$message.to',
+              text: '$message.text',
+              id: '$message._id',
+              seen: '$message.seen',
+              createdAt: '$message.createdAt',
+              from: {
+                  username: '$message.from.username',
+                  id: '$message.from._id',
+                  avatar: '$message.from.avatar',
+                  name: '$message.from.name'
+              }
+          }
+      },
+      {
+          $lookup: {
+              from: 'users',
+              localField: 'to',
+              foreignField: '_id',
+              as: 'message.to'
+          }
+      },
+      { $unwind: '$message.to' },
+      {
+          $project: {
+              id: 1,
+              from: 1,
+              text: 1,
+              seen: 1,
+              createdAt: 1,
+              to: {
+                  username: '$message.to.username',
+                  id: '$message.to._id',
+                  avatar: '$message.to.avatar',
+                  name: '$message.to.name'
+              },
+              isOwnMessage: {
+                  $cond: [
+                      { $eq: ['$from.id', user._id] },
+                      true,
+                      false
+                  ]
+              }
+          }
+      },
+      { $sort : { createdAt : -1 } },
+      ]);
+      const res = await this.chatModel.aggregatePaginate(agg, {
+        ...(limit ? { limit } : {}),
+        ...(page ? { page } : {}),
+      }) as MessagePagination
+
+      if (res.docs.length === 0)
+        throw new NotFoundException('No Message found');
+      return res;
+    } catch (error) {
+       throw new BadRequestException()
     }
   }
 }
