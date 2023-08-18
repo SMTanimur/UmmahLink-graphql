@@ -1,0 +1,44 @@
+query GetMessages($query: MessageQueryArgs!,$option: PaginateOptionArgs!){
+  getMessages(query: $query,option: $option){
+    docs{
+      text
+      createdAt
+      from{
+        id
+        username
+        avatar{
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      to{
+       id
+        username
+        avatar{
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      seen
+       unseenCount
+       isOwnMessage
+       id
+    }
+    totalDocs
+    limit
+    page
+     totalPages
+     hasNextPage
+     hasNextPage
+     hasPrevPage
+      nextPage
+      prevPage
+      pagingCounter
+      totalDocs
+      __typename
+  }
+}

@@ -1,0 +1,6 @@
+mutation UpdateMessageRead ($input: MessageReadQueryArgs!){
+  updateMessageRead(updateMessageRead: $input){
+    state
+    __typename
+  }
+}

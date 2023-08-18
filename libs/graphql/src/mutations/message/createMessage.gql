@@ -1,0 +1,6 @@
+mutation MessageSend ( $input:CreateMessageInput!){
+  createMessage(createMessageInput: $input){
+    message
+    __typename
+  }
+}

@@ -1,0 +1,6 @@
+query GetUnreadMessageCount ($query:MessageQueryArgs!){
+  getUnreadMessageCount(query:$query){
+    count
+    __typename
+  }
+}

@@ -140,6 +140,12 @@ export type CreateFriendRequestInput = {
   user?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type CreateMessageInput = {
+  text: Scalars['String']['input'];
+  user?: InputMaybe<UserInputType>;
+  user_id: Scalars['String']['input'];
+};
+
 export type CreatePostInput = {
   _author_id?: InputMaybe<Scalars['ID']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
@@ -282,9 +288,62 @@ export type LoginResponse = {
   message: Scalars['String']['output'];
 };
 
+export type Message = {
+  __typename?: 'Message';
+  createdAt: Scalars['DateTime']['output'];
+  from?: Maybe<Scalars['ID']['output']>;
+  id: Scalars['ID']['output'];
+  seen?: Maybe<Scalars['Boolean']['output']>;
+  text: Scalars['String']['output'];
+  to?: Maybe<Scalars['ID']['output']>;
+};
+
+export type MessagePaginate = {
+  __typename?: 'MessagePaginate';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  from: MessageUser;
+  id: Scalars['String']['output'];
+  isOwnMessage: Scalars['Boolean']['output'];
+  seen: Scalars['Boolean']['output'];
+  text: Scalars['String']['output'];
+  to: MessageUser;
+  unseenCount: Scalars['Boolean']['output'];
+};
+
+export type MessagePagination = {
+  __typename?: 'MessagePagination';
+  docs?: Maybe<Array<Maybe<MessagePaginate>>>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Float']['output'];
+  nextPage?: Maybe<Scalars['Float']['output']>;
+  page: Scalars['Float']['output'];
+  pagingCounter: Scalars['Float']['output'];
+  prevPage?: Maybe<Scalars['Float']['output']>;
+  totalDocs: Scalars['Float']['output'];
+  totalPages: Scalars['Float']['output'];
+};
+
+export type MessageQueryArgs = {
+  user?: InputMaybe<UserInputType>;
+};
+
+export type MessageReadQueryArgs = {
+  from_id: Scalars['String']['input'];
+  user?: InputMaybe<UserInputType>;
+};
+
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String']['output'];
+};
+
+export type MessageUser = {
+  __typename?: 'MessageUser';
+  avatar?: Maybe<AvatarImage>;
+  id?: Maybe<Scalars['ID']['output']>;
+  name: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -293,6 +352,7 @@ export type Mutation = {
   createComment: MessageResponse;
   createCommentReply: MessageResponse;
   createFriendRequest: FriendRequestResponse;
+  createMessage: MessageResponse;
   createPost: MessageResponse;
   createUser: Scalars['String']['output'];
   deleteComment: MessageResponse;
@@ -305,6 +365,7 @@ export type Mutation = {
   markNotification: NotificationResponse;
   unFollowUser: MessageResponse;
   updateComment: MessageResponse;
+  updateMessageRead: ReadCountResponse;
   updateNotification: NotificationResponse;
   updatePost: MessageResponse;
   updateUser: MessageResponse;
@@ -324,6 +385,10 @@ export type MutationCreateCommentReplyArgs = {
 
 export type MutationCreateFriendRequestArgs = {
   createFriendRequestInput: CreateFriendRequestInput;
+};
+
+export type MutationCreateMessageArgs = {
+  createMessageInput: CreateMessageInput;
 };
 
 export type MutationCreatePostArgs = {
@@ -368,6 +433,10 @@ export type MutationUnFollowUserArgs = {
 
 export type MutationUpdateCommentArgs = {
   updateCommentInput: UpdateCommentInput;
+};
+
+export type MutationUpdateMessageReadArgs = {
+  updateMessageRead: MessageReadQueryArgs;
 };
 
 export type MutationUpdateNotificationArgs = {
@@ -557,12 +626,15 @@ export type Query = {
   getFeeds: NewsFeedPagination;
   getFollowers: FollowPagination;
   getFollowing: FollowPagination;
+  getMessages?: Maybe<MessagePagination>;
   getNotificationCount: NotificationCount;
   getNotifications: NotificationPagination;
   getPostLikes: Array<GetLikeResponse>;
   getPosts: NewsFeedPagination;
   getReplies?: Maybe<CommentPagination>;
   getSuggestionPeople?: Maybe<FollowPagination>;
+  getTargetMessage?: Maybe<MessagePagination>;
+  getUnreadMessageCount: NotificationCount;
   me: IUser;
   post: Post;
   searchUser?: Maybe<Array<IUser>>;
@@ -589,6 +661,11 @@ export type QueryGetFollowingArgs = {
   option: PaginateOptionArgs;
   query: FollowQueryArgs;
   username: Scalars['String']['input'];
+};
+
+export type QueryGetMessagesArgs = {
+  option: PaginateOptionArgs;
+  query: MessageQueryArgs;
 };
 
 export type QueryGetNotificationCountArgs = {
@@ -621,6 +698,15 @@ export type QueryGetSuggestionPeopleArgs = {
   query: FollowQueryArgs;
 };
 
+export type QueryGetTargetMessageArgs = {
+  option: PaginateOptionArgs;
+  query: MessageReadQueryArgs;
+};
+
+export type QueryGetUnreadMessageCountArgs = {
+  query: MessageQueryArgs;
+};
+
 export type QueryPostArgs = {
   postId: Scalars['ID']['input'];
 };
@@ -640,6 +726,11 @@ export enum QueryPostOrderByColumn {
   Rating = 'RATING',
   UpdatedAt = 'UPDATED_AT',
 }
+
+export type ReadCountResponse = {
+  __typename?: 'ReadCountResponse';
+  state: Scalars['Boolean']['output'];
+};
 
 export type ReplyQueryArgs = {
   comment_id: Scalars['ID']['input'];
@@ -847,6 +938,24 @@ export type LikeOrUnlikePostMutationVariables = Exact<{
 export type LikeOrUnlikePostMutation = {
   __typename?: 'Mutation';
   likeOrUnlikePost: { __typename?: 'MessageResponse'; message: string };
+};
+
+export type MessageSendMutationVariables = Exact<{
+  input: CreateMessageInput;
+}>;
+
+export type MessageSendMutation = {
+  __typename?: 'Mutation';
+  createMessage: { __typename: 'MessageResponse'; message: string };
+};
+
+export type UpdateMessageReadMutationVariables = Exact<{
+  input: MessageReadQueryArgs;
+}>;
+
+export type UpdateMessageReadMutation = {
+  __typename?: 'Mutation';
+  updateMessageRead: { __typename: 'ReadCountResponse'; state: boolean };
 };
 
 export type MarkNotificationMutationVariables = Exact<{
@@ -1155,6 +1264,119 @@ export type GetSuggestionPeopleQuery = {
       };
     } | null> | null;
   } | null;
+};
+
+export type GetMessagesQueryVariables = Exact<{
+  query: MessageQueryArgs;
+  option: PaginateOptionArgs;
+}>;
+
+export type GetMessagesQuery = {
+  __typename?: 'Query';
+  getMessages?: {
+    __typename: 'MessagePagination';
+    totalDocs: number;
+    limit: number;
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    prevPage?: number | null;
+    pagingCounter: number;
+    docs?: Array<{
+      __typename?: 'MessagePaginate';
+      text: string;
+      createdAt?: any | null;
+      seen: boolean;
+      unseenCount: boolean;
+      isOwnMessage: boolean;
+      id: string;
+      from: {
+        __typename: 'MessageUser';
+        id?: string | null;
+        username: string;
+        name: string;
+        avatar?: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+      to: {
+        __typename: 'MessageUser';
+        id?: string | null;
+        username: string;
+        name: string;
+        avatar?: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+    } | null> | null;
+  } | null;
+};
+
+export type GetTargetMessageQueryVariables = Exact<{
+  query: MessageReadQueryArgs;
+  option: PaginateOptionArgs;
+}>;
+
+export type GetTargetMessageQuery = {
+  __typename?: 'Query';
+  getTargetMessage?: {
+    __typename: 'MessagePagination';
+    totalDocs: number;
+    limit: number;
+    page: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    nextPage?: number | null;
+    prevPage?: number | null;
+    pagingCounter: number;
+    docs?: Array<{
+      __typename?: 'MessagePaginate';
+      text: string;
+      createdAt?: any | null;
+      seen: boolean;
+      unseenCount: boolean;
+      isOwnMessage: boolean;
+      id: string;
+      from: {
+        __typename: 'MessageUser';
+        id?: string | null;
+        username: string;
+        name: string;
+        avatar?: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+      to: {
+        __typename: 'MessageUser';
+        id?: string | null;
+        username: string;
+        name: string;
+        avatar?: {
+          __typename?: 'AvatarImage';
+          avatarUrl?: string | null;
+          avatarPublicId?: string | null;
+        } | null;
+      };
+    } | null> | null;
+  } | null;
+};
+
+export type GetUnreadMessageCountQueryVariables = Exact<{
+  query: MessageQueryArgs;
+}>;
+
+export type GetUnreadMessageCountQuery = {
+  __typename?: 'Query';
+  getUnreadMessageCount: { __typename: 'NotificationCount'; count: number };
 };
 
 export type GetNotificationsQueryVariables = Exact<{
@@ -1805,6 +2027,91 @@ useLikeOrUnlikePostMutation.fetcher = (
     variables,
     options
   );
+export const MessageSendDocument = /*#__PURE__*/ `
+    mutation MessageSend($input: CreateMessageInput!) {
+  createMessage(createMessageInput: $input) {
+    message
+    __typename
+  }
+}
+    `;
+export const useMessageSendMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    MessageSendMutation,
+    TError,
+    MessageSendMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    MessageSendMutation,
+    TError,
+    MessageSendMutationVariables,
+    TContext
+  >(
+    ['MessageSend'],
+    (variables?: MessageSendMutationVariables) =>
+      fetcher<MessageSendMutation, MessageSendMutationVariables>(
+        MessageSendDocument,
+        variables
+      )(),
+    options
+  );
+useMessageSendMutation.getKey = () => ['MessageSend'];
+
+useMessageSendMutation.fetcher = (
+  variables: MessageSendMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<MessageSendMutation, MessageSendMutationVariables>(
+    MessageSendDocument,
+    variables,
+    options
+  );
+export const UpdateMessageReadDocument = /*#__PURE__*/ `
+    mutation UpdateMessageRead($input: MessageReadQueryArgs!) {
+  updateMessageRead(updateMessageRead: $input) {
+    state
+    __typename
+  }
+}
+    `;
+export const useUpdateMessageReadMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateMessageReadMutation,
+    TError,
+    UpdateMessageReadMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateMessageReadMutation,
+    TError,
+    UpdateMessageReadMutationVariables,
+    TContext
+  >(
+    ['UpdateMessageRead'],
+    (variables?: UpdateMessageReadMutationVariables) =>
+      fetcher<UpdateMessageReadMutation, UpdateMessageReadMutationVariables>(
+        UpdateMessageReadDocument,
+        variables
+      )(),
+    options
+  );
+useUpdateMessageReadMutation.getKey = () => ['UpdateMessageRead'];
+
+useUpdateMessageReadMutation.fetcher = (
+  variables: UpdateMessageReadMutationVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<UpdateMessageReadMutation, UpdateMessageReadMutationVariables>(
+    UpdateMessageReadDocument,
+    variables,
+    options
+  );
 export const MarkNotificationDocument = /*#__PURE__*/ `
     mutation MarkNotification($input: NotificationCountQueryArgs!) {
   markNotification(markNotificationArgs: $input) {
@@ -2427,6 +2734,188 @@ useGetSuggestionPeopleQuery.fetcher = (
 ) =>
   fetcher<GetSuggestionPeopleQuery, GetSuggestionPeopleQueryVariables>(
     GetSuggestionPeopleDocument,
+    variables,
+    options
+  );
+export const GetMessagesDocument = /*#__PURE__*/ `
+    query GetMessages($query: MessageQueryArgs!, $option: PaginateOptionArgs!) {
+  getMessages(query: $query, option: $option) {
+    docs {
+      text
+      createdAt
+      from {
+        id
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      to {
+        id
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      seen
+      unseenCount
+      isOwnMessage
+      id
+    }
+    totalDocs
+    limit
+    page
+    totalPages
+    hasNextPage
+    hasNextPage
+    hasPrevPage
+    nextPage
+    prevPage
+    pagingCounter
+    totalDocs
+    __typename
+  }
+}
+    `;
+export const useGetMessagesQuery = <TData = GetMessagesQuery, TError = unknown>(
+  variables: GetMessagesQueryVariables,
+  options?: UseQueryOptions<GetMessagesQuery, TError, TData>
+) =>
+  useQuery<GetMessagesQuery, TError, TData>(
+    ['GetMessages', variables],
+    fetcher<GetMessagesQuery, GetMessagesQueryVariables>(
+      GetMessagesDocument,
+      variables
+    ),
+    options
+  );
+
+useGetMessagesQuery.getKey = (variables: GetMessagesQueryVariables) => [
+  'GetMessages',
+  variables,
+];
+useGetMessagesQuery.fetcher = (
+  variables: GetMessagesQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetMessagesQuery, GetMessagesQueryVariables>(
+    GetMessagesDocument,
+    variables,
+    options
+  );
+export const GetTargetMessageDocument = /*#__PURE__*/ `
+    query GetTargetMessage($query: MessageReadQueryArgs!, $option: PaginateOptionArgs!) {
+  getTargetMessage(query: $query, option: $option) {
+    docs {
+      text
+      createdAt
+      from {
+        id
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      to {
+        id
+        username
+        avatar {
+          avatarUrl
+          avatarPublicId
+        }
+        name
+        __typename
+      }
+      seen
+      unseenCount
+      isOwnMessage
+      id
+    }
+    totalDocs
+    limit
+    page
+    totalPages
+    hasNextPage
+    hasNextPage
+    hasPrevPage
+    nextPage
+    prevPage
+    pagingCounter
+    totalDocs
+    __typename
+  }
+}
+    `;
+export const useGetTargetMessageQuery = <
+  TData = GetTargetMessageQuery,
+  TError = unknown
+>(
+  variables: GetTargetMessageQueryVariables,
+  options?: UseQueryOptions<GetTargetMessageQuery, TError, TData>
+) =>
+  useQuery<GetTargetMessageQuery, TError, TData>(
+    ['GetTargetMessage', variables],
+    fetcher<GetTargetMessageQuery, GetTargetMessageQueryVariables>(
+      GetTargetMessageDocument,
+      variables
+    ),
+    options
+  );
+
+useGetTargetMessageQuery.getKey = (
+  variables: GetTargetMessageQueryVariables
+) => ['GetTargetMessage', variables];
+useGetTargetMessageQuery.fetcher = (
+  variables: GetTargetMessageQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetTargetMessageQuery, GetTargetMessageQueryVariables>(
+    GetTargetMessageDocument,
+    variables,
+    options
+  );
+export const GetUnreadMessageCountDocument = /*#__PURE__*/ `
+    query GetUnreadMessageCount($query: MessageQueryArgs!) {
+  getUnreadMessageCount(query: $query) {
+    count
+    __typename
+  }
+}
+    `;
+export const useGetUnreadMessageCountQuery = <
+  TData = GetUnreadMessageCountQuery,
+  TError = unknown
+>(
+  variables: GetUnreadMessageCountQueryVariables,
+  options?: UseQueryOptions<GetUnreadMessageCountQuery, TError, TData>
+) =>
+  useQuery<GetUnreadMessageCountQuery, TError, TData>(
+    ['GetUnreadMessageCount', variables],
+    fetcher<GetUnreadMessageCountQuery, GetUnreadMessageCountQueryVariables>(
+      GetUnreadMessageCountDocument,
+      variables
+    ),
+    options
+  );
+
+useGetUnreadMessageCountQuery.getKey = (
+  variables: GetUnreadMessageCountQueryVariables
+) => ['GetUnreadMessageCount', variables];
+useGetUnreadMessageCountQuery.fetcher = (
+  variables: GetUnreadMessageCountQueryVariables,
+  options?: RequestInit['headers']
+) =>
+  fetcher<GetUnreadMessageCountQuery, GetUnreadMessageCountQueryVariables>(
+    GetUnreadMessageCountDocument,
     variables,
     options
   );
