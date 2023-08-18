@@ -25,9 +25,6 @@ export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: PaginateModel<UserDocument>,
     @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
-  
-    @Inject(forwardRef(() => PostsService))
-    private readonly postsService: PostsService,
     private readonly uploadService: UploadService
   ) {}
 

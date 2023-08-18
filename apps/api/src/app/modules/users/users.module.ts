@@ -20,7 +20,6 @@ import { UploadModule } from '../upload/upload.module';
       { name: Follow.name, schema: FollowSchema },
       { name: Post.name, schema: PostSchema },
     ]),
-    forwardRef(() => PostsModule),
     UploadModule
   ],
   controllers: [],

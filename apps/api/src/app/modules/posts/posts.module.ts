@@ -29,7 +29,7 @@ import { UploadModule } from '../upload/upload.module';
       { name: Notification.name, schema: NotificationSchema },
     ]),
     UsersModule,
-    UploadModule
+    UploadModule,
   ],
   controllers: [],
   providers: [PostsService, PostResolver],

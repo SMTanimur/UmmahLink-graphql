@@ -1,5 +1,4 @@
 export * from './modal'
 export * from './user'
-export * from './GlobalAlerts'
 export * from './alerts'
 export * from './notification'

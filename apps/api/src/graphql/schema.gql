@@ -6,38 +6,6 @@ type MessageResponse {
   message: String!
 }
 
-type ProfileInformation {
-  id: ID!
-  username: String!
-  name: String!
-  birthday: DateTime
-  gender: String
-  bio: String
-  contact: String
-  avatar: AvatarImage
-  email: String!
-  coverPicture: CoverImage
-  followingCount: Float
-  followersCount: Float
-  isFollowing: Boolean!
-  isOwnProfile: Boolean!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type AvatarImage {
-  avatarUrl: String
-  avatarPublicId: String
-}
-
-type CoverImage {
-  coverUrl: String
-  coverPublicId: String
-}
-
 type FriendRequest {
   id: ID!
   user: User
@@ -70,6 +38,11 @@ type User {
   role: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 enum EGender {
   male
   female
@@ -89,6 +62,56 @@ type UserWithoutPassword {
   friends: User
   friendRequests: [FriendRequest!]
   role: String!
+}
+
+type Message {
+  id: ID!
+  from: User
+  to: User
+  text: String!
+  seen: Boolean
+  createdAt: DateTime!
+}
+
+type ProfileInformation {
+  id: ID!
+  username: String!
+  name: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  avatar: AvatarImage
+  email: String!
+  coverPicture: CoverImage
+  followingCount: Float
+  followersCount: Float
+  isFollowing: Boolean!
+  isOwnProfile: Boolean!
+}
+
+type AvatarImage {
+  avatarUrl: String
+  avatarPublicId: String
+}
+
+type CoverImage {
+  coverUrl: String
+  coverPublicId: String
+}
+
+type IUser {
+  _id: ID!
+  username: String!
+  name: String!
+  birthday: DateTime
+  gender: String
+  bio: String
+  contact: String
+  avatar: AvatarImage!
+  email: String
+  coverPicture: CoverImage
+  isFollowing: Boolean!
 }
 
 type PhotosImageInfo {
@@ -227,20 +250,6 @@ type NotificationCount {
   count: Int!
 }
 
-type IUser {
-  _id: ID!
-  username: String!
-  name: String!
-  birthday: DateTime
-  gender: String
-  bio: String
-  contact: String
-  avatar: AvatarImage!
-  email: String
-  coverPicture: CoverImage
-  isFollowing: Boolean!
-}
-
 type UserResponse {
   username: String!
   avatar: String!
@@ -297,6 +306,8 @@ input PhotosImageInput {
 }
 
 type Query {
+  user(username: String!): ProfileInformation
+  searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getComments(query: CommentsQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getReplies(query: ReplyQueryArgs!, option: PaginateOptionArgs!): CommentPagination
@@ -305,15 +316,14 @@ type Query {
   post(postId: ID!): Post!
   getPosts(username: String!, query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getPostLikes(query: LikesQueryArgs!, option: PaginateOptionArgs!): [GetLikeResponse!]!
-  user(username: String!): ProfileInformation
-  searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getFollowers(username: String!, query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination!
   getFollowing(username: String!, query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination!
   getSuggestionPeople(query: FollowQueryArgs!, option: PaginateOptionArgs!): FollowPagination
   me: IUser!
 }
 
-input NewsFeedQueryArgs {
+input SearchDto {
+  keyword: String!
   user: UserInputType
 }
 
@@ -336,6 +346,25 @@ input UserInputType {
 input FriendRequestInputType {
   user: UserInputType
   target: UserInputType
+}
+
+input PaginateOptionArgs {
+  select: String
+  sort: String
+  skip: Float
+  lean: Boolean
+  leanWithId: Boolean
+  offset: Float
+  limit: Float = 10
+  page: Float = 1
+  pagination: Boolean
+  allowDiskUse: Boolean
+  forceCountFn: Boolean
+  useEstimatedCount: Boolean
+}
+
+input NewsFeedQueryArgs {
+  user: UserInputType
 }
 
 input GetFeedDto {
@@ -372,21 +401,6 @@ input CommentsQueryArgs {
   postId: ID!
 }
 
-input PaginateOptionArgs {
-  select: String
-  sort: String
-  skip: Float
-  lean: Boolean
-  leanWithId: Boolean
-  offset: Float
-  limit: Float = 10
-  page: Float = 1
-  pagination: Boolean
-  allowDiskUse: Boolean
-  forceCountFn: Boolean
-  useEstimatedCount: Boolean
-}
-
 input ReplyQueryArgs {
   user: UserInputType
   comment_id: ID!
@@ -417,17 +431,15 @@ input LikesQueryArgs {
   commentId: ID
 }
 
-input SearchDto {
-  keyword: String!
-  user: UserInputType
-}
-
 input FollowQueryArgs {
   user: UserInputType
   type: String
 }
 
 type Mutation {
+  createMessage(createMessageInput: CreateMessageInput!): MessageResponse!
+  createUser(createUserInput: CreateUserInput!): String!
+  updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
   createComment(createCommentInput: CreateCommentInput!): MessageResponse!
   updateComment(updateCommentInput: UpdateCommentInput!): MessageResponse!
   createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
@@ -439,14 +451,41 @@ type Mutation {
   updatePost(updatePostInput: UpdatePostInput!): MessageResponse!
   deletePost(deletePostInput: DeletePostInput!): MessageResponse!
   likeOrUnlikePost(likeOrUnlikePostInput: CreatePostOrCommentLikeInput!): MessageResponse!
-  createUser(createUserInput: CreateUserInput!): String!
-  updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
   followUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   unFollowUser(followOrUnFollowInput: FollowOrUnFollowInput!): MessageResponse!
   login(loginInput: LoginInput!): LoginResponse!
   logout: MessageResponse!
   createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
   closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
+}
+
+input CreateMessageInput {
+  text: String!
+  user_id: String!
+  user: UserInputType
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  username: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  birthday: DateTime
+  gender: EGender
+  bio: String
+  contact: String
+  username: String
+  avatar: AvatarImageInput
+  coverPicture: CoverImageInput
+  friends: UserInputType
+  friendRequests: [FriendRequestInputType!] = []
+  password: String
+  role: String
 }
 
 input CreateCommentInput {
@@ -516,29 +555,6 @@ input UpdatePostInput {
 input DeletePostInput {
   user: ID
   postId: ID!
-}
-
-input CreateUserInput {
-  email: String!
-  name: String!
-  username: String!
-  password: String!
-}
-
-input UpdateUserInput {
-  email: String
-  name: String
-  birthday: DateTime
-  gender: EGender
-  bio: String
-  contact: String
-  username: String
-  avatar: AvatarImageInput
-  coverPicture: CoverImageInput
-  friends: UserInputType
-  friendRequests: [FriendRequestInputType!] = []
-  password: String
-  role: String
 }
 
 input FollowOrUnFollowInput {

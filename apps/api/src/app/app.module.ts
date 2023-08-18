@@ -1,3 +1,5 @@
+import { MessagesModule } from './modules/messages/messages.module';
+
 import { NewsFeedModule } from './modules/newsFeed/newsfeed.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NotificationModule } from './modules/notification/notification.module';
@@ -15,9 +17,9 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { UploadModule } from './modules/upload/upload.module';
 
-
 @Module({
   imports: [
+    MessagesModule,
     NewsFeedModule,
     CommentsModule,
     NotificationModule,

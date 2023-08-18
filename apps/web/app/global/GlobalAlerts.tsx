@@ -4,7 +4,7 @@ import { DeleteComment, DeletePost } from '~ui';
 
 
 
-export const GlobalAlerts: FC = () => {
+ const GlobalAlerts: FC = () => {
  
   return (
     <div>
@@ -13,5 +13,7 @@ export const GlobalAlerts: FC = () => {
     </div>
   );
 };
+
+export default GlobalAlerts;
 
 
