@@ -2,7 +2,7 @@ import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { User } from '../../users/entities/user.entity';
+import { User, UserDocument } from '../../users/entities/user.entity';
 import { CoreEntity } from '@social-zone/common';
 import { IsBoolean, IsDate, IsString, MinLength } from 'class-validator';
 
@@ -14,15 +14,15 @@ export class Message extends CoreEntity {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   })
-  @Field((_type) => User, { nullable: true })
-  from: User;
+  @Field((_type) => ID, { nullable: true })
+  from: UserDocument
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   })
-  @Field((_type) => User, { nullable: true })
-  to: User;
+  @Field((_type) => ID, { nullable: true })
+  to: string;
 
   @Prop({type:String})
   @Field(() => String)

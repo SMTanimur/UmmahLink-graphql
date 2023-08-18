@@ -5,7 +5,7 @@ import { UseGuards } from "@nestjs/common";
 import { AuthenticatedGuard } from "../auth/guards/authenticated.guard";
 import {  NewsFeedPagination} from "./dto/newsFeed-paginate";
 import { NewsFeedQueryArgs } from "./dto/newsFeed-query-arg";
-import { CurrentUser, PaginateOptionArgs } from "@social-zone/common";
+import { CurrentUser } from "@social-zone/common";
 import { GetFeedDto } from "./dto/optionArgs";
 
 

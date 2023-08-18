@@ -66,8 +66,8 @@ type UserWithoutPassword {
 
 type Message {
   id: ID!
-  from: User
-  to: User
+  from: ID
+  to: ID
   text: String!
   seen: Boolean
   createdAt: DateTime!
@@ -162,6 +162,18 @@ type MessagePagination {
   nextPage: Float
   prevPage: Float
   pagingCounter: Float!
+}
+
+type NotificationResponse {
+  state: Boolean!
+}
+
+type NotificationCount {
+  count: Int!
+}
+
+type ReadCountResponse {
+  state: Boolean!
 }
 
 type Author {
@@ -273,14 +285,6 @@ type NotificationPagination {
   pagingCounter: Float!
 }
 
-type NotificationResponse {
-  state: Boolean!
-}
-
-type NotificationCount {
-  count: Int!
-}
-
 type UserResponse {
   username: String!
   avatar: String!
@@ -338,6 +342,8 @@ input PhotosImageInput {
 
 type Query {
   getMessages(query: MessageQueryArgs!, option: PaginateOptionArgs!): MessagePagination
+  getTargetMessage(query: MessageReadQueryArgs!, option: PaginateOptionArgs!): MessagePagination
+  getUnreadMessageCount(query: MessageQueryArgs!): NotificationCount!
   user(username: String!): ProfileInformation
   searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
@@ -392,6 +398,11 @@ input PaginateOptionArgs {
   allowDiskUse: Boolean
   forceCountFn: Boolean
   useEstimatedCount: Boolean
+}
+
+input MessageReadQueryArgs {
+  user: UserInputType
+  from_id: String!
 }
 
 input SearchDto {
@@ -474,6 +485,7 @@ input FollowQueryArgs {
 
 type Mutation {
   createMessage(createMessageInput: CreateMessageInput!): MessageResponse!
+  updateMessageRead(updateMessageRead: MessageReadQueryArgs!): ReadCountResponse!
   createUser(createUserInput: CreateUserInput!): String!
   updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
   createComment(createCommentInput: CreateCommentInput!): MessageResponse!
