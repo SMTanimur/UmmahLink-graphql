@@ -8,6 +8,8 @@ query GetSuggestionPeople($options: PaginateOptionArgs!, $query: FollowQueryArgs
     email
     id
     isFollowing
+    lastActive
+    isActive
      name
      username
       __typename

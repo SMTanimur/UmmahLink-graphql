@@ -77,7 +77,7 @@ const Search: FC<SearchProps> = ({
           placeholder={placeholder}
           value={searchText}
           iconLeft={<MagnifyingGlassIcon />}
-          defaultValue={defaultSearchQuery}
+          // defaultValue={defaultSearchQuery}
           iconRight={
             <XMarkIcon
               className={cn(

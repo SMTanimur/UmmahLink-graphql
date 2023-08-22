@@ -1,70 +1,71 @@
-import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
+import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 // import { UserInfo } from "../entities/user.entity";
 
-
-@ObjectType({isAbstract:true})
+@ObjectType({ isAbstract: true })
 export class AvatarImage {
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   avatarUrl: string;
 
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   avatarPublicId: string;
 }
 
-@ObjectType({isAbstract:true})
+@ObjectType({ isAbstract: true })
 export class CoverImage {
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   coverUrl: string;
 
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   coverPublicId: string;
 }
 
 @ObjectType()
 export class ProfileInformation {
-  
   @Field(() => ID)
-  id:string
+  id: string;
 
   @Field(() => String)
-  username:string
+  username: string;
 
   @Field(() => String)
-  name:string
+  name: string;
 
   @Field(() => GraphQLISODateTime, { nullable: true })
   birthday: Date;
 
+  @Field(() => String, { nullable: true })
+  gender: string;
 
-  @Field(() => String,{nullable:true})
-  gender: string
-
-
-  @Field(()=>String,{ nullable: true })
+  @Field(() => String, { nullable: true })
   bio: string;
 
-  @Field(()=>String,{ nullable: true })
+  @Field(() => Boolean,{nullable:true})
+  isActive: boolean;
+
+  @Field(() => Date, { nullable: true })
+  lastActive: Date;
+
+  @Field(() => String, { nullable: true })
   contact?: string;
 
-  @Field(() => AvatarImage,{nullable:true} )
-  avatar:AvatarImage 
+  @Field(() => AvatarImage, { nullable: true })
+  avatar: AvatarImage;
 
   @Field(() => String)
-  email:string
+  email: string;
 
-  @Field(()=>CoverImage,{nullable:true})
-  coverPicture:CoverImage
+  @Field(() => CoverImage, { nullable: true })
+  coverPicture: CoverImage;
 
-  @Field(()=>Number,{nullable:true})
-  followingCount:number
+  @Field(() => Number, { nullable: true })
+  followingCount: number;
 
-  @Field(()=>Number,{nullable:true})
-  followersCount:number
+  @Field(() => Number, { nullable: true })
+  followersCount: number;
 
-  @Field(() =>Boolean)
-  isFollowing:boolean
-  
-  @Field(() =>Boolean)
-  isOwnProfile:boolean
+  @Field(() => Boolean)
+  isFollowing: boolean;
 
+  @Field(() => Boolean)
+  isOwnProfile: boolean;
 }

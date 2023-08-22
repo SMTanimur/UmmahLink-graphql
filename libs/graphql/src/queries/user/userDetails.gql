@@ -13,6 +13,8 @@ query UserProfile($username: String!) {
     bio
     birthday
     contact
+    isActive
+    lastActive
     gender
     name
     email

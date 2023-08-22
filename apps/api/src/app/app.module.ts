@@ -1,3 +1,4 @@
+import { EventsModule } from './modules/events/events.module';
 import { MessagesModule } from './modules/messages/messages.module';
 
 import { NewsFeedModule } from './modules/newsFeed/newsfeed.module';
@@ -19,6 +20,7 @@ import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
+    EventsModule,
     MessagesModule,
     NewsFeedModule,
     CommentsModule,

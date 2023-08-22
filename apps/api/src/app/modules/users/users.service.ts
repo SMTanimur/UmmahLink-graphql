@@ -158,6 +158,8 @@ export class UsersService {
             email: 1,
             avatar: 1,
             coverPicture: 1,
+            lastActive: 1,
+            isActive: 1,
             username: 1,
             name: 1,
             followingCount: { $size: '$following' },
@@ -215,6 +217,19 @@ return usersResult
     console.log(error)
   }
 
+}
+
+async makeUserActive(userId: string) {
+  return await this.userModel.findByIdAndUpdate(userId, {
+    isActive: true,
+    lastActive: new Date(Date.now()),
+  });
+}
+ async makeUserInactive(userId: string) {
+  return await this.userModel.findByIdAndUpdate(userId, {
+    isActive: false,
+    lastActive: new Date(Date.now()),
+  });
 }
 
 }

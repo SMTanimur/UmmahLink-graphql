@@ -49,6 +49,11 @@ export interface Point {
   y: number;
 }
 
+export enum MessageTabs {
+  Inbox = 'Inbox',
+  Following = 'Following'
+}
+
 export interface Area {
   width: number;
   height: number;

@@ -9,6 +9,8 @@ query searchUser($query: SearchDto!, $option: PaginateOptionArgs!) {
     }
     bio
     birthday
+    isActive
+    lastActive
     contact
     coverPicture{
       coverUrl

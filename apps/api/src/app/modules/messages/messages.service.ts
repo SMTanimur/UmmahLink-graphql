@@ -128,6 +128,8 @@ export class MessagesService {
               username: '$message.from.username',
               id: '$message.from._id',
               avatar: '$message.from.avatar',
+              isActive: '$message.from.isActive',
+              lastActive: '$message.from.lastActive',
               name: '$message.from.name',
             },
           },
@@ -150,6 +152,8 @@ export class MessagesService {
             createdAt: 1,
             to: {
               username: '$message.to.username',
+              isActive: '$message.to.isActive',
+              lastActive: '$message.to.lastActive',
               id: '$message.to._id',
               avatar: '$message.to.avatar',
               name: '$message.to.name',
@@ -274,7 +278,8 @@ export class MessagesService {
         docs: res.docs.map((msg) => {
           return {
             ...msg.toObject(),
-            isOwnMessage: msg.from._id.toString() == user._id.toString() ? true : false,
+            isOwnMessage:
+              msg.from._id.toString() == user._id.toString() ? true : false,
           };
         }),
       };

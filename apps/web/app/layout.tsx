@@ -3,14 +3,16 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '../styles/global.css';
 import {  defaultMetadata } from '~ui';
-
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
-import { Navbar } from './components/Navbar/Navbar';
+// import { Navbar } from './components/Navbar/Navbar';
 import { BottomNavigation } from './components/Navbar/BottomNavigation';
-
+import { SocketContextProvider } from './socket/socketContext';
 
 const Providers = dynamic(() => import('./Provider'), {
+  ssr: false,
+});
+const Navbar = dynamic(() => import('./components/Navbar/Navbar'), {
   ssr: false,
 });
 const poppins = Poppins({
@@ -31,6 +33,7 @@ export default function RootLayout({
     <html lang="en" >
       <body  className={poppins.className} suppressHydrationWarning={true}>
         <Providers>
+        
           <Toaster
             position="top-right"
             // toastOptions={getToastOptions(resolvedTheme)}

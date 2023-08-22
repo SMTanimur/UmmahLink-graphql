@@ -8,6 +8,8 @@ getPosts(username: $username,query:$query,option: $option) {
         }
         username
         email
+        isActive
+        lastActive
         id
         name
       }

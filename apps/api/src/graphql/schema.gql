@@ -36,6 +36,8 @@ type User {
   friendRequests: [FriendRequest!]
   password: String!
   role: String!
+  isActive: Boolean!
+  lastActive: DateTime!
 }
 
 """
@@ -62,15 +64,8 @@ type UserWithoutPassword {
   friends: User
   friendRequests: [FriendRequest!]
   role: String!
-}
-
-type Message {
-  id: ID!
-  from: ID
-  to: ID
-  text: String!
-  seen: Boolean
-  createdAt: DateTime!
+  isActive: Boolean!
+  lastActive: DateTime!
 }
 
 type ProfileInformation {
@@ -80,6 +75,8 @@ type ProfileInformation {
   birthday: DateTime
   gender: String
   bio: String
+  isActive: Boolean
+  lastActive: DateTime
   contact: String
   avatar: AvatarImage
   email: String!
@@ -104,6 +101,8 @@ type IUser {
   _id: ID!
   username: String!
   name: String!
+  isActive: Boolean!
+  lastActive: DateTime!
   birthday: DateTime
   gender: String
   bio: String
@@ -133,11 +132,22 @@ type Post {
   updatedAt: DateTime!
 }
 
+type Message {
+  id: ID!
+  from: ID
+  to: ID
+  text: String!
+  seen: Boolean
+  createdAt: DateTime!
+}
+
 type MessageUser {
   id: ID
   username: String!
   avatar: AvatarImage
   name: String!
+  lastActive: DateTime
+  isActive: Boolean
 }
 
 type MessagePaginate {
@@ -179,6 +189,8 @@ type ReadCountResponse {
 type Author {
   id: ID
   username: String!
+  isActive: Boolean
+  lastActive: DateTime
   email: String!
   avatar: AvatarImage!
   name: String!
@@ -302,9 +314,11 @@ type Pagination {
   birthday: DateTime
   gender: String
   bio: String
+  isActive: Boolean
   contact: String
   id: String!
   email: String!
+  lastActive: DateTime
   isFollowing: Boolean!
 }
 
@@ -341,11 +355,11 @@ input PhotosImageInput {
 }
 
 type Query {
+  user(username: String!): ProfileInformation
+  searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getMessages(query: MessageQueryArgs!, option: PaginateOptionArgs!): MessagePagination
   getTargetMessage(query: MessageReadQueryArgs!, option: PaginateOptionArgs!): MessagePagination
   getUnreadMessageCount(query: MessageQueryArgs!): NotificationCount!
-  user(username: String!): ProfileInformation
-  searchUser(query: SearchDto!, option: PaginateOptionArgs!): [IUser!]
   getFeeds(query: NewsFeedQueryArgs!, option: GetFeedDto!): NewsFeedPagination!
   getComments(query: CommentsQueryArgs!, option: PaginateOptionArgs!): CommentPagination
   getReplies(query: ReplyQueryArgs!, option: PaginateOptionArgs!): CommentPagination
@@ -360,7 +374,8 @@ type Query {
   me: IUser!
 }
 
-input MessageQueryArgs {
+input SearchDto {
+  keyword: String!
   user: UserInputType
 }
 
@@ -378,6 +393,8 @@ input UserInputType {
   friendRequests: [FriendRequestInputType!] = []
   password: String!
   role: String!
+  isActive: Boolean!
+  lastActive: DateTime!
 }
 
 input FriendRequestInputType {
@@ -400,14 +417,13 @@ input PaginateOptionArgs {
   useEstimatedCount: Boolean
 }
 
+input MessageQueryArgs {
+  user: UserInputType
+}
+
 input MessageReadQueryArgs {
   user: UserInputType
   from_id: String!
-}
-
-input SearchDto {
-  keyword: String!
-  user: UserInputType
 }
 
 input NewsFeedQueryArgs {
@@ -484,10 +500,10 @@ input FollowQueryArgs {
 }
 
 type Mutation {
-  createMessage(createMessageInput: CreateMessageInput!): MessageResponse!
-  updateMessageRead(updateMessageRead: MessageReadQueryArgs!): ReadCountResponse!
   createUser(createUserInput: CreateUserInput!): String!
   updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
+  createMessage(createMessageInput: CreateMessageInput!): MessageResponse!
+  updateMessageRead(updateMessageRead: MessageReadQueryArgs!): ReadCountResponse!
   createComment(createCommentInput: CreateCommentInput!): MessageResponse!
   updateComment(updateCommentInput: UpdateCommentInput!): MessageResponse!
   createCommentReply(createReplyInput: CreateReplyInput!): MessageResponse!
@@ -505,12 +521,6 @@ type Mutation {
   logout: MessageResponse!
   createFriendRequest(createFriendRequestInput: CreateFriendRequestInput!): FriendRequestResponse!
   closeFriendRequest(closeRequestInput: CloseRequestInput!): UserWithoutPassword!
-}
-
-input CreateMessageInput {
-  text: String!
-  user_id: String!
-  user: UserInputType
 }
 
 input CreateUserInput {
@@ -534,6 +544,14 @@ input UpdateUserInput {
   friendRequests: [FriendRequestInputType!] = []
   password: String
   role: String
+  isActive: Boolean
+  lastActive: DateTime
+}
+
+input CreateMessageInput {
+  text: String!
+  user_id: String!
+  user: UserInputType
 }
 
 input CreateCommentInput {

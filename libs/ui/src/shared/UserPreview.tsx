@@ -59,11 +59,11 @@ export const UserPreview: FC<UserPreviewProps> = ({
           <BadgeCheckIcon className="text-brand h-4 w-4" />
         )} */}
       </div>
-      <Slug
+      {/* <Slug
         className="text-sm"
         slug={lazyProfile?.username as any}
         prefix="@"
-      />
+      /> */}
     </>
   );
 

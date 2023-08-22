@@ -12,5 +12,6 @@ export * from './sanitizeDisplayName'
 export * from './profilePictureUtils'
 export * from './getError'
 export * from './dateFormatter'
+export * from './getUniqueMessages'
 
 

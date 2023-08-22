@@ -1,5 +1,5 @@
-'use client';
 
+"use client"
 /* eslint-disable @next/next/no-img-element */
 
 import { Disclosure } from '@headlessui/react';
@@ -18,7 +18,7 @@ import Search from './Search';
 import {  useRouter } from 'next/navigation';
 import NavMenuItems from './NavbarMenuItems';
 
-export const Navbar: FC = () => {
+ const Navbar: FC = () => {
   const { data } = useProfileQuery();
   const currentProfile = data?.me;
 
@@ -86,3 +86,4 @@ export const Navbar: FC = () => {
   );
 };
 
+export default Navbar

@@ -8,6 +8,8 @@ query GetFollowing($username:String!,$options: PaginateOptionArgs!, $query: Foll
     email
     id
     isFollowing
+    lastActive
+    isActive
     name
     username
     contact

@@ -41,6 +41,8 @@ export type Author = {
   avatar: AvatarImage;
   email: Scalars['String']['output'];
   id?: Maybe<Scalars['ID']['output']>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  lastActive?: Maybe<Scalars['DateTime']['output']>;
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -267,7 +269,9 @@ export type IUser = {
   coverPicture?: Maybe<CoverImage>;
   email?: Maybe<Scalars['String']['output']>;
   gender?: Maybe<Scalars['String']['output']>;
+  isActive: Scalars['Boolean']['output'];
   isFollowing: Scalars['Boolean']['output'];
+  lastActive: Scalars['DateTime']['output'];
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -342,6 +346,8 @@ export type MessageUser = {
   __typename?: 'MessageUser';
   avatar?: Maybe<AvatarImage>;
   id?: Maybe<Scalars['ID']['output']>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  lastActive?: Maybe<Scalars['DateTime']['output']>;
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -573,7 +579,9 @@ export type Pagination = {
   email: Scalars['String']['output'];
   gender?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   isFollowing: Scalars['Boolean']['output'];
+  lastActive?: Maybe<Scalars['DateTime']['output']>;
   name: Scalars['String']['output'];
   username?: Maybe<Scalars['String']['output']>;
 };
@@ -614,8 +622,10 @@ export type ProfileInformation = {
   followingCount?: Maybe<Scalars['Float']['output']>;
   gender?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   isFollowing: Scalars['Boolean']['output'];
   isOwnProfile: Scalars['Boolean']['output'];
+  lastActive?: Maybe<Scalars['DateTime']['output']>;
   name: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
@@ -785,6 +795,8 @@ export type UpdateUserInput = {
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
   gender?: InputMaybe<EGender>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  lastActive?: InputMaybe<Scalars['DateTime']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
@@ -802,6 +814,8 @@ export type User = {
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
   gender?: Maybe<EGender>;
+  isActive: Scalars['Boolean']['output'];
+  lastActive: Scalars['DateTime']['output'];
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
   role: Scalars['String']['output'];
@@ -818,6 +832,8 @@ export type UserInputType = {
   friendRequests?: InputMaybe<Array<FriendRequestInputType>>;
   friends?: InputMaybe<UserInputType>;
   gender?: InputMaybe<EGender>;
+  isActive: Scalars['Boolean']['input'];
+  lastActive: Scalars['DateTime']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   role: Scalars['String']['input'];
@@ -841,6 +857,8 @@ export type UserWithoutPassword = {
   friendRequests?: Maybe<Array<FriendRequest>>;
   friends?: Maybe<User>;
   gender?: Maybe<EGender>;
+  isActive: Scalars['Boolean']['output'];
+  lastActive: Scalars['DateTime']['output'];
   name: Scalars['String']['output'];
   role: Scalars['String']['output'];
   username: Scalars['String']['output'];
@@ -1137,6 +1155,8 @@ export type GetFeedQuery = {
         __typename?: 'Author';
         username: string;
         email: string;
+        lastActive?: any | null;
+        isActive?: boolean | null;
         id?: string | null;
         name: string;
         avatar: {
@@ -1180,6 +1200,8 @@ export type GetFollowersQuery = {
       isFollowing: boolean;
       name: string;
       username?: string | null;
+      lastActive?: any | null;
+      isActive?: boolean | null;
       contact?: string | null;
       birthday?: any | null;
       bio?: string | null;
@@ -1217,6 +1239,8 @@ export type GetFollowingQuery = {
       email: string;
       id: string;
       isFollowing: boolean;
+      lastActive?: any | null;
+      isActive?: boolean | null;
       name: string;
       username?: string | null;
       contact?: string | null;
@@ -1255,6 +1279,8 @@ export type GetSuggestionPeopleQuery = {
       email: string;
       id: string;
       isFollowing: boolean;
+      lastActive?: any | null;
+      isActive?: boolean | null;
       name: string;
       username?: string | null;
       avatar: {
@@ -1483,6 +1509,8 @@ export type GetPostsQuery = {
         __typename?: 'Author';
         username: string;
         email: string;
+        isActive?: boolean | null;
+        lastActive?: any | null;
         id?: string | null;
         name: string;
         avatar: {
@@ -1508,6 +1536,8 @@ export type MeQuery = {
     __typename?: 'IUser';
     username: string;
     name: string;
+    isActive: boolean;
+    lastActive: any;
     email?: string | null;
     _id: string;
     bio?: string | null;
@@ -1540,6 +1570,8 @@ export type SearchUserQuery = {
     username: string;
     bio?: string | null;
     birthday?: any | null;
+    isActive: boolean;
+    lastActive: any;
     contact?: string | null;
     email?: string | null;
     gender?: string | null;
@@ -1571,6 +1603,8 @@ export type UserProfileQuery = {
     bio?: string | null;
     birthday?: any | null;
     contact?: string | null;
+    isActive?: boolean | null;
+    lastActive?: any | null;
     gender?: string | null;
     email: string;
     followersCount?: number | null;
@@ -2506,6 +2540,8 @@ export const GetFeedDocument = /*#__PURE__*/ `
         }
         username
         email
+        lastActive
+        isActive
         id
         name
       }
@@ -2572,6 +2608,8 @@ export const GetFollowersDocument = /*#__PURE__*/ `
       isFollowing
       name
       username
+      lastActive
+      isActive
       contact
       birthday
       bio
@@ -2631,6 +2669,8 @@ export const GetFollowingDocument = /*#__PURE__*/ `
       email
       id
       isFollowing
+      lastActive
+      isActive
       name
       username
       contact
@@ -2692,6 +2732,8 @@ export const GetSuggestionPeopleDocument = /*#__PURE__*/ `
       email
       id
       isFollowing
+      lastActive
+      isActive
       name
       username
       __typename
@@ -3071,6 +3113,8 @@ export const GetPostsDocument = /*#__PURE__*/ `
         }
         username
         email
+        isActive
+        lastActive
         id
         name
       }
@@ -3133,6 +3177,8 @@ export const MeDocument = /*#__PURE__*/ `
     }
     username
     name
+    isActive
+    lastActive
     email
     coverPicture {
       coverUrl
@@ -3174,6 +3220,8 @@ export const SearchUserDocument = /*#__PURE__*/ `
     }
     bio
     birthday
+    isActive
+    lastActive
     contact
     coverPicture {
       coverUrl
@@ -3230,6 +3278,8 @@ export const UserProfileDocument = /*#__PURE__*/ `
     bio
     birthday
     contact
+    isActive
+    lastActive
     gender
     name
     email

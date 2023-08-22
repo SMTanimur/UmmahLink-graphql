@@ -18,7 +18,8 @@ import {
   ValidateNested,
   IsArray,
   IsMongoId,
-  IsDate
+  IsDate,
+  IsBoolean
 } from 'class-validator';
 
 import { FriendRequest } from '../../friendRequest/entities/friendRequest';
@@ -154,6 +155,15 @@ export class User {
   @IsNotEmpty({ message: 'Role is required' })
   @IsString()
   role: string;
+
+  @IsBoolean()
+  @Field(()=>Boolean)
+  @Prop({ default: false })
+  isActive: boolean;
+
+  @Field(()=>Date)
+  @Prop({ default: new Date(Date.now()) })
+  lastActive: Date;
 }
 
 export interface UserDocument extends User, Document {

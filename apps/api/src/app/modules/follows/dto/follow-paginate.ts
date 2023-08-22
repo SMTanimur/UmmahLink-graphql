@@ -25,6 +25,9 @@ export class Pagination {
   @Field(()=>String,{ nullable: true })
   bio: string;
 
+  @Field(()=>Boolean,{nullable:true})
+  isActive: boolean
+
   @Field(()=>String,{ nullable: true })
   contact?: string;
   
@@ -33,6 +36,10 @@ export class Pagination {
 
   @Field(() => String)
   email:string
+
+  @Field(() => Date, { nullable: true })
+  lastActive: Date;
+
 
   @Field(() =>Boolean)
   isFollowing:boolean

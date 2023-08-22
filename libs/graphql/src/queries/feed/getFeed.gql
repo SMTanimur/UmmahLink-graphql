@@ -10,6 +10,8 @@ getFeeds(query:$query,option: $option) {
         }
         username
         email
+        lastActive
+        isActive
         id
         name
       }

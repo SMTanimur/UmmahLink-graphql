@@ -1,6 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@social-zone/common';
-import { PhotosImageInput } from '../../posts/entities/post';
 import { AvatarImage } from '../../users/dto/ProfileData';
 
 @ObjectType()

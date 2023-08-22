@@ -113,7 +113,7 @@ const Home: NextPage = () => {
           <div className="sticky text-sm leading-7 top-20">
             {isAuthenticated ? (
               <>
-                <EnableMessages />
+                {/* <EnableMessages /> */}
                 <RecommendedProfiles />
               </>
             ) : null}

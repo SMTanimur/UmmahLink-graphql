@@ -11,11 +11,17 @@ export class Author {
   @Field(() => String)
   username: string;
 
+  @Field(() => Boolean,{nullable:true})
+  isActive: boolean;
+
+  @Field(() => Date, { nullable: true })
+  lastActive: Date;
+
   @Field(() => String)
   email: string;
 
   @Field(() => AvatarImage)
-  avatar: AvatarImage | string
+  avatar: AvatarImage | string;
 
   @Field(() => String)
   name: string;
@@ -29,13 +35,13 @@ export class NewsFeedPaginate {
   @Field(() => String, { nullable: true })
   content: string;
 
-  @Field(() => Date,{nullable:true})
+  @Field(() => Date, { nullable: true })
   createdAt: Date;
 
-  @Field(() => Date,{nullable:true})
+  @Field(() => Date, { nullable: true })
   updatedAt: Date;
 
-  @Field(() => Author,{nullable:true})
+  @Field(() => Author, { nullable: true })
   author: Author;
 
   @Field(() => Boolean)
@@ -50,14 +56,9 @@ export class NewsFeedPaginate {
   @Field(() => Number)
   likesCount: number;
 
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   id: string;
 }
 
 @ObjectType()
 export class NewsFeedPagination extends Paginated(NewsFeedPaginate) {}
-
-
-
-
-

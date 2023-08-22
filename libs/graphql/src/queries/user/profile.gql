@@ -6,6 +6,8 @@ query me {
     }
     username
     name
+    isActive
+    lastActive
     email
     coverPicture{
       coverUrl

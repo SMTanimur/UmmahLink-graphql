@@ -10,6 +10,8 @@ query GetFollowers($username:String!,$options: PaginateOptionArgs!, $query: Foll
     isFollowing
     name
     username
+    lastActive
+    isActive
     contact
     birthday
     bio

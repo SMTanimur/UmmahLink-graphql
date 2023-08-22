@@ -5,13 +5,12 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { BadRequestException,  Injectable, forwardRef } from '@nestjs/common';
+import { BadRequestException, Injectable, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { NewsFeed, NewsFeedDocument } from './entities/newsFeed';
 import { AggregatePaginateModel, FilterQuery, Model } from 'mongoose';
 import { AggregateOptions } from 'mongoose';
 import { NewsFeedQueryArgs } from './dto/newsFeed-query-arg';
-
 
 @Injectable()
 export class NewsFeedService {
@@ -19,7 +18,6 @@ export class NewsFeedService {
     @InjectModel(NewsFeed.name)
     private newsFeedModel: AggregatePaginateModel<NewsFeedDocument>
   ) {}
-
 
   async getFeeds(
     query?: FilterQuery<NewsFeedQueryArgs>,
@@ -39,7 +37,7 @@ export class NewsFeedService {
         {
           $sort: { [orderBy]: sortedBy === 'desc' ? -1 : 1 },
         },
-        
+
         {
           $lookup: {
             from: 'posts',
@@ -101,6 +99,8 @@ export class NewsFeedService {
                   email: 1,
                   name: 1,
                   avatar: 1,
+                  isActive: 1,
+                  lastActive: 1,
                   username: 1,
                 },
               },
@@ -146,16 +146,14 @@ export class NewsFeedService {
           },
         },
       ]);
-      const res = await this.newsFeedModel.aggregatePaginate(agg,{
+      const res = await this.newsFeedModel.aggregatePaginate(agg, {
         ...(limit ? { limit } : {}),
         ...(page ? { page } : {}),
       });
-     
+
       return res;
     } catch (error) {
       throw new BadRequestException(error.message);
-     
     }
   }
-
 }
