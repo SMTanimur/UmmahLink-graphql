@@ -79,7 +79,7 @@ const Home: NextPage = () => {
                   <Following profile={data?.user as ProfileInformation} />
                 ) : (
                   <>
-                    { FeedData &&  FeedData?.map(
+                    { FeedData.length > 0 &&  FeedData?.map(
                       (post: any, index) =>
                         post?.author && ( // avoid render posts with null author
                           <PostItem

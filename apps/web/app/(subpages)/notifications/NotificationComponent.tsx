@@ -1,31 +1,22 @@
-"use client"
+'use client';
 
 import type { FC } from 'react';
 import { useState } from 'react';
-
-import List from './List';
-import { useProfileQuery } from '../../hooks';
-import { FeedType } from './FeedType';
-import { Settings } from './Settings';
+import { FeedType, List, Settings, useProfileQuery } from '~ui';
 
 type NotificationsProps = {
-
   type: string;
 };
-export const Notifications: FC<NotificationsProps> = ({type}) => {
 
-  const {data:user}=useProfileQuery()
-  const currentProfile=user?.me
+ const Notification: FC<NotificationsProps> = ({ type }) => {
+  const { data: user } = useProfileQuery();
+  const currentProfile = user?.me;
   const [feedType, setFeedType] = useState(
     type &&
-      ['all', 'follow', 'comment', 'likes'].includes(
-        type as string
-      )
+      ['all', 'follow', 'comment', 'likes', 'unread'].includes(type as string)
       ? type.toString().toUpperCase()
       : 'ALL'
   );
-
-  
 
   // if (!currentProfile) {
   //   return <Custom404 />;
@@ -44,3 +35,4 @@ export const Notifications: FC<NotificationsProps> = ({type}) => {
   );
 };
 
+export default Notification

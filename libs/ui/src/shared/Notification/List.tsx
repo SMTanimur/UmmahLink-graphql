@@ -11,6 +11,7 @@ import { NotificationsType } from '../../types';
 import { NotificationPaginate, NotificationType } from '@social-zone/graphql';
 import { useGetNotificationsQuery, useProfileQuery } from '../../hooks';
 import { Card, EmptyState, ErrorMessage } from '../../components';
+import UnreadNotification from './Type/UnreadNotification';
 
 interface ListProps {
   feedType: string;
@@ -38,11 +39,14 @@ const List: FC<ListProps> = ({ feedType }) => {
     }
   };
 
+  const  isUnread = feedType === 'UNREAD'
+  
 
   const {data,isLoading,hasNextPage,fetchNextPage,isError,error}=useGetNotificationsQuery({
     options:{limit:20},
     query:{
       type:getNotificationType(),
+       unread: isUnread ? true : null
 
     }
   })
@@ -120,6 +124,11 @@ const List: FC<ListProps> = ({ feedType }) => {
               )}
               {notification?.type === 'comment' && (
                 <CommentNotification
+                  notification={notification as NotificationPaginate}
+                />
+              )}
+              { isUnread    && (
+                <UnreadNotification
                   notification={notification as NotificationPaginate}
                 />
               )}

@@ -14,7 +14,7 @@ export const NotificationProfileAvatar: FC<NotificationProfileProps> = ({
   profile
 }) => {
   return (
-    <Link href={`/user/${profile?.username}`}>
+    <div>
       <Image
         src={profile?.avatar?.avatarUrl as string}
         className="h-8 w-8 rounded-full border bg-gray-200 dark:border-gray-700"
@@ -22,7 +22,7 @@ export const NotificationProfileAvatar: FC<NotificationProfileProps> = ({
         width={32}
         alt={profile?.username}
       />
-    </Link>
+    </div>
   );
 };
 

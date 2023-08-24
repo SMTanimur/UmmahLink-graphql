@@ -22,7 +22,8 @@ export enum NotificationsType {
   ALL = 'ALL',
   LIKE = 'LIKE',
   FOLLOW = 'FOLLOW',
-  COMMENT = 'COMMENT'
+  COMMENT = 'COMMENT',
+  UNREAD = 'UNREAD',
 }
 
 

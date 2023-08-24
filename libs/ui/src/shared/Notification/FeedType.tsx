@@ -53,6 +53,13 @@ export const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
           type={NotificationsType.LIKE.toLowerCase()}
           onClick={() => switchTab(NotificationsType.LIKE)}
         />
+        <TabButton
+          name={`Unread`}
+          icon={<HeartIcon className="h-4 w-4" />}
+          active={feedType === NotificationsType.UNREAD}
+          type={NotificationsType.UNREAD.toLowerCase()}
+          onClick={() => switchTab(NotificationsType.UNREAD)}
+        />
       </div>
     </div>
   );

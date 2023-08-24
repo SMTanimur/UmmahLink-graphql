@@ -1,4 +1,4 @@
-
+"use client"
 import { BellIcon, CogIcon } from '@heroicons/react/24/outline';
 
 import type { FC } from 'react';

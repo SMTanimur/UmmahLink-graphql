@@ -13,7 +13,8 @@ type Params = {
 
 // META DATA
 import type { Metadata } from "next";
-import { Notifications } from '~ui';
+import Notification from './NotificationComponent';
+
 
 
 /** @type {import("next").Metadata} */
@@ -33,9 +34,10 @@ export async function  generateMetadata({
 
 function NotificationPage({ params: {  type } }: Params) {
 
+
   return (
     <>
-    <Notifications type={type}  />;
+    <Notification type={type}  />;
     </>
     )
 
