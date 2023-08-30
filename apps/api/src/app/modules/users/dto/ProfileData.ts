@@ -42,7 +42,7 @@ export class ProfileInformation {
   @Field(() => Boolean,{nullable:true})
   isActive: boolean;
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date,{nullable:true})
   lastActive: Date;
 
   @Field(() => String, { nullable: true })

@@ -1,5 +1,5 @@
 import UserCard from './UserCard';
-
+import List from './Notification/List';
 export * from './Follow';
 export * from './Unfollow';
 export * from './UserPreview';
@@ -11,8 +11,11 @@ export * from './Options';
 export * from './Alert';
 export * from './Footer/Footer';
 export * from './imageCrop';
-export * from './ToggleWithHelper';
-export * from './Notification'
+export * from './Notification/FeedType';
 export * from './Notification/NotificationIcon';
-
+export * from './Notification/Profile';
+export * from './Notification/Settings';
+export * from './Shimmer';
+export {List}
+export * from './ToggleWithHelper';
 export { UserCard };

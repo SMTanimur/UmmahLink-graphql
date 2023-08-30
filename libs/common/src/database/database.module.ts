@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-
 import { Logger, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { Connection } from 'mongoose';
 // @ts-ignore
-import mongoosePaginate  from 'mongoose-paginate-v2';
+import mongoosePaginate from 'mongoose-paginate-v2';
 // @ts-ignore
-import  mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
+import mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
 import 'colors';
-
-
 
 @Module({
   imports: [
@@ -43,7 +40,7 @@ import 'colors';
           connection.plugin(mongoosePaginate);
           connection.plugin(mongooseAggregatePaginate);
           // //@ts-ignore
-    
+
           return connection;
         },
       }),

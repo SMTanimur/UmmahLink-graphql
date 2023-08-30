@@ -37,9 +37,8 @@ export class Pagination {
   @Field(() => String)
   email:string
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date,{nullable:true})
   lastActive: Date;
-
 
   @Field(() =>Boolean)
   isFollowing:boolean

@@ -18,7 +18,6 @@ import {
 } from '~ui';
 import FeedType, { Type } from './components/FeedType';
 import RecommendedProfiles from './components/RecommendedProfiles';
-import EnableMessages from './components/EnableMessages';
 import WithoutUser from './home/WithoutUser';
 import Followers from './(subpages)/user/[username]/components/Followers';
 import { ProfileInformation } from '@social-zone/graphql';
@@ -81,7 +80,7 @@ const Home: NextPage = () => {
                   <>
                     { FeedData.length > 0 &&  FeedData?.map(
                       (post: any, index) =>
-                        post?.author && ( // avoid render posts with null author
+                         ( // avoid render posts with null author
                           <PostItem
                             key={index}
                             post={post}
