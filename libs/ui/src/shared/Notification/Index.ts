@@ -4,5 +4,4 @@ export * from './NotificationIcon';
 export * from './Profile';
 export * from './Settings';
 export * from './Shimmer';
-
 export {List}
