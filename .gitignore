@@ -34,6 +34,11 @@ yarn-error.log
 testem.log
 /typings
 
+#yarn lock.lock
+yarn.lock
+
+
+
 
 # local env files
 .env.local
