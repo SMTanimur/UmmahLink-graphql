@@ -1,36 +1,24 @@
+'use client';
 
-"use client"
+import React, { lazy } from 'react';
 
-import React, { lazy } from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-
-import CommentItem from "./CommentItem";
-import { CommentPaginate } from "@social-zone/graphql";
-
-
+import CommentItem from './CommentItem';
+import { CommentPaginate } from '@social-zone/graphql';
 
 interface IProps {
-    comments: CommentPaginate[];
-
+  comments: CommentPaginate[];
 }
 
-const CommentList: React.FC<IProps> = ({ comments,  }) => {
-  
- 
-    return (
-        <TransitionGroup component={null}>
-            {comments.map(comment => (
-                <CSSTransition
-                    timeout={500}
-                    classNames="fade"
-                    key={comment?.id}
-                >
-                    <CommentItem  comment={comment} />
-                </CSSTransition>
-            ))}
-       
-        </TransitionGroup>
-    );
+const CommentList: React.FC<IProps> = ({ comments }) => {
+  return (
+    <div>
+      {comments.map((comment) => (
+        <div key={comment?.id}>
+          <CommentItem comment={comment} />
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default CommentList;

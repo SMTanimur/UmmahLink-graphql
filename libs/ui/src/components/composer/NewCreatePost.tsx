@@ -9,7 +9,6 @@ import { Button } from '../button/Button';
 import { usePost } from '../../hooks';
 import { Spinner } from '../loading';
 import { PencilIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import 'emoji-mart/css/emoji-mart.css';
 import { EmojiPicker } from '../../emoji';
 
 export const NewCreatePost = () => {

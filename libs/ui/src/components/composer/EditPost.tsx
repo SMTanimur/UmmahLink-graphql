@@ -8,7 +8,6 @@ import { TextArea } from '../input/TextArea';
 import { Button } from '../button/Button';
 import { Spinner } from '../loading';
 import { PencilIcon } from '@heroicons/react/24/outline';
-import 'emoji-mart/css/emoji-mart.css';
 import { EmojiPicker } from '../../emoji';
 import { object, string } from 'zod';
 import { useQueryClient } from '@tanstack/react-query';
