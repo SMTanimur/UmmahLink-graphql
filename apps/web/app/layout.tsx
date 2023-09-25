@@ -5,16 +5,14 @@ import '../styles/global.css';
 import {  defaultMetadata } from '~ui';
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
-// import { Navbar } from './components/Navbar/Navbar';
-import { BottomNavigation } from './components/Navbar/BottomNavigation';
-import { SocketContextProvider } from './socket/socketContext';
+
+
+
 
 const Providers = dynamic(() => import('./Provider'), {
   ssr: false,
 });
-const Navbar = dynamic(() => import('./components/Navbar/Navbar'), {
-  ssr: false,
-});
+
 const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
@@ -39,9 +37,8 @@ export default function RootLayout({
             // toastOptions={getToastOptions(resolvedTheme)}
           />
         {/* <GlobalModals/>   */}
-         < div className="flex min-h-screen flex-col pb-14 md:pb-0 relative ">
-        <Navbar />
-        <BottomNavigation />
+         < div className=" ">
+      
         {children}
       </div>
         </Providers>
