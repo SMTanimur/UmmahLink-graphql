@@ -1,0 +1,3489 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.0.2",
+  "deps": {
+    "@apollo/server": "^4.7.1",
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.1.0",
+    "@nestjs/apollo": "^11.0.5",
+    "@nestjs/common": "10.0.2",
+    "@nestjs/config": "^2.3.2",
+    "@nestjs/core": "10.0.2",
+    "@nestjs/graphql": "^11.0.6",
+    "@nestjs/mongoose": "^9.2.2",
+    "@nestjs/passport": "^9.0.3",
+    "@nestjs/platform-express": "10.0.2",
+    "@nestjs/platform-socket.io": "^10.1.3",
+    "@nestjs/websockets": "^10.1.3",
+    "@swc/helpers": "0.5.3",
+    "@tanstack/react-query": "^4.29.12",
+    "@tanstack/react-query-devtools": "^4.29.12",
+    "@tippyjs/react": "^4.2.6",
+    "axios": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "buffer-to-stream": "^1.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "class-variance-authority": "^0.6.0",
+    "classnames": "^2.3.2",
+    "cloudinary": "^1.37.1",
+    "clsx": "^1.2.1",
+    "colors": "^1.4.0",
+    "connect-mongodb-session": "^3.1.1",
+    "emoji-mart": "^5.5.2",
+    "express-session": "^1.17.3",
+    "framer-motion": "^10.15.0",
+    "graphql": "^16.6.0",
+    "graphql-request": "^6.1.0",
+    "graphql-upload": "12.0.0",
+    "joi": "^17.9.2",
+    "mongoose": "^7.1.2",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "mongoose-autopopulate": "^1.0.1",
+    "mongoose-paginate-v2": "^1.6.3",
+    "nestjs-cloudinary": "^2.0.6",
+    "next": "^13.5.3",
+    "next-themes": "^0.2.1",
+    "normalize-wheel": "^1.0.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "rc-slider": "^10.1.1",
+    "react": "^18.2.0",
+    "react-cool-inview": "^3.0.1",
+    "react-dom": "^18.2.0",
+    "react-easy-crop": "^5.0.0",
+    "react-hook-form": "^7.44.1",
+    "react-hot-toast": "^2.4.1",
+    "react-infinite-scroll-hook": "^4.1.1",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-phone-input-2": "^2.15.1",
+    "react-virtuoso": "^4.3.11",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "supports-color": "8.1.1",
+    "tailwind-merge": "^1.12.0",
+    "tslib": "^2.3.0",
+    "use-local-storage": "^3.0.0",
+    "use-resize-observer": "^9.1.0",
+    "usehooks-ts": "^2.9.1",
+    "utf-8-validate": "5.0.10",
+    "zod": "^3.21.4",
+    "zustand": "^4.3.8",
+    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
+    "@graphql-codegen/typed-document-node": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.0",
+    "@graphql-codegen/typescript-graphql-request": "^5.0.0",
+    "@graphql-codegen/typescript-operations": "^4.0.0",
+    "@graphql-codegen/typescript-react-query": "^4.1.0",
+    "@nestjs/schematics": "10.0.1",
+    "@nestjs/testing": "10.0.2",
+    "@nx/cypress": "17.0.2",
+    "@nx/eslint-plugin": "17.0.2",
+    "@nx/jest": "17.0.2",
+    "@nx/js": "17.0.2",
+    "@nx/linter": "17.0.2",
+    "@nx/nest": "17.0.2",
+    "@nx/next": "17.0.2",
+    "@nx/node": "17.0.2",
+    "@nx/react": "17.0.2",
+    "@nx/webpack": "17.0.2",
+    "@nx/workspace": "17.0.2",
+    "@swc/cli": "~0.1.62",
+    "@swc/core": "1.3.95",
+    "@swc/jest": "0.2.20",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
+    "@testing-library/react": "14.0.0",
+    "@types/buffer-to-stream": "^1.0.0",
+    "@types/connect-mongodb-session": "^2.4.4",
+    "@types/jest": "^29.4.0",
+    "@types/lodash": "^4.14.194",
+    "@types/mongoose-aggregate-paginate-v2": "^1.0.9",
+    "@types/mongoose-paginate-v2": "^1.4.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "18.14.2",
+    "@types/normalize-wheel": "^1.0.1",
+    "@types/passport-local": "^1.0.35",
+    "@types/react": "18.2.24",
+    "@types/react-dom": "18.2.9",
+    "@types/react-transition-group": "^4.4.6",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "autoprefixer": "^10.4.14",
+    "babel-jest": "^29.4.1",
+    "cypress": "12.16.0",
+    "eslint": "8.46.0",
+    "eslint-config-next": "^13.5.3",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-cypress": "2.15.1",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
+    "nx": "17.0.2",
+    "nx-cloud": "16.5.2",
+    "postcss": "^8.4.23",
+    "prettier": "^2.6.2",
+    "tailwindcss": "^3.3.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "5.1.6"
+  },
+  "pathMappings": {
+    "@social-zone/client": [
+      "libs/client/src/index.ts"
+    ],
+    "@social-zone/common": [
+      "libs/common/src/index.ts"
+    ],
+    "@social-zone/graphql": [
+      "libs/graphql/src/index.ts"
+    ],
+    "@social-zone/types": [
+      "libs/types/src/index.ts"
+    ],
+    "~ui": [
+      "libs/ui/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".env.example",
+        "hash": "11475189155006737162"
+      },
+      {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "4738510174820712473"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "13065565347515408190"
+      },
+      {
+        "file": ".graphqlrc.yaml",
+        "hash": "13897708637571815353"
+      },
+      {
+        "file": ".nx/cache/d/daemon.log",
+        "hash": "1377294910712012683"
+      },
+      {
+        "file": ".nx/cache/d/server-process.json",
+        "hash": "7119740909785951377"
+      },
+      {
+        "file": ".nx/cache/file-map.json",
+        "hash": "10560619310683526176"
+      },
+      {
+        "file": ".nx/cache/lockfile.hash",
+        "hash": "14732529725645803857"
+      },
+      {
+        "file": ".nx/cache/parsed-lock-file.json",
+        "hash": "17155864984113408410"
+      },
+      {
+        "file": ".nx/cache/project-graph.json",
+        "hash": "16536442498555325056"
+      },
+      {
+        "file": ".nxignore",
+        "hash": "12567287616799632810"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "17733650430415207254"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "235626400633494639"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "11524882035729665448"
+      },
+      {
+        "file": "README.md",
+        "hash": "16571108589745185386"
+      },
+      {
+        "file": "apps/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "codegen.ts",
+        "hash": "16463427544293990269"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "12333515226966617182"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "libs/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "9475939877458798364"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17855476520333226316"
+      },
+      {
+        "file": "package.json",
+        "hash": "16188479594385645683"
+      },
+      {
+        "file": "tools/tsconfig.tools.json",
+        "hash": "16088922570277978783"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "9691200372173210668"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/6079771933281348255",
+        "hash": "16402022712598584954"
+      },
+      {
+        "file": ".nx/cache/run.json",
+        "hash": "13533621988894423164"
+      }
+    ],
+    "projectFileMap": {
+      "client": [
+        {
+          "file": "libs/client/.babelrc",
+          "hash": "1231376027096048753"
+        },
+        {
+          "file": "libs/client/.eslintrc.json",
+          "hash": "11012487992710232822"
+        },
+        {
+          "file": "libs/client/README.md",
+          "hash": "11260060744131143133"
+        },
+        {
+          "file": "libs/client/project.json",
+          "hash": "5714430942462355721"
+        },
+        {
+          "file": "libs/client/src/axios/index.ts",
+          "hash": "5749141695573320551",
+          "deps": [
+            "npm:lodash",
+            "npm:axios",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/client/src/index.ts",
+          "hash": "1886444079610072322"
+        },
+        {
+          "file": "libs/client/src/service/index.ts",
+          "hash": "7009274911624672307"
+        },
+        {
+          "file": "libs/client/src/service/upload/index.ts",
+          "hash": "3911629383770106222"
+        },
+        {
+          "file": "libs/client/src/utils/getQueryClient.tsx",
+          "hash": "13974230646239852366",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/client/src/utils/index.ts",
+          "hash": "395892044941878096"
+        },
+        {
+          "file": "libs/client/tsconfig.json",
+          "hash": "14088618039610991405"
+        },
+        {
+          "file": "libs/client/tsconfig.lib.json",
+          "hash": "8750642453852943896"
+        }
+      ],
+      "web": [
+        {
+          "file": "apps/web/.eslintrc.json",
+          "hash": "14414841620709830600"
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/login/login-form.tsx",
+          "hash": "4599475407230188663",
+          "deps": [
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/login/page.tsx",
+          "hash": "7331714782011448265",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/signup/page.tsx",
+          "hash": "9291592561539252136",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/signup/sign-up.form.tsx",
+          "hash": "7696397805739543009",
+          "deps": [
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/layout.tsx",
+          "hash": "7177859039168667365",
+          "deps": [
+            "npm:next/dynamic",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/notifications/NotificationComponent.tsx",
+          "hash": "5573662094046139741",
+          "deps": [
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/notifications/page.tsx",
+          "hash": "14678092973981766341",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/page.tsx",
+          "hash": "17482525551883243574"
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/components/Profiles.tsx",
+          "hash": "6693152884392238385",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:framer-motion",
+            "npm:react",
+            "npm:react-virtuoso",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/components/SearchComponent.tsx",
+          "hash": "11284340121571943735",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/page.tsx",
+          "hash": "5780863810632684701",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Cover.tsx",
+          "hash": "7930936885525741570",
+          "deps": [
+            "npm:react",
+            "npm:tailwindcss/colors",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/CoverPhotoOverlay.tsx",
+          "hash": "10229101029067827910",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Details.tsx",
+          "hash": "4650294301172242699",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "client",
+            "npm:next/link",
+            "npm:react",
+            "ui",
+            "npm:react-hot-toast",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/FeedType.tsx",
+          "hash": "8988936549797568626",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/FollowDialog.tsx",
+          "hash": "2832804903357619785",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Followerings.tsx",
+          "hash": "11881141556892637845",
+          "deps": [
+            "graphql",
+            "ui",
+            "npm:react",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Followers.tsx",
+          "hash": "1882128117006190020",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:react-virtuoso",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Following.tsx",
+          "hash": "18368026844572427141",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react-virtuoso",
+            "graphql",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Info.tsx",
+          "hash": "9464585775454385582",
+          "deps": [
+            "graphql",
+            "npm:dayjs",
+            "npm:next/navigation",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/UserProfile.tsx",
+          "hash": "3420320264136356275",
+          "deps": [
+            "graphql",
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/page.tsx",
+          "hash": "6697619392561286707",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileForm.tsx",
+          "hash": "12655302510247141716",
+          "deps": [
+            "npm:zod",
+            "ui",
+            "graphql",
+            "npm:react",
+            "npm:react-hot-toast",
+            "npm:@heroicons/react/24/outline",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileSetting.tsx",
+          "hash": "16573629468754424122",
+          "deps": [
+            "ui",
+            "graphql",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/Sidebar.tsx",
+          "hash": "13504512292173155524",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/page.tsx",
+          "hash": "1658047856877091567",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/user-component.tsx",
+          "hash": "8282811470241350859",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "ui",
+            "npm:react-infinite-scroll-hook",
+            "npm:react-hot-toast",
+            "client",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/Home-component.tsx",
+          "hash": "9179993377869851924",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui",
+            "graphql",
+            "npm:react-infinite-scroll-hook"
+          ]
+        },
+        {
+          "file": "apps/web/app/Provider.tsx",
+          "hash": "100944452990323638",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:next-themes",
+            "npm:react",
+            "npm:@tanstack/react-query-devtools",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "apps/web/app/api/hello/route.ts",
+          "hash": "495073956729887886"
+        },
+        {
+          "file": "apps/web/app/components/EnableMessages.tsx",
+          "hash": "18115479388475546591",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:@heroicons/react/24/solid",
+            "npm:next/navigation",
+            "npm:react",
+            "npm:usehooks-ts",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/FeedType.tsx",
+          "hash": "12375750557529285364",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/BottomNavigation.tsx",
+          "hash": "6493536611625682711",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:@heroicons/react/24/solid",
+            "npm:next/link",
+            "npm:next/navigation",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/MobileDrawerMenu.tsx",
+          "hash": "15804969859408357293",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "ui",
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/MoreNavItems.tsx",
+          "hash": "8894001405767035193",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:clsx",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/AppVersion.tsx",
+          "hash": "1944211619342696776",
+          "deps": [
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Contact.tsx",
+          "hash": "9450680228689740662",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Logout.tsx",
+          "hash": "11587994746730854210",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "ui",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Settings.tsx",
+          "hash": "14463686859791796771",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/YourProfile.tsx",
+          "hash": "11514623807974468407",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/Navbar.tsx",
+          "hash": "11455607320513358531",
+          "deps": [
+            "npm:@headlessui/react",
+            "ui",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:react",
+            "graphql",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavbarMenuItems.tsx",
+          "hash": "15807105679628582227",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/Search.tsx",
+          "hash": "278405818791397411",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:next/navigation",
+            "npm:react",
+            "npm:usehooks-ts",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/SignedUser.tsx",
+          "hash": "13316071227664692532",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react",
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/SwitchTheme.tsx",
+          "hash": "10560433434334022552",
+          "deps": [
+            "npm:react",
+            "npm:next-themes"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/ThemeSwitch.tsx",
+          "hash": "5645805517750131283",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next-themes",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/RecommendedProfiles.tsx",
+          "hash": "2421525267475438601",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "graphql",
+            "ui",
+            "npm:@heroicons/react/24/solid"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Suggested.tsx",
+          "hash": "344070464458450289",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "npm:react-virtuoso",
+            "ui",
+            "graphql"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/modals/LoginButton.tsx",
+          "hash": "16891064848557488560",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/shared/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/app/global/GlobalAlerts.tsx",
+          "hash": "4679562810881122227",
+          "deps": [
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/GlobalModals.tsx",
+          "hash": "7901492960758308370",
+          "deps": [
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/Logout.tsx",
+          "hash": "7160790043492611892",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/ThemeSwitch.tsx",
+          "hash": "8975955049505150461",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next-themes",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/login-form.tsx",
+          "hash": "7201566318093420432",
+          "deps": [
+            "npm:react",
+            "npm:zod",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/home/WithoutUser.tsx",
+          "hash": "5271488237054520131",
+          "deps": [
+            "npm:react",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/layout.tsx",
+          "hash": "9149752913899006328",
+          "deps": [
+            "npm:next",
+            "npm:next/font/google",
+            "ui",
+            "npm:next/dynamic",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "apps/web/app/not-found.tsx",
+          "hash": "6038964301272088940",
+          "deps": [
+            "npm:next/head",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/socket/socketContext.tsx",
+          "hash": "16896574995885558012",
+          "deps": [
+            "npm:react",
+            "npm:socket.io-client",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/svgs/bruh.svg",
+          "hash": "13127155002308675538"
+        },
+        {
+          "file": "apps/web/index.d.ts",
+          "hash": "5498222895072842432"
+        },
+        {
+          "file": "apps/web/jest.config.ts",
+          "hash": "16056654888912429691"
+        },
+        {
+          "file": "apps/web/middleware.ts",
+          "hash": "8385110465397408951",
+          "deps": [
+            "npm:next/server"
+          ]
+        },
+        {
+          "file": "apps/web/next-env.d.ts",
+          "hash": "5909181270615354023"
+        },
+        {
+          "file": "apps/web/next.config.js",
+          "hash": "9195341510322210485",
+          "deps": [
+            "npm:@nx/next"
+          ]
+        },
+        {
+          "file": "apps/web/postcss.config.js",
+          "hash": "2759402739052110475",
+          "deps": [
+            "npm:path"
+          ]
+        },
+        {
+          "file": "apps/web/project.json",
+          "hash": "18269570685210792434"
+        },
+        {
+          "file": "apps/web/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/web/styles/global.css",
+          "hash": "10096749877482875710"
+        },
+        {
+          "file": "apps/web/tailwind.config.js",
+          "hash": "5997618537825288460",
+          "deps": [
+            "npm:@nx/react/tailwind",
+            "npm:path",
+            "npm:tailwindcss/colors",
+            "npm:@tailwindcss/typography",
+            "npm:@tailwindcss/forms"
+          ]
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "16999038964653025392"
+        },
+        {
+          "file": "apps/web/tsconfig.spec.json",
+          "hash": "6922413205408300107"
+        }
+      ],
+      "types": [
+        {
+          "file": "libs/types/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "libs/types/README.md",
+          "hash": "11134287303145928365"
+        },
+        {
+          "file": "libs/types/project.json",
+          "hash": "2640696245755504076"
+        },
+        {
+          "file": "libs/types/src/graphql/index.ts",
+          "hash": "13493181798787152843"
+        },
+        {
+          "file": "libs/types/src/index.ts",
+          "hash": "15339890375247346308"
+        },
+        {
+          "file": "libs/types/tsconfig.json",
+          "hash": "14490782888307098276"
+        },
+        {
+          "file": "libs/types/tsconfig.lib.json",
+          "hash": "8188472110264778699"
+        }
+      ],
+      "api": [
+        {
+          "file": "apps/api/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "apps/api/jest.config.ts",
+          "hash": "9483968714649439783"
+        },
+        {
+          "file": "apps/api/project.json",
+          "hash": "9513095095013931515"
+        },
+        {
+          "file": "apps/api/src/app/app.controller.spec.ts",
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/app.controller.ts",
+          "hash": "9005150069945785676",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/app.module.ts",
+          "hash": "4469611540005132442",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/apollo",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/app.service.spec.ts",
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/app.service.ts",
+          "hash": "9967902337593410053",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/auth.module.ts",
+          "hash": "2160922114650289037",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/passport"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/auth.resolver.ts",
+          "hash": "7322557659098053763",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/auth.service.ts",
+          "hash": "17841558989998726068",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/dto/login.dto.ts",
+          "hash": "7051474986849366036",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/entities/auth.entity.ts",
+          "hash": "15424776837099087721",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/guards/authenticated.guard.ts",
+          "hash": "9017058158358612319",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/guards/local.guard.ts",
+          "hash": "2754880646740116640",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/passport"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/guards/logout.guard.ts",
+          "hash": "18151857500204482187",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/guards/session.guard.ts",
+          "hash": "14425517445727204140",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/passport"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/session.serializer.ts",
+          "hash": "7529599434656616915",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/passport"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/auth/strategy/local.strategy.ts",
+          "hash": "3163258033124677070",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/passport",
+            "npm:passport-local",
+            "npm:lodash"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/comments.module.ts",
+          "hash": "3495523002430413723",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/comments.resolver.ts",
+          "hash": "1971465270675198174",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/comments.service.ts",
+          "hash": "9890755587342609579",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/dto/comment-paginate.ts",
+          "hash": "9718272322605392676",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/dto/comment-query-arg.ts",
+          "hash": "3898104804730844084",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/dto/optionArgs.ts",
+          "hash": "1897625409976188546",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/dto/reply-query-arg.ts",
+          "hash": "4421303749283473072",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/entities/comment.ts",
+          "hash": "11616077291171954398",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/input/create-comment-input.ts",
+          "hash": "13233187505537137146",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/input/create-comment-replay-input.ts",
+          "hash": "14212279684279399395",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/input/delete-comment-input.ts",
+          "hash": "5091859671131695678",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/comments/input/update-comment-input.ts",
+          "hash": "9695144042715281148",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/core/core.module.ts",
+          "hash": "2177133573405146987",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/passport",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/events/events.gateway.ts",
+          "hash": "3916679630463489384",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/websockets",
+            "npm:socket.io"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/events/events.module.ts",
+          "hash": "17006731481761428547",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/dto/follow-paginate.ts",
+          "hash": "17946025548473552505",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/dto/follow-query-arg.ts",
+          "hash": "1880136104826600501",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/dto/getFollow.dto.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/entities/follow.ts",
+          "hash": "16057592141074987999",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:class-validator",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/follows.module.ts",
+          "hash": "1494334579778432914",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/follows.resolver.ts",
+          "hash": "13070537832864333592",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/follows.service.ts",
+          "hash": "3744959272904896044",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/follows/input/followerUnfollowInput.ts",
+          "hash": "14230667940813601081",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/dto/FriendRequestResponse.ts",
+          "hash": "10786368050831325392",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/dto/close-request.ts",
+          "hash": "6989048370220712605",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/dto/create-FriendRequest.ts",
+          "hash": "9169163295118902601",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/entities/friendRequest.ts",
+          "hash": "8376951471749793475",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/friendrequests.module.ts",
+          "hash": "5435254414940362462",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/friendrequests.resolver.ts",
+          "hash": "10228413703114515333",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/friendRequest/friendrequests.service.ts",
+          "hash": "385754635901954253",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/dto/createMessage.dto.ts",
+          "hash": "311193977629856061",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/dto/message-paginate.ts",
+          "hash": "13562445586207913832",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/dto/message-query-arg.ts",
+          "hash": "3905616265468046937",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/dto/optionArgs.ts",
+          "hash": "1897625409976188546",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/dto/updateMessageRead.ts",
+          "hash": "16629060119662035903",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/entities/chat.ts",
+          "hash": "2495125487510730412",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/entities/message.ts",
+          "hash": "10916434978231597188",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/messages.module.ts",
+          "hash": "3082018410315727723",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/messages.resolver.ts",
+          "hash": "4594701335598010039",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/messages/messages.service.ts",
+          "hash": "1677900223005511381",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/dto/newsFeed-paginate.ts",
+          "hash": "6512264012093854293",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/dto/newsFeed-query-arg.ts",
+          "hash": "5879079624834799255",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/dto/optionArgs.ts",
+          "hash": "1897625409976188546",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/entities/newsFeed.ts",
+          "hash": "18277221321637297540",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/newsfeed.module.ts",
+          "hash": "7584773033365884566",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/newsfeed.resolver.ts",
+          "hash": "9989898874422107375",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/newsFeed/newsfeed.service.ts",
+          "hash": "5740382606069984795",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/dto/notification-paginate.ts",
+          "hash": "1121075434472810296",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/dto/notification-query-arg.ts",
+          "hash": "15559763471305754957",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/dto/notification-update.ts",
+          "hash": "17138207087639850334",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/dto/updateRespnse.dto.ts",
+          "hash": "12133855168935503930",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/entities/notification.ts",
+          "hash": "1991399091035470440",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/notification.module.ts",
+          "hash": "9318994537110634261",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/notification.resolver.ts",
+          "hash": "15915351731175243445",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "common",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/notification/notification.service.ts",
+          "hash": "18380102081280096589",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/craete-post-input.ts",
+          "hash": "1378023262870912021",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/create-post-or-comment-like.ts",
+          "hash": "5681525823676053540",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/delete-post-input.ts",
+          "hash": "7215314012832038721",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/getLike-dto.ts",
+          "hash": "14772596925736665857",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/getPosts.dto.ts",
+          "hash": "13011655315551260579",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/dto/update-post-input.ts",
+          "hash": "11976345245009038205",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/entities/like.ts",
+          "hash": "3585134788786739095",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/entities/post.ts",
+          "hash": "716929520696665355",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/posts.module.ts",
+          "hash": "223174575218201952",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/posts.resolver.ts",
+          "hash": "9851366399095407927",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/posts/posts.service.ts",
+          "hash": "15946816021408656906",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/cloudinary.provider.ts",
+          "hash": "10732852882211543916",
+          "deps": [
+            "common",
+            "npm:cloudinary"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/dto/upload-image.dto.ts",
+          "hash": "7135587329065901399"
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/dto/upload-images.dto.ts",
+          "hash": "1424457590826804889"
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/upload.controller.ts",
+          "hash": "11819277858525956226",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/platform-express"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/upload.module.ts",
+          "hash": "11287777612778366286",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:multer",
+            "npm:@nestjs/platform-express"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/upload/upload.service.ts",
+          "hash": "16411440996436164825",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:cloudinary"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/ProfileData.ts",
+          "hash": "2317861117534418520",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/conmmon.dto.ts",
+          "hash": "5066944935017765828",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/mongoose"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/create-user-input.ts",
+          "hash": "11252556249596338352",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/search.query.dto.ts",
+          "hash": "9043252869188664570",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/searchResponse.dto.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/update-user-input.ts",
+          "hash": "14947443015239297558",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/dto/user.ts",
+          "hash": "9649389587322705879",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/entities/user.entity.ts",
+          "hash": "7193390635788026508",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "npm:bcryptjs",
+            "npm:@nestjs/graphql",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/users.module.ts",
+          "hash": "3068458144292094423",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/users.resolver.ts",
+          "hash": "17628263502392919374",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:@nestjs/common",
+            "common"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/modules/users/users.service.ts",
+          "hash": "210825021994763917",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:mongoose",
+            "npm:@nestjs/mongoose",
+            "common",
+            "npm:lodash"
+          ]
+        },
+        {
+          "file": "apps/api/src/app/utils/hash.ts",
+          "hash": "3846824102646079696",
+          "deps": [
+            "npm:bcryptjs"
+          ]
+        },
+        {
+          "file": "apps/api/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "hash": "18396775360839045731",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core",
+            "common",
+            "npm:passport",
+            "npm:connect-mongodb-session",
+            "npm:express-session"
+          ]
+        },
+        {
+          "file": "apps/api/tsconfig.app.json",
+          "hash": "3171572500325445971"
+        },
+        {
+          "file": "apps/api/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "apps/api/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "apps/api/webpack.config.js",
+          "hash": "10619490397189790225",
+          "deps": [
+            "npm:@nx/webpack"
+          ]
+        }
+      ],
+      "graphql": [
+        {
+          "file": "libs/graphql/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "libs/graphql/README.md",
+          "hash": "17684874664386306162"
+        },
+        {
+          "file": "libs/graphql/jest.config.ts",
+          "hash": "2774916883047908791"
+        },
+        {
+          "file": "libs/graphql/package.json",
+          "hash": "7347484807430106081"
+        },
+        {
+          "file": "libs/graphql/project.json",
+          "hash": "13021569224175890188"
+        },
+        {
+          "file": "libs/graphql/src/configs/fetcher.ts",
+          "hash": "9319306549156672894"
+        },
+        {
+          "file": "libs/graphql/src/configs/index.ts",
+          "hash": "2469646662857004494"
+        },
+        {
+          "file": "libs/graphql/src/graphql/index.ts",
+          "hash": "6789856023310507617",
+          "deps": [
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/graphql/src/index.ts",
+          "hash": "6224392650165737125"
+        },
+        {
+          "file": "libs/graphql/src/mutations/auth/login.gql",
+          "hash": "15564795878629074681"
+        },
+        {
+          "file": "libs/graphql/src/mutations/auth/logout.gql",
+          "hash": "6354841712828236114"
+        },
+        {
+          "file": "libs/graphql/src/mutations/auth/register.gql",
+          "hash": "1925874694274526239"
+        },
+        {
+          "file": "libs/graphql/src/mutations/comment/createComment.gql",
+          "hash": "6031908387351233840"
+        },
+        {
+          "file": "libs/graphql/src/mutations/comment/createReplyComment.gql",
+          "hash": "11077007540836885990"
+        },
+        {
+          "file": "libs/graphql/src/mutations/comment/deleteComment.gql",
+          "hash": "10039681285752574176"
+        },
+        {
+          "file": "libs/graphql/src/mutations/comment/likeOrUnlikeComment.gql",
+          "hash": "1621386275265318536"
+        },
+        {
+          "file": "libs/graphql/src/mutations/comment/updateComment.gql",
+          "hash": "16123454921840539881"
+        },
+        {
+          "file": "libs/graphql/src/mutations/follow/followUser.gql",
+          "hash": "13228388062426665867"
+        },
+        {
+          "file": "libs/graphql/src/mutations/follow/unFollowUser.gql",
+          "hash": "13501809386140902710"
+        },
+        {
+          "file": "libs/graphql/src/mutations/like/likeOrUnlike.gql",
+          "hash": "8840933427160277866"
+        },
+        {
+          "file": "libs/graphql/src/mutations/message/createMessage.gql",
+          "hash": "9639439332332421539"
+        },
+        {
+          "file": "libs/graphql/src/mutations/message/updateMessageRead.gql",
+          "hash": "6367850728306700760"
+        },
+        {
+          "file": "libs/graphql/src/mutations/notification/markNotification.gql",
+          "hash": "15654738688661242220"
+        },
+        {
+          "file": "libs/graphql/src/mutations/notification/updateNotifiaction.gql",
+          "hash": "5797497844843109475"
+        },
+        {
+          "file": "libs/graphql/src/mutations/post/deletePost.gql",
+          "hash": "5752742154071360296"
+        },
+        {
+          "file": "libs/graphql/src/mutations/post/newCreatePost.gql",
+          "hash": "7352867027991719453"
+        },
+        {
+          "file": "libs/graphql/src/mutations/post/updatePost.gql",
+          "hash": "2903258179330121564"
+        },
+        {
+          "file": "libs/graphql/src/mutations/user/updateProfile.gql",
+          "hash": "14615960731013785026"
+        },
+        {
+          "file": "libs/graphql/src/queries/comment/getComment.gql",
+          "hash": "12805404084689451957"
+        },
+        {
+          "file": "libs/graphql/src/queries/comment/getReplies.gql",
+          "hash": "1434116209133014975"
+        },
+        {
+          "file": "libs/graphql/src/queries/feed/getFeed.gql",
+          "hash": "10876733380435529561"
+        },
+        {
+          "file": "libs/graphql/src/queries/follow/getFollowers.gql",
+          "hash": "7133239483122529251"
+        },
+        {
+          "file": "libs/graphql/src/queries/follow/getFollowing.gql",
+          "hash": "8415148857170345589"
+        },
+        {
+          "file": "libs/graphql/src/queries/follow/getSuggestionPeople.gql",
+          "hash": "5320343490558122231"
+        },
+        {
+          "file": "libs/graphql/src/queries/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/graphql/src/queries/message/getMessages.gql",
+          "hash": "2682266036368477998"
+        },
+        {
+          "file": "libs/graphql/src/queries/message/getTargetMessages.gql",
+          "hash": "12665975340137159603"
+        },
+        {
+          "file": "libs/graphql/src/queries/message/getUnreadMessageCount.gql",
+          "hash": "16552733359084609311"
+        },
+        {
+          "file": "libs/graphql/src/queries/notification/getNotifications.gql",
+          "hash": "7815981511557720778"
+        },
+        {
+          "file": "libs/graphql/src/queries/notification/getNotificationsCount.gql",
+          "hash": "2883454844686205615"
+        },
+        {
+          "file": "libs/graphql/src/queries/post/getPostLikes.gql",
+          "hash": "2562273521149664168"
+        },
+        {
+          "file": "libs/graphql/src/queries/post/getPosts.gql",
+          "hash": "8203282178388332697"
+        },
+        {
+          "file": "libs/graphql/src/queries/user/profile.gql",
+          "hash": "5385118156680034570"
+        },
+        {
+          "file": "libs/graphql/src/queries/user/searchUser.gql",
+          "hash": "4756542212134339987"
+        },
+        {
+          "file": "libs/graphql/src/queries/user/userDetails.gql",
+          "hash": "3635753949124982795"
+        },
+        {
+          "file": "libs/graphql/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "libs/graphql/tsconfig.lib.json",
+          "hash": "3632393694954060084"
+        },
+        {
+          "file": "libs/graphql/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "ui": [
+        {
+          "file": "libs/ui/.babelrc",
+          "hash": "1231376027096048753"
+        },
+        {
+          "file": "libs/ui/.eslintrc.json",
+          "hash": "17145422631409842680"
+        },
+        {
+          "file": "libs/ui/README.md",
+          "hash": "3804377118783877380"
+        },
+        {
+          "file": "libs/ui/jest.config.ts",
+          "hash": "1859218002261158366"
+        },
+        {
+          "file": "libs/ui/project.json",
+          "hash": "8612048213742914297"
+        },
+        {
+          "file": "libs/ui/src/components/Avatar/index.tsx",
+          "hash": "18090416987975517151",
+          "deps": [
+            "npm:next/image"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Card/CardBody.tsx",
+          "hash": "15822748877207413607",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Card/CardFooter.tsx",
+          "hash": "5811676846930422518",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Card/index.tsx",
+          "hash": "6906689417699268379",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/EmptyState.tsx",
+          "hash": "10733349186670645715",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/GradientBar/index.tsx",
+          "hash": "1144244276352468491"
+        },
+        {
+          "file": "libs/ui/src/components/GridLayout.tsx",
+          "hash": "9934986520275570709",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Heading/index.tsx",
+          "hash": "8739659176745052347",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Hidden/index.tsx",
+          "hash": "3270408866763846301",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Spinner/LoadingIcon.tsx",
+          "hash": "2017427574970093742",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/Spinner/index.tsx",
+          "hash": "7137478478427262253"
+        },
+        {
+          "file": "libs/ui/src/components/TabButton.tsx",
+          "hash": "7724657723289631408",
+          "deps": [
+            "npm:next/navigation",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/TextContent.tsx",
+          "hash": "18198073865862321361",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/button/Button.tsx",
+          "hash": "17404790934918219498",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/button/SmartButton.tsx",
+          "hash": "6247258037185206088",
+          "deps": [
+            "npm:react",
+            "npm:class-variance-authority"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/button/index.ts",
+          "hash": "11373935794534931838"
+        },
+        {
+          "file": "libs/ui/src/components/composer/EditPost.tsx",
+          "hash": "7880194182599267297",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:zod",
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast",
+            "graphql",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/composer/New.tsx",
+          "hash": "17197158137154809807",
+          "deps": [
+            "npm:next/navigation",
+            "npm:react",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/composer/NewCreatePost.tsx",
+          "hash": "2528747964912684790",
+          "deps": [
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/composer/index.ts",
+          "hash": "1578078182452263865"
+        },
+        {
+          "file": "libs/ui/src/components/form/Form.tsx",
+          "hash": "12325495529203218821",
+          "deps": [
+            "npm:@hookform/resolvers/zod",
+            "npm:react",
+            "npm:react-hook-form",
+            "npm:zod"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/form/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/ui/src/components/helpToolTip/index.tsx",
+          "hash": "1992709962655521567",
+          "deps": [
+            "npm:tippy.js/dist/tippy.css",
+            "npm:@heroicons/react/24/outline",
+            "npm:@tippyjs/react",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/icons/Icon404.tsx",
+          "hash": "7455614424431620729"
+        },
+        {
+          "file": "libs/ui/src/components/icons/index.ts",
+          "hash": "2860457201350585430"
+        },
+        {
+          "file": "libs/ui/src/components/image/Image.tsx",
+          "hash": "15432271542050352875",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/image/index.ts",
+          "hash": "8540327499316172442"
+        },
+        {
+          "file": "libs/ui/src/components/index.ts",
+          "hash": "10795005457108944047"
+        },
+        {
+          "file": "libs/ui/src/components/input/Checkbox.tsx",
+          "hash": "15116018818544826668",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/input/Input.tsx",
+          "hash": "7719600312410598049",
+          "deps": [
+            "npm:react",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/input/InputPassword.tsx",
+          "hash": "17989580868292577919",
+          "deps": [
+            "npm:react",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/input/TextArea.tsx",
+          "hash": "16808397541980509711",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/input/Toggle.tsx",
+          "hash": "3338661674983317862",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/lightbox/LightBox.tsx",
+          "hash": "12541100229812763278",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/lightbox/index.ts",
+          "hash": "1419215457683869391"
+        },
+        {
+          "file": "libs/ui/src/components/loader/Loader.tsx",
+          "hash": "2737503560212426619",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/loader/index.ts",
+          "hash": "11596711379948288444"
+        },
+        {
+          "file": "libs/ui/src/components/loading/PageLoading.tsx",
+          "hash": "9132626373733876829",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/loading/SmartLoader.tsx",
+          "hash": "10310004434468446198",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/loading/Spinner.tsx",
+          "hash": "16195110122866355502",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/loading/index.ts",
+          "hash": "16183286154554472817"
+        },
+        {
+          "file": "libs/ui/src/components/menu/MenuTransition.tsx",
+          "hash": "5071720678614553420",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/menu/index.ts",
+          "hash": "2164654457919715087"
+        },
+        {
+          "file": "libs/ui/src/components/messages/Alert.tsx",
+          "hash": "4099125667754988554",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/messages/ErrorMessage.tsx",
+          "hash": "13599115317654075680",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/messages/WarningMessage.tsx",
+          "hash": "15755583656164388011",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/modal/Modal.tsx",
+          "hash": "11797286485475945858",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/modal/index.ts",
+          "hash": "17308901243945715596"
+        },
+        {
+          "file": "libs/ui/src/components/shared/Slug.tsx",
+          "hash": "10133691350666567288",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/components/shared/index.ts",
+          "hash": "17739274693514867700"
+        },
+        {
+          "file": "libs/ui/src/components/tooltip/Tooltip.tsx",
+          "hash": "16915710877020859967",
+          "deps": [
+            "npm:tippy.js/dist/tippy.css",
+            "npm:@tippyjs/react",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/constants/index.ts",
+          "hash": "15421600328584165285"
+        },
+        {
+          "file": "libs/ui/src/constants/localStorage.ts",
+          "hash": "10468725895714015479"
+        },
+        {
+          "file": "libs/ui/src/constants/path.ts",
+          "hash": "12142313274085168256"
+        },
+        {
+          "file": "libs/ui/src/constants/routes.ts",
+          "hash": "265044929097302810"
+        },
+        {
+          "file": "libs/ui/src/constants/tracking.ts",
+          "hash": "6969858418310734970"
+        },
+        {
+          "file": "libs/ui/src/data/index.ts",
+          "hash": "3283762041903444993"
+        },
+        {
+          "file": "libs/ui/src/data/regex.ts",
+          "hash": "16608057756879351262"
+        },
+        {
+          "file": "libs/ui/src/emoji/EmojiPicker.tsx",
+          "hash": "16872144211136675567",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react",
+            "npm:@emoji-mart/data",
+            "npm:@emoji-mart/react",
+            "npm:clsx",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/emoji/index.ts",
+          "hash": "12208559189421833730"
+        },
+        {
+          "file": "libs/ui/src/hooks/ReplyComment/index.ts",
+          "hash": "11136652772114360710"
+        },
+        {
+          "file": "libs/ui/src/hooks/ReplyComment/useReplyComment.tsx",
+          "hash": "15040587762354324716",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast",
+            "graphql",
+            "npm:zod"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/auth/index.ts",
+          "hash": "7733922291333927872"
+        },
+        {
+          "file": "libs/ui/src/hooks/auth/useAuth.tsx",
+          "hash": "2375193043763282553",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:next/navigation",
+            "npm:react-hot-toast",
+            "npm:use-local-storage",
+            "graphql",
+            "npm:zod"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/auth/useProfileQuery.tsx",
+          "hash": "12737857027659892293",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/comment/index.ts",
+          "hash": "1807134359942513147"
+        },
+        {
+          "file": "libs/ui/src/hooks/comment/useComment.tsx",
+          "hash": "264971422452458798",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/comment/useGetComment.tsx",
+          "hash": "13468372453123020017",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/comment/useReplyComment.tsx",
+          "hash": "13858291898372503062",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/feed/index.ts",
+          "hash": "11645782648342121321"
+        },
+        {
+          "file": "libs/ui/src/hooks/feed/useFeed.tsx",
+          "hash": "1230448323537266186",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/feed/usePost.tsx",
+          "hash": "16076471636333967045",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/follow/index.ts",
+          "hash": "6370401759821114856"
+        },
+        {
+          "file": "libs/ui/src/hooks/follow/useFollow.tsx",
+          "hash": "15318793993094539577",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/follow/useFollowing.tsx",
+          "hash": "15367213116992215414",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/follow/useGetFollowers.tsx",
+          "hash": "17238754048658274828",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/follow/useGetSuggetion.tsx",
+          "hash": "16403031055590400777",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/index.ts",
+          "hash": "7218989900211279695"
+        },
+        {
+          "file": "libs/ui/src/hooks/like/index.ts",
+          "hash": "12948891497188059724"
+        },
+        {
+          "file": "libs/ui/src/hooks/like/usePostLikeOrUnlike.tsx",
+          "hash": "3550093875277117123",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/notification/index.ts",
+          "hash": "17303162434313116021"
+        },
+        {
+          "file": "libs/ui/src/hooks/notification/useGetNotification.tsx",
+          "hash": "15515607532704423973",
+          "deps": [
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/post/index.ts",
+          "hash": "15441087460919893784"
+        },
+        {
+          "file": "libs/ui/src/hooks/post/useGetPostLikes.tsx",
+          "hash": "2374859687926477769",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/post/usePost.tsx",
+          "hash": "15731274089426821361",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react-hot-toast",
+            "graphql",
+            "npm:zod",
+            "client"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/user/index.ts",
+          "hash": "7388070214180099590"
+        },
+        {
+          "file": "libs/ui/src/hooks/user/useSearchUser.tsx",
+          "hash": "2490893222621648484",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/hooks/user/useUserProfile.tsx",
+          "hash": "15794225874028950794",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/index.ts",
+          "hash": "2262188463225522678"
+        },
+        {
+          "file": "libs/ui/src/lib/cn.ts",
+          "hash": "1650944673322398124",
+          "deps": [
+            "npm:clsx",
+            "npm:tailwind-merge"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/common.ts",
+          "hash": "2371308209798532562"
+        },
+        {
+          "file": "libs/ui/src/lib/cropImage.ts",
+          "hash": "6950232280314812949"
+        },
+        {
+          "file": "libs/ui/src/lib/customHooks.tsx",
+          "hash": "11997058735537311477",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/dateFormatter.ts",
+          "hash": "2841353035075180111",
+          "deps": [
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/errorToast.ts",
+          "hash": "14154505139518656906",
+          "deps": [
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/formatTime.ts",
+          "hash": "16377869441509610823",
+          "deps": [
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime",
+            "npm:dayjs/plugin/utc"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/get-icon.tsx",
+          "hash": "16025130713563107617"
+        },
+        {
+          "file": "libs/ui/src/lib/getError.ts",
+          "hash": "2180205747441622312",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/getStampFyiURL.ts",
+          "hash": "9081414906736914263"
+        },
+        {
+          "file": "libs/ui/src/lib/getToastOptions.ts",
+          "hash": "7998122464395328696"
+        },
+        {
+          "file": "libs/ui/src/lib/getUniqueMessages.ts",
+          "hash": "8751132537153375811",
+          "deps": [
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/lib/humanize.ts",
+          "hash": "2554833720406321269"
+        },
+        {
+          "file": "libs/ui/src/lib/index.ts",
+          "hash": "8630580524861462656"
+        },
+        {
+          "file": "libs/ui/src/lib/localStorage.ts",
+          "hash": "17682710956289469052"
+        },
+        {
+          "file": "libs/ui/src/lib/nFormatter.ts",
+          "hash": "16441901566723790370"
+        },
+        {
+          "file": "libs/ui/src/lib/profilePictureUtils.ts",
+          "hash": "4119623667489550313"
+        },
+        {
+          "file": "libs/ui/src/lib/routes.ts",
+          "hash": "9073349754628567791"
+        },
+        {
+          "file": "libs/ui/src/lib/sanitizeDStorageUrl.ts",
+          "hash": "13013809064790307255"
+        },
+        {
+          "file": "libs/ui/src/lib/sanitizeDisplayName.ts",
+          "hash": "13601147316578689158"
+        },
+        {
+          "file": "libs/ui/src/lib/stopEventPropagation.ts",
+          "hash": "18172026321737007870"
+        },
+        {
+          "file": "libs/ui/src/lib/trimify.ts",
+          "hash": "1445365171543489335"
+        },
+        {
+          "file": "libs/ui/src/seo/index.ts",
+          "hash": "6495374194320166961"
+        },
+        {
+          "file": "libs/ui/src/seo/keywords.ts",
+          "hash": "3388708400408254149"
+        },
+        {
+          "file": "libs/ui/src/seo/metadata.ts",
+          "hash": "2203109106586336549",
+          "deps": [
+            "npm:next"
+          ]
+        },
+        {
+          "file": "libs/ui/src/seo/site.ts",
+          "hash": "4181842945634605385"
+        },
+        {
+          "file": "libs/ui/src/shared/Alert/DeleteComment.tsx",
+          "hash": "10906555937973041649",
+          "deps": [
+            "npm:react",
+            "npm:react-hot-toast",
+            "graphql",
+            "npm:@tanstack/react-query",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Alert/DeletePost.tsx",
+          "hash": "1188629018677192639",
+          "deps": [
+            "npm:react",
+            "npm:react-hot-toast",
+            "graphql",
+            "npm:@tanstack/react-query",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Alert/index.ts",
+          "hash": "12027812728347699524"
+        },
+        {
+          "file": "libs/ui/src/shared/ChooseFile.tsx",
+          "hash": "3745201697929045053",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Follow.tsx",
+          "hash": "14115957488453807562",
+          "deps": [
+            "npm:react",
+            "graphql",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Footer/Footer.tsx",
+          "hash": "3357777861351932150",
+          "deps": [
+            "npm:react",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Footer/index.ts",
+          "hash": "6651653852811241668"
+        },
+        {
+          "file": "libs/ui/src/shared/LikeButton/index.tsx",
+          "hash": "10200951782081592401",
+          "deps": [
+            "npm:react",
+            "npm:@heroicons/react/24/outline",
+            "npm:@heroicons/react/24/solid",
+            "npm:framer-motion"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/FeedType.tsx",
+          "hash": "11175600378999017575",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Index.ts",
+          "hash": "3124182605731762190"
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/List.tsx",
+          "hash": "4962555653720348546",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:framer-motion",
+            "npm:react",
+            "npm:react-virtuoso",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/NotificationIcon.tsx",
+          "hash": "2507549171330288571",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:react",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Profile.tsx",
+          "hash": "7311354875412166987",
+          "deps": [
+            "graphql",
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Settings.tsx",
+          "hash": "7494693190985338568",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "graphql",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Shimmer.tsx",
+          "hash": "18183122373839150924",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Type/CommentNotification.tsx",
+          "hash": "7447163844442356853",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "graphql",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Type/FollowerNotification.tsx",
+          "hash": "10261932002676554682",
+          "deps": [
+            "npm:react",
+            "graphql",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Type/LikeNotification.tsx",
+          "hash": "12307891432531703720",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Type/UnreadNotification.tsx",
+          "hash": "18066184136328033293",
+          "deps": [
+            "npm:react",
+            "graphql",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Notification/Type/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/ui/src/shared/Options/PostOptions.tsx",
+          "hash": "7597644053780441345",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Options/index.ts",
+          "hash": "10402570243627051676"
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/PostContentShimmer.tsx",
+          "hash": "1439159194980480371",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/PostShimmer.tsx",
+          "hash": "18407305947260738690",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/PostShimmerPage.tsx",
+          "hash": "13227260458896653462",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/PostsShimmer.tsx",
+          "hash": "2294202770553145057",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/SmallUserProfileShimmer.tsx",
+          "hash": "13601246673280671972",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/UserProfileShimmer.tsx",
+          "hash": "3295859255380390472",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/UserProfilesShimmer.tsx",
+          "hash": "8008375096044651099",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Shimmer/index.ts",
+          "hash": "10025851559312802539"
+        },
+        {
+          "file": "libs/ui/src/shared/Sidebar.tsx",
+          "hash": "8432444550885527819",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/ToggleWithHelper.tsx",
+          "hash": "7855312006929757044",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/Unfollow.tsx",
+          "hash": "7038700128177247235",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "npm:react-hot-toast",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/UserCard.tsx",
+          "hash": "8762819365051686383",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "npm:react-perfect-scrollbar",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/UserInfo.tsx",
+          "hash": "16913654730215434989",
+          "deps": [
+            "graphql",
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/UserPreview.tsx",
+          "hash": "16895533978482255237",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "npm:@tippyjs/react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/Comment.tsx",
+          "hash": "7970020152757574067",
+          "deps": [
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime",
+            "npm:react",
+            "npm:react-infinite-scroll-hook"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/CommentButton.tsx",
+          "hash": "5126896488544136822",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:framer-motion",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/CommentInput.tsx",
+          "hash": "9587611882524692892",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/CommentItem.tsx",
+          "hash": "5746421803798968048",
+          "deps": [
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime",
+            "npm:react",
+            "graphql",
+            "npm:next/link",
+            "npm:react-hot-toast",
+            "npm:@tanstack/react-query",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/CommentList.tsx",
+          "hash": "5652591250640526534",
+          "deps": [
+            "npm:react",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/Menu/CommentMenu.tsx",
+          "hash": "18093113298049997887",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "npm:clsx",
+            "npm:react",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/Menu/Delete.tsx",
+          "hash": "13057953504921684121",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/Menu/Edit.tsx",
+          "hash": "1596366877291112987",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:clsx",
+            "npm:@heroicons/react/24/outline",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/comments/Menu/index.ts",
+          "hash": "7903803469613171484"
+        },
+        {
+          "file": "libs/ui/src/shared/comments/index.ts",
+          "hash": "2374027675432200595"
+        },
+        {
+          "file": "libs/ui/src/shared/imageCrop/CropAvatarModal.tsx",
+          "hash": "12467113794398160515",
+          "deps": [
+            "npm:react",
+            "npm:react-easy-crop"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/imageCrop/index.ts",
+          "hash": "1810565283365092495"
+        },
+        {
+          "file": "libs/ui/src/shared/imageCrop/useFileHandler.tsx",
+          "hash": "1234455688900075594",
+          "deps": [
+            "npm:react",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/index.ts",
+          "hash": "9895034380098843601"
+        },
+        {
+          "file": "libs/ui/src/shared/post/Attachments.tsx",
+          "hash": "16487236690713985955",
+          "deps": [
+            "graphql",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/Menu/CopyPostText.tsx",
+          "hash": "4726386179467891193",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:clsx",
+            "npm:react",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/Menu/Delete.tsx",
+          "hash": "9708137509235684410",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/Menu/Edit.tsx",
+          "hash": "13615038895980521000",
+          "deps": [
+            "npm:@headlessui/react",
+            "graphql",
+            "npm:clsx",
+            "npm:@heroicons/react/24/outline",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/Menu/PostMenu.tsx",
+          "hash": "6070177324822118828",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:@heroicons/react/24/outline",
+            "npm:clsx",
+            "npm:react",
+            "graphql"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/Menu/index.ts",
+          "hash": "3786382749345937562"
+        },
+        {
+          "file": "libs/ui/src/shared/post/PostItem.tsx",
+          "hash": "4470975066049575586",
+          "deps": [
+            "graphql",
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime",
+            "npm:next/link",
+            "npm:react",
+            "npm:next/image",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/PostItemWrapper.tsx",
+          "hash": "8337280566102968314",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/PostModalCard.tsx",
+          "hash": "8647831354224523510",
+          "deps": [
+            "graphql",
+            "npm:dayjs",
+            "npm:dayjs/plugin/relativeTime",
+            "npm:next/link",
+            "npm:react",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "libs/ui/src/shared/post/index.ts",
+          "hash": "6042193268998037533"
+        },
+        {
+          "file": "libs/ui/src/store/alerts.ts",
+          "hash": "1693738445515988732",
+          "deps": [
+            "graphql",
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "libs/ui/src/store/index.ts",
+          "hash": "1080423859581802965"
+        },
+        {
+          "file": "libs/ui/src/store/message.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/ui/src/store/modal.ts",
+          "hash": "1647862216286095559",
+          "deps": [
+            "graphql",
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "libs/ui/src/store/notification.ts",
+          "hash": "3548810261237405080",
+          "deps": [
+            "npm:zustand",
+            "npm:zustand/middleware"
+          ]
+        },
+        {
+          "file": "libs/ui/src/store/user.ts",
+          "hash": "6737086532932656123",
+          "deps": [
+            "npm:zustand",
+            "npm:zustand/middleware"
+          ]
+        },
+        {
+          "file": "libs/ui/src/types/error.ts",
+          "hash": "5444462973225153924"
+        },
+        {
+          "file": "libs/ui/src/types/index.ts",
+          "hash": "4560781676066859445"
+        },
+        {
+          "file": "libs/ui/src/types/user.ts",
+          "hash": "102783640953868361"
+        },
+        {
+          "file": "libs/ui/tsconfig.json",
+          "hash": "17585746507553255565"
+        },
+        {
+          "file": "libs/ui/tsconfig.lib.json",
+          "hash": "857606210723725926"
+        },
+        {
+          "file": "libs/ui/tsconfig.spec.json",
+          "hash": "6514620907549802163"
+        }
+      ],
+      "common": [
+        {
+          "file": "libs/common/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "libs/common/README.md",
+          "hash": "2981317240964550389"
+        },
+        {
+          "file": "libs/common/project.json",
+          "hash": "4319699290237245587"
+        },
+        {
+          "file": "libs/common/src/configuration/configuration.module.ts",
+          "hash": "17254114318050203573",
+          "deps": [
+            "npm:@nestjs/config",
+            "npm:@nestjs/common",
+            "npm:joi"
+          ]
+        },
+        {
+          "file": "libs/common/src/configuration/configuration.service.ts",
+          "hash": "11688095171806407876",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/config"
+          ]
+        },
+        {
+          "file": "libs/common/src/database/abstract.schema.ts",
+          "hash": "5774618933347999848",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "libs/common/src/database/database.module.ts",
+          "hash": "18313225081536028535",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "npm:mongoose-paginate-v2",
+            "npm:mongoose-aggregate-paginate-v2",
+            "npm:colors",
+            "npm:mongoose-autopopulate"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/current-user.decorator.ts",
+          "hash": "999460599697633236",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/exception.filter.ts",
+          "hash": "17902601184282998591",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/index.ts",
+          "hash": "18317797250066046402"
+        },
+        {
+          "file": "libs/common/src/entities/coreEntity.ts",
+          "hash": "5999725612529260607",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:class-transformer"
+          ]
+        },
+        {
+          "file": "libs/common/src/entities/index.ts",
+          "hash": "7712535840802853073"
+        },
+        {
+          "file": "libs/common/src/entities/message-response.ts",
+          "hash": "6973423761621978402",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/index.ts",
+          "hash": "18103809696771133599"
+        },
+        {
+          "file": "libs/common/src/model/abstract.model.ts",
+          "hash": "10172221842969996354",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/model/index.ts",
+          "hash": "17542784340779295120"
+        },
+        {
+          "file": "libs/common/src/pagination/index.ts",
+          "hash": "12296493355994459653"
+        },
+        {
+          "file": "libs/common/src/pagination/paginate-arg.ts",
+          "hash": "2698529239613335382",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:class-transformer",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "libs/common/src/pagination/pagination.ts",
+          "hash": "13807595501560956191",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/tsconfig.json",
+          "hash": "17126288042513070708"
+        },
+        {
+          "file": "libs/common/tsconfig.lib.json",
+          "hash": "3550173832616418300"
+        }
+      ]
+    }
+  }
+}

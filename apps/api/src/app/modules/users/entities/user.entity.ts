@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import mongoose, { Document } from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import {
   Field,
   GraphQLISODateTime,
@@ -19,7 +19,7 @@ import {
   IsArray,
   IsMongoId,
   IsDate,
-  IsBoolean
+  IsBoolean,
 } from 'class-validator';
 
 import { FriendRequest } from '../../friendRequest/entities/friendRequest';
@@ -27,25 +27,22 @@ import { FriendRequest } from '../../friendRequest/entities/friendRequest';
 @ObjectType('AvatarImageInfo')
 @InputType('AvatarImageInput')
 class AvatarImageInput {
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   avatarUrl: string;
 
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   avatarPublicId: string;
 }
 
-
-
 @ObjectType('CoverImageInfo')
 @InputType('CoverImageInput')
- class CoverImageInput {
+class CoverImageInput {
   @Field(() => String, { nullable: true })
   coverUrl: string;
 
-  @Field(() => String,{nullable:true})
+  @Field(() => String, { nullable: true })
   coverPublicId: string;
 }
-
 
 export enum EGender {
   male = 'male',
@@ -56,8 +53,6 @@ export enum EGender {
 registerEnumType(EGender, {
   name: 'EGender',
 });
-
-
 
 // export const UserInfoSchema = SchemaFactory.createForClass(UserInfo);
 @ObjectType()
@@ -70,50 +65,48 @@ export class User {
   @Field(() => String)
   email: string;
 
-  @Prop({type:String})
+  @Prop({ type: String })
   @IsNotEmpty()
   @IsString()
   @Field(() => String)
   name: string;
 
-  @Prop({type:Date})
+  @Prop({ type: Date })
   @IsOptional()
   @IsDate()
   @Field(() => GraphQLISODateTime, { nullable: true })
   birthday?: Date;
 
-  @Prop({ enum: EGender,type:String,default:EGender.unspecified })
-  @Field(() => EGender,{nullable:true})
+  @Prop({ enum: EGender, type: String, default: EGender.unspecified })
+  @Field(() => EGender, { nullable: true })
   gender: EGender;
 
-  @Prop({type:String})
-  @Field(()=>String,{ nullable: true })
+  @Prop({ type: String })
+  @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
   bio?: string;
 
-  @Prop({type:String})
-  @Field(()=>String,{ nullable: true })
+  @Prop({ type: String })
+  @Field(() => String, { nullable: true })
   @IsOptional()
   contact?: string;
- 
+
   @Prop({ unique: true })
   @IsNotEmpty()
   @IsString()
   @Field(() => String)
   username: string;
 
-  @Field(()=>AvatarImageInput)
-  @Prop({type:AvatarImageInput,
-    default:{}
-  })
+  @Field(() => AvatarImageInput)
+  @Prop({ type: AvatarImageInput, default: {} })
   @IsOptional()
-  avatar?: AvatarImageInput
+  avatar?: AvatarImageInput;
 
-  @Field(()=>CoverImageInput,{ nullable: true })
-  @Prop({type:CoverImageInput})
+  @Field(() => CoverImageInput, { nullable: true })
+  @Prop({ type: CoverImageInput })
   @IsOptional()
-  coverPicture?: CoverImageInput
+  coverPicture?: CoverImageInput;
 
   @ValidateNested({ each: true })
   @IsMongoId({ each: true })
@@ -142,7 +135,7 @@ export class User {
   @Field(() => [FriendRequest], { nullable: true, defaultValue: [] })
   friendRequests: FriendRequest[];
 
-  @Prop({type:String})
+  @Prop({ type: String })
   @IsString()
   @Field(() => String)
   password: string;
@@ -157,11 +150,11 @@ export class User {
   role: string;
 
   @IsBoolean()
-  @Field(()=>Boolean)
+  @Field(() => Boolean)
   @Prop({ default: false })
   isActive: boolean;
 
-  @Field(()=>Date)
+  @Field(() => Date)
   @Prop({ default: new Date(Date.now()) })
   lastActive: Date;
 }
