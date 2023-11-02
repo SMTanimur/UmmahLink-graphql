@@ -83,38 +83,6 @@
         "implicitDependencies": []
       }
     },
-    "common": {
-      "name": "common",
-      "type": "lib",
-      "data": {
-        "name": "common",
-        "root": "libs/common",
-        "$schema": "../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "libs/common/src",
-        "projectType": "library",
-        "targets": {
-          "lint": {
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.json",
-              "{workspaceRoot}/.eslintignore"
-            ],
-            "executor": "@nx/linter:eslint",
-            "outputs": [
-              "{options.outputFile}"
-            ],
-            "options": {
-              "lintFilePatterns": [
-                "libs/common/**/*.ts"
-              ]
-            },
-            "configurations": {}
-          }
-        },
-        "tags": [],
-        "implicitDependencies": []
-      }
-    },
     "client": {
       "name": "client",
       "type": "lib",
@@ -144,6 +112,38 @@
             "configurations": {}
           }
         },
+        "implicitDependencies": []
+      }
+    },
+    "common": {
+      "name": "common",
+      "type": "lib",
+      "data": {
+        "name": "common",
+        "root": "libs/common",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/common/src",
+        "projectType": "library",
+        "targets": {
+          "lint": {
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/.eslintignore"
+            ],
+            "executor": "@nx/linter:eslint",
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "options": {
+              "lintFilePatterns": [
+                "libs/common/**/*.ts"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "tags": [],
         "implicitDependencies": []
       }
     },
@@ -436,8 +436,8 @@
   "externalNodes": {},
   "dependencies": {
     "graphql": [],
-    "common": [],
     "client": [],
+    "common": [],
     "types": [],
     "api": [
       {

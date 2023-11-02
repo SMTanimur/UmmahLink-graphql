@@ -177,7 +177,7 @@
       },
       {
         "file": ".gitignore",
-        "hash": "13065565347515408190"
+        "hash": "11715258445399175223"
       },
       {
         "file": ".graphqlrc.yaml",
@@ -185,15 +185,15 @@
       },
       {
         "file": ".nx/cache/d/daemon.log",
-        "hash": "5059810042144852287"
+        "hash": "7850930779520464791"
       },
       {
         "file": ".nx/cache/d/server-process.json",
-        "hash": "7119740909785951377"
+        "hash": "6071991234003871150"
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "14346947353739458730"
+        "hash": "4896310812315757543"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -205,7 +205,15 @@
       },
       {
         "file": ".nx/cache/project-graph.json",
-        "hash": "12464809835276646652"
+        "hash": "16536442498555325056"
+      },
+      {
+        "file": ".nx/cache/run.json",
+        "hash": "13533621988894423164"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/6079771933281348255",
+        "hash": "16402022712598584954"
       },
       {
         "file": ".nxignore",
@@ -270,737 +278,9 @@
       {
         "file": "tsconfig.base.json",
         "hash": "9691200372173210668"
-      },
-      {
-        "file": ".nx/cache/terminalOutputs/6079771933281348255",
-        "hash": "16402022712598584954"
-      },
-      {
-        "file": ".nx/cache/run.json",
-        "hash": "13533621988894423164"
       }
     ],
     "projectFileMap": {
-      "client": [
-        {
-          "file": "libs/client/.babelrc",
-          "hash": "1231376027096048753"
-        },
-        {
-          "file": "libs/client/.eslintrc.json",
-          "hash": "11012487992710232822"
-        },
-        {
-          "file": "libs/client/README.md",
-          "hash": "11260060744131143133"
-        },
-        {
-          "file": "libs/client/project.json",
-          "hash": "5714430942462355721"
-        },
-        {
-          "file": "libs/client/src/axios/index.ts",
-          "hash": "5749141695573320551",
-          "deps": [
-            "npm:lodash",
-            "npm:axios",
-            "npm:react-hot-toast"
-          ]
-        },
-        {
-          "file": "libs/client/src/index.ts",
-          "hash": "1886444079610072322"
-        },
-        {
-          "file": "libs/client/src/service/index.ts",
-          "hash": "7009274911624672307"
-        },
-        {
-          "file": "libs/client/src/service/upload/index.ts",
-          "hash": "3911629383770106222"
-        },
-        {
-          "file": "libs/client/src/utils/getQueryClient.tsx",
-          "hash": "13974230646239852366",
-          "deps": [
-            "npm:@tanstack/react-query",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "libs/client/src/utils/index.ts",
-          "hash": "395892044941878096"
-        },
-        {
-          "file": "libs/client/tsconfig.json",
-          "hash": "14088618039610991405"
-        },
-        {
-          "file": "libs/client/tsconfig.lib.json",
-          "hash": "8750642453852943896"
-        }
-      ],
-      "web": [
-        {
-          "file": "apps/web/.eslintrc.json",
-          "hash": "14414841620709830600"
-        },
-        {
-          "file": "apps/web/app/(subpages)/(auth)/login/login-form.tsx",
-          "hash": "4599475407230188663",
-          "deps": [
-            "ui",
-            "npm:next/link"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/(auth)/login/page.tsx",
-          "hash": "7331714782011448265",
-          "deps": [
-            "npm:next",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/(auth)/signup/page.tsx",
-          "hash": "9291592561539252136",
-          "deps": [
-            "npm:next",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/(auth)/signup/sign-up.form.tsx",
-          "hash": "7696397805739543009",
-          "deps": [
-            "ui",
-            "npm:next/link"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/layout.tsx",
-          "hash": "7177859039168667365",
-          "deps": [
-            "npm:next/dynamic",
-            "npm:react-hot-toast"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/notifications/NotificationComponent.tsx",
-          "hash": "5573662094046139741",
-          "deps": [
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/notifications/page.tsx",
-          "hash": "14678092973981766341",
-          "deps": [
-            "npm:react",
-            "npm:next"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/page.tsx",
-          "hash": "17482525551883243574"
-        },
-        {
-          "file": "apps/web/app/(subpages)/search/components/Profiles.tsx",
-          "hash": "6693152884392238385",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:framer-motion",
-            "npm:react",
-            "npm:react-virtuoso",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/search/components/SearchComponent.tsx",
-          "hash": "11284340121571943735",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/search/page.tsx",
-          "hash": "5780863810632684701",
-          "deps": [
-            "npm:react",
-            "npm:next"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Cover.tsx",
-          "hash": "7930936885525741570",
-          "deps": [
-            "npm:react",
-            "npm:tailwindcss/colors",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/CoverPhotoOverlay.tsx",
-          "hash": "10229101029067827910",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Details.tsx",
-          "hash": "4650294301172242699",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "graphql",
-            "client",
-            "npm:next/link",
-            "npm:react",
-            "ui",
-            "npm:react-hot-toast",
-            "npm:@tanstack/react-query"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/FeedType.tsx",
-          "hash": "8988936549797568626",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/FollowDialog.tsx",
-          "hash": "2832804903357619785",
-          "deps": [
-            "graphql",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Followerings.tsx",
-          "hash": "11881141556892637845",
-          "deps": [
-            "graphql",
-            "ui",
-            "npm:react",
-            "npm:@heroicons/react/24/outline"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Followers.tsx",
-          "hash": "1882128117006190020",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "graphql",
-            "npm:react-virtuoso",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Following.tsx",
-          "hash": "18368026844572427141",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react-virtuoso",
-            "graphql",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/Info.tsx",
-          "hash": "9464585775454385582",
-          "deps": [
-            "graphql",
-            "npm:dayjs",
-            "npm:next/navigation",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/components/UserProfile.tsx",
-          "hash": "3420320264136356275",
-          "deps": [
-            "graphql",
-            "npm:next/link",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/page.tsx",
-          "hash": "6697619392561286707",
-          "deps": [
-            "npm:react",
-            "npm:next"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileForm.tsx",
-          "hash": "12655302510247141716",
-          "deps": [
-            "npm:zod",
-            "ui",
-            "graphql",
-            "npm:react",
-            "npm:react-hot-toast",
-            "npm:@heroicons/react/24/outline",
-            "npm:@tanstack/react-query"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileSetting.tsx",
-          "hash": "16573629468754424122",
-          "deps": [
-            "ui",
-            "graphql",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/setting/components/Sidebar.tsx",
-          "hash": "13504512292173155524",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/setting/page.tsx",
-          "hash": "1658047856877091567",
-          "deps": [
-            "npm:react",
-            "npm:next"
-          ]
-        },
-        {
-          "file": "apps/web/app/(subpages)/user/[username]/user-component.tsx",
-          "hash": "8282811470241350859",
-          "deps": [
-            "graphql",
-            "npm:react",
-            "ui",
-            "npm:react-infinite-scroll-hook",
-            "npm:react-hot-toast",
-            "client",
-            "npm:@tanstack/react-query"
-          ]
-        },
-        {
-          "file": "apps/web/app/Home-component.tsx",
-          "hash": "9179993377869851924",
-          "deps": [
-            "npm:next",
-            "npm:react",
-            "ui",
-            "graphql",
-            "npm:react-infinite-scroll-hook"
-          ]
-        },
-        {
-          "file": "apps/web/app/Provider.tsx",
-          "hash": "100944452990323638",
-          "deps": [
-            "npm:@tanstack/react-query",
-            "npm:next-themes",
-            "npm:react",
-            "npm:@tanstack/react-query-devtools",
-            "npm:next/dynamic"
-          ]
-        },
-        {
-          "file": "apps/web/app/api/hello/route.ts",
-          "hash": "495073956729887886"
-        },
-        {
-          "file": "apps/web/app/components/EnableMessages.tsx",
-          "hash": "18115479388475546591",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:@heroicons/react/24/solid",
-            "npm:next/navigation",
-            "npm:react",
-            "npm:usehooks-ts",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/FeedType.tsx",
-          "hash": "12375750557529285364",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/BottomNavigation.tsx",
-          "hash": "6493536611625682711",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:@heroicons/react/24/solid",
-            "npm:next/link",
-            "npm:next/navigation",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/MobileDrawerMenu.tsx",
-          "hash": "15804969859408357293",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "ui",
-            "npm:next/link",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/MoreNavItems.tsx",
-          "hash": "8894001405767035193",
-          "deps": [
-            "npm:@headlessui/react",
-            "npm:clsx",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavItems/AppVersion.tsx",
-          "hash": "1944211619342696776",
-          "deps": [
-            "npm:next/link",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavItems/Contact.tsx",
-          "hash": "9450680228689740662",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:next/link",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavItems/Logout.tsx",
-          "hash": "11587994746730854210",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "ui",
-            "npm:clsx",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavItems/Settings.tsx",
-          "hash": "14463686859791796771",
-          "deps": [
-            "npm:clsx",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavItems/YourProfile.tsx",
-          "hash": "11514623807974468407",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:clsx",
-            "npm:react"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/Navbar.tsx",
-          "hash": "11455607320513358531",
-          "deps": [
-            "npm:@headlessui/react",
-            "ui",
-            "npm:@heroicons/react/24/outline",
-            "npm:next/link",
-            "npm:react",
-            "graphql",
-            "npm:next/navigation"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/NavbarMenuItems.tsx",
-          "hash": "15807105679628582227",
-          "deps": [
-            "npm:next/link",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/Search.tsx",
-          "hash": "278405818791397411",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "graphql",
-            "npm:next/navigation",
-            "npm:react",
-            "npm:usehooks-ts",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/SignedUser.tsx",
-          "hash": "13316071227664692532",
-          "deps": [
-            "npm:@headlessui/react",
-            "npm:react",
-            "ui",
-            "npm:next/link"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/SwitchTheme.tsx",
-          "hash": "10560433434334022552",
-          "deps": [
-            "npm:react",
-            "npm:next-themes"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Navbar/ThemeSwitch.tsx",
-          "hash": "5645805517750131283",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:next-themes",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/RecommendedProfiles.tsx",
-          "hash": "2421525267475438601",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "graphql",
-            "ui",
-            "npm:@heroicons/react/24/solid"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/Suggested.tsx",
-          "hash": "344070464458450289",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "npm:react-virtuoso",
-            "ui",
-            "graphql"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/modals/LoginButton.tsx",
-          "hash": "16891064848557488560",
-          "deps": [
-            "npm:next/link",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/components/shared/index.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/web/app/global/GlobalAlerts.tsx",
-          "hash": "4679562810881122227",
-          "deps": [
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/global/GlobalModals.tsx",
-          "hash": "7901492960758308370",
-          "deps": [
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/global/Logout.tsx",
-          "hash": "7160790043492611892",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/global/ThemeSwitch.tsx",
-          "hash": "8975955049505150461",
-          "deps": [
-            "npm:@heroicons/react/24/outline",
-            "npm:next-themes",
-            "npm:react",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/global/login-form.tsx",
-          "hash": "7201566318093420432",
-          "deps": [
-            "npm:react",
-            "npm:zod",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/home/WithoutUser.tsx",
-          "hash": "5271488237054520131",
-          "deps": [
-            "npm:react",
-            "npm:@heroicons/react/24/outline",
-            "npm:next/link"
-          ]
-        },
-        {
-          "file": "apps/web/app/layout.tsx",
-          "hash": "9149752913899006328",
-          "deps": [
-            "npm:next",
-            "npm:next/font/google",
-            "ui",
-            "npm:next/dynamic",
-            "npm:react-hot-toast"
-          ]
-        },
-        {
-          "file": "apps/web/app/not-found.tsx",
-          "hash": "6038964301272088940",
-          "deps": [
-            "npm:next/head",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/socket/socketContext.tsx",
-          "hash": "16896574995885558012",
-          "deps": [
-            "npm:react",
-            "npm:socket.io-client",
-            "ui"
-          ]
-        },
-        {
-          "file": "apps/web/app/svgs/bruh.svg",
-          "hash": "13127155002308675538"
-        },
-        {
-          "file": "apps/web/index.d.ts",
-          "hash": "5498222895072842432"
-        },
-        {
-          "file": "apps/web/jest.config.ts",
-          "hash": "16056654888912429691"
-        },
-        {
-          "file": "apps/web/middleware.ts",
-          "hash": "8385110465397408951",
-          "deps": [
-            "npm:next/server"
-          ]
-        },
-        {
-          "file": "apps/web/next-env.d.ts",
-          "hash": "5909181270615354023"
-        },
-        {
-          "file": "apps/web/next.config.js",
-          "hash": "9195341510322210485",
-          "deps": [
-            "npm:@nx/next"
-          ]
-        },
-        {
-          "file": "apps/web/postcss.config.js",
-          "hash": "2759402739052110475",
-          "deps": [
-            "npm:path"
-          ]
-        },
-        {
-          "file": "apps/web/project.json",
-          "hash": "18269570685210792434"
-        },
-        {
-          "file": "apps/web/public/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/web/public/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/web/styles/global.css",
-          "hash": "10096749877482875710"
-        },
-        {
-          "file": "apps/web/tailwind.config.js",
-          "hash": "5997618537825288460",
-          "deps": [
-            "npm:@nx/react/tailwind",
-            "npm:path",
-            "npm:tailwindcss/colors",
-            "npm:@tailwindcss/typography",
-            "npm:@tailwindcss/forms"
-          ]
-        },
-        {
-          "file": "apps/web/tsconfig.json",
-          "hash": "16999038964653025392"
-        },
-        {
-          "file": "apps/web/tsconfig.spec.json",
-          "hash": "6922413205408300107"
-        }
-      ],
-      "types": [
-        {
-          "file": "libs/types/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "libs/types/README.md",
-          "hash": "11134287303145928365"
-        },
-        {
-          "file": "libs/types/project.json",
-          "hash": "2640696245755504076"
-        },
-        {
-          "file": "libs/types/src/graphql/index.ts",
-          "hash": "13493181798787152843"
-        },
-        {
-          "file": "libs/types/src/index.ts",
-          "hash": "15339890375247346308"
-        },
-        {
-          "file": "libs/types/tsconfig.json",
-          "hash": "14490782888307098276"
-        },
-        {
-          "file": "libs/types/tsconfig.lib.json",
-          "hash": "8188472110264778699"
-        }
-      ],
       "api": [
         {
           "file": "apps/api/.eslintrc.json",
@@ -2051,6 +1331,860 @@
         {
           "file": "libs/graphql/tsconfig.spec.json",
           "hash": "11550347367511341917"
+        }
+      ],
+      "common": [
+        {
+          "file": "libs/common/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "libs/common/README.md",
+          "hash": "2981317240964550389"
+        },
+        {
+          "file": "libs/common/project.json",
+          "hash": "4319699290237245587"
+        },
+        {
+          "file": "libs/common/src/configuration/configuration.module.ts",
+          "hash": "17254114318050203573",
+          "deps": [
+            "npm:@nestjs/config",
+            "npm:@nestjs/common",
+            "npm:joi"
+          ]
+        },
+        {
+          "file": "libs/common/src/configuration/configuration.service.ts",
+          "hash": "11688095171806407876",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/config"
+          ]
+        },
+        {
+          "file": "libs/common/src/database/abstract.schema.ts",
+          "hash": "5774618933347999848",
+          "deps": [
+            "npm:@nestjs/mongoose",
+            "npm:mongoose"
+          ]
+        },
+        {
+          "file": "libs/common/src/database/database.module.ts",
+          "hash": "18313225081536028535",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/mongoose",
+            "npm:mongoose",
+            "npm:mongoose-paginate-v2",
+            "npm:mongoose-aggregate-paginate-v2",
+            "npm:colors",
+            "npm:mongoose-autopopulate"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/current-user.decorator.ts",
+          "hash": "999460599697633236",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/exception.filter.ts",
+          "hash": "17902601184282998591",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "libs/common/src/decorators/index.ts",
+          "hash": "18317797250066046402"
+        },
+        {
+          "file": "libs/common/src/entities/coreEntity.ts",
+          "hash": "5999725612529260607",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:class-transformer"
+          ]
+        },
+        {
+          "file": "libs/common/src/entities/index.ts",
+          "hash": "7712535840802853073"
+        },
+        {
+          "file": "libs/common/src/entities/message-response.ts",
+          "hash": "6973423761621978402",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/index.ts",
+          "hash": "18103809696771133599"
+        },
+        {
+          "file": "libs/common/src/model/abstract.model.ts",
+          "hash": "10172221842969996354",
+          "deps": [
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/src/model/index.ts",
+          "hash": "17542784340779295120"
+        },
+        {
+          "file": "libs/common/src/pagination/index.ts",
+          "hash": "12296493355994459653"
+        },
+        {
+          "file": "libs/common/src/pagination/paginate-arg.ts",
+          "hash": "2698529239613335382",
+          "deps": [
+            "npm:@nestjs/graphql",
+            "npm:class-transformer",
+            "npm:class-validator"
+          ]
+        },
+        {
+          "file": "libs/common/src/pagination/pagination.ts",
+          "hash": "13807595501560956191",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/graphql"
+          ]
+        },
+        {
+          "file": "libs/common/tsconfig.json",
+          "hash": "17126288042513070708"
+        },
+        {
+          "file": "libs/common/tsconfig.lib.json",
+          "hash": "3550173832616418300"
+        }
+      ],
+      "client": [
+        {
+          "file": "libs/client/.babelrc",
+          "hash": "1231376027096048753"
+        },
+        {
+          "file": "libs/client/.eslintrc.json",
+          "hash": "11012487992710232822"
+        },
+        {
+          "file": "libs/client/README.md",
+          "hash": "11260060744131143133"
+        },
+        {
+          "file": "libs/client/project.json",
+          "hash": "5714430942462355721"
+        },
+        {
+          "file": "libs/client/src/axios/index.ts",
+          "hash": "5749141695573320551",
+          "deps": [
+            "npm:lodash",
+            "npm:axios",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "libs/client/src/index.ts",
+          "hash": "1886444079610072322"
+        },
+        {
+          "file": "libs/client/src/service/index.ts",
+          "hash": "7009274911624672307"
+        },
+        {
+          "file": "libs/client/src/service/upload/index.ts",
+          "hash": "3911629383770106222"
+        },
+        {
+          "file": "libs/client/src/utils/getQueryClient.tsx",
+          "hash": "13974230646239852366",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/client/src/utils/index.ts",
+          "hash": "395892044941878096"
+        },
+        {
+          "file": "libs/client/tsconfig.json",
+          "hash": "14088618039610991405"
+        },
+        {
+          "file": "libs/client/tsconfig.lib.json",
+          "hash": "8750642453852943896"
+        }
+      ],
+      "types": [
+        {
+          "file": "libs/types/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "libs/types/README.md",
+          "hash": "11134287303145928365"
+        },
+        {
+          "file": "libs/types/project.json",
+          "hash": "2640696245755504076"
+        },
+        {
+          "file": "libs/types/src/graphql/index.ts",
+          "hash": "13493181798787152843"
+        },
+        {
+          "file": "libs/types/src/index.ts",
+          "hash": "15339890375247346308"
+        },
+        {
+          "file": "libs/types/tsconfig.json",
+          "hash": "14490782888307098276"
+        },
+        {
+          "file": "libs/types/tsconfig.lib.json",
+          "hash": "8188472110264778699"
+        }
+      ],
+      "web": [
+        {
+          "file": "apps/web/.eslintrc.json",
+          "hash": "14414841620709830600"
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/login/login-form.tsx",
+          "hash": "4599475407230188663",
+          "deps": [
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/login/page.tsx",
+          "hash": "7331714782011448265",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/signup/page.tsx",
+          "hash": "9291592561539252136",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/(auth)/signup/sign-up.form.tsx",
+          "hash": "7696397805739543009",
+          "deps": [
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/layout.tsx",
+          "hash": "7177859039168667365",
+          "deps": [
+            "npm:next/dynamic",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/notifications/NotificationComponent.tsx",
+          "hash": "5573662094046139741",
+          "deps": [
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/notifications/page.tsx",
+          "hash": "14678092973981766341",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/page.tsx",
+          "hash": "17482525551883243574"
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/components/Profiles.tsx",
+          "hash": "6693152884392238385",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:framer-motion",
+            "npm:react",
+            "npm:react-virtuoso",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/components/SearchComponent.tsx",
+          "hash": "11284340121571943735",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/search/page.tsx",
+          "hash": "5780863810632684701",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Cover.tsx",
+          "hash": "7930936885525741570",
+          "deps": [
+            "npm:react",
+            "npm:tailwindcss/colors",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/CoverPhotoOverlay.tsx",
+          "hash": "10229101029067827910",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Details.tsx",
+          "hash": "4650294301172242699",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "client",
+            "npm:next/link",
+            "npm:react",
+            "ui",
+            "npm:react-hot-toast",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/FeedType.tsx",
+          "hash": "8988936549797568626",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/FollowDialog.tsx",
+          "hash": "2832804903357619785",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Followerings.tsx",
+          "hash": "11881141556892637845",
+          "deps": [
+            "graphql",
+            "ui",
+            "npm:react",
+            "npm:@heroicons/react/24/outline"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Followers.tsx",
+          "hash": "1882128117006190020",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:react-virtuoso",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Following.tsx",
+          "hash": "18368026844572427141",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react-virtuoso",
+            "graphql",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/Info.tsx",
+          "hash": "9464585775454385582",
+          "deps": [
+            "graphql",
+            "npm:dayjs",
+            "npm:next/navigation",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/components/UserProfile.tsx",
+          "hash": "3420320264136356275",
+          "deps": [
+            "graphql",
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/page.tsx",
+          "hash": "6697619392561286707",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileForm.tsx",
+          "hash": "12655302510247141716",
+          "deps": [
+            "npm:zod",
+            "ui",
+            "graphql",
+            "npm:react",
+            "npm:react-hot-toast",
+            "npm:@heroicons/react/24/outline",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/ProfileSetting.tsx",
+          "hash": "16573629468754424122",
+          "deps": [
+            "ui",
+            "graphql",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/components/Sidebar.tsx",
+          "hash": "13504512292173155524",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/setting/page.tsx",
+          "hash": "1658047856877091567",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/app/(subpages)/user/[username]/user-component.tsx",
+          "hash": "8282811470241350859",
+          "deps": [
+            "graphql",
+            "npm:react",
+            "ui",
+            "npm:react-infinite-scroll-hook",
+            "npm:react-hot-toast",
+            "client",
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/web/app/Home-component.tsx",
+          "hash": "9179993377869851924",
+          "deps": [
+            "npm:next",
+            "npm:react",
+            "ui",
+            "graphql",
+            "npm:react-infinite-scroll-hook"
+          ]
+        },
+        {
+          "file": "apps/web/app/Provider.tsx",
+          "hash": "100944452990323638",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:next-themes",
+            "npm:react",
+            "npm:@tanstack/react-query-devtools",
+            "npm:next/dynamic"
+          ]
+        },
+        {
+          "file": "apps/web/app/api/hello/route.ts",
+          "hash": "495073956729887886"
+        },
+        {
+          "file": "apps/web/app/components/EnableMessages.tsx",
+          "hash": "18115479388475546591",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:@heroicons/react/24/solid",
+            "npm:next/navigation",
+            "npm:react",
+            "npm:usehooks-ts",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/FeedType.tsx",
+          "hash": "12375750557529285364",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/BottomNavigation.tsx",
+          "hash": "6493536611625682711",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:@heroicons/react/24/solid",
+            "npm:next/link",
+            "npm:next/navigation",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/MobileDrawerMenu.tsx",
+          "hash": "15804969859408357293",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "ui",
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/MoreNavItems.tsx",
+          "hash": "8894001405767035193",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:clsx",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/AppVersion.tsx",
+          "hash": "1944211619342696776",
+          "deps": [
+            "npm:next/link",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Contact.tsx",
+          "hash": "9450680228689740662",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Logout.tsx",
+          "hash": "11587994746730854210",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "ui",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/Settings.tsx",
+          "hash": "14463686859791796771",
+          "deps": [
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavItems/YourProfile.tsx",
+          "hash": "11514623807974468407",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:clsx",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/Navbar.tsx",
+          "hash": "11455607320513358531",
+          "deps": [
+            "npm:@headlessui/react",
+            "ui",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link",
+            "npm:react",
+            "graphql",
+            "npm:next/navigation"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/NavbarMenuItems.tsx",
+          "hash": "15807105679628582227",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/Search.tsx",
+          "hash": "278405818791397411",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "graphql",
+            "npm:next/navigation",
+            "npm:react",
+            "npm:usehooks-ts",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/SignedUser.tsx",
+          "hash": "13316071227664692532",
+          "deps": [
+            "npm:@headlessui/react",
+            "npm:react",
+            "ui",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/SwitchTheme.tsx",
+          "hash": "10560433434334022552",
+          "deps": [
+            "npm:react",
+            "npm:next-themes"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Navbar/ThemeSwitch.tsx",
+          "hash": "5645805517750131283",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next-themes",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/RecommendedProfiles.tsx",
+          "hash": "2421525267475438601",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "graphql",
+            "ui",
+            "npm:@heroicons/react/24/solid"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/Suggested.tsx",
+          "hash": "344070464458450289",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "npm:react-virtuoso",
+            "ui",
+            "graphql"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/modals/LoginButton.tsx",
+          "hash": "16891064848557488560",
+          "deps": [
+            "npm:next/link",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/components/shared/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/app/global/GlobalAlerts.tsx",
+          "hash": "4679562810881122227",
+          "deps": [
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/GlobalModals.tsx",
+          "hash": "7901492960758308370",
+          "deps": [
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/Logout.tsx",
+          "hash": "7160790043492611892",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/ThemeSwitch.tsx",
+          "hash": "8975955049505150461",
+          "deps": [
+            "npm:@heroicons/react/24/outline",
+            "npm:next-themes",
+            "npm:react",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/global/login-form.tsx",
+          "hash": "7201566318093420432",
+          "deps": [
+            "npm:react",
+            "npm:zod",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/home/WithoutUser.tsx",
+          "hash": "5271488237054520131",
+          "deps": [
+            "npm:react",
+            "npm:@heroicons/react/24/outline",
+            "npm:next/link"
+          ]
+        },
+        {
+          "file": "apps/web/app/layout.tsx",
+          "hash": "9149752913899006328",
+          "deps": [
+            "npm:next",
+            "npm:next/font/google",
+            "ui",
+            "npm:next/dynamic",
+            "npm:react-hot-toast"
+          ]
+        },
+        {
+          "file": "apps/web/app/not-found.tsx",
+          "hash": "6038964301272088940",
+          "deps": [
+            "npm:next/head",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/socket/socketContext.tsx",
+          "hash": "16896574995885558012",
+          "deps": [
+            "npm:react",
+            "npm:socket.io-client",
+            "ui"
+          ]
+        },
+        {
+          "file": "apps/web/app/svgs/bruh.svg",
+          "hash": "13127155002308675538"
+        },
+        {
+          "file": "apps/web/index.d.ts",
+          "hash": "5498222895072842432"
+        },
+        {
+          "file": "apps/web/jest.config.ts",
+          "hash": "16056654888912429691"
+        },
+        {
+          "file": "apps/web/middleware.ts",
+          "hash": "8385110465397408951",
+          "deps": [
+            "npm:next/server"
+          ]
+        },
+        {
+          "file": "apps/web/next-env.d.ts",
+          "hash": "5909181270615354023"
+        },
+        {
+          "file": "apps/web/next.config.js",
+          "hash": "9195341510322210485",
+          "deps": [
+            "npm:@nx/next"
+          ]
+        },
+        {
+          "file": "apps/web/postcss.config.js",
+          "hash": "2759402739052110475",
+          "deps": [
+            "npm:path"
+          ]
+        },
+        {
+          "file": "apps/web/project.json",
+          "hash": "18269570685210792434"
+        },
+        {
+          "file": "apps/web/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/web/styles/global.css",
+          "hash": "10096749877482875710"
+        },
+        {
+          "file": "apps/web/tailwind.config.js",
+          "hash": "5997618537825288460",
+          "deps": [
+            "npm:@nx/react/tailwind",
+            "npm:path",
+            "npm:tailwindcss/colors",
+            "npm:@tailwindcss/typography",
+            "npm:@tailwindcss/forms"
+          ]
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "16999038964653025392"
+        },
+        {
+          "file": "apps/web/tsconfig.spec.json",
+          "hash": "6922413205408300107"
         }
       ],
       "ui": [
@@ -3348,140 +3482,6 @@
         {
           "file": "libs/ui/tsconfig.spec.json",
           "hash": "6514620907549802163"
-        }
-      ],
-      "common": [
-        {
-          "file": "libs/common/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "libs/common/README.md",
-          "hash": "2981317240964550389"
-        },
-        {
-          "file": "libs/common/project.json",
-          "hash": "4319699290237245587"
-        },
-        {
-          "file": "libs/common/src/configuration/configuration.module.ts",
-          "hash": "17254114318050203573",
-          "deps": [
-            "npm:@nestjs/config",
-            "npm:@nestjs/common",
-            "npm:joi"
-          ]
-        },
-        {
-          "file": "libs/common/src/configuration/configuration.service.ts",
-          "hash": "11688095171806407876",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/config"
-          ]
-        },
-        {
-          "file": "libs/common/src/database/abstract.schema.ts",
-          "hash": "5774618933347999848",
-          "deps": [
-            "npm:@nestjs/mongoose",
-            "npm:mongoose"
-          ]
-        },
-        {
-          "file": "libs/common/src/database/database.module.ts",
-          "hash": "18313225081536028535",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/mongoose",
-            "npm:mongoose",
-            "npm:mongoose-paginate-v2",
-            "npm:mongoose-aggregate-paginate-v2",
-            "npm:colors",
-            "npm:mongoose-autopopulate"
-          ]
-        },
-        {
-          "file": "libs/common/src/decorators/current-user.decorator.ts",
-          "hash": "999460599697633236",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/graphql"
-          ]
-        },
-        {
-          "file": "libs/common/src/decorators/exception.filter.ts",
-          "hash": "17902601184282998591",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "libs/common/src/decorators/index.ts",
-          "hash": "18317797250066046402"
-        },
-        {
-          "file": "libs/common/src/entities/coreEntity.ts",
-          "hash": "5999725612529260607",
-          "deps": [
-            "npm:@nestjs/graphql",
-            "npm:class-transformer"
-          ]
-        },
-        {
-          "file": "libs/common/src/entities/index.ts",
-          "hash": "7712535840802853073"
-        },
-        {
-          "file": "libs/common/src/entities/message-response.ts",
-          "hash": "6973423761621978402",
-          "deps": [
-            "npm:@nestjs/graphql"
-          ]
-        },
-        {
-          "file": "libs/common/src/index.ts",
-          "hash": "18103809696771133599"
-        },
-        {
-          "file": "libs/common/src/model/abstract.model.ts",
-          "hash": "10172221842969996354",
-          "deps": [
-            "npm:@nestjs/graphql"
-          ]
-        },
-        {
-          "file": "libs/common/src/model/index.ts",
-          "hash": "17542784340779295120"
-        },
-        {
-          "file": "libs/common/src/pagination/index.ts",
-          "hash": "12296493355994459653"
-        },
-        {
-          "file": "libs/common/src/pagination/paginate-arg.ts",
-          "hash": "2698529239613335382",
-          "deps": [
-            "npm:@nestjs/graphql",
-            "npm:class-transformer",
-            "npm:class-validator"
-          ]
-        },
-        {
-          "file": "libs/common/src/pagination/pagination.ts",
-          "hash": "13807595501560956191",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/graphql"
-          ]
-        },
-        {
-          "file": "libs/common/tsconfig.json",
-          "hash": "17126288042513070708"
-        },
-        {
-          "file": "libs/common/tsconfig.lib.json",
-          "hash": "3550173832616418300"
         }
       ]
     }
