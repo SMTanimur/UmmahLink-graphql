@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start:api" : "node dist/apps/api/main.js",
-     "build:web": "nx build web",
-    "build:api": "nx run api:build",
     "start:web": "nx serve web",
+    "build:web": "nx build web",
+    "build:api": "nx run api:build",
     "dev": "nx run-many --target=serve --projects=web,api --parallel",
     "gen:graphql-client": "graphql-codegen --watch"
   },
