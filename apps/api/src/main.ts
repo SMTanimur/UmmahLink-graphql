@@ -61,7 +61,7 @@ async function bootstrap() {
           secure: __prod__,
           maxAge: 1000 * 60 * 60 * 24 * 30, //30 days
           sameSite: __prod__ ? 'none' : 'lax',
-          domain: __prod__ ? '.ummah-link-graphql.vercel.app' : undefined,
+          // domain: __prod__ ? '.ummah-link-graphql.vercel.app' : undefined,
         },
         store: new MongoStore({
           uri: configurationService.MONGODB_URI,
