@@ -14,7 +14,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     const configurationService =
       app.get<ConfigurationService>(ConfigurationService);
-    const __prod__ = process.env.NODE_ENV === 'production';
+    const __prod__ = process.env.MODE === 'production';
 
     app.enableCors({
       origin: [configurationService.WEB_URL, 'http://localhost:4200'],
