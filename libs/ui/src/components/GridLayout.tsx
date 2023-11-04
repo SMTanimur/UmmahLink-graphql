@@ -1,5 +1,4 @@
 
-"use client"
 import type { FC, ReactNode } from 'react';
 
 interface GridProps {

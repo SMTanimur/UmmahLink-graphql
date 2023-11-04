@@ -1,4 +1,4 @@
-"use client"
+
 import { ReactNode } from 'react';
 
 export const TextContent = (props: {

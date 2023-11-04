@@ -262,7 +262,7 @@ export type GetLikeResponse = {
 export type IUser = {
   __typename?: 'IUser';
   _id: Scalars['ID']['output'];
-  avatar: AvatarImage;
+  avatar?: Maybe<AvatarImage>;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
@@ -1544,11 +1544,11 @@ export type MeQuery = {
     birthday?: any | null;
     contact?: string | null;
     gender?: string | null;
-    avatar: {
+    avatar?: {
       __typename?: 'AvatarImage';
       avatarUrl?: string | null;
       avatarPublicId?: string | null;
-    };
+    } | null;
     coverPicture?: {
       __typename?: 'CoverImage';
       coverUrl?: string | null;
@@ -1577,11 +1577,11 @@ export type SearchUserQuery = {
     gender?: string | null;
     isFollowing: boolean;
     name: string;
-    avatar: {
+    avatar?: {
       __typename: 'AvatarImage';
       avatarUrl?: string | null;
       avatarPublicId?: string | null;
-    };
+    } | null;
     coverPicture?: {
       __typename: 'CoverImage';
       coverUrl?: string | null;

@@ -9,10 +9,10 @@ export class UserInformation {
   @Field(() => String)
   gender: string;
 
-  @Field(() => Boolean,{nullable:true})
+  @Field(() => Boolean, { nullable: true })
   isActive: boolean;
 
-  @Field(() => Date,{nullable:true})
+  @Field(() => Date, { nullable: true })
   lastActive: Date;
 
   @Field(() => String, { nullable: true })
@@ -51,7 +51,7 @@ export class IUser {
   @Field(() => String, { nullable: true })
   contact?: string;
 
-  @Field(() => AvatarImage)
+  @Field(() => AvatarImage, { nullable: true })
   avatar: AvatarImage | string;
 
   @Field(() => String, { nullable: true })

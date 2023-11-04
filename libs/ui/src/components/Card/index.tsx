@@ -4,8 +4,6 @@ import { CardBody  } from './CardBody'
 import { cn } from '../../lib'
 import { CardFooter } from './CardFooter'
 
-
-
 interface CardProps {
 	noPadding?: boolean
 	children: React.ReactNode

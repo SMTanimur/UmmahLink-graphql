@@ -1,5 +1,4 @@
 
-'use client';
 import type { ComponentProps, ReactNode } from 'react';
 import { forwardRef, useId } from 'react';
 

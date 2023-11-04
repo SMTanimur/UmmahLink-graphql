@@ -107,7 +107,7 @@ type IUser {
   gender: String
   bio: String
   contact: String
-  avatar: AvatarImage!
+  avatar: AvatarImage
   email: String
   coverPicture: CoverImage
   isFollowing: Boolean!

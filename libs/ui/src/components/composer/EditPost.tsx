@@ -1,4 +1,4 @@
-'use client';
+
 
 import { Card } from '../Card';
 import { cn, errorToast } from '../../lib';

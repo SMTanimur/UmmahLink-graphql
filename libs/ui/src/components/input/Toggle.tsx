@@ -1,5 +1,4 @@
-'use client';
-
+"use client"
 import { Switch } from '@headlessui/react';
 import type { Dispatch, FC } from 'react';
 import { cn } from '../../lib';

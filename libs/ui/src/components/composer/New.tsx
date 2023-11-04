@@ -25,7 +25,7 @@ export const NewPost: FC = () => {
       <div className="flex items-center space-x-3">
         <Image
           src={
-            data?.me?.avatar.avatarUrl
+            data?.me?.avatar?.avatarUrl
               ? data?.me?.avatar.avatarUrl
               : UserAvatarUrl
           }
