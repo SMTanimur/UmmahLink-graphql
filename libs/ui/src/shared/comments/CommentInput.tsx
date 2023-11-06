@@ -25,8 +25,8 @@ const CommentInput = forwardRef<HTMLInputElement, IProps>((props, ref) => {
         <div className={`flex items-center gap-3 w-full`}>
             {!isUpdateMode && <Image
             src={
-              data?.me?.avatar.avatarUrl
-                ? data?.me?.avatar.avatarUrl
+              data?.me?.avatar?.avatarUrl
+                ? data?.me?.avatar?.avatarUrl
                 : UserAvatarUrl
             }
             className="h-[50px] w-[50px] cursor-pointer rounded-full bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-[60px] sm:w-[60px]"

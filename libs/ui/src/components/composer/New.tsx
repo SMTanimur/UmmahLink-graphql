@@ -26,7 +26,7 @@ export const NewPost: FC = () => {
         <Image
           src={
             data?.me?.avatar?.avatarUrl
-              ? data?.me?.avatar.avatarUrl
+              ? data?.me?.avatar?.avatarUrl
               : UserAvatarUrl
           }
           className="h-9 w-9 cursor-pointer rounded-full border bg-gray-200 dark:border-gray-700"

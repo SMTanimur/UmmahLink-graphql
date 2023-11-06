@@ -32,7 +32,7 @@ const SignedUser: FC = () => {
   const Avatar = () => (
     <Image
       src={
-        currentProfile?.avatar.avatarUrl
+        currentProfile?.avatar?.avatarUrl
           ? currentProfile?.avatar.avatarUrl
           : UserAvatarUrl
       }

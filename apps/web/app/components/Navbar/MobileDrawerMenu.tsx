@@ -33,7 +33,7 @@ const MobileDrawerMenu: FC = () => {
         >
           <div className="flex w-full space-x-1.5">
             <Image
-              src={data?.me?.avatar.avatarUrl || UserAvatarUrl}
+              src={data?.me?.avatar?.avatarUrl || UserAvatarUrl}
               className="h-12 w-12 cursor-pointer rounded-full border dark:border-gray-700"
               alt={data?.me?.username}
             />
