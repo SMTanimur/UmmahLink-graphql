@@ -3,34 +3,52 @@ import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user-input';
 import { User } from './entities/user.entity';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
-import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
+import {
+  CurrentUser,
+  MessageResponse,
+  PaginateOptionArgs,
+} from '@social-zone/common';
 import { UpdateUserInput } from './dto/update-user-input';
 import { ProfileInformation } from './dto/ProfileData';
 import { IUser } from './dto/user';
 import { SearchDto } from './dto/search.query.dto';
+import { LoginResponse } from '../auth/dto/login.dto';
+import { JWTService } from '../auth/jwt.service';
+import { GqlAuthGuard } from '../auth/guards/auth.guard';
+
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JWTService
+  ) {}
 
-  @Mutation(() => String)
+  @Mutation(() => LoginResponse)
   async createUser(@Args('createUserInput') createUser: CreateUserInput) {
-    return await this.usersService.createUser(createUser);
+    const user = await this.usersService.createUser(createUser);
+    const { access_token} = await this.jwtService.createToken(
+      user.email,
+      user.role
+    );
+    return {
+      message: `Welcome to UmmahLink! 🎉`,
+      token: access_token,
+    };
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => MessageResponse)
   async updateUser(
     @CurrentUser() user: any,
     @Args('input') updateUser: UpdateUserInput,
-    @Args('username',{ type: () => String })  username: string
+    @Args('username', { type: () => String }) username: string
   ) {
-    return await this.usersService.updateUser(user, updateUser,username);
+    return await this.usersService.updateUser(user, updateUser, username);
   }
 
   // @Mutation(() => String)
-  // @UseGuards(AuthenticatedGuard)
+  // @UseGuards(GqlAuthGuard)
   // async createOrUpdateInfo(
   //   @CurrentUser() user: any,
   //   @Args('createOrUpdateProfileInput')
@@ -44,7 +62,7 @@ export class UserResolver {
   // }
 
   @Query((_returns) => ProfileInformation, { nullable: true, name: 'user' })
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard)
   async getUserInfo(
     @Args('username', { type: () => String }) username: string,
     @CurrentUser() user: any
@@ -52,8 +70,8 @@ export class UserResolver {
     return await this.usersService.findUserByUsername(username, user);
   }
 
-  @Query((_returns) => [IUser], {nullable:true, name: 'searchUser' })
-  @UseGuards(AuthenticatedGuard)
+  @Query((_returns) => [IUser], { nullable: true, name: 'searchUser' })
+  @UseGuards(GqlAuthGuard)
   async searchUser(
     @Args('query') query: SearchDto,
     @Args('option') options: PaginateOptionArgs,

@@ -30,6 +30,10 @@ export class ConfigurationService {
     return this.configService.get<string>('MONGODB_URI');
   }
 
+  get JWT_SECRET_KEY() {
+    return this.configService.get<string>('JWT_SECRET_KEY');
+  }
+
   get SESSION_SECRET_KEY() {
     return this.configService.get<string>('SESSION_SECRET_KEY');
   }

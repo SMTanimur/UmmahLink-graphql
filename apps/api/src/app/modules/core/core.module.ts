@@ -1,17 +1,23 @@
-/*
-https://docs.nestjs.com/modules
-*/
 
 import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
-import { ConfigurationModule, DatabaseModule } from '@social-zone/common';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigurationModule, ConfigurationService, DatabaseModule } from '@social-zone/common';
 
 
 @Module({
   imports: [
     DatabaseModule,
     ConfigurationModule,
-    PassportModule.register({ session: true }),
+    {
+      ...JwtModule.registerAsync({
+        useFactory: async (configurationService: ConfigurationService) => ({
+          secret: configurationService.JWT_SECRET_KEY,
+          signOptions: { expiresIn: '3d' },
+        }),
+        inject: [ConfigurationService],
+      }),
+      global: true,
+    },
   ],
   controllers: [],
   providers: [],

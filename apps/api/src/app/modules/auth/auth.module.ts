@@ -5,23 +5,28 @@ import { AuthService } from './auth.service';
 /*
 https://docs.nestjs.com/modules
 */
-
 import { Module } from '@nestjs/common';
 import { LocalStrategy } from './strategy/local.strategy';
-import { PassportModule } from '@nestjs/passport';
-import { SessionSerializer } from './session.serializer';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
-import { SessionAuthGuard } from './guards/session.guard';
+import { JWTService } from './jwt.service';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from '../users/entities/user.entity';
 
 @Module({
-  imports: [UsersModule, PassportModule.register({ session: true })],
+  imports: [
+    UsersModule,
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [],
   providers: [
     AuthService,
     AuthResolver,
     LocalStrategy,
-    SessionSerializer,
-    SessionAuthGuard,
+    // SessionSerializer,
+    // SessionAuthGuard,
+    JWTService,
+    JwtStrategy,
     AuthenticatedGuard,
   ],
 })

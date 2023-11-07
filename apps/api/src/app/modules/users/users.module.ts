@@ -7,10 +7,11 @@ https://docs.nestjs.com/modules
 import { Module } from '@nestjs/common';
 
 import { UserResolver } from './users.resolver';
-import { User,  UserSchema } from './entities/user.entity';
+import { User, UserSchema } from './entities/user.entity';
 import { Follow, FollowSchema } from '../follows/entities/follow';
 import { Post, PostSchema } from '../posts/entities/post';
 import { UploadModule } from '../upload/upload.module';
+import { JWTService } from '../auth/jwt.service';
 
 @Module({
   imports: [
@@ -19,10 +20,10 @@ import { UploadModule } from '../upload/upload.module';
       { name: Follow.name, schema: FollowSchema },
       { name: Post.name, schema: PostSchema },
     ]),
-    UploadModule
+    UploadModule,
   ],
   controllers: [],
-  providers: [UsersService, UserResolver],
+  providers: [UsersService, UserResolver, JWTService],
   exports: [UsersService],
 })
 export class UsersModule {}

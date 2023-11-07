@@ -2,11 +2,11 @@ import { Args, Query, Resolver } from "@nestjs/graphql";
 import { NewsFeed } from "./entities/newsFeed";
 import { NewsFeedService } from "./newsfeed.service";
 import { UseGuards } from "@nestjs/common";
-import { AuthenticatedGuard } from "../auth/guards/authenticated.guard";
 import {  NewsFeedPagination} from "./dto/newsFeed-paginate";
 import { NewsFeedQueryArgs } from "./dto/newsFeed-query-arg";
 import { CurrentUser } from "@social-zone/common";
 import { GetFeedDto } from "./dto/optionArgs";
+import { GqlAuthGuard } from "../auth/guards/auth.guard";
 
 
 
@@ -15,7 +15,7 @@ import { GetFeedDto } from "./dto/optionArgs";
 export class NewsFeedResolver {
   constructor(private readonly newsFeedService: NewsFeedService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() =>NewsFeedPagination ,{name:'getFeeds'})
   async  getSuggestionPeople(
     @Args('query') query: NewsFeedQueryArgs,

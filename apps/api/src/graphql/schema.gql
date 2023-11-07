@@ -113,6 +113,11 @@ type IUser {
   isFollowing: Boolean!
 }
 
+type LoginResponse {
+  message: String!
+  token: String!
+}
+
 type PhotosImageInfo {
   photosUrl: String
   photosPublicId: String
@@ -335,10 +340,6 @@ type FollowPagination {
   pagingCounter: Float!
 }
 
-type LoginResponse {
-  message: String!
-}
-
 input AvatarImageInput {
   avatarUrl: String
   avatarPublicId: String
@@ -500,7 +501,7 @@ input FollowQueryArgs {
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): String!
+  createUser(createUserInput: CreateUserInput!): LoginResponse!
   updateUser(input: UpdateUserInput!, username: String!): MessageResponse!
   createMessage(createMessageInput: CreateMessageInput!): MessageResponse!
   updateMessageRead(updateMessageRead: MessageReadQueryArgs!): ReadCountResponse!

@@ -28,7 +28,7 @@ export class UsersService {
     private readonly uploadService: UploadService
   ) {}
 
-  async createUser(createUser: CreateUserInput): Promise<string> {
+  async createUser(createUser: CreateUserInput): Promise<User> {
     try {
       const user = await this.userModel.findOne({
       $or:[
@@ -40,8 +40,8 @@ export class UsersService {
         throw new ConflictException('User already exists');
       }
       createUser.password = await createHash(createUser.password);
-      const userData = await (await this.userModel.create(createUser)).toJSON();
-      return `Welcome ${userData.username}!`;
+      const userData =  (await this.userModel.create(createUser)).toJSON();
+      return userData
     } catch (error) {
      throw new BadRequestException()
     }

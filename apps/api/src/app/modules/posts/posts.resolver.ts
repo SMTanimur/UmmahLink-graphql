@@ -1,6 +1,5 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { CurrentUser, MessageResponse, PaginateOptionArgs } from '@social-zone/common';
 import { Post } from './entities/post';
 import { CreatePostInput } from './dto/craete-post-input';
@@ -12,6 +11,7 @@ import { NewsFeedPagination } from '../newsFeed/dto/newsFeed-paginate';
 import { NewsFeedQueryArgs } from '../newsFeed/dto/newsFeed-query-arg';
 import { GetLikeResponse, LikesQueryArgs } from './dto/getLike-dto';
 import { GetFeedDto } from '../newsFeed/dto/optionArgs';
+import { GqlAuthGuard } from '../auth/guards/auth.guard';
 
 
 
@@ -21,7 +21,7 @@ export class PostResolver {
   constructor(private readonly postService: PostsService) {}
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async createPost(
     @CurrentUser() user: any,
     @Args('createPostInput')
@@ -32,7 +32,7 @@ export class PostResolver {
   }
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async updatePost(
     @CurrentUser() user: any,
     @Args('updatePostInput')
@@ -42,7 +42,7 @@ export class PostResolver {
     return await this.postService.updatePost(updatePostInput);
   }
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async deletePost(
     @CurrentUser() user: any,
     @Args('deletePostInput')
@@ -53,13 +53,13 @@ export class PostResolver {
   }
 
   @Query(() => Post, { name: 'post' })
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async getPost(@Args('postId', { type: () => ID }) postId: string) {
     return await this.postService.getPostById(postId);
   }
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async likeOrUnlikePost(
     @CurrentUser() user: any,
     @Args('likeOrUnlikePostInput')
@@ -71,7 +71,7 @@ export class PostResolver {
   }
 
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() =>NewsFeedPagination ,{name:'getPosts'})
   async  getPosts(
     @Args('username', { type: () => String }) username: string,
@@ -82,7 +82,7 @@ export class PostResolver {
     query.user = user
     return await this.postService.getPosts(username,query, options);
   }
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() =>[GetLikeResponse] ,{name:'getPostLikes'})
   async  getPostLikes(
     

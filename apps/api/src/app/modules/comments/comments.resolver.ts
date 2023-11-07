@@ -7,7 +7,6 @@ import {
   MessageResponse,
   PaginateOptionArgs,
 } from '@social-zone/common';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { UseGuards } from '@nestjs/common';
 import { CreateCommentInput } from './input/create-comment-input';
 import { CreateReplyInput } from './input/create-comment-replay-input';
@@ -17,13 +16,14 @@ import { CommentsQueryArgs } from './dto/comment-query-arg';
 import { UpdateCommentInput } from './input/update-comment-input';
 import { ReplyQueryArgs } from './dto/reply-query-arg';
 import { CreatePostOrCommentLikeInput } from '../posts/dto/create-post-or-comment-like';
+import { GqlAuthGuard } from '../auth/guards/auth.guard';
 
 @Resolver(() => Comment)
 export class CommentResolver {
   constructor(private readonly commentService: CommentsService) {}
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async createComment(
     @CurrentUser() user: any,
     @Args('createCommentInput')
@@ -34,7 +34,7 @@ export class CommentResolver {
     return await this.commentService.createComment(createCommentInput);
   }
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async updateComment(
     @CurrentUser() user: any,
     @Args('updateCommentInput')
@@ -45,7 +45,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async createCommentReply(
     @CurrentUser() user: any,
     @Args('createReplyInput')
@@ -56,7 +56,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async deleteComment(
     @CurrentUser() user: any,
     @Args('deleteCommentInput')
@@ -66,7 +66,7 @@ export class CommentResolver {
     return await this.commentService.deleteComment(deleteCommentInput);
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() => CommentPagination, { name: 'getComments', nullable: true })
   async getComments(
     @Args('query') query: CommentsQueryArgs,
@@ -76,7 +76,7 @@ export class CommentResolver {
     query.user = user;
     return await this.commentService.getComments(query, option);
   }
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() => CommentPagination, { name: 'getReplies', nullable: true })
   async getReplies(
     @Args('query') query: ReplyQueryArgs,
@@ -89,7 +89,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => MessageResponse)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   async likeOrUnlikeComment(
     @CurrentUser() user: any,
     @Args('likeOrUnlikeCommentInput')

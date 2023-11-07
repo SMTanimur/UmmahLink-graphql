@@ -9,18 +9,18 @@ import {
   NotificationQueryArgs,
 } from './dto/notification-query-arg';
 import { UseGuards } from '@nestjs/common';
-import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { NotificationUpdateArgs } from './dto/notification-update';
 import {
   NotificationCount,
   NotificationResponse,
 } from './dto/updateRespnse.dto';
+import { GqlAuthGuard } from '../auth/guards/auth.guard';
 
 @Resolver(() => Notification)
 export class NotificationResolver {
   constructor(private readonly notificationService: NotificationService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() => NotificationPagination, { name: 'getNotifications' })
   async getNotifications(
     @Args('query') query: NotificationQueryArgs,
@@ -30,7 +30,7 @@ export class NotificationResolver {
     query.user = user;
     return await this.notificationService.paginate(query, options);
   }
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Query(() => NotificationCount, { name: 'getNotificationCount' })
   async getNotificationCount(
     @Args('query') query: NotificationCountQueryArgs,
@@ -40,7 +40,7 @@ export class NotificationResolver {
     return await this.notificationService.getNotificationCount(query);
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Mutation(() => NotificationResponse)
   async updateNotification(
     @Args('updateNotificationArgs')
@@ -50,7 +50,7 @@ export class NotificationResolver {
       updateNotificationInput
     );
   }
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(GqlAuthGuard )
   @Mutation(() => NotificationResponse)
   async markNotification(
     @Args('markNotificationArgs')
