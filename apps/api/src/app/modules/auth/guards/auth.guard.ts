@@ -1,5 +1,5 @@
-import { AuthenticationError } from '@nestjs/apollo';
-import { Injectable, ExecutionContext } from '@nestjs/common';
+
+import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,7 +19,7 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err: any, user: any, info: any) {
     if (err || !user) {
-      throw err || new AuthenticationError('Could not authenticate with token');
+      throw err ||  new UnauthorizedException("You are not authorized to access this resource")
     }
     return user;
   }
