@@ -4,34 +4,27 @@ import { NextRequest } from 'next/server';
 export function middleware(req: NextRequest) {
   // const userToken = req.cookies.get('ummahlink_sid')?.value
 
-  const sessionToken = req.cookies.has("ummahlink_sid");
+  const sessionToken = req.cookies.has('ummahlink_sid');
 
   // console.log("USER TOKEN", userToken)
 
-  console.log("ISSESSION", sessionToken);
-
-  const host = req.nextUrl.protocol + req.headers.get("host");
+  const host = req.nextUrl.protocol + req.headers.get('host');
   // console.log("host", host);
 
-
-
-
   // user login control
-  if (sessionToken && req.nextUrl.pathname === "/login") {
+  if (sessionToken && req.nextUrl.pathname === '/login') {
     return NextResponse.redirect(new URL(`${host}/`));
   }
   // Add a closing bracket here
-  if (!sessionToken && req.nextUrl.pathname.includes("/user")) {
+  if (!sessionToken && req.nextUrl.pathname.includes('/user')) {
     return NextResponse.redirect(new URL(`${host}/login`));
   }
   // Add a closing bracket here
-  if (!sessionToken && req.nextUrl.pathname.includes("/notifications")) {
+  if (!sessionToken && req.nextUrl.pathname.includes('/notifications')) {
     return NextResponse.redirect(new URL(`${host}/login`));
   }
- 
 }
 
 export const config = {
-  matcher: ["/user/:path*", "/login/:path*","/notifications/:path*"], // Add "/profile" path here
-
-}
+  matcher: ['/user/:path*', '/login/:path*', '/notifications/:path*'], // Add "/profile" path here
+};

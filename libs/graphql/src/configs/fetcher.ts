@@ -3,7 +3,6 @@
 import  Cookies from "js-cookie";
 import { SessionKey } from "../constants";
 const token = Cookies.get(SessionKey as string);
-console.log(token,'djfkd')
 export const fetcher = <TData, TVariables>(
   query: string,
   variables?: TVariables,

@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { errorToast } from "../../lib";
 import { ErrorMessage, useZodForm } from "../../components";
-import { CreatePostInput, PhotosImageInput, UpdatePostInput, useCreatePostMutation, useUpdatePostMutation } from "@social-zone/graphql";
+import { CreatePostInput, PhotosImageInput,useCreatePostMutation, } from "@social-zone/graphql";
 import { object, string } from "zod";
 import { useGlobalModalStateStore } from "../../store";
 import { useFileHandler } from "../../shared";
@@ -59,7 +59,8 @@ const postForm = useZodForm({
       loading: 'creating in...',
       success: ( {createPost:{message} }) => {
         toast.dismiss()
-        queryClient.invalidateQueries();
+        queryClient.invalidateQueries(["Feeds"]);
+        queryClient.invalidateQueries(['Posts']);
         queryClient.invalidateQueries(['UserProfile'])
         clearFiles()
         setShowNewPostModal(false)
