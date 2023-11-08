@@ -1,0 +1,1 @@
+export const SessionKey = process.env["NEXT_PUBLIC_SESSION_KEY"] as string

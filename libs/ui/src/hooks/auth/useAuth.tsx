@@ -1,8 +1,7 @@
-
+"use client"
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
-import useLocalStorage from 'use-local-storage';
 import {
   useLoginMutation,
   useLogoutMutation,
@@ -11,6 +10,9 @@ import {
 } from '@social-zone/graphql';
 import { object, string } from 'zod';
 import { ErrorMessage, useZodForm } from '../../components';
+import { useAtom } from 'jotai';
+import { authorizationAtom } from '../authorization-atom';
+import { useToken } from '../use-token';
 
 
 
@@ -35,9 +37,11 @@ export const useAuth = () => {
     useRegisterMutation();
   const { mutateAsync: loginMutation, isLoading: LoginLoading } =
     useLoginMutation();
+    const {setToken,removeToken}=useToken()
 
      const {mutateAsync:logoutMutation} = useLogoutMutation()
-    const [isAuthenticated, setIsAuthenticated] = useLocalStorage('loggedIn', false);
+     const [isAuthenticated, setAuthorized] = useAtom(authorizationAtom);
+   
   // const { mutateAsync: logoutMutation } = useLogoutMutation();
 
   const RegisterForm = useZodForm({
@@ -55,7 +59,13 @@ export const useAuth = () => {
     try {
       toast.promise(registerMutation({ createUserInput: data }), {
         loading: 'Registering...',
-        success: ({ createUser }) => <b>{createUser}</b>,
+        success: ({ createUser:{message,token}}) => {
+          setToken(token)
+          setAuthorized(true)
+          queryClient.invalidateQueries(useMeQuery.getKey());
+          push('/');
+          return <b>{message}</b>;
+        },
         error: (data) => {
           return (
             <ErrorMessage
@@ -78,8 +88,9 @@ export const useAuth = () => {
     try {
       toast.promise(loginMutation({ loginInput: data }), {
         loading: 'Logging in...',
-        success: ({ login: { message } }) => {
-          setIsAuthenticated(true)
+        success: ({ login: { message,token } }) => {
+          setToken(token)
+          setAuthorized(true)
           queryClient.invalidateQueries(useMeQuery.getKey());
           push('/');
           return <b>{message}</b>;
@@ -107,7 +118,8 @@ export const useAuth = () => {
       toast.promise(logoutMutation({}), {
         loading: 'Logging out...',
         success: ({ logout: { message } }) => {
-          setIsAuthenticated(false)
+          removeToken()
+          setAuthorized(false)
           push('/login');
           queryClient.resetQueries(useMeQuery.getKey());
           queryClient.resetQueries();
@@ -130,6 +142,6 @@ export const useAuth = () => {
     RegisterLoading,
     LoginLoading,
     isAuthenticated,
-    setIsAuthenticated
+    setAuthorized
   };
 };

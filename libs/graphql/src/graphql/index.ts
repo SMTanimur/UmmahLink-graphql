@@ -290,6 +290,7 @@ export type LoginInput = {
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   message: Scalars['String']['output'];
+  token: Scalars['String']['output'];
 };
 
 export type Message = {
@@ -360,7 +361,7 @@ export type Mutation = {
   createFriendRequest: FriendRequestResponse;
   createMessage: MessageResponse;
   createPost: MessageResponse;
-  createUser: Scalars['String']['output'];
+  createUser: LoginResponse;
   deleteComment: MessageResponse;
   deletePost: MessageResponse;
   followUser: MessageResponse;
@@ -870,7 +871,7 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = {
   __typename?: 'Mutation';
-  login: { __typename?: 'LoginResponse'; message: string };
+  login: { __typename?: 'LoginResponse'; message: string; token: string };
 };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
@@ -884,7 +885,10 @@ export type RegisterMutationVariables = Exact<{
   createUserInput: CreateUserInput;
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation'; createUser: string };
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  createUser: { __typename?: 'LoginResponse'; message: string; token: string };
+};
 
 export type CreateCommentMutationVariables = Exact<{
   input: CreateCommentInput;
@@ -1629,6 +1633,7 @@ export const LoginDocument = /*#__PURE__*/ `
     mutation Login($loginInput: LoginInput!) {
   login(loginInput: $loginInput) {
     message
+    token
   }
 }
     `;
@@ -1697,7 +1702,10 @@ useLogoutMutation.fetcher = (
   );
 export const RegisterDocument = /*#__PURE__*/ `
     mutation Register($createUserInput: CreateUserInput!) {
-  createUser(createUserInput: $createUserInput)
+  createUser(createUserInput: $createUserInput) {
+    message
+    token
+  }
 }
     `;
 export const useRegisterMutation = <TError = unknown, TContext = unknown>(

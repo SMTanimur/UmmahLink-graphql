@@ -1,3 +1,6 @@
 mutation Register($createUserInput: CreateUserInput!) {
-  createUser(createUserInput: $createUserInput)
+  createUser(createUserInput: $createUserInput){
+    message
+    token
+  }
 }

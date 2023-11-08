@@ -1,14 +1,22 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-ignore
+import  Cookies from "js-cookie";
+import { SessionKey } from "../constants";
+const token = Cookies.get(SessionKey as string);
+console.log(token,'djfkd')
 export const fetcher = <TData, TVariables>(
   query: string,
   variables?: TVariables,
   options?: RequestInit['headers']
 ): (() => Promise<TData>) => {
+  
   return async () => {
     const res = await fetch(process.env["NEXT_PUBLIC_API_BASE_ENDPOINT"] + '/graphql', {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token ? token : ""}`,
         ...options,
       },
       body: JSON.stringify({
