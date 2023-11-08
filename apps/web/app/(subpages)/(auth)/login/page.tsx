@@ -11,7 +11,7 @@ const LoginPage = () => {
 				
 					<Heading size="h2">Login</Heading>
 				</div>
-				<p className="mt-3 text-gray-500">Welcome back! Sign in to your DogeSocial account.</p>
+				<p className="mt-3 text-gray-500">Welcome back! Sign in to your Ummahlink account.</p>
 			</div>
 			<Card
 				rounded="md"
