@@ -13,7 +13,7 @@ export class Pagination {
   @Field(() => String)
   name:string
 
-  @Field(() => AvatarImage)
+  @Field(() => AvatarImage,{nullable:true})
   avatar:AvatarImage | string
 
   @Field(() => GraphQLISODateTime, { nullable: true })

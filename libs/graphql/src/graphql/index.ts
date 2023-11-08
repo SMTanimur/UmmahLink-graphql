@@ -573,7 +573,7 @@ export type PaginateOptionArgs = {
 
 export type Pagination = {
   __typename?: 'Pagination';
-  avatar: AvatarImage;
+  avatar?: Maybe<AvatarImage>;
   bio?: Maybe<Scalars['String']['output']>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   contact?: Maybe<Scalars['String']['output']>;
@@ -1210,11 +1210,11 @@ export type GetFollowersQuery = {
       birthday?: any | null;
       bio?: string | null;
       gender?: string | null;
-      avatar: {
+      avatar?: {
         __typename?: 'AvatarImage';
         avatarUrl?: string | null;
         avatarPublicId?: string | null;
-      };
+      } | null;
     } | null> | null;
   };
 };
@@ -1251,11 +1251,11 @@ export type GetFollowingQuery = {
       birthday?: any | null;
       bio?: string | null;
       gender?: string | null;
-      avatar: {
+      avatar?: {
         __typename?: 'AvatarImage';
         avatarUrl?: string | null;
         avatarPublicId?: string | null;
-      };
+      } | null;
     } | null> | null;
   };
 };
@@ -1287,11 +1287,11 @@ export type GetSuggestionPeopleQuery = {
       isActive?: boolean | null;
       name: string;
       username?: string | null;
-      avatar: {
+      avatar?: {
         __typename?: 'AvatarImage';
         avatarUrl?: string | null;
         avatarPublicId?: string | null;
-      };
+      } | null;
     } | null> | null;
   } | null;
 };

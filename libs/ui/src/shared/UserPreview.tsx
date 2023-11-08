@@ -1,14 +1,13 @@
-'use client';
+"use client"
 import { ProfileInformation, useUserProfileQuery } from '@social-zone/graphql';
 import { FC, ReactNode, useState } from 'react';
-import { Image, Slug } from '../components';
+import { Image} from '../components';
 import {
   cn,
   nFormatter,
   sanitizeDisplayName,
-  stopEventPropagation,
 } from '../lib';
-import { Follow } from './Follow';
+
 import Tippy from '@tippyjs/react';
 import { UserAvatarUrl } from '../data';
 
@@ -32,8 +31,6 @@ export const UserPreview: FC<UserPreviewProps> = ({
   const { data } = useUserProfileQuery({ username: lazyProfile?.username });
 
   const UserAvatar = () => (
-
-    
     <Image
       src={
         lazyProfile?.avatar?.avatarUrl ? lazyProfile?.avatar?.avatarUrl : UserAvatarUrl
@@ -73,7 +70,12 @@ export const UserPreview: FC<UserPreviewProps> = ({
         {
           
         }
-        <UserAvatar />
+        {
+          data?.user ? (
+            <UserAvatar />
+          ) : null
+        }
+        
         {/* <div onClick={stopEventPropagation} aria-hidden="true">
           {!lazyProfile.isFollowing  &&
             (followStatusLoading ? (

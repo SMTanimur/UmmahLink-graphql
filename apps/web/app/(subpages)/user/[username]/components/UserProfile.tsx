@@ -46,7 +46,7 @@ const UserProfile: FC<UserProfileProps> = ({
 
   const UserAvatar = () => (
     <Image
-      src={profile?.avatar.avatarUrl ? profile?.avatar.avatarUrl : UserAvatarUrl}
+      src={profile?.avatar?.avatarUrl ? profile?.avatar?.avatarUrl : UserAvatarUrl}
       loading="lazy"
       className={cn(
         isBig ? 'h-14 w-14' : 'h-10 w-10',

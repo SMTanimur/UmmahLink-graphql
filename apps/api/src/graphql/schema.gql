@@ -315,7 +315,7 @@ type FriendRequestResponse {
 type Pagination {
   username: String
   name: String!
-  avatar: AvatarImage!
+  avatar: AvatarImage
   birthday: DateTime
   gender: String
   bio: String
