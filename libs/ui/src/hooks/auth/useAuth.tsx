@@ -62,6 +62,7 @@ export const useAuth = () => {
         success: ({ createUser:{message,token}}) => {
           setToken(token)
           setAuthorized(true)
+          queryClient.invalidateQueries(["me"])
           queryClient.invalidateQueries(useMeQuery.getKey());
           push('/');
           return <b>{message}</b>;
@@ -91,6 +92,7 @@ export const useAuth = () => {
         success: ({ login: { message,token } }) => {
           setToken(token)
           setAuthorized(true)
+          queryClient.invalidateQueries(["me"])
           queryClient.invalidateQueries(useMeQuery.getKey());
           push('/');
           return <b>{message}</b>;
