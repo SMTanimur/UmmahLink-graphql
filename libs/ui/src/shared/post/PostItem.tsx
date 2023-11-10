@@ -68,7 +68,7 @@ export const PostItem: React.FC<IProps> = ({isAuth,post}) => {
             <div className="flex gap-4 items-center">
               <Image
                 src={
-                  post.author?.avatar.avatarUrl
+                  post.author?.avatar?.avatarUrl
                     ? post?.author?.avatar?.avatarUrl
                     : UserAvatarUrl
                 }

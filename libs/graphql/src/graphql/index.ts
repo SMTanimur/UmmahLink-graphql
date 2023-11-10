@@ -38,7 +38,7 @@ export type Scalars = {
 
 export type Author = {
   __typename?: 'Author';
-  avatar: AvatarImage;
+  avatar?: Maybe<AvatarImage>;
   email: Scalars['String']['output'];
   id?: Maybe<Scalars['ID']['output']>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
@@ -1163,11 +1163,11 @@ export type GetFeedQuery = {
         isActive?: boolean | null;
         id?: string | null;
         name: string;
-        avatar: {
+        avatar?: {
           __typename: 'AvatarImage';
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
-        };
+        } | null;
       } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';
@@ -1517,11 +1517,11 @@ export type GetPostsQuery = {
         lastActive?: any | null;
         id?: string | null;
         name: string;
-        avatar: {
+        avatar?: {
           __typename?: 'AvatarImage';
           avatarUrl?: string | null;
           avatarPublicId?: string | null;
-        };
+        } | null;
       } | null;
       photos?: Array<{
         __typename: 'PhotosImageInfo';

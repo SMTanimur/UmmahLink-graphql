@@ -11,7 +11,7 @@ export class Author {
   @Field(() => String)
   username: string;
 
-  @Field(() => Boolean,{nullable:true})
+  @Field(() => Boolean, { nullable: true })
   isActive: boolean;
 
   @Field(() => Date, { nullable: true })
@@ -20,8 +20,8 @@ export class Author {
   @Field(() => String)
   email: string;
 
-  @Field(() => AvatarImage)
-  avatar: AvatarImage | string;
+  @Field(() => AvatarImage, { nullable: true })
+  avatar: AvatarImage;
 
   @Field(() => String)
   name: string;

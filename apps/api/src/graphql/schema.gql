@@ -197,7 +197,7 @@ type Author {
   isActive: Boolean
   lastActive: DateTime
   email: String!
-  avatar: AvatarImage!
+  avatar: AvatarImage
   name: String!
 }
 

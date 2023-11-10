@@ -81,7 +81,6 @@ PostSchema.virtual('author', {
 PostSchema.methods.isPostLiked = function (this:PostDocument, userID) {
   if (userID) return;
   return this.likes.some(user => {
-    console.log(user)
       return user.toString() === userID.toString();
   });
 }
