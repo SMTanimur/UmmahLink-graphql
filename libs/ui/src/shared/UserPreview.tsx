@@ -29,6 +29,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
   const [lazyProfile, setLazyProfile] = useState<ProfileInformation>(profile);
 
   const { data } = useUserProfileQuery({ username: lazyProfile?.username });
+  
 
   const UserAvatar = () => (
     <Image
@@ -106,7 +107,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-1">
             <div className="text-base">
-              {nFormatter(lazyProfile?.followingCount as number)}
+              {nFormatter(data?.user?.followingCount as number)}
             </div>
             <div className="lt-text-gray-500 text-sm">
               <h6>Following</h6>
@@ -114,7 +115,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
           </div>
           <div className="text-md flex items-center space-x-1">
             <div className="text-base">
-              {nFormatter(lazyProfile?.followersCount as number)}
+              {nFormatter(data?.user?.followersCount as number)}
             </div>
             <div className="lt-text-gray-500 text-sm">
               <h6>Followers</h6>
