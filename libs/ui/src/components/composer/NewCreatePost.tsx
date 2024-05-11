@@ -5,14 +5,14 @@ import { CardBody } from '../Card/CardBody';
 import { Form } from '../form/Form';
 import { TextArea } from '../input/TextArea';
 import { Button } from '../button/Button';
-import { usePost } from '../../hooks';
+import { usePost, useProfileQuery } from '../../hooks';
 import { Spinner } from '../loading';
 import { PencilIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { EmojiPicker } from '../../emoji';
 
 export const NewCreatePost = () => {
   const { attemptToCreatePost, createPostLoading, postForm ,imageFile,onFileChange,removeImage} = usePost();
-
+  const {data}=useProfileQuery()
   function handleEmojiPick(emote: any) {
     //The types provided by these types are incorrect. I promise there's a native obj here
 
@@ -41,8 +41,8 @@ export const NewCreatePost = () => {
 
           <div className="relative">
             <TextArea
-              label={`Bio`}
-              placeholder={`Tell us something about you!`}
+             
+              placeholder={`what's on your mind, ${data?.me.username}?`}
               {...postForm.register('content')}
             />
             <div className="absolute top-5 right-2 flex space-x-3">
