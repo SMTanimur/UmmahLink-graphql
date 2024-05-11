@@ -66,6 +66,20 @@ CLOUDINARY_API_SECRET =
 NEXT_PUBLIC_API_BASE_ENDPOINT=http://localhost:3333
 ```
 
+## Installation
+
+```bash
+$ yarn
+```
+
+## Running the app
+
+```bash
+# development
+$ yarn dev
+
+```
+
 ## Screenshots
 
 <details>
