@@ -1,6 +1,6 @@
 "use client"
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter,redirect } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import {
   useLoginMutation,
@@ -53,7 +53,7 @@ export const useAuth = () => {
   });
 
   const queryClient = useQueryClient();
-  const { push } = useRouter();
+  const { push,replace } = useRouter();
 
   const signup = RegisterForm.handleSubmit(async (data) => {
     try {
@@ -64,7 +64,7 @@ export const useAuth = () => {
           setAuthorized(true)
           queryClient.invalidateQueries(["me"])
           queryClient.invalidateQueries(useMeQuery.getKey());
-          push('/');
+          replace('/');
           return <b>{message}</b>;
         },
         error: (data) => {
@@ -94,8 +94,9 @@ export const useAuth = () => {
           setAuthorized(true)
           queryClient.invalidateQueries(["me"])
           queryClient.invalidateQueries(useMeQuery.getKey());
-          push('/');
+          replace('/');
           return <b>{message}</b>;
+           
         },
         error: (data) => {
           return (
