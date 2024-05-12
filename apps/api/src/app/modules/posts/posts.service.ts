@@ -138,6 +138,7 @@ export class PostsService {
         });
 
         await this.postModel.findByIdAndDelete(post._id);
+        await this.newsModel.deleteMany({ post: post._id });
         const images = post.photos.map((img) => img.photosPublicId);
         console.log(images)
         if (images.length) {

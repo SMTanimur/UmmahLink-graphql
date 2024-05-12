@@ -92,7 +92,7 @@ export const UserPreview: FC<UserPreviewProps> = ({
       <div className="space-y-3 p-1">
         <UserName />
         <div>
-          {profile.bio && (
+          {profile?.bio && (
             <div
               className={cn(
                 isBig ? 'text-base' : 'text-sm',
