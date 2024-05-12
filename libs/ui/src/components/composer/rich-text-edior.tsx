@@ -8,6 +8,7 @@ import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import '@mantine/tiptap/styles.css';
+import { useProfileQuery } from '../../hooks';
 export function RichTextEditorTipTap({ ...props }) {
   const editor = useEditor({
     extensions: [
@@ -25,8 +26,10 @@ export function RichTextEditorTipTap({ ...props }) {
     },
   });
 
+  const {data}=useProfileQuery()
+
   return (
-    <RichTextEditor editor={editor}>
+    <RichTextEditor editor={editor} placeholder={`what's on your mind, ${data?.me.username}?`}>
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />

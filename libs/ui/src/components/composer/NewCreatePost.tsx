@@ -46,11 +46,11 @@ export const NewCreatePost = () => {
               placeholder={`what's on your mind, ${data?.me.username}?`}
               {...postForm.register('content')}
             /> */}
-             <RichTextEditorTipTap value={postForm.getValues("content")} onChange={(v: any) => postForm.setValue("content",v)} className='' id='rte' />
-            <div className="absolute bottom-14 right-2 flex space-x-3">
+             <RichTextEditorTipTap value={postForm.watch('content')} onChange={(v: any) => postForm.setValue("content",v)} className='' id='rte' />
+            {/* <div className="absolute bottom-14 right-2 flex space-x-3">
 							<EmojiPicker onEmojiPick={handleEmojiPick} />
 							
-						</div>
+						</div> */}
 
              {/* --- UPLOAD OPTIONS */}
              <div className="flex items-center flex-grow">
