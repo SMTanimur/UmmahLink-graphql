@@ -5,7 +5,8 @@ import '../styles/global.css';
 import {  defaultMetadata } from '~ui';
 import dynamic from 'next/dynamic';
 import { Toaster } from 'react-hot-toast';
-
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 
 
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body  className={poppins.className} suppressHydrationWarning={true}>
+      <MantineProvider>
         <Providers>
         
           <Toaster
@@ -42,6 +44,7 @@ export default function RootLayout({
         {children}
       </div>
         </Providers>
+        </MantineProvider>
       </body>
     </html>
   );

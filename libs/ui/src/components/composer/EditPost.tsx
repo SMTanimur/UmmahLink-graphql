@@ -18,6 +18,7 @@ import {
 import { FC } from 'react';
 import { ErrorMessage } from '../messages/ErrorMessage';
 import { useGlobalModalStateStore } from '../../store';
+import { RichTextEditorTipTap } from './rich-text-edior';
 const editPostSchema = object({
   content: string(),
 });
@@ -97,14 +98,11 @@ export const EditPost: FC = () => {
           onSubmit={async () => await attemptToUpdatePost()}
         >
           <div className="relative">
-            <TextArea
-              label={`Bio`}
-              placeholder={`Tell us something about you!`}
-              {...postForm.register('content')}
-            />
-            <div className="absolute top-5 right-2 flex space-x-3">
-              <EmojiPicker onEmojiPick={handleEmojiPick} />
-            </div>
+          <RichTextEditorTipTap value={postForm.getValues("content")} onChange={(v: any) => postForm.setValue("content",v)} className='' id='rte' />
+            {/* <div className="absolute bottom-14 right-2 flex space-x-3">
+							<EmojiPicker onEmojiPick={handleEmojiPick} />
+							
+						</div> */}
           </div>
 
           <Button

@@ -9,6 +9,7 @@ import { usePost, useProfileQuery } from '../../hooks';
 import { Spinner } from '../loading';
 import { PencilIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { EmojiPicker } from '../../emoji';
+import { RichTextEditorTipTap } from './rich-text-edior';
 
 export const NewCreatePost = () => {
   const { attemptToCreatePost, createPostLoading, postForm ,imageFile,onFileChange,removeImage} = usePost();
@@ -40,12 +41,13 @@ export const NewCreatePost = () => {
           )} */}
 
           <div className="relative">
-            <TextArea
+            {/* <TextArea
              
               placeholder={`what's on your mind, ${data?.me.username}?`}
               {...postForm.register('content')}
-            />
-            <div className="absolute top-5 right-2 flex space-x-3">
+            /> */}
+             <RichTextEditorTipTap value={postForm.getValues("content")} onChange={(v: any) => postForm.setValue("content",v)} className='' id='rte' />
+            <div className="absolute bottom-14 right-2 flex space-x-3">
 							<EmojiPicker onEmojiPick={handleEmojiPick} />
 							
 						</div>

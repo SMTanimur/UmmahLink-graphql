@@ -95,9 +95,7 @@ export const PostCardModal: React.FC = () => {
       </div>
       {/* --- DESCRIPTION */}
       <div className="mb-3 mt-2">
-        <p className="text-gray-700 dark:text-gray-300 break-words">
-          {postData?.content}
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: postData?.content as any }}  />
       </div>
 
       {/* --- IMAGE GRID ----- */}
