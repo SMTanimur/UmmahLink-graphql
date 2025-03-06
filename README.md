@@ -27,6 +27,7 @@ GithubUrl : https://github.com/SMTanimur/UmmahLink-graphql
 - Nestjs, Typescript
 - Graphql
 - Mongoose
+- Pasport js
 - Express
 - Passportjs
 - Express-session base (Auth)
