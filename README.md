@@ -133,7 +133,7 @@ $ yarn dev
  </p>
 </details>
 <details>
- <summary>Sign In Page</summary>
+ <summary>Sign-In Page</summary>
  <p>
  
 ![LoginPage](https://github.com/SMTanimur/UmmahLink-graphql/assets/80884335/022c4c73-c557-4d66-865c-985fa6b60805)
